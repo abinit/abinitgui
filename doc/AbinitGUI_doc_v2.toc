@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 \beamer@endinputifotherversion {3.07pt}
+=======
+\beamer@endinputifotherversion {3.26pt}
+>>>>>>> 95cbb94c6e437495bddbd63053561283b6ae90c0
 \select@language {english}
