@@ -3221,7 +3221,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_abipyPathPathLabelMouseClicked
 
     private void abipyPathTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abipyPathTextFieldActionPerformed
-        // TODO add your handling code here:
+        printDEB("Coucou !");
     }//GEN-LAST:event_abipyPathTextFieldActionPerformed
 
     public void sendCommand(String CMD) /*throws CMDException*/ {
