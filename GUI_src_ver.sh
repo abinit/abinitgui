@@ -4,9 +4,12 @@ LOG=AbinitGUI_src_ver.log
 
 OPTS='-Rf'
 
-Version='2013r2'
-PackageFolder='AbinitGUI-'$Version
+#Version='0.1.0.7'
+#PackageFolder='AbinitGUI_v.'$Version
+#BIN_FOLDER=bin
+#TEST_FOLDER=bin
 
+PackageFolder=gui
 BIN_FOLDER=precompiled
 TEST_FOLDER=tests
 

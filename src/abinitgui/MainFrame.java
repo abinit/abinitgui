@@ -419,6 +419,8 @@ public class MainFrame extends javax.swing.JFrame {
         abinitPathTextField = new javax.swing.JTextField();
         abinitPathPathLabel = new javax.swing.JLabel();
         abinitPathButton = new javax.swing.JButton();
+        abipyPathPathLabel = new javax.swing.JLabel();
+        abipyPathTextField = new javax.swing.JTextField();
         inputFilePanel = new javax.swing.JPanel();
         useExtIFRadioButton = new javax.swing.JRadioButton();
         openFileTextField = new javax.swing.JTextField();
@@ -698,6 +700,21 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        abipyPathPathLabel.setLabelFor(pspPathTextField);
+        abipyPathPathLabel.setText("Path to abipy (At abinit server !)");
+        abipyPathPathLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                abipyPathPathLabelMouseClicked(evt);
+            }
+        });
+
+        abipyPathTextField.setText("/home/naps/ygillet/MAPR2451-v2/7.3.1-public/abipy-0.1.0.dev");
+        abipyPathTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abipyPathTextFieldActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout configPanelLayout = new org.jdesktop.layout.GroupLayout(configPanel);
         configPanel.setLayout(configPanelLayout);
         configPanelLayout.setHorizontalGroup(
@@ -705,6 +722,7 @@ public class MainFrame extends javax.swing.JFrame {
             .add(configPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(configPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(abipyPathTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 508, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(whereIsAbinitLabel)
                     .add(configPanelLayout.createSequentialGroup()
                         .add(localAbinitRadioButton)
@@ -725,8 +743,9 @@ public class MainFrame extends javax.swing.JFrame {
                             .add(mySimulationsTextField)
                             .add(pspPathTextField))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(abinitPathButton)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                        .add(abinitPathButton))
+                    .add(abipyPathPathLabel))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         configPanelLayout.setVerticalGroup(
             configPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -757,7 +776,11 @@ public class MainFrame extends javax.swing.JFrame {
                 .add(configPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(abinitPathTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(abinitPathButton))
-                .add(187, 187, 187))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(abipyPathPathLabel)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(abipyPathTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         mainTabbedPane.addTab("Configuration", configPanel);
@@ -1011,7 +1034,7 @@ public class MainFrame extends javax.swing.JFrame {
             emptyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(emptyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                .add(jLabel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                 .addContainerGap())
         );
         emptyPanelLayout.setVerticalGroup(
@@ -1019,7 +1042,7 @@ public class MainFrame extends javax.swing.JFrame {
             .add(emptyPanelLayout.createSequentialGroup()
                 .add(133, 133, 133)
                 .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addContainerGap(207, Short.MAX_VALUE))
         );
 
         inputFileTabbedPane.addTab("", emptyPanel);
@@ -1242,7 +1265,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .add(jLabel1)
                                 .add(18, 18, 18)
                                 .add(scriptName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 287, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(0, 12, Short.MAX_VALUE)))
+                                .add(0, 1, Short.MAX_VALUE)))
                         .add(12, 12, 12))
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -2630,7 +2653,7 @@ public class MainFrame extends javax.swing.JFrame {
                             // TODO Util.dos2unix(new File(inputFileR)); // Transformer avant d'envoyer le fichier
                         }
                     }
-                    String command = program + " " + inputFileR;
+                    String command = "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH "+program + " " + inputFileR;
 
                     ArrayList<ScriptArgument> listInput = scr.listInput;
 
@@ -3192,6 +3215,14 @@ public class MainFrame extends javax.swing.JFrame {
         scriptBibs.loadScriptsFromFile("listScripts.xml");
         showScripts();
     }//GEN-LAST:event_reloadScriptsActionPerformed
+
+    private void abipyPathPathLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abipyPathPathLabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_abipyPathPathLabelMouseClicked
+
+    private void abipyPathTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abipyPathTextFieldActionPerformed
+        printDEB("Coucou !");
+    }//GEN-LAST:event_abipyPathTextFieldActionPerformed
 
     public void sendCommand(String CMD) /*throws CMDException*/ {
         RetMSG retmsg;
@@ -3782,6 +3813,8 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JLabel abinitPathPathLabel;
     javax.swing.JTextField abinitPathTextField;
     javax.swing.ButtonGroup abinixbuttonGroup;
+    javax.swing.JLabel abipyPathPathLabel;
+    javax.swing.JTextField abipyPathTextField;
     javax.swing.JMenuItem aboutMenuItem;
     javax.swing.JButton algoAndConvButton;
     javax.swing.JPanel basicsPanel;

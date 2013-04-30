@@ -262,6 +262,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="abipyPathTextField" min="-2" pref="508" max="-2" attributes="1"/>
                           <Component id="whereIsAbinitLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="localAbinitRadioButton" min="-2" max="-2" attributes="0"/>
@@ -287,8 +288,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="abinitPathButton" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="abipyPathPathLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="51" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -325,7 +327,11 @@
                           <Component id="abinitPathTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="abinitPathButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="abipyPathPathLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="abipyPathTextField" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -649,6 +655,25 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="abinitPathButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="abipyPathPathLabel">
+              <Properties>
+                <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="pspPathTextField"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Path to abipy (At abinit server !)"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="abipyPathPathLabelMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="abipyPathTextField">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="/home/naps/ygillet/MAPR2451-v2/7.3.1-public/abipy-0.1.0.dev"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="abipyPathTextFieldActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

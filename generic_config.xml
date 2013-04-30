@@ -2,7 +2,6 @@
 <tabbedpaneconf>
   <configuration>
     <hostlocation lacation="Remote" />
-    <needpbs checked="0" />
     <remotelogin login="tutoXX" />
     <remotehost host="green.cism.ucl.ac.be" />
     <remotepwd pwd="" />
@@ -16,14 +15,6 @@
     <mySimulationspath path="./MySims" />
     <psppath path="./PSP" />
     <abinitpath path="/home/users/y/g/ygillet/MAPR2451/bin" />
-    <abinitSequ checked="1" />
-    <abinitPara checked="0" />
-    <abinipproc numproc="4" />
-    <pbstime time="2" />
-    <pbsnodes nodes="1" />
-    <pbsram ram="100" />
-    <pbshdm hdm="150" />
-    <pbsemail email="abinitgui@gmail.com" />
     <openfile file="./test2.in" />
     <psp psp="2" />
     <psptable>

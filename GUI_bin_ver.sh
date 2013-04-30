@@ -4,10 +4,10 @@ LOG=AbinitGUI_bin_ver.log
 
 OPTS='-Rf'
 
-Version='2013r2'
+Version='2013r3'
 PackageFolder='AbinitGUI-'$Version
 
-bash MakeGUI
+#bash MakeGUI
 
 # Création du dossier contenant le Package AbinitGUI
 [ -d $PackageFolder ] && echo 'Folder '$PackageFolder' exists!' || mkdir $PackageFolder
@@ -23,10 +23,11 @@ rsync -a --exclude='.*' PSP $PackageFolder/.
 rsync -a --exclude='.*' ClustepEx $PackageFolder/. 2>> $LOG
 rsync -a --exclude='.*' scriptsBib $PackageFolder/. 2>> $LOG
 #rsync -a --exclude='.*' doc $PackageFolder/. 2>> $LOG
-cp $OPTS doc_v1.pdf $PackageFolder/. 2>> $LOG
+cp $OPTS doc/AbinitGUI_doc_v2.pdf $PackageFolder/doc_v2.pdf 2>> $LOG
+cp $OPTS json_vars.txt $PackageFolder/. 2>> $LOG
 
 cp $OPTS Jmol.jar $PackageFolder/. 2>> $LOG
-cp $OPTS Graph2D.jar $PackageFolder/. 2>> $LOG
+cp $OPTS FlavioChart.jar $PackageFolder/. 2>> $LOG
 
 cp $OPTS Tight-Binding_src.tar.gz $PackageFolder/. 2>> $LOG
 cp $OPTS CLUSTEP_src.tar.gz $PackageFolder/. 2>> $LOG
@@ -35,7 +36,8 @@ cp $OPTS listScripts.xml $PackageFolder/. 2>> $LOG
 
 cp $OPTS generic_config.xml $PackageFolder/config.xml 2>> $LOG
 cp $OPTS README_binVer.txt $PackageFolder/README 2>> $LOG
-cp $OPTS AbinitGUI.jar $PackageFolder/AbinitGUI.jar 2>> $LOG
+#cp $OPTS AbinitGUI.jar $PackageFolder/AbinitGUI.jar 2>> $LOG
+cp $OPTS standalone/AbinitGUI.jar $PackageFolder/AbinitGUI.jar 2>> $LOG
 echo 'Files copied'
 
 find $PackageFolder -name .DS_Store -type f -print0 | xargs -0 /bin/rm -f
@@ -43,6 +45,7 @@ find $PackageFolder -name .DS_Store -type f -print0 | xargs -0 /bin/rm -f
 #echo 'Creating AbinitGUI.tar.gz file...'
 #tar -zcvf AbinitGUI.tar.gz $PackageFolder >> $LOG
 #echo 'AbinitGUI.tar.gz file created.'
+
 echo 'Creating AbinitGUI.zip file...'
 zip -r AbinitGUI $PackageFolder >> $LOG
 echo 'AbinitGUI.zip file created.'

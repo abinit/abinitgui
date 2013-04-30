@@ -1,12 +1,12 @@
 -----------------------------------------------
-*******   AbinitGUI v. 0.1 (May 2011)   *******
+******   AbinitGUI v. 0.3 (April 2013)   ******
 -----------------------------------------------
 
 ***************************
 1. How to run AbinitGUI.jar
 ***************************
 
-Before you start the AbiniGUI.jar executable you need the Java JRE version 1.6+ (mandatory).
+Before you start the AbiniGUI.jar executable you need the Java JRE version 1.7+ (mandatory).
 
 The jar file distributed in this package can be executed on the following ARCH/OS:
 
@@ -20,7 +20,7 @@ prompt# java -jar AbinitGUI.jar
 
 This ensures that the current directory will be the one in which lies the AbinitGUI.jar file. Furthermore, it allows to display additional error messages that are not displayed in the GUI.
 
-IMPORTANT: The database of the pseudopotentials is not included in this Abinit package. You can find the database at www.flavio-abreu.net.
+IMPORTANT: The database of the pseudopotentials is not included in this Abinit package. You can find the database at www.flavio.be.
 
 *****************************
 2. How to build AbinitGUI.jar
