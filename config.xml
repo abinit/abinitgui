@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tabbedpaneconf>
+  <configuration>
+    <hostlocation lacation="Remote" />
+    <remotelogin login="tuto04" />
+    <remotehost host="green.cism.ucl.ac.be" />
+    <remotepwd pwd="B@rdaff!" />
+    <keyRemote checked="0" />
+    <keyFileRemote keyFile="/home/flavio/.ssh/id_stud_dsa" />
+    <gatewaylogin login="tuto04" />
+    <gatewayhost host="hall.cism.ucl.ac.be" />
+    <gatewaypwd pwd="B@rdaff!" />
+    <keyGateway checked="0" />
+    <keyFileGateway keyFile="" />
+    <mySimulationspath path="./MySims" />
+    <psppath path="./PSP" />
+    <abinitpath path="/home/naps/ygillet/MAPR2451-v2/7.3.1-public/build/src/98_main/" />
+    <openfile file="./test3.in" />
+    <psp psp="3" />
+    <psptable>
+      <entry i="0" symbol="Nb" psppath="./PSP/LDA_FHI" pspfile="41-Nb.LDA.fhi" psptype="LDA_FHI" />
+      <entry i="1" symbol="Li" psppath="./PSP/LDA_FHI" pspfile="03-Li.LDA.fhi" psptype="LDA_FHI" />
+      <entry i="2" symbol="O" psppath="./PSP/LDA_FHI" pspfile="08-O.LDA.fhi" psptype="LDA_FHI" />
+    </psptable>
+  </configuration>
+  <inputfile />
+</tabbedpaneconf>
+

@@ -1,0 +1,44 @@
+#Computation of the density of LiNbO3
+
+#Dataset 1 : Computation of density
+kptopt 1
+ngkpt  2 2 2
+shiftk 0.5 0.5 0.5
+nshiftk 1
+prtden 1
+toldfe 1.0d-12
+ecutsm 0.5
+
+#Definition of material bands
+nband 42
+nbdbuf 2
+
+#Definition of the atom types
+ntypat 3          # 3 types of atoms
+znucl 41 3 8      # Nb, Li, O
+
+#Definition of the planewave basis set
+ecut 8
+
+#Definition of the SCF procedure
+nstep 100
+diemac 10
+
+#Definition of the atoms
+natom 10          
+typat 1 1 2 2 3 3 3 3 3 3 
+
+#Definition of the unit cell
+acell 3*10.3915492
+angdeg 3*55.857
+xred
+0 0 0
+0.5 0.5 0.5
+0.2829 0.2829 0.2829
+0.7829 0.7829 0.7829
+0.22133 0.611903333 0.859166667
+0.859166667 0.22133 0.611903333
+0.611903333 0.859166667 0.22133
+0.111903333 0.72133 0.359166667
+0.359166667 0.111903333 0.72133
+0.72133 0.359166667 0.111903333

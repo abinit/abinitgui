@@ -1,0 +1,5 @@
+Hartwigsen-Goedecker-Hutter psp for Carbon, PBE GGA, created in LLN.
+ 6  4  980723                       zatom, zion, pspdat
+ 3  11   0    0    2001    0        pspcod,pspxc,lmax,lloc,mmax,r2well
+ .3488304486   -.8356080817E+01  .1254782702E+01  0 0  rloc,gpot()
+ .3042695760    .9467718621E+01   0 0                  rs, h11s,h22s,h33s
