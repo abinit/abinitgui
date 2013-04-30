@@ -1,12 +1,12 @@
 -----------------------------------------------
-*******   AbinitGUI v. 0.1 (May 2011)   *******
+******   AbinitGUI v. 0.3 (April 2013)   ******
 -----------------------------------------------
 
 ***************************
 1. How to run AbinitGUI.jar
 ***************************
 
-Before you start the AbiniGUI.jar executable you need the Java JRE version 1.6+ (mandatory).
+Before you start the AbiniGUI.jar executable you need the Java JRE version 1.7+ (mandatory).
 
 The jar file distributed in this package can be executed on the following ARCH/OS:
 
