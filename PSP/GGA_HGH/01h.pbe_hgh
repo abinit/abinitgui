@@ -1,0 +1,5 @@
+Hartwigsen-Goedecker-Hutter psp for Hydrogen, PBE GGA, created in LLN.
+ 1  1  980723                       zatom, zion, pspdat
+ 3  11   0    0    2001    0        pspcod,pspxc,lmax,lloc,mmax,r2well
+ .2  -.4178947459E+01     .7244856021E+00  0  0  rloc,gpot()
+ .2   0 0 0                                      rs, h11s,h22s,h33s
