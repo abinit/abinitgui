@@ -8,12 +8,12 @@
         <input>
             <name name="inputFile" />
             <help help="The fileName which will be read" />
-            <default default="./MySims/wholedata/test3/test3o_DS2_WFK-etsf.nc" />
+            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
         </input>
         <input>
-            <name name="backend" />
-            <help help="The backend (Agg for non-interactive, TkAgg for interactive)" />
-            <default default="Agg" />
+            <name name="show" />
+            <help help="True to show the figure" />
+            <default default="True" />
         </input>
         <input>
             <name name="title" />
