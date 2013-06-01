@@ -74,7 +74,7 @@
         <input>
             <name name="inputFile" />
             <help help="Input file you want to analyze" />
-	    <type type="INPUTFILE" />
+	    <type type="REMOTEFILE" />
             <default default="./MySims/output/test2.out" />
         </input>
         <output>
