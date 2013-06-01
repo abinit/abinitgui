@@ -2654,7 +2654,9 @@ public class MainFrame extends javax.swing.JFrame {
                             // TODO Util.dos2unix(new File(inputFileR)); // Transformer avant d'envoyer le fichier
                         }
                     }
-                    String command = "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH "+program + " " + inputFileR;
+                    // "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH "+
+                    
+                    String command = program + " " + inputFileR;
 
                     ArrayList<ScriptArgument> listInput = scr.listInput;
 
@@ -2986,7 +2988,8 @@ public class MainFrame extends javax.swing.JFrame {
                             String scriptFileR = rootPath + "/" + inputFolder + "/" + scriptFile;
                             putFile(scriptFile + " " + scriptFileR);
 
-                            String cmd = "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH python " + scriptFileR + " " + inputFileR;
+                            // "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH 
+                            String cmd = "python " + scriptFileR + " " + inputFileR;
 
                             sendCommand(cmd);
 
