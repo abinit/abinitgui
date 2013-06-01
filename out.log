@@ -1,4 +1,2 @@
-DEB>> 0 Si   
-OUT>> Connecting to localhost as yannick.
-OUT>> Connected to localhost as yannick.
-OUT>> Succes: gedit scriptsBib/AbinitBandStructureMaker.py => .
+DEB>> 0 O ./PSP/LDA_TM.psps/08 8o.pspnc LDA_TM
+DEB>> 1 H ./PSP/LDA_TM.psps/01 1h.pspnc LDA_TM
