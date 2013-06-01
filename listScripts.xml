@@ -8,16 +8,19 @@
         <input>
             <name name="abinitoutput" />
             <help help="Abinit Output file" />
+	    <type type="INPUTFILE" />
             <default default="./MySims/output/test3.out" />
         </input>
         <input>
             <name name="idtset" />
             <help help="idtset to use" />
+	    <type type="NUMBER" />
             <default default="2" />
         </input>
         <output>
             <name name="outputFile" />
             <help help="DBS Output" />
+	    <type type="OUTPUTFILE" />
             <default default="test3.dbs" />
         </output>
     </script>    
@@ -29,21 +32,25 @@
         <file>
             <name name="abinitoutput" />
             <help help="DBS file" />
+	    <type type="INPUTFILE" />
             <default default="./MySims/scripts/test3.dbs" />
         </file>
         <input>
             <name name="autolaunch" />
             <help help="Set it to yes if you want xmgrace to be runned automatically" />
+	    <type type="BOOLEAN" />
             <default default="no" />
         </input>
         <output>
             <name name="outputFile" />
             <help help="AGR output" />
+	    <type type="OUTPUTFILE" />
             <default default="test3.agr" />
         </output>
         <output>
             <name name="outputIMG" />
             <help help="IMG output" />
+	    <type type="OUTPUTFILE" />
             <default default="test3.png" />
         </output>
     </script>
@@ -55,21 +62,25 @@
         <input>
             <name name="varConv" />
             <help help= "help" />
+	    <type type="TEXT" />
             <default default="ecut" />
         </input>
         <input>
             <name name="varOut" />
             <help help="help" />
+	    <type type="TEXT" />
             <default default="etotal" />
         </input>
         <input>
             <name name="inputFile" />
-            <help help="help" />
+            <help help="Input file you want to analyze" />
+	    <type type="INPUTFILE" />
             <default default="./MySims/output/test2.out" />
         </input>
         <output>
             <name name="outputFile" />
             <help help="Output file" />
+	    <type type="OUTPUTFILE" />
             <default default="output.txt" />
         </output>
     </script>
