@@ -55,6 +55,7 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -71,8 +72,60 @@ public class ScriptTable extends JTable
         {
             return new FileEditor();
         }
+        else if(arg.type.toUpperCase().equals("BOOLEAN"))
+        {
+            return new BooleanEditor();
+        }
         
         return getDefaultEditor(getModel().getValueAt(row, column).getClass());
+    }
+    
+    private class BooleanEditor extends AbstractCellEditor
+        implements TableCellEditor,
+        ActionListener
+    {
+        private JButton but;
+        private String status;
+        private boolean stat;
+        
+        public BooleanEditor()
+        {
+            but = new JButton();
+            but.addActionListener(this);
+            but.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+            but.setBackground(Color.darkGray);
+        }
+        
+        @Override
+        public Object getCellEditorValue()
+        {
+            return status;
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            
+            status = (String)value;
+            stat = (status.equals("yes"));
+            return but;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            stat = !stat;
+            
+            if(stat)
+            {
+                status = "yes";
+            }
+            else
+            {
+                status = "no";
+            }
+            
+            fireEditingStopped();
+        }
     }
     
     private class FileEditor extends AbstractCellEditor
