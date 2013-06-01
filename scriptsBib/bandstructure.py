@@ -1,8 +1,8 @@
 #!python
 
-import abipy;
 import os, sys;
 import argparse;
+import abipy;
 
 def bandstructure(inputFile,outputFile,title,show):
 

@@ -294,6 +294,8 @@ public class MainFrame extends javax.swing.JFrame {
         editPYDFT.setVisible(false);
         jMenuClustepAndTB.setVisible(false);
         localAbinitRadioButton.setVisible(false);
+        abipyPathPathLabel.setVisible(false);
+        abipyPathTextField.setVisible(false);
 
         useExtIFRadioButtonActionPerformed(null);
 
