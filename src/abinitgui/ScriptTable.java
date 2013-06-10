@@ -68,14 +68,14 @@ public class ScriptTable extends JTable
     {
         ScriptArgument arg = (ScriptArgument)(getModel().getValueAt(row,0));
         
-        if(arg.type.toUpperCase().equals("INPUTFILE"))
-        {
-            return new FileEditor();
-        }
-        else if(arg.type.toUpperCase().equals("BOOLEAN"))
-        {
-            return new BooleanEditor();
-        }
+//        if(arg.type.toUpperCase().equals("INPUTFILE"))
+//        {
+//            return new FileEditor();
+//        }
+//        else if(arg.type.toUpperCase().equals("BOOLEAN"))
+//        {
+//            return new BooleanEditor();
+//        }
         
         return getDefaultEditor(getModel().getValueAt(row, column).getClass());
     }
