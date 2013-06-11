@@ -127,6 +127,7 @@ public class MainFrame extends javax.swing.JFrame {
     private String curPath = "."; // to save current Path !
     private ProjectManager projectManager;
     private GUIEditor guiEditor;
+    private GUIEditorNew guiEditorNew;
     private AbinitInputVars abinitInputVars;
     private Simulation simulation;
     private SubmissionScriptFrame submitScriptFrame;
@@ -284,6 +285,7 @@ public class MainFrame extends javax.swing.JFrame {
         simulation.setRemoteJob(remoteJob);
 
         guiEditor = new GUIEditor(this);
+        guiEditorNew = new GUIEditorNew(this);
         allInputVars = new AllInputVars(this);
         abinitInputVars = new AbinitInputVars(this, allInputVars);
 
@@ -458,6 +460,7 @@ public class MainFrame extends javax.swing.JFrame {
         otherTextArea = new javax.swing.JTextArea();
         emptyPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        testAnalyze1 = new javax.swing.JButton();
         postProcPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         scriptScrollPane = new javax.swing.JScrollPane();
@@ -1035,7 +1038,7 @@ public class MainFrame extends javax.swing.JFrame {
             emptyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(emptyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                .add(jLabel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                 .addContainerGap())
         );
         emptyPanelLayout.setVerticalGroup(
@@ -1043,18 +1046,26 @@ public class MainFrame extends javax.swing.JFrame {
             .add(emptyPanelLayout.createSequentialGroup()
                 .add(133, 133, 133)
                 .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         inputFileTabbedPane.addTab("", emptyPanel);
+
+        testAnalyze1.setText("Test / Analyze file (NEW)");
+        testAnalyze1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testAnalyze1ActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout inputFilePanelLayout = new org.jdesktop.layout.GroupLayout(inputFilePanel);
         inputFilePanel.setLayout(inputFilePanelLayout);
         inputFilePanelLayout.setHorizontalGroup(
             inputFilePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(inputFilePanelLayout.createSequentialGroup()
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, inputFilePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(inputFilePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(testAnalyze1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, testAnalyze, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, SubmissionEditButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, pspTableScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -1135,6 +1146,8 @@ public class MainFrame extends javax.swing.JFrame {
                         .add(sendSIMButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(testAnalyze)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(testAnalyze1)
                 .addContainerGap())
         );
 
@@ -1266,7 +1279,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .add(jLabel1)
                                 .add(18, 18, 18)
                                 .add(scriptName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 287, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(0, 1, Short.MAX_VALUE)))
+                                .add(0, 0, Short.MAX_VALUE)))
                         .add(12, 12, 12))
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1275,7 +1288,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .add(0, 0, Short.MAX_VALUE))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addContainerGap())
                     .add(jPanel1Layout.createSequentialGroup()
@@ -3228,6 +3241,10 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_abipyPathTextFieldActionPerformed
 
+    private void testAnalyze1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testAnalyze1ActionPerformed
+        guiEditorNew.loadFile(openFileTextField.getText());
+    }//GEN-LAST:event_testAnalyze1ActionPerformed
+
     public void sendCommand(String CMD) /*throws CMDException*/ {
         RetMSG retmsg;
         if (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected()) {
@@ -3923,6 +3940,7 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JScrollPane scriptScrollPane;
     javax.swing.JButton sendSIMButton;
     javax.swing.JButton testAnalyze;
+    javax.swing.JButton testAnalyze1;
     javax.swing.JButton theoryButton;
     javax.swing.JRadioButton useCreIFRadioButton;
     javax.swing.JRadioButton useExtIFRadioButton;
