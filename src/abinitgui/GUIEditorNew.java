@@ -134,16 +134,17 @@ public class GUIEditorNew extends javax.swing.JFrame {
 //                }
 //            }
 //            
-        if(input.getNdtset() == 1)
+        if(input.getNdtset() == 1 || input.getNdtset() == 0)
         {
             data = new String[1];
-            data[0] = "1 Dataset";
+            data[0] = "1";
         }
         else
         {
             data = input.getJdtsets().toArray(new String[0]);
         }
-           dtsetList.setListData(data);
+        
+        dtsetList.setListData(data);
 //            
 //        } catch (IOException ex) {
 //            Logger.getLogger(TestJSon.class.getName()).log(Level.SEVERE, null, ex);
@@ -295,9 +296,9 @@ public class GUIEditorNew extends javax.swing.JFrame {
 
     private void viewGeomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewGeomButtonActionPerformed
 
-        int jdtset = dtsetList.getSelectedIndex();
+        String jdtset = (String)dtsetList.getSelectedValue();
         
-        if(jdtset == -1)
+        if(jdtset == null)
         {
             mf.printERR("First select a dataset !");
             return;
@@ -310,12 +311,22 @@ public class GUIEditorNew extends javax.swing.JFrame {
 
         try {
             AbinitGeometry geom = new AbinitGeometry();
-            JSONObject object = jsonArray.getJSONObject(dtsetList.getSelectedIndex()+1);
-            JSONObject objectdefault = jsonArray.getJSONObject(0);
             
-            geom.readFromJSON(object.getInt("natom"), object.getInt("ntypat"),
-                    object.getJSONArray("typat"), object.getJSONArray("znucl"), 
-                    object.getJSONArray("xred_orig"), object.getJSONArray("rprimd_orig"));
+            if(jdtset == null)
+            {
+                return;
+            }
+            HashMap<String,Object> values = null;
+            if(input.isUsejdtset())
+            {
+                values = input.getAllDatasets().get(jdtset);
+            }
+            else
+            {
+                values = input.getAllDatasets().get("0");
+            }
+            
+            geom.loadData(values);
 
             if (geom == null) {
                 mf.printERR("Geometry analyzer does not support multi-dataset files !");
@@ -342,11 +353,14 @@ public class GUIEditorNew extends javax.swing.JFrame {
     private void loadDatabase()
     {
         String jdtset = (String)dtsetList.getSelectedValue();
+        if(jdtset == null)
+        {
+            return;
+        }
         HashMap<String,Object> values = null;
         if(input.isUsejdtset())
         {
             values = input.getAllDatasets().get(jdtset);
-            
         }
         else
         {
@@ -432,9 +446,33 @@ public class GUIEditorNew extends javax.swing.JFrame {
             }
             else if(column == 1)
             {
-                return dataTable.get(row).get("value");
+                Object o = dataTable.get(row).get("value");
+                StringBuilder sb = new StringBuilder();
+                if(o instanceof Number[])
+                {
+                    for(Number nb : (Number[])o)
+                    {
+                        sb.append(nb+" ");
+                    }
+                }
+                else if(o instanceof Number[][])
+                {
+                    for(Number[] nbs : (Number[][])o)
+                    {
+                        for(Number nb : nbs)
+                        {
+                            sb.append(nb).append(" ");
+                        }
+                        sb.append(";");
+                    }
+                }
+                else
+                {
+                    sb.append(o.toString());
+                }
+                
+                return sb.toString();
             }
-            
             return null;
         }
         
