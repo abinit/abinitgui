@@ -4890,7 +4890,7 @@
         "category": " ", 
         "default": "1 (for <a href=\"varbas.html#natom\">natom</a>=1)", 
         "definition": "TYPE of atoms ", 
-        "dimensions": [], 
+        "dimensions": ["natom"], 
         "section": "varbas", 
         "text": "<p>\nArray giving an integer label to every atom in the unit\ncell to denote its type. <br>The different types of atoms\nare constructed from the pseudopotential files.\nThere are at most <a href=\"varbas.html#ntypat\">ntypat</a> types of atoms.\n<br> As an example, for BaTiO3, where the pseudopotential for Ba is number 1,\nthe one of Ti is number 2, and the one of O is number 3, the actual\nvalue of the <b>typat</b> array might be :\n<pre>\ntypat 1 2 3 3 3\n</pre>\n<br>The array <b>typat</b> has to agree with the actual locations\nof atoms given in <a href=\"varbas.html#xred\">xred</a> , <a href=\"varbas.html#xcart\">xcart</a> or\n<a href=\"varbas.html#xangst\">xangst</a>, and the input\nof pseudopotentials has to be ordered to agree with the\natoms identified in <b>typat</b>.\n<br>The nuclear charge of the\nelements, given by the array <a href=\"varbas.html#znucl\">znucl</a>, also must agree with\nthe type of atoms designated in \"<b>typat</b>\".\n<br>The array <b>typat</b> is\nnot constrained to be increasing. An\ninternal representation of the list of atoms,\ndeep in the code (array atindx), groups the atoms of same type\ntogether. This should be transparent to the\nuser, while keeping efficiency.\n", 
         "vartype": "integer array typat(<a href=\"varbas.html#natom\">natom</a>) (or : typat(<a href=\"vargeo.html#natrd\">natrd</a>), if the geometry builder is used) "

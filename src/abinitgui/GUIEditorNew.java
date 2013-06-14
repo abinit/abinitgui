@@ -95,7 +95,7 @@ public class GUIEditorNew extends javax.swing.JFrame {
     
     public void loadFile(String fileName)
     {
-        
+        dataTable.clear();
         this.fileName = fileName;
         System.out.println("Parsing file : "+fileName);
         input = new AbinitInput();
@@ -104,7 +104,8 @@ public class GUIEditorNew extends javax.swing.JFrame {
             input.readFromFile(fileName);
         } catch(IOException e)
         {
-            e.printStackTrace();
+            mf.printERR("Unable to parse fileName = "+fileName);
+            mf.printERR("Error = "+e.getMessage());
         }
         System.out.println(input);
         

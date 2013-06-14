@@ -76,29 +76,32 @@ public class AbinitInput
     
     public static void main(String[] args)
     {
-        String path = "/home/yannick/abinit/7.3.2-private/tests/";
+        String path = "/home/yannick/abinit/7.3.2-private/tests/v67mbpt/Input";
+          
+        File folder = new File(path);
         
-        String[] filesToTest = {"v67mbpt/Input/t22.in","fast/Input/t01.in","v6/Input/t66.in"};
-    
-        for(String file : filesToTest)
+        File[] listOfFiles = folder.listFiles(); 
+        
+        for(File f : listOfFiles)
         {
+            String file = f.getAbsolutePath();
             System.out.println("Parsing file : "+file);
             AbinitInput input = new AbinitInput();
         
             try{
-                input.readFromFile(path+file);
+                input.readFromFile(file);
+                System.out.println(input);
 
-            } catch(IOException e)
+            } catch(Exception e)
             {
                 e.printStackTrace();
             }
-            System.out.println(input);
         }
         
 
     }
     
-    private HashMap<String, String> tabularize(String content, AllInputVars allInputs)
+    private HashMap<String, String> tabularize(String content, AllInputVars allInputs) throws InvalidInputFileException
     {
         HashMap<String,String> newMap = new HashMap<>();
         
@@ -111,7 +114,7 @@ public class AbinitInput
         {
             String word = splitted[i].toLowerCase();
             
-            System.out.print("Looking for word "+word+"...");
+            //System.out.print("Looking for word "+word+"...");
             
             if(isVariable(word))
             {
@@ -122,9 +125,13 @@ public class AbinitInput
                 }
                 keyword = word;
             }
-            else
+            else if(isUnit(word) || isNumber(word) || word.contains("*"))
             {
                 sb.append(word+" ");
+            }
+            else
+            {
+                throw new InvalidInputFileException("Unrecognized token : "+word);
             }
             
         }
@@ -197,13 +204,13 @@ public class AbinitInput
     
     // http://stackoverflow.com/questions/7597485/how-to-check-if-a-string-is-a-number
     public boolean isNumber(String str) {
-        Pattern pattern = Pattern.compile("(^-?)(\\d+)(.?)(\\d*$)"); // \\'D'?\\-?\\d* [^/]
+        Pattern pattern = Pattern.compile("(^-?)(\\d*)(.?)(\\d*$)"); // \\'D'?\\-?\\d* [^/]
         Matcher matcher = pattern.matcher(str);
         boolean isSimpleNumber = matcher.matches();
-        pattern = Pattern.compile("(^-?)(\\d+)(.?)(\\d*)[DEFdef](-?)(\\d+)(.?)(\\d*$)");
+        pattern = Pattern.compile("(^-?)(\\d*)(.?)(\\d*)[DEFdef]([+-]?)(\\d+)(.?)(\\d*$)");
         matcher = pattern.matcher(str);
         boolean isExponential = matcher.matches();
-        pattern = Pattern.compile("(^-?)(\\d+)(.?)(\\d*)/(-?)(\\d+)(.?)(\\d*$)");
+        pattern = Pattern.compile("(^-?)(\\d*)(.?)(\\d*)/(-?)(\\d+)(.?)(\\d*$)");
         matcher = pattern.matcher(str);
         boolean isFraction = matcher.matches();
         return isSimpleNumber || isFraction || isExponential;
@@ -222,11 +229,12 @@ public class AbinitInput
         boolean isText = matcher.matches();
         pattern = Pattern.compile("");
         matcher = pattern.matcher(word);
-        boolean isTextWithPlus = word.endsWith("+");
-        boolean isTextWithPoint = word.endsWith(":");
-        String curWord = word.replaceAll("\\d", "").replaceAll("\\+","").replaceAll(":", "");
+        boolean isTextWithPlus = word.contains("+");
+        boolean isTextWithPoint = word.contains(":");
+        boolean isTextWithInter = word.contains("?");
+        String curWord = word.replaceAll("\\d", "").replaceAll("\\+","").replaceAll(":", "").replaceAll("\\?","");
         boolean isVar = allInputs.getListKeys().contains(curWord);
-        return (isText || isTextWithPoint || isTextWithPlus) && isVar ;
+        return (isText || isTextWithPoint || isTextWithPlus || isTextWithInter) && isVar ;
     }
     
     // Returns a string from a file where the next line are appended.
@@ -378,7 +386,7 @@ public class AbinitInput
             }
         }
         
-        System.out.println("jdtsets = "+getJdtsets());
+        //System.out.println("jdtsets = "+getJdtsets());
         
         allDatasets = new HashMap<>();
         
@@ -398,7 +406,7 @@ public class AbinitInput
             getAllDatasets().put("0", values);
         }
         
-        System.out.println(getAllDatasets());
+        //System.out.println(getAllDatasets());
         
     }
 
@@ -459,7 +467,7 @@ public class AbinitInput
     public Object getValue(String name, String text, String type, String dimensions, String jdtset) throws InvalidInputFileException
     {
         
-        System.out.println("Reading variable "+name+" with text = "+text+", type = "+type+", dimensions = "+dimensions);
+        //System.out.println("Reading variable "+name+" with text = "+text+", type = "+type+", dimensions = "+dimensions);
         
         JSONArray dims = new JSONArray(dimensions);
         
@@ -634,7 +642,7 @@ public class AbinitInput
             {
                 if(listValues.size() != length)
                 {
-                    throw new InvalidInputFileException("Mismatch between dimensions");
+                    throw new InvalidInputFileException("For var = "+name+", Mismatch between dimensions "+(listValues.size())+"!="+length);
                 }
                 if(type.contains("integer"))
                 {
@@ -661,16 +669,49 @@ public class AbinitInput
                 tab = new Double[length1][length2];
             }
             
+            
+            ArrayList<Object> listValues = new ArrayList<>();
+            for(int i = 0; i < nbValues; i++)
+            {
+                String curValue = allText[i];
+
+                if(curValue.contains("*"))
+                {
+                    if(curValue.startsWith("*"))
+                    {
+                        if(nbValues > 1)
+                        {
+                            throw new InvalidInputFileException("Only possible with 1 value");
+                        }
+                        for(int j = 0; j < nbValues; j++)
+                        {
+                            listValues.add(readData(curValue.substring(1), type));
+                        }
+                    }
+                    else
+                    {
+                        // Will split
+                        //System.out.println("Will split value : "+curValue);
+                        int nbTimes = Integer.parseInt(curValue.split("\\*")[0]);
+                        for(int j = 0; j < nbTimes; j++)
+                        {
+                            listValues.add(readData(curValue.split("\\*")[1],type));
+                        }
+                    }
+                }
+                else
+                {
+                    listValues.add(readData(curValue,type));
+                }
+            }
+            
             // TODO : Should check the order of reading
             int index = 0;
             for(int i = 0; i < length1; i++)
             {
                 for(int k = 0; k < length2; k++)
                 {
-                    String curValue = allText[index];
-                    System.out.println("curValue = "+curValue);
-
-                    tab[i][k] = readData(curValue,type);
+                    tab[i][k] = (Number)listValues.get(index);
                     index++;
                 }
             }
@@ -686,14 +727,26 @@ public class AbinitInput
         return null;
     }
     
-    public int getDim(Object dim)
+    public int getDim(Object dim) throws InvalidInputFileException
     {
         int nb = 0;
         if(dim instanceof String)
         {
             String var = (String)dim;
-            
-            nb = Integer.parseInt(mapString.get(var)); // Temporary
+            try{
+                nb = (int)readData(mapString.get(var),"integer"); // Temporary
+            }
+            catch(Exception e)
+            {
+                if(mapString.get(var) == null)
+                {
+                    throw new InvalidInputFileException("Default values for dimensions are not yet supported by the parser... sorry for inconvenience");
+                }
+                else
+                {
+                    throw new InvalidInputFileException("Problem with dimension : "+var);
+                }
+            }
         }
         else
         {
