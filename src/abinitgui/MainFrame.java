@@ -2626,7 +2626,9 @@ public class MainFrame extends javax.swing.JFrame {
                     
                     String[] arrayCMD = allCommand.toArray(new String[0]);
                     retmsg = localExec.sendCommand(arrayCMD);
-                    if (retmsg.getRetCode() != RetMSG.SUCCES) {
+                    if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                        printOUT("Script output : \n"+retmsg.getRetMSG());
+                    } else {
                         printERR("Error: " + retmsg.getRetMSG() + " !");
                     }
                     printDEB(command);
