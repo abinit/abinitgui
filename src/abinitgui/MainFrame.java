@@ -2531,6 +2531,13 @@ public class MainFrame extends javax.swing.JFrame {
                 String rootPath = mySimulationsTextField.getText();
 
                 String folder = "scripts";
+                
+                String path = mySimulationsTextField.getText();
+                if (path.equals("")) {
+                    path = ".";
+                }
+                
+                createLocalTree(path);
 
                 int index = scriptList.getSelectedIndex();
 
@@ -3610,6 +3617,17 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }
+    
+    public void createLocalTree(String path)
+    {
+        mkdir(path);
+        mkdir(path + "/input");
+        mkdir(path + "/output");
+        mkdir(path + "/wholedata");
+        mkdir(path + "/logfiles");
+        mkdir(path + "/pseudopot");
+        mkdir(path + "/scripts");
+    }
 
     public void createFiletree() {
         if (localExec != null) {
@@ -3619,13 +3637,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
             if (localAbinitRadioButton.isSelected()) {
                 // Création de l'arborescence locale
-                mkdir(path);
-                mkdir(path + "/input");
-                mkdir(path + "/output");
-                mkdir(path + "/wholedata");
-                mkdir(path + "/logfiles");
-                mkdir(path + "/pseudopot");
-                mkdir(path + "/scripts");
+                createLocalTree(path);
             } else {
                 if (remoteExec != null && (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected())) {
                     mkdirR(path);
