@@ -1,4 +1,5 @@
 /nbproject/private/
 standalone
 !/standalone/
-/build/s
+/build/
+config.xml

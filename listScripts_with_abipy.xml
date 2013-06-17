@@ -7,127 +7,108 @@
         <program program="python" />
         <input>
             <name name="inputFile" />
-	    <type type="file" />
             <help help="The fileName which will be read" />
             <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
         </input>
         <input>
             <name name="show" />
-            <type type="boolean" />
             <help help="True to show the figure" />
             <default default="True" />
         </input>
         <input>
             <name name="title" />
-            <type type="text" />
             <help help="The title of the graph" />
             <default default="A sample title" />
         </input>
         <output>
             <name name="outputFile" />
-            <type type="file" />
             <help help="The fileName which contains the plot" />
             <default default="bs.eps" />
         </output>
     </script>
     <script>
-        <title title="Density of States (Abipy)" />
+        <title title="Density of States" />
         <filename filename="scriptsBib/dos.py" />
         <description description="Creates a density of states from an ETSF-IO WFK file (accesswff 3 is mandatory in the input file)" />
         <program program="python" />
         <input>
             <name name="inputFile" />
-            <type type="file" />
             <help help="The fileName which will be read" />
-            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+            <default default="./MySims/wholedata/test3/test3o_DS2_WFK-etsf.nc" />
         </input>
         <input>
-            <name name="show" />
-            <type type="boolean" />
-            <help help="True to show the graph" />
-            <default default="True" />
+            <name name="backend" />
+            <help help="The backend (Agg for non-interactive, TkAgg for interactive)" />
+            <default default="Agg" />
         </input>
         <input>
             <name name="title" />
-            <type type="text" />
             <help help="The title of the graph" />
             <default default="A sample title" />
         </input>
         <input>
             <name name="method" />
-            <type type="text" />
             <help help="Method used to generate the dos" />
             <default default="gaussian" />
         </input>
         <input>
             <name name="step" />
-            <type type="number" />
             <help help="Defines the sampling of the energies" />
             <default default="0.002" />
         </input>
         <input>
 	    <name name="width" />
-            <type type="number" />
             <help help="Width of the gaussians" />
             <default default="0.01" />
         </input>
         <output>
             <name name="outputFile" />
-            <type type="file" />
             <help help="The fileName which contains the plot" />
             <default default="dos.eps" />
         </output>
     </script>
     <script>
-        <title title="BS + DOS (Abipy)" />
+        <title title="BS + DOS" />
         <filename filename="scriptsBib/band+dos.py" />
         <description description="Creates a density of states and the band structure from two ETSF-IO WFK file  (accesswff 3 is mandatory in the input file)" />
         <program program="python" />
         <input>
             <name name="inputDos" />
-            <type type="file" />
             <help help="The WFK file used to compute the DOS" />
-            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+            <default default="./MySims/wholedata/test3/test3o_DS2_WFK-etsf.nc" />
         </input>	
         <input>
             <name name="inputBand" />
-            <type type="file" />
             <help help="The WFK file used to compute the BS" />
-            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+            <default default="./MySims/wholedata/test3/test3o_DS2_WFK-etsf.nc" />
         </input>
         <input>
-            <name name="show" />
-            <type type="boolean" />
-            <help help="True to show the graphs" />
-            <default default="True" />
+            <name name="backend" />
+            <help help="The backend (Agg for non-interactive, TkAgg for interactive)" />
+            <default default="Agg" />
         </input>
         <input>
             <name name="titleBS" />
-            <type type="text" />
             <help help="The title of the BS" />
             <default default="A sample title" />
         </input>
         <input>
             <name name="titleDOS" />
-            <type type="text" />
             <help help="The title of the DOS" />
             <default default="A sample title" />
         </input>
         <output>
             <name name="outputDos" />
-            <type type="file" />
             <help help="The fileName which contains the plot of DOS" />
             <default default="dos.eps" />
         </output>
         <output>
             <name name="outputBand" />
-            <type type="file" />
             <help help="The fileName which contains the plot of BS" />
             <default default="band.eps" />
         </output>
         <output>
             <name name="outputBoth" />
-            <type type="file" />
             <help help="The fileName which contains the plot of both simultaneously" />
             <default default="bs+dos.eps" />
         </output>
@@ -140,19 +121,16 @@
         <input>
             <name name="abinitoutput" />
             <help help="Abinit Output file" />
-	    <type type="INPUTFILE" />
             <default default="./MySims/output/test3.out" />
         </input>
         <input>
             <name name="idtset" />
             <help help="idtset to use" />
-	    <type type="NUMBER" />
             <default default="2" />
         </input>
         <output>
             <name name="outputFile" />
             <help help="DBS Output" />
-	    <type type="OUTPUTFILE" />
             <default default="test3.dbs" />
         </output>
     </script>    
@@ -161,28 +139,24 @@
         <filename filename="scriptsBib/AbinitBandStructureMaker.py" />
         <description description="Uses the input dbs file to create an XMGrace file (.agr) and a picture (.eps)" />
         <program program="python" />
-        <input>
+        <file>
             <name name="abinitoutput" />
             <help help="DBS file" />
-	    <type type="INPUTFILE" />
             <default default="./MySims/scripts/test3.dbs" />
-        </input>
+        </file>
         <input>
             <name name="autolaunch" />
             <help help="Set it to yes if you want xmgrace to be runned automatically" />
-	    <type type="BOOLEAN" />
             <default default="no" />
         </input>
         <output>
             <name name="outputFile" />
             <help help="AGR output" />
-	    <type type="OUTPUTFILE" />
             <default default="test3.agr" />
         </output>
         <output>
             <name name="outputIMG" />
             <help help="IMG output" />
-	    <type type="OUTPUTFILE" />
             <default default="test3.png" />
         </output>
     </script>
@@ -194,25 +168,21 @@
         <input>
             <name name="varConv" />
             <help help= "help" />
-	    <type type="TEXT" />
             <default default="ecut" />
         </input>
         <input>
             <name name="varOut" />
             <help help="help" />
-	    <type type="TEXT" />
             <default default="etotal" />
         </input>
         <input>
             <name name="inputFile" />
-            <help help="Input file you want to analyze" />
-	    <type type="REMOTEFILE" />
+            <help help="help" />
             <default default="./MySims/output/test2.out" />
         </input>
         <output>
             <name name="outputFile" />
             <help help="Output file" />
-	    <type type="OUTPUTFILE" />
             <default default="output.txt" />
         </output>
     </script>
