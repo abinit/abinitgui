@@ -56,7 +56,7 @@ import javax.swing.table.*;
 import json.*;
 import parser.AbinitInput;
 
-public class GUIEditorNew extends javax.swing.JFrame {
+public class GUIEditor extends javax.swing.JFrame {
     
     private String fileName;
     private MainFrame mf;
@@ -73,7 +73,7 @@ public class GUIEditorNew extends javax.swing.JFrame {
     /**
      * Creates new form GUIEditor
      */
-    public GUIEditorNew(MainFrame mf) {
+    public GUIEditor(MainFrame mf) {
         this.mf = mf;
         initComponents();
         
@@ -97,7 +97,7 @@ public class GUIEditorNew extends javax.swing.JFrame {
     {
         dataTable.clear();
         this.fileName = fileName;
-        System.out.println("Parsing file : "+fileName);
+        
         input = new AbinitInput();
 
         try{
@@ -107,34 +107,8 @@ public class GUIEditorNew extends javax.swing.JFrame {
             mf.printERR("Unable to parse fileName = "+fileName);
             mf.printERR("Error = "+e.getMessage());
         }
-        System.out.println(input);
         
-//        mf.printOUT("Loading JSON File "+fileName);
-//        
-//        BufferedReader br = null;
-//        try {
-//            br = new BufferedReader(new FileReader(fileName));
-//            String s = br.readLine();
-//            jsonArray = new JSONArray(s);
-//            int length = jsonArray.length();
-//            mf.printOUT("length = "+length);
-            String[] data = null;
-//            if(length == 2)
-//            {
-//                mf.printOUT("Only 1 dataset detected !");
-//                data[0] = "1 Dataset";
-//            }
-//            else
-//            {
-//                mf.printOUT((length-1)+" datasets detected !");
-//                for(int idtset = 1; idtset < length; idtset++)
-//                {
-//
-//                    JSONObject json = new JSONArray(s).getJSONObject(idtset);
-//                    data[idtset-1] = "jdtset "+json.get("jdtset");
-//                }
-//            }
-//            
+        String[] data = null;
         if(input.getNdtset() == 1 || input.getNdtset() == 0)
         {
             data = new String[1];
@@ -146,17 +120,7 @@ public class GUIEditorNew extends javax.swing.JFrame {
         }
         
         dtsetList.setListData(data);
-//            
-//        } catch (IOException ex) {
-//            Logger.getLogger(TestJSon.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                br.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(TestJSon.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        
+        
         setVisible(true);
     }
 
@@ -394,7 +358,7 @@ public class GUIEditorNew extends javax.swing.JFrame {
             pw = new PrintWriter(new BufferedWriter(new FileWriter("test-json-output.txt")));
             jsonArray.write(pw);
         } catch (IOException ex) {
-            Logger.getLogger(GUIEditorNew.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GUIEditor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             pw.close();
         }

@@ -126,7 +126,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final ScriptTableModel outModel;
     private String curPath = "."; // to save current Path !
     private ProjectManager projectManager;
-    private GUIEditorNew guiEditorNew;
+    private GUIEditor guiEditor;
     private AbinitInputVars abinitInputVars;
     private Simulation simulation;
     private SubmissionScriptFrame submitScriptFrame;
@@ -276,7 +276,7 @@ public class MainFrame extends javax.swing.JFrame {
         simulation = new Simulation();
         simulation.setRemoteJob(remoteJob);
 
-        guiEditorNew = new GUIEditorNew(this);
+        guiEditor = new GUIEditor(this);
         allInputVars = new AllInputVars(this);
         abinitInputVars = new AbinitInputVars(this, allInputVars);
 
@@ -2810,7 +2810,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_reloadScriptsActionPerformed
 
     private void testAnalyze1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testAnalyze1ActionPerformed
-        guiEditorNew.loadFile(openFileTextField.getText());
+        guiEditor.loadFile(openFileTextField.getText());
     }//GEN-LAST:event_testAnalyze1ActionPerformed
 
     public void sendCommand(String CMD) /*throws CMDException*/ {
