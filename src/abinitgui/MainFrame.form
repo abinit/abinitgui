@@ -261,7 +261,6 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="abipyPathTextField" min="-2" pref="508" max="-2" attributes="1"/>
                           <Component id="whereIsAbinitLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="localAbinitRadioButton" min="-2" max="-2" attributes="0"/>
@@ -287,7 +286,6 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="abinitPathButton" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="abipyPathPathLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -326,11 +324,7 @@
                           <Component id="abinitPathTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="abinitPathButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="abipyPathPathLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="abipyPathTextField" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -656,22 +650,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="abinitPathButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="abipyPathPathLabel">
-              <Properties>
-                <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="pspPathTextField"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Path to abipy (At abinit server !)"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="abipyPathPathLabelMouseClicked"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JTextField" name="abipyPathTextField">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="abipyPathTextFieldActionPerformed"/>
-              </Events>
-            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="inputFilePanel">
@@ -701,7 +679,6 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="testAnalyze1" max="32767" attributes="0"/>
-                          <Component id="testAnalyze" alignment="0" max="32767" attributes="0"/>
                           <Component id="SubmissionEditButton1" alignment="0" max="32767" attributes="0"/>
                           <Component id="pspTableScrollPane" alignment="0" pref="0" max="32767" attributes="1"/>
                           <Component id="sendSIMButton" alignment="0" max="32767" attributes="0"/>
@@ -796,8 +773,6 @@
                               <Component id="sendSIMButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="testAnalyze" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="testAnalyze1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -900,14 +875,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SubmissionEditButton1ActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="testAnalyze">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Test / Analyze file"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="testAnalyzeActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JRadioButton" name="useCreIFRadioButton">
@@ -1033,11 +1000,6 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
-                                  <Component id="editPYDFT" min="-2" pref="141" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -1055,9 +1017,7 @@
                                   <Component id="inputOutputButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="theoryButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                                  <Component id="editPYDFT" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1111,14 +1071,6 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="theoryButtonActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="editPYDFT">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Edit input file"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editPYDFTActionPerformed"/>
-                          </Events>
-                        </Component>
                       </SubComponents>
                     </Container>
                   </SubComponents>
@@ -1156,7 +1108,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel4" pref="290" max="32767" attributes="0"/>
+                              <Component id="jLabel4" pref="302" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1184,7 +1136,7 @@
             </Container>
             <Component class="javax.swing.JButton" name="testAnalyze1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Test / Analyze file (NEW)"/>
+                <Property name="text" type="java.lang.String" value="Test / Analyze file"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="testAnalyze1ActionPerformed"/>
@@ -1265,7 +1217,7 @@
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jScrollPane3" pref="0" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane3" pref="454" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
