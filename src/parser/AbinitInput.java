@@ -144,63 +144,6 @@ public class AbinitInput
         
         return newMap;
     }
-
-    private HashMap<String, ArrayList> tabularizeContent(String content) throws InvalidInputFileException 
-    {
-        HashMap<String,ArrayList> newmap = new HashMap<>();
-        
-        String[] splitted = content.split(" ");
-        
-        String keyword = null;
-        ArrayList<Object> listValue = new ArrayList<>();
-        
-        for(int i = 0; i < splitted.length; i++)
-        {
-            String word = splitted[i].toUpperCase();
-            
-            if(isUnit(word))
-            {
-                double curScaling = listOfUnits.get(word);
-                
-                // Rescale !
-                if(listValue.isEmpty())
-                {
-                    System.out.println("word = "+word+", keyword = "+keyword+", listValue = "+listValue);
-                    throw new InvalidInputFileException("Unit "+word+" without values !");
-                }
-                
-                for(int j = 0; j < listValue.size(); j++)
-                {
-                    listValue.set(j, curScaling*(Double)listValue.get(j));
-                }
-                
-                newmap.put(keyword, listValue);
-                continue;
-            }
-            else if(isNumber(word))
-            {
-                listValue.addAll(getAllNumber(word));
-                continue;
-            }
-            else if((keyword != null && keyword.contains("file")))
-            {
-                listValue.add(word);
-                continue;
-            }
-            else
-            {
-                if(keyword != null)
-                {
-                    newmap.put(keyword, listValue);
-                }
-                keyword = word;
-                listValue = new ArrayList<>();
-                continue;
-            }
-        }
-        
-        return newmap;
-    }
     
     // http://stackoverflow.com/questions/7597485/how-to-check-if-a-string-is-a-number
     public boolean isNumber(String str) {
@@ -213,7 +156,12 @@ public class AbinitInput
         pattern = Pattern.compile("(^-?)(\\d*)(.?)(\\d*)/(-?)(\\d+)(.?)(\\d*$)");
         matcher = pattern.matcher(str);
         boolean isFraction = matcher.matches();
-        return isSimpleNumber || isFraction || isExponential;
+        boolean isSQRT = false;
+        if(str.startsWith("sqrt(") || str.startsWith("SQRT("))
+        {
+            isSQRT = isNumber(str.substring(5,str.length()-1));
+        }
+        return isSimpleNumber || isFraction || isExponential || isSQRT;
     }
     
     private boolean isUnit(String word)
@@ -266,43 +214,6 @@ public class AbinitInput
         }
         
         return sb.toString();
-    }
-
-    private Collection<? extends Object> getAllNumber(String word) throws InvalidInputFileException 
-    {
-        ArrayList<Object> values = new ArrayList<>();
-        word = word.replaceAll("D","E");
-        
-        if(word.contains("/"))
-        {
-            String[] splitted = word.split("/");
-            Double d1 = Double.parseDouble(splitted[0]);
-            Double d2 = Double.parseDouble(splitted[1]);
-            values.add(d1/d2);
-        }
-        else if(word.contains("*"))
-        {
-            if(word.startsWith("*"))
-            {
-                throw new InvalidInputFileException("* starting value is not supported yet");
-            }
-            
-            String[] splitted = word.split("\\*");
-            
-            Integer nb = Integer.parseInt(splitted[0]);
-            Double d = Double.parseDouble(splitted[1]);
-            
-            while(nb-- > 0)
-            {
-                values.add(d);
-            }
-        }
-        else
-        {
-            values.add(Double.parseDouble(word));
-        }
-        
-        return values;
     }
 
     private void buildDtset(HashMap<String, String> mapString) throws InvalidInputFileException {
@@ -774,6 +685,12 @@ public class AbinitInput
                 Double d1 = (Double)readData(splitted[0],type);
                 Double d2 = (Double)readData(splitted[1],type);
                 val = d1/d2;
+            }
+            else if(text.startsWith("sqrt(") || text.startsWith("SQRT("))
+            {
+                String sub= text.substring(5,text.length()-1);
+                Double v = (Double)readData(sub,type);
+                return Math.sqrt(v);
             }
             else
             {
