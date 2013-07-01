@@ -145,15 +145,19 @@ public class AbinitInput
     private boolean isVariable(String word)
     {
         word = word.trim();
-        Pattern pattern = Pattern.compile("(^[a-zA-Z_]+)(\\d*$)");
+        Pattern pattern = Pattern.compile("(^[a-zA-Z_]+)(\\d*)([a-zA-Z_]*)(\\d*$)");
         Matcher matcher = pattern.matcher(word);
         boolean isText = matcher.matches();
+        if(word.equals("prt1dm"))
+        {
+            System.out.println("isText = "+isText);
+        }
         pattern = Pattern.compile("");
         matcher = pattern.matcher(word);
         boolean isTextWithPlus = word.contains("+");
         boolean isTextWithPoint = word.contains(":");
         boolean isTextWithInter = word.contains("?");
-        String curWord = word.replaceAll("\\d", "").replaceAll("\\+","").replaceAll(":", "").replaceAll("\\?","");
+        String curWord = word.replaceAll("\\+","").replaceAll(":", "").replaceAll("\\?","").replaceFirst("(\\d*$)", "");
         boolean isVar = allInputs.getListKeys().contains(curWord);
         return (isText || isTextWithPoint || isTextWithPlus || isTextWithInter) && isVar ;
     }
