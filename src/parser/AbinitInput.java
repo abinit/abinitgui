@@ -35,8 +35,8 @@ public class AbinitInput
     private HashMap<String,ArrayList> map;
     private HashMap<String,String> mapString;
     private HashMap<String,Double> listOfUnits = null;
-    private final String[] units = {"HA","HARTREE","RY","RYDBERG","BOHR","AU", "T","TE", "EV", "ANGSTROM" };
-    private final double[] scaling = {1.0,1.0,0.5,0.5,1.0,1.0,tesla_to_au,tesla_to_au,ev_to_Ha,angstrom_to_bohr};
+    private final String[] units = {"HA","HARTREE","RY","RYDBERG","BOHR","AU", "T","TE", "EV", "ANGSTROM", "ANGSTR", "ANGSTROMS" };
+    private final double[] scaling = {1.0,1.0,0.5,0.5,1.0,1.0,tesla_to_au,tesla_to_au,ev_to_Ha,angstrom_to_bohr,angstrom_to_bohr,angstrom_to_bohr};
     
     private HashMap<String,HashMap<String,Object>> allDatasets;
     private int ndtset = 0;
@@ -133,6 +133,10 @@ public class AbinitInput
         if(str.startsWith("sqrt(") || str.startsWith("SQRT("))
         {
             isSQRT = isNumber(str.substring(5,str.length()-1));
+        }
+        else if(str.startsWith("-sqrt(") || str.startsWith("-SQRT("))
+        {
+            isSQRT = isNumber(str.substring(6,str.length()-1));
         }
         return isSimpleNumber || isFraction || isExponential || isSQRT;
     }
@@ -622,13 +626,35 @@ public class AbinitInput
         {
             String var = (String)dim;
             try{
-                nb = (int)readData(mapString.get(var),"integer"); // Temporary
+                String data = mapString.get(var);
+                if(data == null)
+                {
+                    // default value ?
+                    switch(var)
+                    {
+                        // Since we have not yet decided how to deal with 
+                        // the default value, ntypat and natom are hard-coded
+                        // to make the parser with abinit test input files
+                        case "ntypat":
+                            nb = 1;
+                            break;
+                        case "natom":
+                            nb = 1;
+                            break;
+                        default:
+                            throw new Exception(var);
+                    }
+                }
+                else
+                {
+                    nb = (int)readData(data,"integer"); // Temporary
+                }
             }
             catch(Exception e)
             {
                 if(mapString.get(var) == null)
                 {
-                    throw new InvalidInputFileException("Default values for dimensions are not yet supported by the parser... sorry for inconvenience");
+                    throw new InvalidInputFileException("Default values for "+var+" for dimensions are not yet supported by the parser... sorry for inconvenience");
                 }
                 else
                 {
@@ -668,6 +694,12 @@ public class AbinitInput
                 String sub= text.substring(5,text.length()-1);
                 Double v = (Double)readData(sub,type);
                 return Math.sqrt(v);
+            }
+            else if(text.startsWith("-sqrt(") || text.startsWith("-SQRT("))
+            {
+                String sub= text.substring(6,text.length()-1);
+                Double v = (Double)readData(sub,type);
+                return -Math.sqrt(v);
             }
             else
             {

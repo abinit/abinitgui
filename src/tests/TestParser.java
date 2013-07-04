@@ -129,12 +129,12 @@ public class TestParser {
     public static void testOneFile(String name, PrintWriter pw)
     {
         try {
-            pw.print("Reading file : "+name+" ...");
+            //pw.print("Reading file : "+name+" ...");
 
             new AbinitInput().readFromFile(name);
-            pw.println("OK !");
+            //pw.println("OK !");
         } catch (Exception ex) {
-            pw.println("Failed (Msg = "+ex.getMessage()+")");
+            pw.println("Parsing file : "+name+" : Failed (Msg = "+ex.getMessage()+")");
             //Logger.getLogger(TestParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
