@@ -2343,7 +2343,7 @@
         "category": " ", 
         "default": "1 ", 
         "definition": "Number of ATOMs ", 
-        "dimensions": [1], 
+        "dimensions": [], 
         "section": "varbas", 
         "text": "<p>\nGives the total number of atoms in the unit cell.\nDefault is 1 but you will obviously want to input this\nvalue explicitly.\n<br>Note that <b>natom</b> refers to all atoms in the unit cell, not\nonly to the irreducible set of atoms in the unit cell (using symmetry operations,\nthis set allows to recover all atoms). If you want\nto specify only the irreducible set of atoms, use the\nsymmetriser, see the input variable <a href=\"vargeo.html#natrd\">natrd</a>.", 
         "vartype": "integer parameter  "
@@ -3036,7 +3036,7 @@
         "category": "<a href=\"../users/abinit_help.html#no_multi\">NO MULTI</a> ", 
         "default": "1.", 
         "definition": "Number of TYPEs of atoms ", 
-        "dimensions": [1], 
+        "dimensions": [], 
         "section": "varbas", 
         "text": "<p>\nGives the number of types of atoms.  E.g. for\na homopolar system (e.g. pure Si) <b>ntypat</b> is 1, while for BaTiO3,\n<b>ntypat</b> is 3.\n<br>Except when alchemical mixing of pseudopotentials is used, the number\nof types of atoms will be equal to the number of pseudopotentials\n<a href=\"vargs.html#npsp\">npsp</a> to be provided by the user.\nThus, the code will try to read the same number of pseudopotential files,\nwhose names should have been given in the \"files\" file.\n<br>The first pseudopotential will be assigned the type number 1, and so\non ...", 
         "vartype": "integer parameter "
