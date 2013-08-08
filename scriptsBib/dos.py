@@ -6,7 +6,7 @@ import argparse;
 
 def dos(inputFile,outputFile,title,method,step,width,show):
 
-    ebands = abipy.ebands.ElectronBands.from_ncfile(inputFile)
+    ebands = abipy.ebands.ElectronBands.from_file(inputFile)
 
     dos = ebands.get_dos(method=method, step=float(step), width=float(width));
 

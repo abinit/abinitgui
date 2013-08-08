@@ -6,8 +6,8 @@ import argparse;
 
 def bsanddos(inputDos,inputBand,outputDos,outputBand,outputBoth,titleBS,titleDOS,show):
 
-    ebands = abipy.ebands.ElectronBands.from_ncfile(inputBand)
-    ebandsDos = abipy.ebands.ElectronBands.from_ncfile(inputDos)
+    ebands = abipy.ebands.ElectronBands.from_file(inputBand)
+    ebandsDos = abipy.ebands.ElectronBands.from_file(inputDos)
 
     dos = ebandsDos.get_dos();
 
