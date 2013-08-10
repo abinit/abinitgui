@@ -38,10 +38,10 @@ public class AbinitInput
     private final String[] units = {"HA","HARTREE","RY","RYDBERG","BOHR","AU", "T","TE", "EV", "ANGSTROM", "ANGSTR", "ANGSTROMS" };
     private final double[] scaling = {1.0,1.0,0.5,0.5,1.0,1.0,tesla_to_au,tesla_to_au,ev_to_Ha,angstrom_to_bohr,angstrom_to_bohr,angstrom_to_bohr};
     
-    private HashMap<String,HashMap<String,Object>> allDatasets;
+    private HashMap<Integer,HashMap<String,Object>> allDatasets;
     private int ndtset = 0;
     private int udtset[] = new int[]{0,0};
-    private ArrayList<String> jdtsets;
+    private ArrayList<Integer> jdtsets;
     private boolean usedtsets = false;
     private boolean useudtset = false;
     private boolean usejdtset = false;
@@ -152,10 +152,6 @@ public class AbinitInput
         Pattern pattern = Pattern.compile("(^[a-zA-Z_]+)(\\d*)([a-zA-Z_]*)(\\d*$)");
         Matcher matcher = pattern.matcher(word);
         boolean isText = matcher.matches();
-        if(word.equals("prt1dm"))
-        {
-            System.out.println("isText = "+isText);
-        }
         pattern = Pattern.compile("");
         matcher = pattern.matcher(word);
         boolean isTextWithPlus = word.contains("+");
@@ -228,6 +224,14 @@ public class AbinitInput
                 {
                     throw new InvalidInputFileException("Ndtset should be the product of udtsets");
                 }
+                if(getUdtset()[0] > 999 || getUdtset()[0] < 1)
+                {
+                    throw new InvalidInputFileException("Udtset(1) should be between 1 and 999");
+                }
+                if(getUdtset()[1] > 9 || getUdtset()[1] < 1)
+                {
+                    throw new InvalidInputFileException("Udtset(2) should be between 1 and 9");
+                }
             }
             usedtsets = true;
         }
@@ -242,7 +246,7 @@ public class AbinitInput
                 {
                     for(int j = 1; j <= getUdtset()[1]; j++)
                     {
-                        getJdtsets().add(""+i+""+j);
+                        getJdtsets().add((i*10+j));
                     }
                 }
                 usejdtset = true;
@@ -251,7 +255,7 @@ public class AbinitInput
             {
                 for(int i = 1; i <= getNdtset(); i++)
                 {
-                    getJdtsets().add(""+i);
+                    getJdtsets().add(i);
                 }
                 usejdtset = true;
             }
@@ -272,7 +276,14 @@ public class AbinitInput
                 String[] split = jdtset_S.split(" ");
                 for(String s : split)
                 {
-                    getJdtsets().add(s);
+                    try
+                    {
+                        getJdtsets().add(new Integer(s));
+                    }
+                    catch(NumberFormatException e)
+                    {
+                        throw new InvalidInputFileException("Error in the syntax of jdtset");
+                    }
                 }
                 usejdtset = true;
             }
@@ -284,7 +295,7 @@ public class AbinitInput
         
         if(isUsejdtset())
         {
-            for(String idtset : getJdtsets())
+            for(int idtset : getJdtsets())
             {
                 HashMap<String,Object> values = readDataSet(mapString,idtset);
                 
@@ -293,25 +304,25 @@ public class AbinitInput
         }
         else
         {
-            HashMap<String,Object> values = readDataSet(mapString,"0");
+            HashMap<String,Object> values = readDataSet(mapString,0);
             
-            getAllDatasets().put("0", values);
+            getAllDatasets().put(0, values);
         }
         
         //System.out.println(getAllDatasets());
         
     }
 
-    private HashMap<String, Object> readDataSet(HashMap<String, String> mapString, String idtset) throws InvalidInputFileException {
+    private HashMap<String, Object> readDataSet(HashMap<String, String> mapString, int idtset) throws InvalidInputFileException {
         
         HashMap<String,Object> curMap = new HashMap<>();
         
         Iterator<String> iter = allInputs.getListKeys().iterator();
         
-        if(useudtset)
-        {
-            throw new UnsupportedOperationException("Udtset not yet supported by the parser ... Sorry for inconvenience");
-        }
+//        if(useudtset)
+//        {
+//            throw new UnsupportedOperationException("Udtset not yet supported by the parser ... Sorry for inconvenience");
+//        }
         
         while(iter.hasNext())
         {
@@ -356,7 +367,7 @@ public class AbinitInput
         return curMap;
     }
     
-    public Object getValue(String name, String text, String type, String dimensions, String jdtset) throws InvalidInputFileException
+    public Object getValue(String name, String text, String type, String dimensions, int jdtset) throws InvalidInputFileException
     {
         
         //System.out.println("Reading variable "+name+" with text = "+text+", type = "+type+", dimensions = "+dimensions);
@@ -368,7 +379,7 @@ public class AbinitInput
             String startVal = text.split(";")[0];
             String incVal = text.split(";")[1];
             
-            int idtset = Integer.parseInt(jdtset)-1;
+            int idtset = jdtset-1;
             
             Object o1 = getValue(name,startVal,type,dimensions,jdtset);
             Object o2 = getValue(name,incVal,type,dimensions,jdtset);
@@ -718,7 +729,7 @@ public class AbinitInput
     /**
      * @return the allDatasets
      */
-    public HashMap<String,HashMap<String,Object>> getAllDatasets() {
+    public HashMap<Integer,HashMap<String,Object>> getAllDatasets() {
         return allDatasets;
     }
 
@@ -739,7 +750,7 @@ public class AbinitInput
     /**
      * @return the jdtsets
      */
-    public ArrayList<String> getJdtsets() {
+    public ArrayList<Integer> getJdtsets() {
         return jdtsets;
     }
 
