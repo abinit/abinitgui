@@ -422,7 +422,7 @@ public class AbinitInput
         
         if(text.startsWith("="))
         {
-            String splitted[] = text.split("|");
+            String splitted[] = text.split("\\|");
             
             String cmd = splitted[0];
             String startVal = splitted[1];

@@ -108,7 +108,7 @@ public class TestParser {
             String line;
             while((line = br.readLine())!=null)
             {
-                if(line.contains("abinit"))
+                if(line.contains("executable") && line.contains("abinit"))
                 {
                     test = true;
                 }
@@ -134,6 +134,7 @@ public class TestParser {
             new AbinitInput().readFromFile(name);
             //pw.println("OK !");
         } catch (Exception ex) {
+            ex.printStackTrace();
             pw.println("Parsing file : "+name+" : Failed (Msg = "+ex.getMessage()+")");
             //Logger.getLogger(TestParser.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -143,9 +144,9 @@ public class TestParser {
     
     public static void main(String[] args)
     {
-        testAllInputsInPath("/home/yannick/abinit/7.5.0-private","test-all.txt");
+        testAllInputsInPath("/home/yannick/abinit/7.5.1-private","test-all.txt");
         
-        testOneInputFile("/home/yannick/abinit/7.5.0-private/tests/v1/Input/t41.in","test-v1-41.txt");
+        //testOneInputFile("/home/yannick/abinit/7.5.1-private/tests/v5/Input/t75.in","test-v5-75.txt");
     }
     
 }
