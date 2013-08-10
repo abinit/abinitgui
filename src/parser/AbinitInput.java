@@ -333,19 +333,63 @@ public class AbinitInput
             String value = mapString.get(name);
             if(isUsejdtset())
             {
-                // Look for : and + possibilities !
-                String startVal = mapString.get(name+":");
-                if(startVal != null)
+                // Look for : and + and * possibilities !
+                String cscolon = mapString.get(name+":");
+                String csplus = mapString.get(name+"+");
+                String cstimes = mapString.get(name+"*");
+                
+                String cs1colon = mapString.get(name+"?:");
+                String cs1plus = mapString.get(name+"?+");
+                String cs1times = mapString.get(name+"?*");
+                
+                String cs2colon = mapString.get(name+":?");
+                String cs2plus = mapString.get(name+"+?");
+                String cs2times = mapString.get(name+"*?");
+                
+                
+                if(cscolon != null)
                 {
-                    String incVal = mapString.get(name+"+");
-                    if(incVal  == null)
+                    if(csplus != null)
                     {
-                        throw new InvalidInputFileException("Check the increment for variable : "+name);
+                        value = "=0+|"+cscolon+"|"+csplus;
+                    }
+                    else if(csplus != null)
+                    {
+                        value = "=0*|"+cscolon+"|"+cstimes;
                     }
                     else
                     {
-                        // Compute the value ...
-                        value = startVal+";"+incVal;
+                        throw new InvalidInputFileException("Check the increment for variable : "+name);
+                    }
+                }
+                else if(cs1colon != null)
+                {
+                    if(cs1plus != null)
+                    {
+                        value = "=1+|"+cs1colon+"|"+cs1plus;
+                    }
+                    else if(cs1plus != null)
+                    {
+                        value = "=1*|"+cs1colon+"|"+cs1times;
+                    }
+                    else
+                    {
+                        throw new InvalidInputFileException("Check the increment for variable : "+name);
+                    }
+                }
+                else if(cs2colon != null)
+                {
+                    if(cs2plus != null)
+                    {
+                        value = "=2+|"+cs2colon+"|"+cs2plus;
+                    }
+                    else if(cs2plus != null)
+                    {
+                        value = "=2*|"+cs2colon+"|"+cs2times;
+                    }
+                    else
+                    {
+                        throw new InvalidInputFileException("Check the increment for variable : "+name);
                     }
                 }
                 
@@ -360,274 +404,136 @@ public class AbinitInput
                     
             if(value != null)
             {
-                curMap.put(name,getValue(name,value,var.vartype, var.dimensions,idtset));
+                ArrayList<Object> valueArray = getValue(name,value,var.vartype, var.dimensions,idtset);
+                Object o = getObjectFromArray(valueArray,var.vartype,var.dimensions);
+                curMap.put(name,valueArray);
             }
         }
         
         return curMap;
     }
     
-    public Object getValue(String name, String text, String type, String dimensions, int jdtset) throws InvalidInputFileException
+    public ArrayList<Object> getValue(String name, String text, String type, String dimensions, int jdtset) throws InvalidInputFileException
     {
         
         //System.out.println("Reading variable "+name+" with text = "+text+", type = "+type+", dimensions = "+dimensions);
         
-        JSONArray dims = new JSONArray(dimensions);
+        ArrayList<Object> listValues = new ArrayList<>();
         
-        if(text.contains(";"))
+        if(text.startsWith("="))
         {
-            String startVal = text.split(";")[0];
-            String incVal = text.split(";")[1];
+            String splitted[] = text.split("|");
             
-            int idtset = jdtset-1;
+            String cmd = splitted[0];
+            String startVal = splitted[1];
+            String incVal = splitted[2];
             
-            Object o1 = getValue(name,startVal,type,dimensions,jdtset);
-            Object o2 = getValue(name,incVal,type,dimensions,jdtset);
+            int unities = (jdtset%10);
+            int dozens = (jdtset/10);
+            int number = 0;
             
-            if(o1.getClass() != o2.getClass())
+            switch(cmd.charAt(1))
             {
-                throw new InvalidInputFileException("The increment and the starting value should have the same format");
+                case '0':
+                    number = (jdtset-1);
+                    break;
+                case '1':
+                    number = (unities-1);
+                    break;
+                case '2':
+                    number = (dozens-1);
+                    break;
             }
             
-            if(dims.length() == 0 || dims.length() == 1)
+            ArrayList<Object> o1 = getValue(name,startVal,type,dimensions,jdtset);
+            ArrayList<Object> o2 = getValue(name,incVal,type,dimensions,jdtset);
+            
+            if(o1.size() != o2.size())
             {
-                ArrayList<Object> listValues = new ArrayList<>();
+                throw new InvalidInputFileException("The increment and the starting value should have the same length");
+            }
                 
-                if(o1 instanceof Number)
-                {
-                    if(type.contains("integer"))
-                    {
-                        return (int)o1+idtset*(int)o2;
-                    }
-                    else if(type.contains("real"))
-                    {
-                        return (double)o1+idtset*(double)o2;
-                    }
-                    else
-                    {
-                        throw new InvalidInputFileException("Unknown type");
-                    }
-                }
-                else if(o1 instanceof Number[])
-                {
-                    if(type.contains("integer"))
-                    {
-                        Integer[] tab1 = (Integer[])o1;
-                        Integer[] tab2 = (Integer[])o2;
-                        
-                        for(int i = 0; i < tab1.length; i++)
-                        {
-                            listValues.add(tab1[i]+idtset*tab2[i]);
-                        }
-                        
-                        return listValues.toArray(new Integer[0]);
-                    }
-                    else if(type.contains("real"))
-                    {
-                        
-                        Double[] tab1 = (Double[])o1;
-                        Double[] tab2 = (Double[])o2;
-                        
-                        for(int i = 0; i < tab1.length; i++)
-                        {
-                            listValues.add(tab1[i]+idtset*tab2[i]);
-                        }
-                       
-                        return listValues.toArray(new Double[0]);
-                    }
-                    
-                }
-            }
-        }
-        String[] allText = text.split(" ");
-     
-        String unit = allText[allText.length-1];
-        double scalingFactor = 1.0d;
-        int nbValues = allText.length;
-        if(isUnit(unit))
-        {
-            scalingFactor = listOfUnits.get(unit.toUpperCase());
-            nbValues--;
-        }
-                
-        if(dims.length() == 0 || dims.length() == 1)
-        {
-            int length = 0;
-            if(dims.length() == 0)
+            for(int i = 0; i < o1.size(); i++)
             {
-                 length = -1;
-            }
-            else
-            {
-                length = getDim(dims.get(0));
-            }
-            
-            ArrayList<Object> listValues = new ArrayList<>();
-            for(int i = 0; i < nbValues; i++)
-            {
-                String curValue = allText[i];
-
-                if(curValue.contains("*"))
-                {
-                    if(curValue.startsWith("*"))
-                    {
-                        if(nbValues > 1)
-                        {
-                            throw new InvalidInputFileException("Only possible with 1 value");
-                        }
-                        for(int j = 0; j < nbValues; j++)
-                        {
-                            listValues.add(readData(curValue.substring(1), type));
-                        }
-                    }
-                    else
-                    {
-                        // Will split
-                        //System.out.println("Will split value : "+curValue);
-                        int nbTimes = Integer.parseInt(curValue.split("\\*")[0]);
-                        for(int j = 0; j < nbTimes; j++)
-                        {
-                            listValues.add(readData(curValue.split("\\*")[1],type));
-                        }
-                    }
-                }
-                else
-                {
-                    listValues.add(readData(curValue,type));
-                }
-            }
-
-            if(length == 0)
-            {
-                if(listValues.size() != 1)
-                {
-                    throw new InvalidInputFileException("Field should contain only one value");
-                }
                 if(type.contains("integer"))
                 {
-                    return (int)(listValues.get(0));
+                    int i1 = (int)o1.get(i);
+                    int i2 = (int)o2.get(i);
+
+                    if(cmd.charAt(2) == '+')
+                    {
+                        listValues.add(i1+i2*number);
+                    }
+                    else
+                    {
+                        listValues.add((int)(i1*(Math.pow(i2,number))));
+                    }
                 }
                 else if(type.contains("real"))
                 {
-                    return (double)(listValues.get(0));
-                }
-                else
-                {
-                    throw new InvalidInputFileException("Unknown type of variable");
-                }
-            }
-            else if(length == -1)
-            {
-                if(listValues.size() == 1)
-                {
-                    if(type.contains("integer"))
-                    {
-                        return (int)(listValues.get(0));
-                    }
-                    else if(type.contains("real"))
-                    {
-                        return (double)(listValues.get(0));
-                    }
-                }
-                else
-                {
-                    if(type.contains("integer"))
-                    {
-                        return listValues.toArray(new Integer[0]);
-                    }
-                    else if(type.contains("real"))
-                    {
-                        return listValues.toArray(new Double[0]);
-                    }
-                }
-            }
-            else
-            {
-                if(listValues.size() != length)
-                {
-                    throw new InvalidInputFileException("For var = "+name+", Mismatch between dimensions "+(listValues.size())+"!="+length);
-                }
-                if(type.contains("integer"))
-                {
-                    return listValues.toArray(new Integer[0]);
-                }
-                else if(type.contains("real"))
-                {
-                    return listValues.toArray(new Double[0]);
-                }
-            }
-        }
-        else if(dims.length() == 2)
-        {
-            int length1 = getDim(dims.get(0));
-            int length2 = getDim(dims.get(1));
-            
-            Number[][] tab = null;
-            if(type.contains("integer"))
-            {
-                tab = new Integer[length1][length2];
-            }
-            else if(type.contains("real"))
-            {
-                tab = new Double[length1][length2];
-            }
-            
-            
-            ArrayList<Object> listValues = new ArrayList<>();
-            for(int i = 0; i < nbValues; i++)
-            {
-                String curValue = allText[i];
+                    double i1 = (double)o1.get(i);
+                    double i2 = (double)o2.get(i);
 
-                if(curValue.contains("*"))
-                {
-                    if(curValue.startsWith("*"))
+                    if(cmd.charAt(2) == '+')
                     {
-                        if(nbValues > 1)
-                        {
-                            throw new InvalidInputFileException("Only possible with 1 value");
-                        }
-                        for(int j = 0; j < nbValues; j++)
-                        {
-                            listValues.add(readData(curValue.substring(1), type));
-                        }
+                        listValues.add(i1+i2*number);
                     }
                     else
                     {
-                        // Will split
-                        //System.out.println("Will split value : "+curValue);
-                        int nbTimes = Integer.parseInt(curValue.split("\\*")[0]);
-                        for(int j = 0; j < nbTimes; j++)
-                        {
-                            listValues.add(readData(curValue.split("\\*")[1],type));
-                        }
+                        listValues.add((i1*(Math.pow(i2,number))));
                     }
                 }
-                else
-                {
-                    listValues.add(readData(curValue,type));
-                }
             }
-            
-            // TODO : Should check the order of reading
-            int index = 0;
-            for(int i = 0; i < length1; i++)
-            {
-                for(int k = 0; k < length2; k++)
-                {
-                    tab[i][k] = (Number)listValues.get(index);
-                    index++;
-                }
-            }
-            return tab;
         }
         else
         {
-            throw new InvalidInputFileException("Input with more than 2 dimensions");
+            String[] allText = text.split(" ");
+
+            String unit = allText[allText.length-1];
+            double scalingFactor = 1.0d;
+            int nbValues = allText.length;
+            if(isUnit(unit))
+            {
+                scalingFactor = listOfUnits.get(unit.toUpperCase());
+                nbValues--;
+            }
+
+            for(int i = 0; i < nbValues; i++)
+            {
+                String curValue = allText[i];
+
+                if(curValue.contains("*"))
+                {
+                    if(curValue.startsWith("*"))
+                    {
+                        if(nbValues > 1)
+                        {
+                            throw new InvalidInputFileException("Only possible with 1 value");
+                        }
+                        for(int j = 0; j < nbValues; j++)
+                        {
+                            listValues.add(readData(curValue.substring(1), type));
+                        }
+                    }
+                    else
+                    {
+                        // Will split
+                        //System.out.println("Will split value : "+curValue);
+                        int nbTimes = Integer.parseInt(curValue.split("\\*")[0]);
+                        for(int j = 0; j < nbTimes; j++)
+                        {
+                            listValues.add(readData(curValue.split("\\*")[1],type));
+                        }
+                    }
+                }
+                else
+                {
+                    listValues.add(readData(curValue,type));
+                }
+            }
         }
-        // Push all values in a queue
-        
-        
-        return null;
+
+        return listValues;
     }
     
     public int getDim(Object dim) throws InvalidInputFileException
@@ -773,6 +679,91 @@ public class AbinitInput
      */
     public boolean isUsejdtset() {
         return usejdtset;
+    }
+
+    private Object getObjectFromArray(ArrayList<Object> listValues, String type, String dimensions) 
+            throws InvalidInputFileException 
+    {
+        
+        JSONArray dims = new JSONArray(dimensions);
+        
+        if(dims.length() == 0)
+        {
+            // We don't know the size of table
+            if(listValues.size() == 1)
+            {
+                if(type.contains("integer"))
+                {
+                    return (int)(listValues.get(0));
+                }
+                else if(type.contains("real"))
+                {
+                    return (double)(listValues.get(0));
+                }
+            }
+            else
+            {
+                if(type.contains("integer"))
+                {
+                    return listValues.toArray(new Integer[0]);
+                }
+                else if(type.contains("real"))
+                {
+                    return listValues.toArray(new Double[0]);
+                }
+            }
+            
+        }
+        else if(dims.length() == 1)
+        {
+            int length = getDim(dims.get(0));
+            
+            if(length != listValues.size())
+            {
+                throw new InvalidInputFileException("Mismatch between doc dim ("+length+") and input file ("+listValues.size()+")");
+            }
+            if(type.contains("integer"))
+            {
+                return listValues.toArray(new Integer[0]);
+            }
+            else if(type.contains("real"))
+            {
+                return listValues.toArray(new Double[0]);
+            }
+        }
+        else if(dims.length() == 2)
+        {
+            int length1 = getDim(dims.get(0));
+            int length2 = getDim(dims.get(1));
+            
+            if(length1*length2 != listValues.size())
+            {
+                throw new InvalidInputFileException("Mismatch between doc dim ("+length1+"x"+length2+") and input file ("+listValues.size()+")");
+            }
+            
+            Number[][] tab = null;
+            if(type.contains("integer"))
+            {
+                tab = new Integer[length1][length2];
+            }
+            else if(type.contains("real"))
+            {
+                tab = new Double[length1][length2];
+            }
+            
+            int index = 0;
+            for(int i = 0; i < length1; i++)
+            {
+                for(int k = 0; k < length2; k++)
+                {
+                    tab[i][k] = (Number)listValues.get(index);
+                    index++;
+                }
+            }
+            return tab;
+        }
+        
+        return null;
     }
 
     private static class InvalidInputFileException extends IOException {
