@@ -405,7 +405,7 @@ public class AbinitInput
             if(value != null)
             {
                 ArrayList<Object> valueArray = getValue(name,value,var.vartype, var.dimensions,idtset);
-                Object o = getObjectFromArray(valueArray,var.vartype,var.dimensions);
+                Object o = getObjectFromArray(valueArray,name,var.vartype,var.dimensions);
                 curMap.put(name,valueArray);
             }
         }
@@ -506,10 +506,6 @@ public class AbinitInput
                 {
                     if(curValue.startsWith("*"))
                     {
-                        if(nbValues > 1)
-                        {
-                            throw new InvalidInputFileException("Only possible with 1 value");
-                        }
                         for(int j = 0; j < nbValues; j++)
                         {
                             listValues.add(readData(curValue.substring(1), type));
@@ -587,13 +583,22 @@ public class AbinitInput
         return nb;
     }
     
-    public Number readData(String text, String type)
+    public Number readData(String text, String type) throws InvalidInputFileException
     {
         Double val = null;
         
         if(type.contains("integer"))
         {
-            return Integer.parseInt(text);
+            int i = -1;
+            try{
+                
+                i = Integer.parseInt(text);
+            }
+            catch(NumberFormatException ex)
+            {
+                throw new InvalidInputFileException("Error parsing text : "+text+" [should be integer]");
+            }
+            return i;
         }
         else if(type.contains("real"))
         {
@@ -621,7 +626,14 @@ public class AbinitInput
             else
             {
                // System.out.println("ParseDouble : "+text);
-                val = Double.parseDouble(text);
+                try
+                {
+                    val = Double.parseDouble(text);
+                }
+                catch(NumberFormatException ex)
+                {
+                    throw new InvalidInputFileException("Error parsing text : "+text+" [should be real]");
+                }
             }
 
             return val;
@@ -681,7 +693,7 @@ public class AbinitInput
         return usejdtset;
     }
 
-    private Object getObjectFromArray(ArrayList<Object> listValues, String type, String dimensions) 
+    private Object getObjectFromArray(ArrayList<Object> listValues, String name, String type, String dimensions) 
             throws InvalidInputFileException 
     {
         
@@ -720,7 +732,7 @@ public class AbinitInput
             
             if(length != listValues.size())
             {
-                throw new InvalidInputFileException("Mismatch between doc dim ("+length+") and input file ("+listValues.size()+")");
+                throw new InvalidInputFileException("Mismatch for var = "+name+" between doc dim ("+length+") and input file ("+listValues.size()+")");
             }
             if(type.contains("integer"))
             {
