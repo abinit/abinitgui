@@ -35,8 +35,8 @@ public class AbinitInput
     private HashMap<String,ArrayList> map;
     private HashMap<String,String> mapString;
     private HashMap<String,Double> listOfUnits = null;
-    private final String[] units = {"HA","HARTREE","RY","RYDBERG","BOHR","AU", "T","TE", "EV", "ANGSTROM", "ANGSTR", "ANGSTROMS" };
-    private final double[] scaling = {1.0,1.0,0.5,0.5,1.0,1.0,tesla_to_au,tesla_to_au,ev_to_Ha,angstrom_to_bohr,angstrom_to_bohr,angstrom_to_bohr};
+    private final String[] units = {"HA","HARTREE","RY","RYDBERG","BOHR","AU", "T","TE", "EV", "ANGSTROM", "ANGSTR", "ANGSTROMS", "K" };
+    private final double[] scaling = {1.0,1.0,0.5,0.5,1.0,1.0,tesla_to_au,tesla_to_au,ev_to_Ha,angstrom_to_bohr,angstrom_to_bohr,angstrom_to_bohr,1.0};
     
     private HashMap<Integer,HashMap<String,Object>> allDatasets;
     private int ndtset = 0;
@@ -502,10 +502,16 @@ public class AbinitInput
             String unit = allText[allText.length-1];
             double scalingFactor = 1.0d;
             int nbValues = allText.length;
+            boolean isUnit = false;
             if(isUnit(unit))
             {
+                if(type.contains("integer"))
+                {
+                    throw new InvalidInputFileException("Units can only be provided for real numbers !");
+                }
                 scalingFactor = listOfUnits.get(unit.toUpperCase());
                 nbValues--;
+                isUnit = true;
             }
 
             for(int i = 0; i < nbValues; i++)
@@ -518,7 +524,14 @@ public class AbinitInput
                     {
                         for(int j = 0; j < nbValues; j++)
                         {
-                            listValues.add(readData(curValue.substring(1), type));
+                            if(isUnit)
+                            {
+                                listValues.add(scalingFactor*(Double)readData(curValue.substring(1), type));
+                            }
+                            else
+                            {
+                                listValues.add(readData(curValue.substring(1), type));
+                            }
                         }
                     }
                     else
@@ -528,13 +541,27 @@ public class AbinitInput
                         int nbTimes = Integer.parseInt(curValue.split("\\*")[0]);
                         for(int j = 0; j < nbTimes; j++)
                         {
-                            listValues.add(readData(curValue.split("\\*")[1],type));
+                            if(isUnit)
+                            {
+                                listValues.add(scalingFactor*(Double)readData(curValue.split("\\*")[1],type));
+                            }
+                            else
+                            {
+                                listValues.add(readData(curValue.split("\\*")[1],type));
+                            }
                         }
                     }
                 }
                 else
                 {
-                    listValues.add(readData(curValue,type));
+                    if(isUnit)
+                    {
+                        listValues.add(scalingFactor*(Double)readData(curValue,type));
+                    }
+                    else
+                    {
+                        listValues.add(readData(curValue,type));
+                    }
                 }
             }
         }

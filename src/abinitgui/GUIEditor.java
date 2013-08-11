@@ -290,13 +290,13 @@ public class GUIEditor extends javax.swing.JFrame {
             }
             else
             {
-                values = input.getAllDatasets().get("0");
+                values = input.getAllDatasets().get(0);
             }
             
             geom.loadData(values);
 
             if (geom == null) {
-                mf.printERR("Geometry analyzer does not support multi-dataset files !");
+                mf.printERR("Unable to load data from the parser !");
             } else {
                 geom.fillData();
 
