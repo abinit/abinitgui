@@ -406,7 +406,7 @@ public class AbinitInput
             {
                 ArrayList<Object> valueArray = getValue(name,value,var.vartype, var.dimensions,idtset);
                 Object o = getObjectFromArray(valueArray,name,var.vartype,var.dimensions);
-                curMap.put(name,valueArray);
+                curMap.put(name,o);
             }
         }
         
