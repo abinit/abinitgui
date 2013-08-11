@@ -230,7 +230,6 @@ public class AbinitGeometry {
 
     public void loadData(HashMap<String,Object> map)
     {
-        System.out.println("loadData with map = "+map);
         Iterator<String> iter = map.keySet().iterator();
         
         Object o = map.get("natom");
