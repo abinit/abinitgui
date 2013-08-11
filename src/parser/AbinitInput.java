@@ -318,17 +318,14 @@ public class AbinitInput
         HashMap<String,Object> curMap = new HashMap<>();
         
         Iterator<String> iter = allInputs.getListKeys().iterator();
-        
-//        if(useudtset)
-//        {
-//            throw new UnsupportedOperationException("Udtset not yet supported by the parser ... Sorry for inconvenience");
-//        }
+
+        int units = idtset%10;
+        int dozens = idtset/10;
         
         while(iter.hasNext())
         {
             String name = iter.next();
-//            System.out.println("Name = "+name);
-//            System.out.println("MapString = "+mapString);
+            
             InputVar var = allInputs.get(name);
             String value = mapString.get(name);
             if(isUsejdtset())
@@ -392,14 +389,27 @@ public class AbinitInput
                         throw new InvalidInputFileException("Check the increment for variable : "+name);
                     }
                 }
-                
-                
-                String curVal = mapString.get(name+idtset);
+                String curVal = mapString.get(name+"?"+units);
                 if(curVal != null)
                 {
                     // Parse the string to get the value
                     value = curVal;
                 }
+                
+                curVal = mapString.get(name+dozens+"?");
+                if(curVal != null)
+                {
+                    // Parse the string to get the value
+                    value = curVal;
+                }
+                
+                curVal = mapString.get(name+idtset);
+                if(curVal != null)
+                {
+                    // Parse the string to get the value
+                    value = curVal;
+                }
+                
             }
                     
             if(value != null)
