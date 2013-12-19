@@ -108,10 +108,10 @@ public class MainFrame extends javax.swing.JFrame {
     private String ParaAbinit = "abinit";
     public String CharSet = "UTF-8";
     private static boolean autoTest;
-    public static String Version = "0.4";
+    public static String Version = "0.5";
     public static String SubVersion = "0.1";
-    public static String VerMonth = "Jun";
-    public static String VerYear = "2013";
+    public static String VerMonth = "Janv";
+    public static String VerYear = "2014";
     private String outputFile = "out.log";
     public static OutputStreamWriter fw;
     public static BufferedWriter bw;
