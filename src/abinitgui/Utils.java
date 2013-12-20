@@ -204,7 +204,7 @@ public class Utils {
             while((line = br.readLine()) != null)
             {
                 sb.append(line);
-                sb.append(" ");
+                sb.append("\n");
             }
             
             return sb.toString();

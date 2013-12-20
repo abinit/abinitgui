@@ -56,12 +56,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import json.JSONArray;
 
 public class AbinitGeometry {
     
     // Fixed sized tables
-    public Double acell[] = null;
+    public Double acell[]  = null;
     public Double scalecart[] = null;
     public Double angdeg[] = null;
     public Double rprim[][] = null;
@@ -191,41 +190,6 @@ public class AbinitGeometry {
         }
         
         return s+"]";
-    }
-    
-    public void readFromJSON(int natom, int ntypat, JSONArray typat, JSONArray znucl, JSONArray xred_orig, JSONArray rprimd)
-    {
-         this.natom = natom;
-         this.ntypat = ntypat;
-         this.typat = new Integer[natom];
-         for(int i = 0; i < natom; i++)
-         {
-             this.typat[i] = typat.getInt(i);
-         }
-         
-         this.znucl = new Double[ntypat];
-         for(int i = 0; i < ntypat; i++)
-         {
-             this.znucl[i] = (double)znucl.getInt(i);
-         }
-         
-         this.xred = new Double[this.natom][3];
-         
-         for(int i = 0; i < natom; i++)
-         {
-             this.xred[i][0] = xred_orig.getJSONArray(0).getJSONArray(i).getDouble(0);
-             this.xred[i][1] = xred_orig.getJSONArray(0).getJSONArray(i).getDouble(1);
-             this.xred[i][2] = xred_orig.getJSONArray(0).getJSONArray(i).getDouble(2);
-         }
-         
-         
-         this.rprimd = new Double[3][3];
-         for(int i = 0; i < 3; i++)
-         {
-             this.rprimd[i][0] = rprimd.getJSONArray(0).getJSONArray(i).getDouble(0)*ANGSTROMPERBOHR;
-             this.rprimd[i][1] = rprimd.getJSONArray(0).getJSONArray(i).getDouble(1)*ANGSTROMPERBOHR;
-             this.rprimd[i][2] = rprimd.getJSONArray(0).getJSONArray(i).getDouble(2)*ANGSTROMPERBOHR;
-         }
     }
 
     public void loadData(HashMap<String,Object> map)
@@ -376,15 +340,15 @@ public class AbinitGeometry {
                 }
 
                 rprim[0][0] = new Double(df_rprim.format(rprim11));
-                rprim[1][0] = new Double(df_rprim.format(rprim12));
-                rprim[2][0] = new Double(df_rprim.format(rprim13));
+                rprim[0][1] = new Double(df_rprim.format(rprim12));
+                rprim[0][2] = new Double(df_rprim.format(rprim13));
 
-                rprim[0][1] = new Double(df_rprim.format(rprim21));
+                rprim[1][0] = new Double(df_rprim.format(rprim21));
                 rprim[1][1] = new Double(df_rprim.format(rprim22));
-                rprim[2][1] = new Double(df_rprim.format(rprim23));
+                rprim[1][2] = new Double(df_rprim.format(rprim23));
 
-                rprim[0][2] = new Double(df_rprim.format(rprim31));
-                rprim[1][2] = new Double(df_rprim.format(rprim32));
+                rprim[2][0] = new Double(df_rprim.format(rprim31));
+                rprim[2][1] = new Double(df_rprim.format(rprim32));
                 rprim[2][2] = new Double(df_rprim.format(rprim33));
             }
             
@@ -431,11 +395,12 @@ public class AbinitGeometry {
                 {
                     for(int j = 0; j < 3; j++)
                     {
+                
                         xangst[i][j] = 0.0D;
                         for(int k = 0; k < 3; k++)
                         {
                             // Should check order of indices
-                            xangst[i][j] = xangst[i][j] + rprimd[k][j]*xred[i][k];
+                            xangst[i][j] = xangst[i][j] + rprimd[j][k]*xred[k][i];
                         }
                     }
                 }
@@ -467,7 +432,7 @@ public class AbinitGeometry {
                         {
                             allznucl[atomindex] = znucl[typat[i]-1];
                             allpositions[atomindex][j] = 
-                                    x*rprimd[0][j]+y*rprimd[1][j]+z*rprimd[2][j]+xangst[i][j];
+                                    x*rprimd[j][0]+y*rprimd[j][1]+z*rprimd[j][2]+xangst[i][j];
                         }
                     }
                 }
@@ -506,7 +471,7 @@ public class AbinitGeometry {
            String latticevect = "lattice_vector\t";
            for(int j = 0; j < 3; j++)
            {
-               latticevect += rprimd[i][j]+"\t";
+               latticevect += rprimd[j][i]+"\t";
            }
            pw.println(latticevect);
            System.out.println("Writing inside "+fileName+" latticevect = "+latticevect);

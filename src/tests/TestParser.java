@@ -144,9 +144,9 @@ public class TestParser {
     
     public static void main(String[] args)
     {
-        testAllInputsInPath("/home/yannick/abinit/7.5.1-private","test-all.txt");
+//        testAllInputsInPath("/home/yannick/abinit/7.5.4-private","test-all.txt");
         
-        //testOneInputFile("/home/yannick/abinit/7.5.1-private/tests/v5/Input/t75.in","test-v5-75.txt");
+        testOneInputFile("/home/yannick/abinit/7.5.4-private/tests/v3/Input/t76.in","test-v3-76.txt");
     }
     
 }

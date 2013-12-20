@@ -53,14 +53,12 @@ import java.util.*;
 import java.util.logging.*;
 import javax.swing.*;
 import javax.swing.table.*;
-import json.*;
 import parser.AbinitInput;
 
 public class GUIEditor extends javax.swing.JFrame {
     
     private String fileName;
     private MainFrame mf;
-    private JSONArray jsonArray;
     private DatasetModel model;
     private ArrayList<HashMap<String,Object>> dataTable;
     
@@ -83,7 +81,6 @@ public class GUIEditor extends javax.swing.JFrame {
         jTable1.setModel(model);
         
         jTable1.setDefaultRenderer(Object.class, new DatasetRenderer());
-        jTable1.setDefaultEditor(JSONArray.class,new JSONArrayEditor(mf));
         
         mapVar.put("acell_orig", "acell");
         mapVar.put("rprimd_orig", "rprimd");
@@ -314,6 +311,10 @@ public class GUIEditor extends javax.swing.JFrame {
 
         } catch (IOException e) {
             mf.printERR(e.getMessage());
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            mf.printERR(e.getMessage());
         }
     }//GEN-LAST:event_viewGeomButtonActionPerformed
 
@@ -350,19 +351,6 @@ public class GUIEditor extends javax.swing.JFrame {
             map.put("value", value);
             
             dataTable.add(map);
-        }
-    }
-    
-    public void dumpDatabase()
-    {
-        PrintWriter pw = null;
-        try {
-            pw = new PrintWriter(new BufferedWriter(new FileWriter("test-json-output.txt")));
-            jsonArray.write(pw);
-        } catch (IOException ex) {
-            Logger.getLogger(GUIEditor.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            pw.close();
         }
     }
     
@@ -424,11 +412,14 @@ public class GUIEditor extends javax.swing.JFrame {
                 }
                 else if(o instanceof Number[][])
                 {
-                    for(Number[] nbs : (Number[][])o)
+                    Number[][] tab = ((Number[][])o);
+                    int length1 = tab.length;
+                    int length2 = tab[0].length;
+                    for(int i = 0; i < length2; i++)
                     {
-                        for(Number nb : nbs)
+                        for(int j = 0; j < length1; j++)
                         {
-                            sb.append(nb).append(" ");
+                            sb.append(tab[j][i]).append(" ");
                         }
                         sb.append(";");
                     }
@@ -468,13 +459,6 @@ public class GUIEditor extends javax.swing.JFrame {
         {
             if(column == 1)
             {
-                String name = (String)getValueAt(row,0);
-                
-                JSONObject object = jsonArray.getJSONObject(dtsetList.getSelectedIndex()+1);
-                JSONObject objectdefault = jsonArray.getJSONObject(0);
-                
-                object.put(name, o);
-                
                 loadDatabase();
                 model.fireTableDataChanged();
             }

@@ -46,7 +46,10 @@ For more information on the Abinit Project, please see
 
 package abinitgui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.text.html.HTMLEditorKit;
+import variables.Variable;
 
 public class AbinitInputVars extends javax.swing.JFrame {
 
@@ -83,6 +86,9 @@ public class AbinitInputVars extends javax.swing.JFrame {
         mnemoPane.setEditable(false);
         mnemoPane.setEditorKit(new HTMLEditorKit());
         
+        dimensionsPane.setEditable(false);
+        dimensionsPane.setEditorKit(new HTMLEditorKit());
+        
         showInputVars();
         
         listVars.setSelectedIndex(0);
@@ -94,6 +100,15 @@ public class AbinitInputVars extends javax.swing.JFrame {
     {
         String strName[] = database.getListKeys().toArray(new String[0]);
         listVars.setListData(strName);
+    }
+    
+    public String makeLinkVars(String txt)
+    {
+        if(txt == null)
+        {
+            return null;
+        }
+        return txt.replaceAll("\\[\\[([a-zA-Z0-9_]*)\\]\\]", "<a href=\"$1\">$1</a>");
     }
 
     /**
@@ -115,12 +130,15 @@ public class AbinitInputVars extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         descriptPaneEdit = new javax.swing.JEditorPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         namePane = new javax.swing.JEditorPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         defaultValPane = new javax.swing.JEditorPane();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        dimensionsPane = new javax.swing.JEditorPane();
         jScrollPane5 = new javax.swing.JScrollPane();
         typePane = new javax.swing.JEditorPane();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -159,6 +177,8 @@ public class AbinitInputVars extends javax.swing.JFrame {
 
         jLabel7.setText("Description :");
 
+        jLabel8.setText("Dimensions :");
+
         jScrollPane4.setViewportView(descriptPaneEdit);
 
         jScrollPane2.setViewportView(namePane);
@@ -166,6 +186,10 @@ public class AbinitInputVars extends javax.swing.JFrame {
         defaultValPane.setMinimumSize(new java.awt.Dimension(100, 48));
         defaultValPane.setPreferredSize(new java.awt.Dimension(100, 48));
         jScrollPane3.setViewportView(defaultValPane);
+
+        dimensionsPane.setMinimumSize(new java.awt.Dimension(100, 48));
+        dimensionsPane.setPreferredSize(new java.awt.Dimension(100, 48));
+        jScrollPane9.setViewportView(dimensionsPane);
 
         jScrollPane5.setViewportView(typePane);
 
@@ -194,16 +218,18 @@ public class AbinitInputVars extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane4))
+                            .addComponent(jScrollPane9)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -226,6 +252,10 @@ public class AbinitInputVars extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -233,13 +263,14 @@ public class AbinitInputVars extends javax.swing.JFrame {
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -254,15 +285,25 @@ public class AbinitInputVars extends javax.swing.JFrame {
         
         String varName = (String)obj;
         
-        InputVar curVar = database.get(varName);
+        Variable curVar2 = database.getVar(varName);
         
-        namePane.setText("<html><b>"+curVar.name+"</b></html>");
-        sectionPane.setText("<html>"+curVar.section+"</html>");
-        defaultValPane.setText("<html>"+curVar.defaultVal+"</html>");
-        mnemoPane.setText("<html>"+curVar.definition+"</html>");
-        typePane.setText("<html>"+curVar.vartype+"</html>");
-        categoryPane.setText("<html>"+curVar.category+"</html>");
-        descriptPaneEdit.setText("<html>"+curVar.text+"</html>");
+        namePane.setText("<html><b>"+curVar2.getVarname()+"</b></html>");
+        sectionPane.setText("<html>"+curVar2.getSection()+"</html>");
+        defaultValPane.setText("<html>"+makeLinkVars(curVar2.getDefaultval()+"")+"</html>");
+        mnemoPane.setText("<html>"+makeLinkVars(curVar2.getDefinition())+"</html>");
+        typePane.setText("<html>"+makeLinkVars(curVar2.getVartype())+"</html>");
+        categoryPane.setText("<html>"+makeLinkVars(curVar2.getCategory())+"</html>");
+        descriptPaneEdit.setText("<html>"+makeLinkVars(curVar2.getText())+"</html>");
+        Object o = curVar2.getDimensions();
+        String s = null;
+        if(o != null)
+        {
+            if(o.getClass().isArray())
+            {
+                s = Arrays.toString((Object[])o);
+            }
+        }
+        dimensionsPane.setText("<html>"+makeLinkVars(s)+"</html>");
         
     }//GEN-LAST:event_listVarsValueChanged
 
@@ -270,6 +311,7 @@ public class AbinitInputVars extends javax.swing.JFrame {
     private javax.swing.JEditorPane categoryPane;
     private javax.swing.JEditorPane defaultValPane;
     private javax.swing.JEditorPane descriptPaneEdit;
+    private javax.swing.JEditorPane dimensionsPane;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -277,6 +319,7 @@ public class AbinitInputVars extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -286,6 +329,7 @@ public class AbinitInputVars extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JList listVars;
     private javax.swing.JEditorPane mnemoPane;
     private javax.swing.JEditorPane namePane;
