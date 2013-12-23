@@ -66,7 +66,7 @@ public class TestJmol {
     // sample start-up script
     
     String strError = jmolPanel.viewer
-        .openFile("http://chemapps.stolaf.edu/jmol/docs/examples-11/data/caffeine.xyz");
+        .openFile("http://chemapps.stolaf.edu/jmol/docs/examples-11/data/zircon.xyz");
     //viewer.openStringInline(strXyzHOH);
     if (strError == null)
       jmolPanel.viewer.evalString(strScript);
