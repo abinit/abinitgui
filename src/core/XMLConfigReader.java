@@ -44,45 +44,29 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package projects;
+package core;
 
-public class RemoteJob 
-{
-    private SubmissionScript script;
-    
-    private int status;
-    
-    public void updateStatus()
-    {
-        // TODO !
+import java.io.File;
+import java.io.IOException;
+import org.jdom.*;
+import org.jdom.input.*;
+
+public class XMLConfigReader {
+
+    org.jdom.Document document;
+    Element root;
+
+    public XMLConfigReader(String file2read) {
+        SAXBuilder sxb = new SAXBuilder();
+        try {
+            document = sxb.build(new File(file2read));
+            root = document.getRootElement();
+        } catch (JDOMException | IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
+    public Element getRoot() {
+        return root;
     }
-
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
-    }
-
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
-    }
-    
 }

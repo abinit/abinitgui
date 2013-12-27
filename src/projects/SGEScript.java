@@ -46,8 +46,7 @@ For more information on the Abinit Project, please see
 
 package projects;
 
-import abinitgui.AbstractSubmissionScript;
-import abinitgui.MainFrame;
+import core.MainFrame;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;

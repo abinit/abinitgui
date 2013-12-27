@@ -1,6 +1,6 @@
 package parser;
 
-import abinitgui.AllInputVars;
+import variables.AllInputVars;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;

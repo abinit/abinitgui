@@ -44,45 +44,79 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package projects;
+package scriptbib;
 
-public class RemoteJob 
-{
-    private SubmissionScript script;
+import java.util.ArrayList;
+
+public class Script {
+
+    public String fileName;
+    public ArrayList<ScriptArgument> listArgs;
+    public ArrayList<ScriptArgument> listOutput;
+    public ArrayList<ScriptArgument> listInput;
+    public String title;
+    public String description;
+    public String program;
     
-    private int status;
-    
-    public void updateStatus()
+    public Script()
     {
-        // TODO !
+        listArgs = new ArrayList<ScriptArgument>();
+        listOutput = new ArrayList<ScriptArgument>();
+        listInput = new ArrayList<ScriptArgument>();
+    }
+    
+    /**
+     * This launches the script on the remote server
+     * STEP 1 : copy to the remote server
+     * STEP 2 : launch remotely
+     * STEP 3 : get results back
+     * @return True if the computation was successful (To be modified)
+     */
+    public boolean run()
+    {   
+        return false;
     }
 
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
+    void setFileName(String fileName) 
+    {
+        this.fileName = fileName;
     }
 
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
+    void setTitle(String title) 
+    {
+        this.title = title;
     }
 
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
+    void setDescription(String description) 
+    {
+        this.description = description;
+    }
+    
+    void setProgram(String program)
+    {
+        this.program = program;
     }
 
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
+    void addArgs(ScriptArgument arg) 
+    {
+        listArgs.add(arg);
+    }
+
+    void addOutput(ScriptArgument attrValue) 
+    {
+        listOutput.add(attrValue);
+    }
+
+    void addInput(ScriptArgument attrValue) 
+    {
+        listInput.add(attrValue);
+    }
+    
+    @Override
+    public String toString()
+    {
+        return title+":\n"+"Description : "+description+"\nFileName : "
+                +fileName+"\nlistArgs : "+listArgs;
     }
     
 }

@@ -44,8 +44,8 @@
  <http://www.abinit.org/>.
  */
 
-import abinitgui.MainFrame;
-import abinitgui.Utils;
+import core.MainFrame;
+import core.Utils;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;

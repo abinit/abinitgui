@@ -44,45 +44,64 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package projects;
+package core;
 
-public class RemoteJob 
-{
-    private SubmissionScript script;
-    
-    private int status;
-    
-    public void updateStatus()
-    {
-        // TODO !
+import java.io.*;
+import org.jdom.*;
+import org.jdom.output.*;
+
+public class XMLConfigWriter {
+
+    Element root_;
+    org.jdom.Document document_;
+
+    public XMLConfigWriter(String root) {
+        root_ = new Element(root);
+        document_ = new Document(root_);
     }
 
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
+    public Element add2root(String elem) {
+        Element elem_ = new Element(elem);
+        root_.addContent(elem_);
+        return elem_;
     }
 
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
+    public void setAttr(Element parent, String child, String attr, String value) {
+        Element elem = new Element(child);
+        elem.setAttribute(new Attribute(attr, value));
+        parent.addContent(elem);
     }
 
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
+    public void setAttr(Element parent, String child, String[] attrs, String[] values) {
+        Element elem = new Element(child);
+        if (values.length != attrs.length) {
+            System.err.println("class: XMLConfigWriter. method: setAttr()");
+            return;
+        }
+        for (int i = 0; i < values.length; i++) {
+            elem.setAttribute(new Attribute(attrs[i], values[i]));
+        }
+        parent.addContent(elem);
     }
 
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
+    public void display() {
+        try {
+            //On utilise ici un affichage classique avec getPrettyFormat()
+            XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+            sortie.output(document_, System.out);
+        } catch (java.io.IOException e) {
+            System.err.println("class: XMLConfigWriter. method: display(): " + e);
+        }
     }
-    
+
+    public void save2file(String fichier) {
+        try {
+            XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+            // Il suffitde créer une instance de FileOutputStream avec en
+            // argument le nom du fichier pour effectuer la sérialisation.
+            sortie.output(document_, new FileOutputStream(fichier));
+        } catch (java.io.IOException e) {
+            System.err.println("class: XMLConfigWriter. method: save2file(): " + e);
+        }
+    }
 }

@@ -46,43 +46,11 @@ For more information on the Abinit Project, please see
 
 package projects;
 
-public class RemoteJob 
+/**
+ * This class represents a Remote Machine with its configuration
+ * @author yannick
+ */
+public class RemoteMachine 
 {
-    private SubmissionScript script;
-    
-    private int status;
-    
-    public void updateStatus()
-    {
-        // TODO !
-    }
-
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
-    }
-
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
-    }
-
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
-    }
     
 }

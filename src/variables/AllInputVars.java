@@ -44,45 +44,73 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package projects;
+package variables;
 
-public class RemoteJob 
+import core.MainFrame;
+import core.Utils;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import variables.Variable;
+import variables.VariableConstructor;
+
+public class AllInputVars
 {
-    private SubmissionScript script;
-    
-    private int status;
-    
-    public void updateStatus()
+    private HashMap<String, Variable> database2;
+    private TreeSet<String> listKeys2;
+    private MainFrame mf;
+
+    public AllInputVars(MainFrame mf)
     {
-        // TODO !
+        this.mf = mf;
+        database2 = new HashMap<>();
+        listKeys2 = new TreeSet<>();
+        loadVars();
     }
 
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
+
+
+    public void loadVars()
+    {
+        Constructor constructor = new VariableConstructor();
+
+        Yaml yaml2 = new Yaml(constructor);
+
+        try {
+            String s2 = Utils.fileToString("tmp_struct.yml");
+            Object obj2 = yaml2.load(s2);
+            listKeys2.clear();
+            Iterator<Variable> iter2 = ((ArrayList<Variable>)obj2).iterator();
+            while(iter2.hasNext())
+            {
+                Variable var = iter2.next();
+                listKeys2.add(var.getVarname());
+                database2.put(var.getVarname(), var);
+            }
+            
+        } catch (IOException ex) {
+            mf.printERR("File 'tmp_struct.yml' does not exist. Help and pre-processing might not be available");
+        }
+
     }
 
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
-    }
-
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
+    public TreeSet<String> getListKeys() {
+        return listKeys2;
     }
     
+    public Variable getVar(String varName) {
+        return database2.get(varName);
+    }
+
+
+
 }

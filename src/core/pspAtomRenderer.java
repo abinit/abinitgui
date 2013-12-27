@@ -44,45 +44,38 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package projects;
+package core;
 
-public class RemoteJob 
-{
-    private SubmissionScript script;
-    
-    private int status;
-    
-    public void updateStatus()
-    {
-        // TODO !
+import inputgen.Atom;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+
+//@SuppressWarnings("serial")
+public class pspAtomRenderer extends JLabel
+        implements TableCellRenderer {
+
+    public pspAtomRenderer() {
+        setBackground(Color.LIGHT_GRAY);
+        setHorizontalAlignment(JLabel.CENTER);
+        setOpaque(true);
     }
 
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
+    @Override
+    public Component getTableCellRendererComponent(
+            JTable table, Object atom,
+            boolean isSelected, boolean hasFocus,
+            int row, int column) {
+        Atom newAtom = (Atom) atom;
+        setBackground(Color.LIGHT_GRAY);
+        setText(newAtom.getSymbol());
+        if (newAtom.getSymbol() != null) {
+            table.setValueAt(newAtom.getPSPFileName(), row, 1);
+            table.setValueAt(newAtom.getPSPType(), row, 2);
+            table.setValueAt(newAtom.getPSPPath(), row, 3);
+        }
+        return this;
     }
-
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
-    }
-
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
-    }
-    
 }

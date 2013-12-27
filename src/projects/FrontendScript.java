@@ -46,43 +46,75 @@ For more information on the Abinit Project, please see
 
 package projects;
 
-public class RemoteJob 
+import core.MainFrame;
+import projects.AbstractSubmissionScript;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author yannick
+ */
+public class FrontendScript extends AbstractSubmissionScript
 {
-    private SubmissionScript script;
+    private MainFrame mf;
     
-    private int status;
-    
-    public void updateStatus()
+    public FrontendScript(MainFrame mf)
     {
-        // TODO !
-    }
-
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
-    }
-
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
-    }
-
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
+        this.mf = mf;
+        this.system = "Frontend";
     }
     
+    @Override
+    public String toString()
+    {
+        String fileContent = "#!/bin/bash" + "\n";
+//                + "\n"
+//                + preProcessPart
+//                + "\n";
+                
+        if (parallel) {
+            fileContent += "mpirun -np " + nbProcs + " " + abinitPath + " < "+ inputPath +" >& " + logPath;
+        } else {
+            fileContent += abinitPath + " < "+ inputPath +" >& " + logPath;
+        }
+        
+        fileContent+= postProcessPart
+                    + "\n";
+        
+        return fileContent;
+    }
+    @Override
+    public void writeToFile(String fileName) 
+    {
+        try {
+            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+            
+            if(pw.checkError())
+            {
+                throw new IOException("Error with pw");
+            }
+            
+            // Writing file !
+            pw.println(this.toString());
+            
+            if(pw.checkError())
+            {
+                throw new IOException("Error with pw");
+            }
+            
+            pw.println();
+            
+            pw.close();
+            
+        } catch (IOException ex) {
+            mf.printERR("Error while writing the file");
+        }
+        
+        
+    }   
 }

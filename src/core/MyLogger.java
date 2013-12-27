@@ -44,45 +44,35 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package projects;
+package core;
 
-public class RemoteJob 
-{
-    private SubmissionScript script;
+//@SuppressWarnings("unchecked")
+public class MyLogger implements com.jcraft.jsch.Logger {
+
+    static java.util.Hashtable name = new java.util.Hashtable();
     
-    private int status;
-    
-    public void updateStatus()
-    {
-        // TODO !
-    }
+    private MainFrame mainFrame;
 
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
-    }
-
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
-    }
-
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
+    static {
+        name.put(new Integer(DEBUG), "DEBUG: ");
+        name.put(new Integer(INFO), "INFO: ");
+        name.put(new Integer(WARN), "WARN: ");
+        name.put(new Integer(ERROR), "ERROR: ");
+        name.put(new Integer(FATAL), "FATAL: ");
     }
     
+    public MyLogger(MainFrame parent) {
+        mainFrame = parent;
+    }
+
+    @Override
+    public boolean isEnabled(int level) {
+        return true;
+    }
+
+    @Override
+    public void log(int level, String message) {
+        //System.out.println(name.get(new Integer(level)) + message);
+        mainFrame.printOUT(name.get(new Integer(level)) + message);
+    }
 }

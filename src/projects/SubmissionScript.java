@@ -46,43 +46,67 @@ For more information on the Abinit Project, please see
 
 package projects;
 
-public class RemoteJob 
+public interface SubmissionScript 
 {
-    private SubmissionScript script;
+    /*
+     * Accessors to fields
+     */
     
-    private int status;
+    public String getSimName();
     
-    public void updateStatus()
-    {
-        // TODO !
-    }
-
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
-    }
-
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
-    }
-
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
-    }
+    public void setSimName(String simName);
     
+    public String getNbProcs();
+    
+    public void setNbProcs(String nbProcs);
+    
+    public String getMemoryMax();
+    
+    public void setMemoryMax(String memory);
+
+    public String getTimeLimit();
+    
+    public void setTimeLimit(String time);
+    
+    public String getEmail();
+    
+    public void setEmail(String email);
+    
+    public String getPreProcessPart();
+    
+    public void setPreProcessPart(String part);
+    
+    public String getPostProcessPart();
+    
+    public void setPostProcessPart(String part);
+    
+    public String getMPIPath();
+    
+    public void setMPIPath(String path);
+    
+    public boolean isParallel();
+    
+    public void setParallel(boolean parallel);
+    
+    public String getAbinitPath();
+    
+    public void setAbinitPath(String path);
+    
+    public String getInputPath();
+    
+    public void setInputPath(String path);
+    
+    public String getLogPath();
+    
+    public void setLogPath(String path);
+
+    public String getSystem();
+    
+    public void setSystem(String system);
+    
+    
+    /*
+     * Actions
+     */
+    public void writeToFile(String fileName);
 }

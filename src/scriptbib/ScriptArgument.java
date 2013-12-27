@@ -44,45 +44,24 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package projects;
+package scriptbib;
 
-public class RemoteJob 
-{
-    private SubmissionScript script;
-    
-    private int status;
-    
-    public void updateStatus()
-    {
-        // TODO !
+public class ScriptArgument {
+
+    public String name;
+    public String help;
+    public String value;
+    public String type;
+
+    public ScriptArgument() {
+        this.name = null;
+        this.help = null;
+        this.value = null;
+        this.type = null;
     }
 
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
+    @Override
+    public String toString() {
+        return name + " (" + help + ") [" + type + "] = " + value;
     }
-
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
-    }
-
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
-    }
-    
 }

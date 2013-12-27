@@ -46,9 +46,7 @@ For more information on the Abinit Project, please see
 
 package projects;
 
-import abinitgui.FrontendScript;
-import abinitgui.MainFrame;
-import abinitgui.SubmissionScript;
+import core.MainFrame;
 import projects.SGEScript;
 import projects.SLURMScript;
 

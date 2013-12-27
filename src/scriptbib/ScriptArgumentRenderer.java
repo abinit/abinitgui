@@ -44,45 +44,43 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package projects;
+package scriptbib;
 
-public class RemoteJob 
-{
-    private SubmissionScript script;
-    
-    private int status;
-    
-    public void updateStatus()
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+
+//@SuppressWarnings("serial")
+public class ScriptArgumentRenderer extends JLabel
+        implements TableCellRenderer {
+
+    public ScriptArgumentRenderer() {
+        setBackground(Color.LIGHT_GRAY);
+        setHorizontalAlignment(JLabel.CENTER);
+        setOpaque(true);
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(
+            JTable table, Object arg,
+            boolean isSelected, boolean hasFocus,
+            int row, int column) 
     {
-        // TODO !
+        if(arg instanceof ScriptArgument)
+        {
+            ScriptArgument newArg = (ScriptArgument) arg;
+            if(newArg != null)
+            {
+                setBackground(Color.LIGHT_GRAY);
+                setText(newArg.name);
+                this.setToolTipText(newArg.help);
+                if (newArg.name != null) {
+                    table.setValueAt(newArg.value, row, 1);
+                }
+            }
+        }
+        return this;
     }
-
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
-    }
-
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
-    }
-
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
-    }
-    
 }

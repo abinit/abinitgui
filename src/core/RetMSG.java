@@ -44,45 +44,30 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package projects;
+package core;
 
-public class RemoteJob 
-{
-    private SubmissionScript script;
-    
-    private int status;
-    
-    public void updateStatus()
-    {
-        // TODO !
+public class RetMSG {
+
+    private int retCode;
+    private String retMSG;
+    private String CMD;
+    final public static int SUCCES = 0;
+
+    public RetMSG(int retCode, String retMSG, String CMD) {
+        this.retCode = retCode;
+        this.retMSG = retMSG;
+        this.CMD = CMD;
     }
 
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
+    public int getRetCode() {
+        return retCode;
     }
 
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
+    public String getRetMSG() {
+        return retMSG;
     }
 
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
+    public String getCMD() {
+        return CMD;
     }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
-    }
-    
 }
