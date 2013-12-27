@@ -44,7 +44,13 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package abinitgui;
+package projects;
+
+import abinitgui.FrontendScript;
+import abinitgui.MainFrame;
+import abinitgui.SubmissionScript;
+import projects.SGEScript;
+import projects.SLURMScript;
 
 public class SubmissionScriptFrame extends javax.swing.JFrame {
 

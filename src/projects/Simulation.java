@@ -44,45 +44,64 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package abinitgui;
+package projects;
 
-public class RemoteJob 
-{
-    private SubmissionScript script;
-    
+import projects.RemoteJob;
+
+public class Simulation {
+
+    private String name = "default";
+    private String fileName = "default.ab";
+    private RemoteJob job;
+    public static int RUNNING = 1;
+    public static int FINISHED = 2;
+    public static int READY = 0;
     private int status;
-    
-    public void updateStatus()
-    {
-        // TODO !
+
+    public Simulation() {
+        status = READY;
+
+        job = new RemoteJob();
     }
 
-    /**
-     * @return the script
-     */
-    public SubmissionScript getScript() {
-        return script;
+    public String getName() {
+        return name;
     }
 
-    /**
-     * @param script the script to set
-     */
-    public void setScript(SubmissionScript script) {
-        this.script = script;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    /**
-     * @return the status
-     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    @Override
+    public String toString() {
+        return "Simulation(name = " + name + "; fileName = " + fileName + ")";
+    }
+
     public int getStatus() {
         return status;
     }
 
-    /**
-     * @param status the status to set
-     */
     public void setStatus(int status) {
         this.status = status;
     }
-    
+
+    public RemoteJob getRemoteJob() {
+        return job;
+    }
+
+    public void setRemoteJob(RemoteJob job) {
+        this.job = job;
+    }
+
+    void updateStatus() {
+        job.updateStatus();
+    }
 }

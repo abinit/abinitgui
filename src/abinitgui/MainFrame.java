@@ -46,6 +46,11 @@ For more information on the Abinit Project, please see
 
 package abinitgui;
 
+import projects.ProjectManager;
+import projects.Simulation;
+import projects.SubmissionScriptFrame;
+import projects.SGEScript;
+import projects.RemoteJob;
 import MDandTB.ClustepDiag;
 import MDandTB.TightBindingDiag;
 import java.awt.Color;
@@ -3506,7 +3511,7 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.ButtonGroup whereIsAbinitbuttonGroup;
     // End of variables declaration//GEN-END:variables
 
-    void setSimulation(Simulation simulation) {
+    public void setSimulation(Simulation simulation) {
         printDEB("is setting simulation " + simulation);
     }
 

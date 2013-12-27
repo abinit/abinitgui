@@ -44,8 +44,11 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package abinitgui;
+package projects;
 
+import abinitgui.MainFrame;
+import projects.SimulationDatabase;
+import projects.Simulation;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.Iterator;

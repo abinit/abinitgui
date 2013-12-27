@@ -44,8 +44,11 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package abinitgui;
+package projects;
 
+import abinitgui.MainFrame;
+import abinitgui.XMLConfigReader;
+import projects.Simulation;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
