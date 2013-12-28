@@ -52,6 +52,7 @@ import inputgen.GeomDialog;
 import inputgen.WaDeDialog;
 import inputgen.InOuDialog;
 import inputgen.ReReDialog;
+import projects.MachinePane;
 import variables.AllInputVars;
 import inputgen.Atom;
 import inputgen.AtomEditor;
@@ -81,14 +82,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import javax.swing.DefaultListModel;
@@ -96,7 +93,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -125,6 +121,7 @@ public class MainFrame extends javax.swing.JFrame {
     private WaDeDialog wadeD;
     private InOuDialog inouD;
     private TheoDialog theoD;
+    private MachinePane machinePane;
     //private VarsHelp varsHelp;
     // Avant la version 6 de ABINIT, il y avait deux exécutables différents
     private String SequAbinit = "abinit";
@@ -212,6 +209,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         theoD = new TheoDialog(this, false);
         theoD.setTitle("..:: Theory (DFT) ::..");
+        
+        machinePane = new MachinePane(this);
 
         //varsHelp = new VarsHelp();
         //varsHelp.setTitle("..:: Abinit variables help ::..");
@@ -1007,7 +1006,7 @@ public class MainFrame extends javax.swing.JFrame {
             .add(emptyPanelLayout.createSequentialGroup()
                 .add(133, 133, 133)
                 .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         inputFileTabbedPane.addTab("", emptyPanel);
@@ -1229,7 +1228,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .add(12, 12, 12))
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+                            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .add(jPanel1Layout.createSequentialGroup()
                                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(jPanel1Layout.createSequentialGroup()
