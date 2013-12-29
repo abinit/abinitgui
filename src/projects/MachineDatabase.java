@@ -22,16 +22,16 @@ import org.yaml.snakeyaml.Yaml;
  */
 public class MachineDatabase implements Iterable<Machine>
 {
-    private HashMap<String,Machine> list;
+    private ArrayList<Machine> list;
     
     public MachineDatabase()
     {
-        list = new HashMap<>();
+        list = new ArrayList<>();
     }
     
     public void addMachine(Machine rm)
     {
-        list.put(rm.getName(),rm);
+        list.add(rm);
     }
     
     public void removeMachine(Machine rm)
@@ -41,24 +41,31 @@ public class MachineDatabase implements Iterable<Machine>
     
     public Machine getMachine(String name)
     {
-        return list.get(name);
+        for(Machine mach : list)
+        {
+            if(mach.getName().equals(name))
+            {
+                return mach;
+            }
+        }
+        return null;
     }
     
-    public HashMap<String,Machine> getMachineList()
+    public ArrayList<Machine> getMachineList()
     {
         return list;
     }
     
     public Iterator<Machine> iterator()
     {
-        return list.values().iterator();
+        return list.iterator();
     }
     
     public void loadFromFile(String fileName) throws IOException
     {
         Yaml yaml = new Yaml(new ProjectConstructor());
         Object data = yaml.load(new FileReader(fileName));
-        this.list = (HashMap<String,Machine>)data;
+        this.list = (ArrayList<Machine>)data;
     }
     
     public void saveToFile(String fileName) throws IOException

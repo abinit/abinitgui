@@ -109,10 +109,15 @@ public class MachinePane extends javax.swing.JPanel {
     public void createNewMachine()
     {
         this.machine = new Machine();
+        this.machine.setName("New machine");
         
         this.mf.getMachineDatabase().addMachine(this.machine);
         
+        refresh();
+        
         setEmptyFields();
+        
+        mf.refreshMachines();
     }
     
     private void setEmptyFields()
@@ -176,6 +181,8 @@ public class MachinePane extends javax.swing.JPanel {
                 Logger.getLogger(MachinePane.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        mf.refreshMachines();
     }
 
     /**

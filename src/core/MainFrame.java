@@ -88,15 +88,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.jdom.*;
+import projects.Machine;
 import projects.MachineDatabase;
 
 //@SuppressWarnings({"deprecation", "serial"})
@@ -153,6 +156,7 @@ public class MainFrame extends javax.swing.JFrame {
     private SubmissionScriptFrame submitScriptFrame;
     private final AllInputVars allInputVars;
     private MachineDatabase machineDatabase;
+    private Machine currentMachine;
 
     /**
      * Creates new form MainFrame
@@ -311,7 +315,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         catch(IOException e)
         {
-            e.printStackTrace();
+            printERR("Unable to load machines config from \"machines.yml\"");
         }
                 
         projectManager = new ProjectFrame(this);
@@ -325,6 +329,8 @@ public class MainFrame extends javax.swing.JFrame {
         simulation = new Simulation();
         simulation.setRemoteJob(remoteJob);
         
+        refreshMachines();
+        
         /**
          * End of projects section
          */
@@ -333,6 +339,21 @@ public class MainFrame extends javax.swing.JFrame {
 
     public String getNtypat() {
         return geomD.getNtypat();
+    }
+    
+    public void refreshMachines()
+    {
+        Machine mymach = (Machine)(machineCombo.getSelectedItem());
+        
+        DefaultComboBoxModel<Machine> model = new DefaultComboBoxModel<>();
+        
+        for(Machine mach : machineDatabase)
+        {
+            model.addElement(mach);
+        }
+        
+        machineCombo.setModel(model);
+        machineCombo.setSelectedItem(mymach);
     }
 
     private void initTableHeader(JTable table, String header[], Integer headerWidths[]) {
@@ -509,6 +530,8 @@ public class MainFrame extends javax.swing.JFrame {
         connectionToggleButton = new javax.swing.JToggleButton();
         SSH2ClientButton = new javax.swing.JButton();
         SFTPButton = new javax.swing.JButton();
+        machineCombo = new javax.swing.JComboBox();
+        machineLabel = new javax.swing.JLabel();
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         saveMenuItem = new javax.swing.JMenuItem();
@@ -786,7 +809,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .add(configPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(abinitPathTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(abinitPathButton))
-                .add(177, 177, 177))
+                .add(128, 128, 128))
         );
 
         mainTabbedPane.addTab("Configuration", configPanel);
@@ -1349,6 +1372,20 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        machineCombo.setModel(new DefaultComboBoxModel<Machine>());
+        machineCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                machineComboItemStateChanged(evt);
+            }
+        });
+        machineCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                machineComboActionPerformed(evt);
+            }
+        });
+
+        machineLabel.setText("Direct access to:");
+
         fileMenu.setLabel("File");
 
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
@@ -1485,6 +1522,10 @@ public class MainFrame extends javax.swing.JFrame {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(mainTabbedPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 754, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(layout.createSequentialGroup()
+                        .add(machineLabel)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(machineCombo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(connectionToggleButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 143, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(SSH2ClientButton)
@@ -1501,7 +1542,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(connectionToggleButton)
                     .add(SSH2ClientButton)
-                    .add(SFTPButton))
+                    .add(SFTPButton)
+                    .add(machineCombo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(machineLabel))
                 .addContainerGap())
         );
 
@@ -1511,25 +1554,13 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void stopConnection() {
-        if (remoteGatewayRadioButton.isSelected()) {
-            if (remoteExec != null) {
-                remoteExec.stop();
-                remoteExec = null;
-            }
-            if (sshtun != null) {
-                sshtun.stop();
-                sshtun = null;
-            }
-            lport = 0;
-        } else if (remoteAbinitRadioButton.isSelected()) {
-            if (remoteExec != null) {
-                remoteExec.stop();
-                remoteExec = null;
-            }
-        } else if (localAbinitRadioButton.isSelected()) {
-            // Pas besoin en local
-        } else { // Le choix n'a pas été fait
-            printERR("Choose a destination option please at config. tab !");
+        if(currentMachine != null)
+        {
+            currentMachine.stopConnection(this);
+        }
+        else
+        {
+            printERR("Please select a machine !");
         }
     }
 
@@ -2232,89 +2263,99 @@ public class MainFrame extends javax.swing.JFrame {
             public void run() {
                 connectionToggleButton.setEnabled(false);
                 if (connectionToggleButton.isSelected()) {
-                    if (remoteGatewayRadioButton.isSelected()) {
-                        String gwHostname = gatewayHostTextField.getText();
-                        String gwLogin = gatewayLoginTextField.getText();
-                        if (!gwLogin.equals("") && !gwHostname.equals("")) {
-                            String abHostname = hostTextField.getText();
-                            String abLogin = loginTextField.getText();
-                            if (!abLogin.equals("") && !abHostname.equals("")) {
-                                // Début de la création du tunnel SSH
-                                printOUT("Connecting to " + gwHostname + " as " + gwLogin + ".");
-                                sshtun = new SSHTunnel(mainFrame, gwLogin, gwHostname, 22, abHostname, 2568, 22);
-                                String keyFile = jTF_key2.getText();
-                                if (keyFile.equals("")) {
-                                    keyFile = null;
-                                }
-                                sshtun.setPrvkeyOrPwdOnly(keyFile, new String(gatewayPasswordField.getPassword()), useKey2);
-                                lport = sshtun.start();
-                                if (lport > 0 && lport < 65536) {
-                                    printOUT("Connected to " + gwHostname + " as " + gwLogin + ".");
-                                    printOUT("Connecting to " + abHostname + " as " + abLogin + ".");
-                                    remoteExec = new RemoteExec(mainFrame, abLogin, "localhost", lport);
-                                    keyFile = jTF_key1.getText();
-                                    if (keyFile.equals("")) {
-                                        keyFile = null;
-                                    }
-                                    remoteExec.setPrvkeyOrPwdOnly(keyFile, new String(pwdPasswordField.getPassword()), useKey1);
-                                    if (remoteExec.start()) {
-                                        printOUT("Connected to " + abHostname + " as " + abLogin + ".");
-                                        // Le tunnel SSH a été créé avec succÃ¨s
-                                        connectionToggleButton.setText("Disconnect");
-                                    } else {
-                                        lport = 0;
-                                        printERR("Could not connect to " + abHostname + " as " + abLogin + " !");
-                                        connectionToggleButton.setSelected(false);
-                                        stopConnection();
-                                    }
-                                } else {
-                                    lport = 0;
-                                    printERR("Could not connect to " + gwHostname + " as " + gwLogin + " !");
-                                    connectionToggleButton.setSelected(false);
-                                    stopConnection();
-                                }
-                            } else {
-                                printERR("Please enter the ABINIT hostname AND corresponding login !");
-                                connectionToggleButton.setSelected(false);
-                                stopConnection();
-                            }
-                        } else {
-                            printERR("Please enter the gateway hostname AND corresponding login !");
-                            connectionToggleButton.setSelected(false);
-                            stopConnection();
-                        }
-                    } else if (remoteAbinitRadioButton.isSelected()) {
-                        String abHostname = hostTextField.getText();
-                        String abLogin = loginTextField.getText();
-                        if (!abLogin.equals("") && !abHostname.equals("")) {
-                            printOUT("Connecting to " + abHostname + " as " + abLogin + ".");
-                            remoteExec = new RemoteExec(mainFrame, abLogin, abHostname, 22);
-                            String keyFile = jTF_key1.getText();
-                            if (keyFile.equals("")) {
-                                keyFile = null;
-                            }
-                            remoteExec.setPrvkeyOrPwdOnly(keyFile, new String(pwdPasswordField.getPassword()), useKey1);
-                            if (remoteExec.start()) {
-                                printOUT("Connected to " + abHostname + " as " + abLogin + ".");
-                                connectionToggleButton.setText("Disconnect");
-                            } else {
-                                printERR("Could not connect to " + abHostname + " as " + abLogin + " !");
-                                connectionToggleButton.setSelected(false);
-                                stopConnection();
-                            }
-                        } else {
-                            printERR("Please enter the ABINIT hostname AND corresponding login !");
-                            connectionToggleButton.setSelected(false);
-                            stopConnection();
-                        }
-                    } else if (localAbinitRadioButton.isSelected()) {
-                        // Pas besoin en local
-                    } else { // Le choix n'a pas été fait
-                        printERR("Choose a destination option please at config. tab !");
+                    if(currentMachine != null)
+                    {
+                        currentMachine.connection(MainFrame.this);
+                        setStateConnect();
                     }
+                    else
+                    {
+                        printERR("Please select a machine first !");
+                    }
+//                    if (remoteGatewayRadioButton.isSelected()) {
+//                        String gwHostname = gatewayHostTextField.getText();
+//                        String gwLogin = gatewayLoginTextField.getText();
+//                        if (!gwLogin.equals("") && !gwHostname.equals("")) {
+//                            String abHostname = hostTextField.getText();
+//                            String abLogin = loginTextField.getText();
+//                            if (!abLogin.equals("") && !abHostname.equals("")) {
+//                                // Début de la création du tunnel SSH
+//                                printOUT("Connecting to " + gwHostname + " as " + gwLogin + ".");
+//                                sshtun = new SSHTunnel(mainFrame, gwLogin, gwHostname, 22, abHostname, 2568, 22);
+//                                String keyFile = jTF_key2.getText();
+//                                if (keyFile.equals("")) {
+//                                    keyFile = null;
+//                                }
+//                                sshtun.setPrvkeyOrPwdOnly(keyFile, new String(gatewayPasswordField.getPassword()), useKey2);
+//                                lport = sshtun.start();
+//                                if (lport > 0 && lport < 65536) {
+//                                    printOUT("Connected to " + gwHostname + " as " + gwLogin + ".");
+//                                    printOUT("Connecting to " + abHostname + " as " + abLogin + ".");
+//                                    remoteExec = new RemoteExec(mainFrame, abLogin, "localhost", lport);
+//                                    keyFile = jTF_key1.getText();
+//                                    if (keyFile.equals("")) {
+//                                        keyFile = null;
+//                                    }
+//                                    remoteExec.setPrvkeyOrPwdOnly(keyFile, new String(pwdPasswordField.getPassword()), useKey1);
+//                                    if (remoteExec.start()) {
+//                                        printOUT("Connected to " + abHostname + " as " + abLogin + ".");
+//                                        // Le tunnel SSH a été créé avec succÃ¨s
+//                                        connectionToggleButton.setText("Disconnect");
+//                                    } else {
+//                                        lport = 0;
+//                                        printERR("Could not connect to " + abHostname + " as " + abLogin + " !");
+//                                        connectionToggleButton.setSelected(false);
+//                                        stopConnection();
+//                                    }
+//                                } else {
+//                                    lport = 0;
+//                                    printERR("Could not connect to " + gwHostname + " as " + gwLogin + " !");
+//                                    connectionToggleButton.setSelected(false);
+//                                    stopConnection();
+//                                }
+//                            } else {
+//                                printERR("Please enter the ABINIT hostname AND corresponding login !");
+//                                connectionToggleButton.setSelected(false);
+//                                stopConnection();
+//                            }
+//                        } else {
+//                            printERR("Please enter the gateway hostname AND corresponding login !");
+//                            connectionToggleButton.setSelected(false);
+//                            stopConnection();
+//                        }
+//                    } else if (remoteAbinitRadioButton.isSelected()) {
+//                        String abHostname = hostTextField.getText();
+//                        String abLogin = loginTextField.getText();
+//                        if (!abLogin.equals("") && !abHostname.equals("")) {
+//                            printOUT("Connecting to " + abHostname + " as " + abLogin + ".");
+//                            remoteExec = new RemoteExec(mainFrame, abLogin, abHostname, 22);
+//                            String keyFile = jTF_key1.getText();
+//                            if (keyFile.equals("")) {
+//                                keyFile = null;
+//                            }
+//                            remoteExec.setPrvkeyOrPwdOnly(keyFile, new String(pwdPasswordField.getPassword()), useKey1);
+//                            if (remoteExec.start()) {
+//                                printOUT("Connected to " + abHostname + " as " + abLogin + ".");
+//                                connectionToggleButton.setText("Disconnect");
+//                            } else {
+//                                printERR("Could not connect to " + abHostname + " as " + abLogin + " !");
+//                                connectionToggleButton.setSelected(false);
+//                                stopConnection();
+//                            }
+//                        } else {
+//                            printERR("Please enter the ABINIT hostname AND corresponding login !");
+//                            connectionToggleButton.setSelected(false);
+//                            stopConnection();
+//                        }
+//                    } else if (localAbinitRadioButton.isSelected()) {
+//                        // Pas besoin en local
+//                    } else { // Le choix n'a pas été fait
+//                        printERR("Choose a destination option please at config. tab !");
+//                    }
                 } else {
                     stopConnection();
-                    connectionToggleButton.setText("Connect");
+                    setStateConnect();
+                    //connectionToggleButton.setText("Connect");
                     printOUT("You are now disconnected!");
                 }
                 connectionToggleButton.setEnabled(true);
@@ -2424,41 +2465,50 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jCB_useKey2ActionPerformed
 
     private void SSH2ClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SSH2ClientButtonActionPerformed
-        MySSHTerm ssh2;
-        if (remoteGatewayRadioButton.isSelected()) {
-            if (lport != 0) {
-                String host = "localhost";
-                String user = loginTextField.getText();
-                String keyFile = jTF_key1.getText();
-                String pass = new String(pwdPasswordField.getPassword());
-                if (useKey1) {
-                    ssh2 = new MySSHTerm(mainFrame, host, lport, user, keyFile, pass);
-                } else {
-                    ssh2 = new MySSHTerm(mainFrame, host, lport, user, pass);
-                }
-                Thread thread = new Thread(ssh2);
-                thread.start();
-            } else {
-                printERR("The ssh tunnel is not working, please connect at the config. tab before !");
-            }
-        } else if (remoteAbinitRadioButton.isSelected()) {
-            String host = hostTextField.getText();
-            String user = loginTextField.getText();
-            String keyFile = jTF_key1.getText();
-            String pass = new String(pwdPasswordField.getPassword());
-            if (useKey1) {
-                ssh2 = new MySSHTerm(mainFrame, host, 22, user, keyFile, pass);
-            } else {
-                ssh2 = new MySSHTerm(mainFrame, host, 22, user, pass);
-            }
-            Thread thread = new Thread(ssh2);
-            thread.start();
-        } else if (localAbinitRadioButton.isSelected()) {
-            printERR("To connect to the local host, please choose the remote option"
-                    + " where you specify localhost as hostname !");
-        } else { // Le choix n'a pas été fait
-            printERR("Choose a destination option please at config. tab !");
+        Machine mach = (Machine)machineCombo.getSelectedItem();
+        if(mach != null)
+        {
+            MySSHTerm ssh2 = mach.newSSHTerm(MainFrame.this);
         }
+        else
+        {
+            printERR("Please select a machine first !");
+        }
+//        MySSHTerm ssh2;
+//        if (remoteGatewayRadioButton.isSelected()) {
+//            if (lport != 0) {
+//                String host = "localhost";
+//                String user = loginTextField.getText();
+//                String keyFile = jTF_key1.getText();
+//                String pass = new String(pwdPasswordField.getPassword());
+//                if (useKey1) {
+//                    ssh2 = new MySSHTerm(mainFrame, host, lport, user, keyFile, pass);
+//                } else {
+//                    ssh2 = new MySSHTerm(mainFrame, host, lport, user, pass);
+//                }
+//                Thread thread = new Thread(ssh2);
+//                thread.start();
+//            } else {
+//                printERR("The ssh tunnel is not working, please connect at the config. tab before !");
+//            }
+//        } else if (remoteAbinitRadioButton.isSelected()) {
+//            String host = hostTextField.getText();
+//            String user = loginTextField.getText();
+//            String keyFile = jTF_key1.getText();
+//            String pass = new String(pwdPasswordField.getPassword());
+//            if (useKey1) {
+//                ssh2 = new MySSHTerm(mainFrame, host, 22, user, keyFile, pass);
+//            } else {
+//                ssh2 = new MySSHTerm(mainFrame, host, 22, user, pass);
+//            }
+//            Thread thread = new Thread(ssh2);
+//            thread.start();
+//        } else if (localAbinitRadioButton.isSelected()) {
+//            printERR("To connect to the local host, please choose the remote option"
+//                    + " where you specify localhost as hostname !");
+//        } else { // Le choix n'a pas été fait
+//            printERR("Choose a destination option please at config. tab !");
+//        }
     }//GEN-LAST:event_SSH2ClientButtonActionPerformed
 
     private void jMenuItemClustepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClustepActionPerformed
@@ -2713,40 +2763,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_openOutputActionPerformed
 
     private void SFTPButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SFTPButtonActionPerformed
-        MySFTP client;
-        if (remoteGatewayRadioButton.isSelected()) {
-            if (lport != 0) {
-                String host = "localhost";
-                String user = loginTextField.getText();
-                String keyFile = jTF_key1.getText();
-                String pass = new String(pwdPasswordField.getPassword());
-                if (useKey1) {
-                    client = new MySFTP(this, host, lport, user, keyFile, pass);
-                } else {
-                    client = new MySFTP(this, host, lport, user, pass);
-                }
-                Thread thread = new Thread(client);
-                thread.start();
-            } else {
-                printERR("The ssh tunnel is not working, please connect at the config. tab before !");
-            }
-        } else if (remoteAbinitRadioButton.isSelected()) {
-            String host = hostTextField.getText();
-            String user = loginTextField.getText();
-            String keyFile = jTF_key1.getText();
-            String pass = new String(pwdPasswordField.getPassword());
-            if (useKey1) {
-                client = new MySFTP(this, host, 22, user, keyFile, pass);
-            } else {
-                client = new MySFTP(this, host, 22, user, pass);
-            }
-            Thread thread = new Thread(client);
-            thread.start();
-        } else if (localAbinitRadioButton.isSelected()) {
-            printERR("To connect to the local host, please choose the remote option"
-                    + " where you specify localhost as hostname !");
-        } else { // Le choix n'a pas été fait
-            printERR("Choose a destination option please at config. tab !");
+        if(currentMachine != null)
+        {
+            MySFTP client = currentMachine.newSFTP(MainFrame.this);
+        }
+        else
+        {
+            printERR("Please select a machine first !");
         }
     }//GEN-LAST:event_SFTPButtonActionPerformed
 
@@ -2868,6 +2891,36 @@ public class MainFrame extends javax.swing.JFrame {
     private void editMachinesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMachinesMenuItemActionPerformed
         machineD.setVisible(true);
     }//GEN-LAST:event_editMachinesMenuItemActionPerformed
+
+    private void machineComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_machineComboItemStateChanged
+        
+    }//GEN-LAST:event_machineComboItemStateChanged
+
+    private void setStateConnect()
+    {
+        if(currentMachine != null && currentMachine.isConnected())
+        {
+            connectionToggleButton.setSelected(true);
+            connectionToggleButton.setText("Disconnect");
+        }
+        else
+        {
+            connectionToggleButton.setSelected(false);
+            connectionToggleButton.setText("Connect"); 
+        }
+    }
+    private void machineComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_machineComboActionPerformed
+        Machine mach = (Machine)machineCombo.getSelectedItem();
+        if(mach != null)
+        {
+            this.currentMachine = mach;   
+            setStateConnect();
+        }
+        else
+        {
+            printERR("Please select a machine first !");
+        }
+    }//GEN-LAST:event_machineComboActionPerformed
 
     public void sendCommand(String CMD) /*throws CMDException*/ {
         RetMSG retmsg;
@@ -3513,6 +3566,8 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JPanel loginPanel;
     javax.swing.JTextField loginTextField;
     javax.swing.ButtonGroup lookAndFeelbuttonGroup;
+    javax.swing.JComboBox machineCombo;
+    javax.swing.JLabel machineLabel;
     javax.swing.JMenuBar mainMenuBar;
     javax.swing.JTabbedPane mainTabbedPane;
     javax.swing.JLabel mySimulationsLabel;
@@ -3583,4 +3638,9 @@ public class MainFrame extends javax.swing.JFrame {
     {
         return machineDatabase;
     }
+    
+//    public JToggleButton getConnectionToggleButton()
+//    {
+//        return connectionToggleButton;
+//    }
 }
