@@ -94,7 +94,8 @@ public class MachineDialog extends javax.swing.JDialog {
 
     private void myinit() {
         
-        machineP = new MachinePane(mainFrame);
+        machineP = new MachinePane();
+        machineP.setMainFrame(mainFrame);
         machineP.setEnabled(true);
         machineP.setVisible(true);
 

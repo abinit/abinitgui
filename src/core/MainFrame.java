@@ -101,6 +101,7 @@ import javax.swing.table.TableColumnModel;
 import org.jdom.*;
 import projects.Machine;
 import projects.MachineDatabase;
+import projects.MachinePane;
 
 //@SuppressWarnings({"deprecation", "serial"})
 public class MainFrame extends javax.swing.JFrame {
@@ -809,7 +810,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .add(configPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(abinitPathTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(abinitPathButton))
-                .add(128, 128, 128))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("Configuration", configPanel);
@@ -2197,66 +2198,6 @@ public class MainFrame extends javax.swing.JFrame {
         inputFileTabbedPane.setSelectedIndex(inputFileTabbedPane.getTabCount() - 1);
 }//GEN-LAST:event_useExtIFRadioButtonActionPerformed
 
-    private void abinitPathButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abinitPathButtonActionPerformed
-        abinitPathButton.setEnabled(false);
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                String CMD = "whereis " + SequAbinit;
-                RetMSG retmsg;
-                if (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected()) {
-                    if (remoteExec != null) {
-                        retmsg = remoteExec.sendCommand(CMD);
-                        if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                            StringTokenizer st = new StringTokenizer(retmsg.getRetMSG());
-                            int nbt = st.countTokens();
-                            for (int i = 0; i < nbt; i++) {
-                                String str = st.nextToken();
-                                if (i == 1) {
-                                    // TODO adapter au systÃ¨me Windows
-                                    int idx = str.lastIndexOf('/');
-                                    abinitPathTextField.setText((String) str.subSequence(0, idx));
-                                }
-                                printOUT(str);
-                            }
-                        } else {
-                            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                            printERR("Error: " + retmsg.getRetMSG() + " !");
-                        }
-                    } else {
-                        printERR("First connect to an abinit host please !");
-                    }
-                } else if (localAbinitRadioButton.isSelected()) {
-                    if (localExec != null) {
-                        retmsg = localExec.sendCommand(CMD);
-                        if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                            StringTokenizer st = new StringTokenizer(retmsg.getRetMSG());
-                            int nbt = st.countTokens();
-                            for (int i = 0; i < nbt; i++) {
-                                String str = st.nextToken();
-                                if (i == 1) {
-                                    // TODO adapter au systÃ¨me Windows
-                                    int idx = str.lastIndexOf('/');
-                                    abinitPathTextField.setText((String) str.subSequence(0, idx));
-                                }
-                                printOUT(str);
-                            }
-                        } else {
-                            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                            printERR("Error: " + retmsg.getRetMSG() + " !");
-                        }
-                    }
-                } else { // Le choix n'a pas été fait
-                    printERR("Choose a destination option please at config. tab !");
-                }
-                abinitPathButton.setEnabled(true);
-            }
-        };
-
-        Thread t = new Thread(r);
-        t.start();
-}//GEN-LAST:event_abinitPathButtonActionPerformed
-
     private void connectionToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectionToggleButtonActionPerformed
         Runnable r = new Runnable() {
             @Override
@@ -2366,64 +2307,6 @@ public class MainFrame extends javax.swing.JFrame {
         t.start();
 }//GEN-LAST:event_connectionToggleButtonActionPerformed
 
-    private void remoteGatewayRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remoteGatewayRadioButtonActionPerformed
-        connectionToggleButton.setEnabled(true);
-
-        localAbinitRadioButton.setForeground(Color.blue);
-        remoteGatewayRadioButton.setForeground(Color.red);
-        remoteAbinitRadioButton.setForeground(Color.blue);
-
-        gatewayLoginPanel.setVisible(true);
-        loginPanel.setVisible(true);
-        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
-                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
-                "Remote Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
-}//GEN-LAST:event_remoteGatewayRadioButtonActionPerformed
-
-    private void remoteAbinitRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remoteAbinitRadioButtonActionPerformed
-        connectionToggleButton.setEnabled(true);
-
-        localAbinitRadioButton.setForeground(Color.blue);
-        remoteGatewayRadioButton.setForeground(Color.blue);
-        remoteAbinitRadioButton.setForeground(Color.red);
-
-        gatewayLoginPanel.setVisible(false);
-        loginPanel.setVisible(true);
-        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
-                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
-                "Remote Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
-}//GEN-LAST:event_remoteAbinitRadioButtonActionPerformed
-
-    private void localAbinitRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localAbinitRadioButtonActionPerformed
-        connectionToggleButton.setEnabled(false);
-
-        localAbinitRadioButton.setForeground(Color.red);
-        remoteGatewayRadioButton.setForeground(Color.blue);
-        remoteAbinitRadioButton.setForeground(Color.blue);
-
-        gatewayLoginPanel.setVisible(false);
-        loginPanel.setVisible(false);
-        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
-                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
-                "Local Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
-}//GEN-LAST:event_localAbinitRadioButtonActionPerformed
-
-    private void mySimulationsLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mySimulationsLabelMouseClicked
-        printGEN("--- HINT ------------------------------------------", Color.BLACK, false, true);
-        printGEN("You have to start your path with ./ and give a folder name where"
-                + " to create the abinit filetree\n", Color.RED, false, true);
-        printGEN("Example: ./MySimulations\n", new Color(0, 100, 0), false, true);
-        printGEN("The filetree will be created in your local computer and at the"
-                + " Abinit server side when using remote Abinit servers", Color.DARK_GRAY, false, true);
-        printGEN("---------------------------------------------------", Color.BLACK, false, true);
-    }//GEN-LAST:event_mySimulationsLabelMouseClicked
-
     private void pspPathLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pspPathLabelMouseClicked
         printGEN("--- HINT ------------------------------------------", Color.BLACK, false, true);
         printGEN("Please fill in the path to your local pseudopotential database\n", Color.RED, false, true);
@@ -2432,37 +2315,6 @@ public class MainFrame extends javax.swing.JFrame {
         printGEN("You can find the database at http://www.flavio-abreu.net", Color.DARK_GRAY, false, true);
         printGEN("---------------------------------------------------", Color.BLACK, false, true);
     }//GEN-LAST:event_pspPathLabelMouseClicked
-
-    private void abinitPathPathLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abinitPathPathLabelMouseClicked
-        printGEN("--- HINT ------------------------------------------", Color.BLACK, false, true);
-        printGEN("Remote path where to find the abinit program\n", Color.RED, false, true);
-        printGEN("Example: /Users/me/Abinit6.7.2/bin\n", new Color(0, 100, 0), false, true);
-        printGEN("---------------------------------------------------", Color.BLACK, false, true);
-    }//GEN-LAST:event_abinitPathPathLabelMouseClicked
-
-    private void jCB_useKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_useKey1ActionPerformed
-        if (jCB_useKey1.isSelected()) {
-            this.useKey1 = true;
-            pwdLabel.setText("Passphrase");
-            jTF_key1.setEnabled(true);
-        } else {
-            this.useKey1 = false;
-            pwdLabel.setText("Password");
-            jTF_key1.setEnabled(false);
-        }
-    }//GEN-LAST:event_jCB_useKey1ActionPerformed
-
-    private void jCB_useKey2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_useKey2ActionPerformed
-        if (jCB_useKey2.isSelected()) {
-            this.useKey2 = true;
-            pwdBFELabel.setText("Passphrase");
-            jTF_key2.setEnabled(true);
-        } else {
-            this.useKey2 = false;
-            pwdBFELabel.setText("Password");
-            jTF_key2.setEnabled(false);
-        }
-    }//GEN-LAST:event_jCB_useKey2ActionPerformed
 
     private void SSH2ClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SSH2ClientButtonActionPerformed
         Machine mach = (Machine)machineCombo.getSelectedItem();
@@ -2917,6 +2769,155 @@ public class MainFrame extends javax.swing.JFrame {
             setStateConnect();
         }
     }//GEN-LAST:event_machineComboActionPerformed
+
+    private void abinitPathButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abinitPathButtonActionPerformed
+        abinitPathButton.setEnabled(false);
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                String CMD = "whereis " + SequAbinit;
+                RetMSG retmsg;
+                if (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected()) {
+                    if (remoteExec != null) {
+                        retmsg = remoteExec.sendCommand(CMD);
+                        if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                            StringTokenizer st = new StringTokenizer(retmsg.getRetMSG());
+                            int nbt = st.countTokens();
+                            for (int i = 0; i < nbt; i++) {
+                                String str = st.nextToken();
+                                if (i == 1) {
+                                    // TODO adapter au systÃ¨me Windows
+                                    int idx = str.lastIndexOf('/');
+                                    abinitPathTextField.setText((String) str.subSequence(0, idx));
+                                }
+                                printOUT(str);
+                            }
+                        } else {
+                            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+                            printERR("Error: " + retmsg.getRetMSG() + " !");
+                        }
+                    } else {
+                        printERR("First connect to an abinit host please !");
+                    }
+                } else if (localAbinitRadioButton.isSelected()) {
+                    if (localExec != null) {
+                        retmsg = localExec.sendCommand(CMD);
+                        if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                            StringTokenizer st = new StringTokenizer(retmsg.getRetMSG());
+                            int nbt = st.countTokens();
+                            for (int i = 0; i < nbt; i++) {
+                                String str = st.nextToken();
+                                if (i == 1) {
+                                    // TODO adapter au systÃ¨me Windows
+                                    int idx = str.lastIndexOf('/');
+                                    abinitPathTextField.setText((String) str.subSequence(0, idx));
+                                }
+                                printOUT(str);
+                            }
+                        } else {
+                            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+                            printERR("Error: " + retmsg.getRetMSG() + " !");
+                        }
+                    }
+                } else { // Le choix n'a pas été fait
+                    printERR("Choose a destination option please at config. tab !");
+                }
+                abinitPathButton.setEnabled(true);
+            }
+        };
+
+        Thread t = new Thread(r);
+        t.start();
+    }//GEN-LAST:event_abinitPathButtonActionPerformed
+
+    private void abinitPathPathLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abinitPathPathLabelMouseClicked
+        printGEN("--- HINT ------------------------------------------", Color.BLACK, false, true);
+        printGEN("Remote path where to find the abinit program\n", Color.RED, false, true);
+        printGEN("Example: /Users/me/Abinit6.7.2/bin\n", new Color(0, 100, 0), false, true);
+        printGEN("---------------------------------------------------", Color.BLACK, false, true);
+    }//GEN-LAST:event_abinitPathPathLabelMouseClicked
+
+    private void mySimulationsLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mySimulationsLabelMouseClicked
+        printGEN("--- HINT ------------------------------------------", Color.BLACK, false, true);
+        printGEN("You have to start your path with ./ and give a folder name where"
+            + " to create the abinit filetree\n", Color.RED, false, true);
+        printGEN("Example: ./MySimulations\n", new Color(0, 100, 0), false, true);
+        printGEN("The filetree will be created in your local computer and at the"
+            + " Abinit server side when using remote Abinit servers", Color.DARK_GRAY, false, true);
+        printGEN("---------------------------------------------------", Color.BLACK, false, true);
+    }//GEN-LAST:event_mySimulationsLabelMouseClicked
+
+    private void jCB_useKey2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_useKey2ActionPerformed
+        if (jCB_useKey2.isSelected()) {
+            this.useKey2 = true;
+            pwdBFELabel.setText("Passphrase");
+            jTF_key2.setEnabled(true);
+        } else {
+            this.useKey2 = false;
+            pwdBFELabel.setText("Password");
+            jTF_key2.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCB_useKey2ActionPerformed
+
+    private void jCB_useKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_useKey1ActionPerformed
+        if (jCB_useKey1.isSelected()) {
+            this.useKey1 = true;
+            pwdLabel.setText("Passphrase");
+            jTF_key1.setEnabled(true);
+        } else {
+            this.useKey1 = false;
+            pwdLabel.setText("Password");
+            jTF_key1.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCB_useKey1ActionPerformed
+
+    private void remoteGatewayRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remoteGatewayRadioButtonActionPerformed
+        connectionToggleButton.setEnabled(true);
+
+        localAbinitRadioButton.setForeground(Color.blue);
+        remoteGatewayRadioButton.setForeground(Color.red);
+        remoteAbinitRadioButton.setForeground(Color.blue);
+
+        gatewayLoginPanel.setVisible(true);
+        loginPanel.setVisible(true);
+        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
+            "Remote Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+            javax.swing.border.TitledBorder.DEFAULT_POSITION,
+            new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
+    }//GEN-LAST:event_remoteGatewayRadioButtonActionPerformed
+
+    private void remoteAbinitRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remoteAbinitRadioButtonActionPerformed
+        connectionToggleButton.setEnabled(true);
+
+        localAbinitRadioButton.setForeground(Color.blue);
+        remoteGatewayRadioButton.setForeground(Color.blue);
+        remoteAbinitRadioButton.setForeground(Color.red);
+
+        gatewayLoginPanel.setVisible(false);
+        loginPanel.setVisible(true);
+        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
+            "Remote Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+            javax.swing.border.TitledBorder.DEFAULT_POSITION,
+            new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
+    }//GEN-LAST:event_remoteAbinitRadioButtonActionPerformed
+
+    private void localAbinitRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localAbinitRadioButtonActionPerformed
+        connectionToggleButton.setEnabled(false);
+
+        localAbinitRadioButton.setForeground(Color.red);
+        remoteGatewayRadioButton.setForeground(Color.blue);
+        remoteAbinitRadioButton.setForeground(Color.blue);
+
+        gatewayLoginPanel.setVisible(false);
+        loginPanel.setVisible(false);
+        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
+            "Local Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+            javax.swing.border.TitledBorder.DEFAULT_POSITION,
+            new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
+    }//GEN-LAST:event_localAbinitRadioButtonActionPerformed
 
     public void sendCommand(String CMD) /*throws CMDException*/ {
         RetMSG retmsg;
