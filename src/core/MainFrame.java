@@ -2916,10 +2916,6 @@ public class MainFrame extends javax.swing.JFrame {
             this.currentMachine = mach;   
             setStateConnect();
         }
-        else
-        {
-            printERR("Please select a machine first !");
-        }
     }//GEN-LAST:event_machineComboActionPerformed
 
     public void sendCommand(String CMD) /*throws CMDException*/ {

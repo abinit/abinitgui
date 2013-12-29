@@ -79,14 +79,17 @@ public class Machine
     private SSHTunnel sshtun;
     private boolean isConnected;
     
+    private static int last_port;
+    
     public Machine()
     {
         this.remoteConnect = null;
         this.gatewayConnect = null;
         this.remoteExec = null;
-        lport = -1;
+        lport = 0;
         sshtun = null;
         isConnected = false;
+        last_port = 2568;
     }
     
     public ConnectionInfo getRemoteConnect()
@@ -184,12 +187,15 @@ public class Machine
                     if (!abLogin.equals("") && !abHostname.equals("")) {
                         // Début de la création du tunnel SSH
                         mf.printOUT("Connecting to " + gwHostname + " as " + gwLogin + ".");
-                        sshtun = new SSHTunnel(mf, gwLogin, gwHostname, 22, abHostname, 2568, 22);
+                        sshtun = new SSHTunnel(mf, gwLogin, gwHostname, 22, abHostname, last_port++, 22);
                         String keyFile = gatewayConnect.getKeyPath();
                         if (keyFile == null || keyFile.equals("")) {
                             keyFile = null;
                         }
-                        sshtun.setPrvkeyOrPwdOnly(keyFile, gatewayConnect.getPassword().toString(), gatewayConnect.isUseKey());
+                        if(gatewayConnect.getPassword() == null)
+                            sshtun.setPrvkeyOrPwdOnly(keyFile, null, gatewayConnect.isUseKey());
+                        else
+                            sshtun.setPrvkeyOrPwdOnly(keyFile, gatewayConnect.getPassword().toString(), gatewayConnect.isUseKey());
                         lport = sshtun.start();
                         if (lport > 0 && lport < 65536) {
                             mf.printOUT("Connected to " + gwHostname + " as " + gwLogin + ".");
@@ -199,7 +205,10 @@ public class Machine
                             if (keyFile == null || keyFile.equals("")) {
                                 keyFile = null;
                             }
-                            remoteExec.setPrvkeyOrPwdOnly(keyFile, remoteConnect.getPassword().toString(), remoteConnect.isUseKey());
+                            if(remoteConnect.getPassword() == null)
+                                remoteExec.setPrvkeyOrPwdOnly(keyFile, null, remoteConnect.isUseKey());
+                            else
+                                remoteExec.setPrvkeyOrPwdOnly(keyFile, remoteConnect.getPassword().toString(), remoteConnect.isUseKey());
                             if (remoteExec.start()) {
                                 isConnected = true;
                                 mf.printOUT("Connected to " + abHostname + " as " + abLogin + ".");
@@ -237,7 +246,10 @@ public class Machine
                     if (keyFile.equals("")) {
                         keyFile = null;
                     }
-                    remoteExec.setPrvkeyOrPwdOnly(keyFile, remoteConnect.getPassword().toString(), remoteConnect.isUseKey());
+                    if(remoteConnect.getPassword() == null)
+                        remoteExec.setPrvkeyOrPwdOnly(keyFile, null, remoteConnect.isUseKey());
+                    else
+                        remoteExec.setPrvkeyOrPwdOnly(keyFile, remoteConnect.getPassword().toString(), remoteConnect.isUseKey());
                     if (remoteExec.start()) {
                         mf.printOUT("Connected to " + abHostname + " as " + abLogin + ".");
                         //mf.getConnectionToggleButton().setText("Disconnect");
@@ -301,7 +313,16 @@ public class Machine
                 String host = "localhost";
                 String user = remoteConnect.getLogin();
                 String keyFile = remoteConnect.getKeyPath();
-                String pass = remoteConnect.getPassword().toString();
+                String pass = null;
+                if(remoteConnect.getPassword() != null)
+                {
+                    pass = remoteConnect.getPassword().toString();
+                }
+                else
+                {
+                    mf.printERR("Please provide a password before connection");
+                    return null;
+                }
                 if (remoteConnect.isUseKey()) {
                     ssh2 = new MySSHTerm(mf, host, lport, user, keyFile, pass);
                 } else {
@@ -317,6 +338,15 @@ public class Machine
             String user = remoteConnect.getLogin();
             String keyFile = remoteConnect.getKeyPath();
             String pass = remoteConnect.getPassword().toString();
+            if(remoteConnect.getPassword() != null)
+            {
+                pass = remoteConnect.getPassword().toString();
+            }
+            else
+            {
+                mf.printERR("Please provide a password before connection");
+                return null;
+            }
             if (remoteConnect.isUseKey()) {
                 ssh2 = new MySSHTerm(mf, host, 22, user, keyFile, pass);
             } else {
@@ -340,7 +370,16 @@ public class Machine
                 String host = "localhost";
                 String user = remoteConnect.getLogin();
                 String keyFile = remoteConnect.getKeyPath();
-                String pass = remoteConnect.getPassword().toString();
+                String pass = null;
+                if(remoteConnect.getPassword() != null)
+                {
+                    pass = remoteConnect.getPassword().toString();
+                }
+                else
+                {
+                    mf.printERR("Please provide a password !");
+                    return null;
+                }
                 if (remoteConnect.isUseKey()) {
                     client = new MySFTP(mf, host, lport, user, keyFile, pass);
                 } else {
@@ -355,7 +394,16 @@ public class Machine
             String host = remoteConnect.getHost();
             String user = remoteConnect.getLogin();
             String keyFile = remoteConnect.getKeyPath();
-            String pass = remoteConnect.getPassword().toString();
+            String pass = null;
+            if(remoteConnect.getPassword() != null)
+            {
+                pass = remoteConnect.getPassword().toString();
+            }
+            else
+            {
+                mf.printERR("Please provide a password !");
+                return null;
+            }
             if (remoteConnect.isUseKey()) {
                 client = new MySFTP(mf, host, 22, user, keyFile, pass);
             } else {
