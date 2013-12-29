@@ -1,0 +1,11 @@
+green: !machine
+  abinitPath: /homs/naps/abinit/7.5.3-private/build/src/98_main/
+  gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: null, login: ygillet,
+    password: null, useKey: false}
+  name: green
+  remoteConnect: !connectioninfo {host: green.cism.ucl.ac.be, keyPath: null, login: ygillet,
+    password: null, useKey: false}
+  remoteExec: null
+  simulationPath: ./MySims
+  type: 2
+

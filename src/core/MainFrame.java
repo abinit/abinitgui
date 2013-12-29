@@ -52,7 +52,7 @@ import inputgen.GeomDialog;
 import inputgen.WaDeDialog;
 import inputgen.InOuDialog;
 import inputgen.ReReDialog;
-import projects.MachinePane;
+import projects.MachineDialog;
 import variables.AllInputVars;
 import inputgen.Atom;
 import inputgen.AtomEditor;
@@ -97,6 +97,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.jdom.*;
+import projects.MachineDatabase;
 
 //@SuppressWarnings({"deprecation", "serial"})
 public class MainFrame extends javax.swing.JFrame {
@@ -121,7 +122,7 @@ public class MainFrame extends javax.swing.JFrame {
     private WaDeDialog wadeD;
     private InOuDialog inouD;
     private TheoDialog theoD;
-    private MachinePane machinePane;
+    private MachineDialog machineD;
     //private VarsHelp varsHelp;
     // Avant la version 6 de ABINIT, il y avait deux exécutables différents
     private String SequAbinit = "abinit";
@@ -151,6 +152,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Simulation simulation;
     private SubmissionScriptFrame submitScriptFrame;
     private final AllInputVars allInputVars;
+    private MachineDatabase machineDatabase;
 
     /**
      * Creates new form MainFrame
@@ -210,7 +212,8 @@ public class MainFrame extends javax.swing.JFrame {
         theoD = new TheoDialog(this, false);
         theoD.setTitle("..:: Theory (DFT) ::..");
         
-        machinePane = new MachinePane(this);
+        machineD = new MachineDialog(this, false);
+        machineD.setTitle(" Select machine !");
 
         //varsHelp = new VarsHelp();
         //varsHelp.setTitle("..:: Abinit variables help ::..");
@@ -287,16 +290,6 @@ public class MainFrame extends javax.swing.JFrame {
         /**
          * End of script section *
          */
-        projectManager = new ProjectFrame(this);
-        projectManager.setVisible(false);
-        
-        // Default values
-        RemoteJob remoteJob = new RemoteJob();
-        // Default values
-        SubmissionScript script = new SGEScript(this);
-        remoteJob.setScript(script);
-        simulation = new Simulation();
-        simulation.setRemoteJob(remoteJob);
 
         guiEditor = new GUIEditor(this);
         allInputVars = new AllInputVars(this);
@@ -307,6 +300,34 @@ public class MainFrame extends javax.swing.JFrame {
         localAbinitRadioButton.setVisible(true);
 
         useExtIFRadioButtonActionPerformed(null);
+        
+        /**
+         * Projects section
+         */
+        
+        machineDatabase = new MachineDatabase();
+        try{
+            machineDatabase.loadFromFile("machines.yml");
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+                
+        projectManager = new ProjectFrame(this);
+        projectManager.setVisible(false);
+        
+        // Default values
+        RemoteJob remoteJob = new RemoteJob();
+        // Default values
+        SubmissionScript script = new SGEScript(this);
+        remoteJob.setScript(script);
+        simulation = new Simulation();
+        simulation.setRemoteJob(remoteJob);
+        
+        /**
+         * End of projects section
+         */
 
     }
 
@@ -493,6 +514,7 @@ public class MainFrame extends javax.swing.JFrame {
         saveMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
         LoadMenuItem = new javax.swing.JMenuItem();
+        editMachinesMenuItem = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
         outputMSGMenuItem = new javax.swing.JMenuItem();
         clearOutMSGMenuItem = new javax.swing.JMenuItem();
@@ -1355,6 +1377,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         fileMenu.add(LoadMenuItem);
+
+        editMachinesMenuItem.setText("Edit machines");
+        editMachinesMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editMachinesMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(editMachinesMenuItem);
 
         mainMenuBar.add(fileMenu);
 
@@ -2835,6 +2865,10 @@ public class MainFrame extends javax.swing.JFrame {
         guiEditor.loadFile(openFileTextField.getText());
     }//GEN-LAST:event_testAnalyze1ActionPerformed
 
+    private void editMachinesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMachinesMenuItemActionPerformed
+        machineD.setVisible(true);
+    }//GEN-LAST:event_editMachinesMenuItemActionPerformed
+
     public void sendCommand(String CMD) /*throws CMDException*/ {
         RetMSG retmsg;
         if (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected()) {
@@ -3433,6 +3467,7 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JToggleButton connectionToggleButton;
     javax.swing.JButton createButton;
     javax.swing.JButton displayFileButton;
+    javax.swing.JMenuItem editMachinesMenuItem;
     javax.swing.JButton editScripts;
     javax.swing.JPanel emptyPanel;
     javax.swing.JMenu fileMenu;
@@ -3542,5 +3577,10 @@ public class MainFrame extends javax.swing.JFrame {
     
     public JTextField getPspPathTextField() {
         return pspPathTextField;
+    }
+
+    public MachineDatabase getMachineDatabase() 
+    {
+        return machineDatabase;
     }
 }

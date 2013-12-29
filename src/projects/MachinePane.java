@@ -7,7 +7,12 @@
 package projects;
 
 import core.MainFrame;
+import core.Password;
 import java.awt.Color;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -16,41 +21,161 @@ import java.awt.Color;
 public class MachinePane extends javax.swing.JPanel {
 
     private MainFrame mf;
+    private Machine machine;
     
     /**
      * Creates new form MachinePane
      */
     public MachinePane(MainFrame mf) {
         this.mf = mf;
+        this.machine = null;
         initComponents();
+        remoteGatewayRadioButton.doClick();
+    }
+    
+    public void refresh()
+    {
+        MachineDatabase ddb = this.mf.getMachineDatabase();
+        DefaultListModel<Machine> model = new DefaultListModel<>();
+        for(Machine mach : ddb)
+        {
+            model.addElement(mach);
+        }
+        machineList.setModel(model);
     }
     
     public void fillFieldsFromMachine(Machine machine)
     {
-        switch(machine.getType())
+        this.machine = machine;
+        setEmptyFields();
+        if(machine != null)
         {
-            case Machine.GATEWAY_MACHINE:
-                this.remoteGatewayRadioButton.setSelected(true);
-                this.gatewayHostTextField.setText(machine.getGatewayConnect().getHost());
-                this.gatewayLoginTextField.setText(machine.getGatewayConnect().getLogin());
-                this.gatewayPasswordField.setText(machine.getGatewayConnect().getPassword());
-                this.jCB_useKey2.setSelected(machine.getGatewayConnect().isUseKey());
-            case Machine.REMOTE_MACHINE:
-                this.remoteAbinitRadioButton.setSelected(true);
-                this.hostTextField.setText(machine.getRemoteConnect().getHost());
-                this.loginTextField.setText(machine.getRemoteConnect().getLogin());
-                this.pwdPasswordField.setText(machine.getRemoteConnect().getPassword());
-                this.jCB_useKey1.setSelected(machine.getRemoteConnect().isUseKey());
-            case Machine.LOCAL_MACHINE:
-                this.localAbinitRadioButton.setSelected(true);
+            if(machine.getName() != null)
+                this.nameField.setText(machine.getName());
+            
+            if(machine.getAbinitPath() != null)
                 this.abinitPathTextField.setText(machine.getAbinitPath());
+            
+            if(machine.getSimulationPath() != null)
                 this.mySimulationsTextField.setText(machine.getSimulationPath());
+            
+            if(machine.getType() == Machine.REMOTE_MACHINE || 
+                    machine.getType() == Machine.GATEWAY_MACHINE)
+            {
+                if(machine.getRemoteConnect() != null)
+                {
+                    if(machine.getRemoteConnect().getHost() != null)
+                        this.hostTextField.setText(machine.getRemoteConnect().getHost());
+                    
+                    if(machine.getRemoteConnect().getLogin() != null)
+                        this.loginTextField.setText(machine.getRemoteConnect().getLogin());
+                    
+                    if(machine.getRemoteConnect().getPassword() != null)
+                        this.pwdPasswordField.setText(machine.getRemoteConnect().getPassword().toString());
+                    
+                    this.jCB_useKey1.setSelected(machine.getRemoteConnect().isUseKey());
+                }
+                
+                if(machine.getType() == Machine.GATEWAY_MACHINE)
+                {
+                    if(machine.getGatewayConnect().getHost() != null)
+                        this.gatewayHostTextField.setText(machine.getGatewayConnect().getHost());
+                    
+                    if(machine.getGatewayConnect().getLogin() != null)
+                        this.gatewayLoginTextField.setText(machine.getGatewayConnect().getLogin());
+                    
+                    if(machine.getGatewayConnect().getPassword() != null)
+                        this.gatewayPasswordField.setText(machine.getGatewayConnect().getPassword().toString());
+                    
+                    this.jCB_useKey2.setSelected(machine.getGatewayConnect().isUseKey());
+                }
+            }
+        
+            if(machine.getType() == Machine.GATEWAY_MACHINE)
+            {
+                this.remoteGatewayRadioButton.setSelected(true);
+            }
+            else if(machine.getType() == Machine.REMOTE_MACHINE)
+            {
+                this.remoteAbinitRadioButton.setSelected(true);
+            }
+            else if(machine.getType() == Machine.LOCAL_MACHINE)
+            {
+                this.localAbinitRadioButton.setSelected(true);
+            }
         }
     }
     
-    public Machine getMachineFromFields()
+    public void createNewMachine()
     {
-        return null;
+        this.machine = new Machine();
+        
+        this.mf.getMachineDatabase().addMachine(this.machine);
+        
+        setEmptyFields();
+    }
+    
+    private void setEmptyFields()
+    {
+        this.gatewayHostTextField.setText("");
+        this.gatewayLoginTextField.setText("");
+        this.gatewayPasswordField.setText("");
+        this.jCB_useKey2.setSelected(false);
+        this.hostTextField.setText("");
+        this.loginTextField.setText("");
+        this.pwdPasswordField.setText("");
+        this.jCB_useKey1.setSelected(false);
+        this.abinitPathTextField.setText("");
+        this.mySimulationsTextField.setText("");
+        this.nameField.setText("");
+    }
+    
+    public void saveMachineFromFields()
+    {
+        if(this.machine != null)
+        {
+            this.machine.setAbinitPath(this.abinitPathTextField.getText());
+            this.machine.setSimulationPath(this.mySimulationsTextField.getText());
+            this.machine.setName(this.nameField.getText());
+            
+            if(remoteAbinitRadioButton.isSelected() || remoteGatewayRadioButton.isSelected())
+            {
+                ConnectionInfo infos = new ConnectionInfo();
+                infos.setHost(this.hostTextField.getText());
+                infos.setLogin(this.loginTextField.getText());
+                infos.setPassword(new Password(new String(this.pwdPasswordField.getPassword())));
+                infos.setUseKey(this.jCB_useKey1.isSelected());
+                this.machine.setRemoteConnect(infos);
+                
+                if(remoteGatewayRadioButton.isSelected())
+                {
+                    ConnectionInfo infosgw = new ConnectionInfo();
+                    infosgw.setHost(this.gatewayHostTextField.getText());
+                    infosgw.setLogin(this.gatewayLoginTextField.getText());
+                    infosgw.setPassword(new Password(new String(this.gatewayPasswordField.getPassword())));
+                    infosgw.setUseKey(this.jCB_useKey2.isSelected());
+                    this.machine.setGatewayConnect(infosgw);
+                }
+            }
+            
+            if(remoteGatewayRadioButton.isSelected())
+            {
+                this.machine.setType(Machine.GATEWAY_MACHINE);
+            }
+            else if(remoteAbinitRadioButton.isSelected())
+            {
+                this.machine.setType(Machine.REMOTE_MACHINE);
+            }
+            else if(localAbinitRadioButton.isSelected())
+            {
+                this.machine.setType(Machine.LOCAL_MACHINE);
+            }
+            try {
+                mf.getMachineDatabase().saveToFile("machines.yml");
+            } catch (IOException ex) {
+                Logger.getLogger(MachinePane.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     /**
@@ -62,6 +187,7 @@ public class MachinePane extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        whereIsAbinitbuttonGroup = new javax.swing.ButtonGroup();
         whereIsAbinitLabel = new javax.swing.JLabel();
         localAbinitRadioButton = new javax.swing.JRadioButton();
         remoteAbinitRadioButton = new javax.swing.JRadioButton();
@@ -88,10 +214,18 @@ public class MachinePane extends javax.swing.JPanel {
         mySimulationsTextField = new javax.swing.JTextField();
         abinitPathPathLabel = new javax.swing.JLabel();
         abinitPathTextField = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        machineList = new javax.swing.JList();
+        newButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        nameField = new javax.swing.JTextField();
+        nameLabel = new javax.swing.JLabel();
 
         whereIsAbinitLabel.setForeground(java.awt.Color.red);
         whereIsAbinitLabel.setText("ABINIT host location ?");
 
+        whereIsAbinitbuttonGroup.add(localAbinitRadioButton);
         localAbinitRadioButton.setForeground(java.awt.Color.blue);
         localAbinitRadioButton.setText("Local (only for Linux hosts)");
         localAbinitRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +234,7 @@ public class MachinePane extends javax.swing.JPanel {
             }
         });
 
+        whereIsAbinitbuttonGroup.add(remoteAbinitRadioButton);
         remoteAbinitRadioButton.setForeground(java.awt.Color.blue);
         remoteAbinitRadioButton.setText("Remote");
         remoteAbinitRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -108,8 +243,8 @@ public class MachinePane extends javax.swing.JPanel {
             }
         });
 
+        whereIsAbinitbuttonGroup.add(remoteGatewayRadioButton);
         remoteGatewayRadioButton.setForeground(java.awt.Color.red);
-        remoteGatewayRadioButton.setSelected(true);
         remoteGatewayRadioButton.setText("Remote (behind a gateway)");
         remoteGatewayRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,12 +392,48 @@ public class MachinePane extends javax.swing.JPanel {
             }
         });
 
+        machineList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        machineList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                machineListValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(machineList);
+
+        newButton.setText("New");
+        newButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setText("Delete");
+
+        saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
+        nameLabel.setText("Name of the machine: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(newButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(gatewayLoginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -272,37 +443,56 @@ public class MachinePane extends javax.swing.JPanel {
                     .addComponent(mySimulationsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(abinitPathPathLabel)
                     .addComponent(abinitPathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(whereIsAbinitLabel)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(localAbinitRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(remoteAbinitRadioButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(remoteGatewayRadioButton)))
+                        .addComponent(remoteGatewayRadioButton))
+                    .addComponent(whereIsAbinitLabel)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(nameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(whereIsAbinitLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(localAbinitRadioButton)
-                    .addComponent(remoteAbinitRadioButton)
-                    .addComponent(remoteGatewayRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gatewayLoginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mySimulationsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mySimulationsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(abinitPathPathLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(abinitPathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(newButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(whereIsAbinitLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(localAbinitRadioButton)
+                            .addComponent(remoteAbinitRadioButton)
+                            .addComponent(remoteGatewayRadioButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(gatewayLoginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mySimulationsLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mySimulationsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(abinitPathPathLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(abinitPathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -392,10 +582,24 @@ public class MachinePane extends javax.swing.JPanel {
         mf.printGEN("---------------------------------------------------", Color.BLACK, false, true);
     }//GEN-LAST:event_abinitPathPathLabelMouseClicked
 
+    private void machineListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_machineListValueChanged
+        Machine mach = (Machine)(machineList.getSelectedValue());
+        fillFieldsFromMachine(mach);
+    }//GEN-LAST:event_machineListValueChanged
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        saveMachineFromFields();
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        createNewMachine();
+    }//GEN-LAST:event_newButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel abinitPathPathLabel;
     private javax.swing.JTextField abinitPathTextField;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JTextField gatewayHostTextField;
     private javax.swing.JPanel gatewayLoginPanel;
     private javax.swing.JTextField gatewayLoginTextField;
@@ -405,6 +609,7 @@ public class MachinePane extends javax.swing.JPanel {
     private javax.swing.JTextField hostTextField;
     private javax.swing.JCheckBox jCB_useKey1;
     private javax.swing.JCheckBox jCB_useKey2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTF_key1;
     private javax.swing.JTextField jTF_key2;
     private javax.swing.JRadioButton localAbinitRadioButton;
@@ -412,13 +617,19 @@ public class MachinePane extends javax.swing.JPanel {
     private javax.swing.JLabel loginLabel;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JTextField loginTextField;
+    private javax.swing.JList machineList;
     private javax.swing.JLabel mySimulationsLabel;
     private javax.swing.JTextField mySimulationsTextField;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JButton newButton;
     private javax.swing.JLabel pwdBFELabel;
     private javax.swing.JLabel pwdLabel;
     private javax.swing.JPasswordField pwdPasswordField;
     private javax.swing.JRadioButton remoteAbinitRadioButton;
     private javax.swing.JRadioButton remoteGatewayRadioButton;
+    private javax.swing.JButton saveButton;
     private javax.swing.JLabel whereIsAbinitLabel;
+    private javax.swing.ButtonGroup whereIsAbinitbuttonGroup;
     // End of variables declaration//GEN-END:variables
 }

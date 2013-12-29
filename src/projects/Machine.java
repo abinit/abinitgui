@@ -63,10 +63,18 @@ public class Machine
     private int type;
     private String abinitPath;
     private String simulationPath;
+    private String name;
     
     public final static int LOCAL_MACHINE = 0;
     public final static int REMOTE_MACHINE = 1;
     public final static int GATEWAY_MACHINE = 2;
+    
+    public Machine()
+    {
+        this.remoteConnect = null;
+        this.gatewayConnect = null;
+        this.remoteExec = null;
+    }
     
     public ConnectionInfo getRemoteConnect()
     {
@@ -105,28 +113,6 @@ public class Machine
     public void setType(int type) {
         this.type = type;
     }
-    
-    public void dumpToFile(String fileName)
-    {
-        Yaml yaml = new Yaml();
-        
-        yaml.dump(this);
-    }
-    
-    public void loadFromFile(String fileName) throws IOException
-    {
-        Yaml yaml = new Yaml();
-        
-        Object o = yaml.load(new FileReader(fileName));
-        
-        if(o instanceof Machine)
-        {
-            Machine rm = (Machine)o;
-            this.setRemoteConnect(rm.remoteConnect);
-            this.setGatewayConnect(rm.gatewayConnect);
-            this.setRemoteExec(rm.remoteExec);
-        }
-    }
 
     public String getAbinitPath() 
     {
@@ -146,5 +132,18 @@ public class Machine
     public void setSimulationPath(String simulationPath)
     {
         this.simulationPath = simulationPath;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String toString()
+    {
+        return this.name;
     }
 }

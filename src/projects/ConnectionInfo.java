@@ -6,6 +6,8 @@
 
 package projects;
 
+import core.Password;
+
 /**
  *
  * @author yannick
@@ -13,7 +15,7 @@ package projects;
 public class ConnectionInfo 
 {
     private String login;
-    private String password;
+    private Password password;
     private boolean useKey;
     private String keyPath;
     private String host;
@@ -26,11 +28,11 @@ public class ConnectionInfo
         this.login = login;
     }
 
-    public String getPassword() {
+    public Password getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(Password password) {
         this.password = password;
     }
 

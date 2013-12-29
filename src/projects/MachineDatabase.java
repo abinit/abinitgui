@@ -6,39 +6,85 @@
 
 package projects;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  *
  * @author yannick
  */
-public class MachineDatabase 
+public class MachineDatabase implements Iterable<Machine>
 {
-    private ArrayList<Machine> list;
+    private HashMap<String,Machine> list;
     
     public MachineDatabase()
     {
-        list = new ArrayList<>();
+        list = new HashMap<>();
     }
     
     public void addMachine(Machine rm)
     {
-        list.add(rm);
+        list.put(rm.getName(),rm);
     }
     
-    public boolean removeMachine(Machine rm)
+    public void removeMachine(Machine rm)
     {
-        return list.remove(rm);
+        list.remove(rm.getName());
     }
     
-    public ArrayList<Machine> getMachineList()
+    public Machine getMachine(String name)
+    {
+        return list.get(name);
+    }
+    
+    public HashMap<String,Machine> getMachineList()
     {
         return list;
     }
     
     public Iterator<Machine> iterator()
     {
-        return list.iterator();
+        return list.values().iterator();
+    }
+    
+    public void loadFromFile(String fileName) throws IOException
+    {
+        Yaml yaml = new Yaml(new ProjectConstructor());
+        Object data = yaml.load(new FileReader(fileName));
+        this.list = (HashMap<String,Machine>)data;
+    }
+    
+    public void saveToFile(String fileName) throws IOException
+    {
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        options.setIndent(4);
+        options.setPrettyFlow(true);
+        Yaml yaml = new Yaml(new ProjectRepresenter(), new DumperOptions());
+        
+        String txt = yaml.dump(this.list);
+        System.out.println(txt);
+        
+        PrintWriter pw = new PrintWriter(new FileWriter(fileName));
+        if(pw.checkError())
+        {
+                System.err.println("Error while writing");
+        }
+
+        pw.println(txt);
+
+        if(pw.checkError())
+        {
+                System.err.println("Error while writing");
+        }
+
+        pw.close();
     }
 }
