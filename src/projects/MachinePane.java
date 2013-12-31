@@ -33,6 +33,7 @@ public class MachinePane extends javax.swing.JPanel {
     public void setMainFrame(MainFrame mf)
     {
         this.mf = mf;
+        submissionScriptPanel1.setMainFrame(mf);
     }
     
     public void refresh()
@@ -105,6 +106,8 @@ public class MachinePane extends javax.swing.JPanel {
             {
                 this.localAbinitRadioButton.setSelected(true);
             }
+            
+            this.submissionScriptPanel1.setScript(machine.getSubmissionScript());
         }
     }
     
@@ -182,6 +185,8 @@ public class MachinePane extends javax.swing.JPanel {
             } catch (IOException ex) {
                 Logger.getLogger(MachinePane.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            this.machine.setSubmissionScript(this.submissionScriptPanel1.getScript());
         }
         
         mf.refreshMachines();

@@ -28,21 +28,74 @@ public class SubmissionScriptPanel extends javax.swing.JPanel {
     {
         this.mf = mf;
     }
+    
+    public void setEmptyFields()
+    {
+        typeChooser.setSelectedIndex(-1);
+        memField.setText("");
+        nbProcsField.setText("");
+        mailField.setText("");
+        preProcessArea.setText("");
+        postProcessArea.setText("");
+        timeField.setText("");
+    }
 
     public void setScript(SubmissionScript script) {
+        setEmptyFields();
         this.script = script;
 
-        typeChooser.setSelectedItem(script.getSystem());
-        mailField.setText(script.getEmail());
-        memField.setText(script.getMemoryMax());
-        nbProcsField.setText(script.getNbProcs());
-        parallelBox.setSelected(script.isParallel());
-        preProcessArea.setText(script.getPreProcessPart());
-        postProcessArea.setText(script.getPostProcessPart());
-        timeField.setText(script.getTimeLimit());
+        if(script != null)
+        {
+            if(script.getSystem() != null)
+                typeChooser.setSelectedItem(script.getSystem());
+            if(script.getEmail() != null)
+                mailField.setText(script.getEmail());
+            if(script.getMemoryMax() != null)
+                memField.setText(script.getMemoryMax());
+            if(script.getNbProcs() != null)
+                nbProcsField.setText(script.getNbProcs());
+            parallelBox.setSelected(script.isParallel());
+            if(script.getPreProcessPart() != null)
+                preProcessArea.setText(script.getPreProcessPart());
+            if(script.getPostProcessPart() != null)
+                postProcessArea.setText(script.getPostProcessPart());
+            if(script.getTimeLimit() != null)
+                timeField.setText(script.getTimeLimit());
+        }
     }
 
     public SubmissionScript getScript() {
+                // Save to script instance !
+        int index = typeChooser.getSelectedIndex();
+        if (index == -1) {
+            mf.printERR("Please choose a type !");
+        }
+        String type = (String) typeChooser.getSelectedItem();
+        if (script == null || !type.equals(script.getSystem())) {
+            // Rebuilt the script !
+            switch (type) {
+                case "SGE":
+                    script = new SGEScript(mf);
+                    break;
+                case "Frontend":
+                    script = new FrontendScript(mf);
+                    break;
+                case "SLURM":
+                    script = new SLURMScript(mf);
+                    break;
+                default:
+                    mf.printERR("The type "+type+" is not yet implemented");
+                    break;
+            }
+        }
+        script.setEmail(mailField.getText());
+        script.setMemoryMax(memField.getText());
+        script.setNbProcs(nbProcsField.getText());
+        script.setParallel(parallelBox.isSelected());
+        script.setPreProcessPart(preProcessArea.getText());
+        script.setPostProcessPart(postProcessArea.getText());
+        script.setTimeLimit(timeField.getText());
+        
         return script;
     }
 
@@ -190,13 +243,9 @@ public class SubmissionScriptPanel extends javax.swing.JPanel {
 
     private void typeChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeChooserActionPerformed
         // Save to script instance !
-        int index = typeChooser.getSelectedIndex();
-        if (index == -1) {
-            mf.printERR("Please choose a type !");
-        }
         String type = (String) typeChooser.getSelectedItem();
-
-        if (type.equals("Frontend")) {
+        
+        if (type == null || type.equals("Frontend")) {
             EnableSubmitFields(false);
         } else {
             EnableSubmitFields(true);

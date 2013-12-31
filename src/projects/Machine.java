@@ -109,6 +109,16 @@ public class Machine
         return gatewayConnect;
     }
     
+    public SubmissionScript getSubmissionScript()
+    {
+        return submissionScript;
+    }
+    
+    public void setSubmissionScript(SubmissionScript script)
+    {
+        this.submissionScript = script;
+    }
+    
     public void setGatewayConnect(ConnectionInfo info)
     {
         this.gatewayConnect = info;

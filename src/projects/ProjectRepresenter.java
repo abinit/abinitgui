@@ -7,6 +7,7 @@
 package projects;
 
 import core.Password;
+import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.Tag;
 import org.yaml.snakeyaml.representer.Represent;
@@ -23,9 +24,13 @@ import variables.Variable;
 public class ProjectRepresenter extends Representer {
     	public ProjectRepresenter() {
 
-		this.addClassTag(Machine.class,new Tag("!machine"));
-		this.addClassTag(ConnectionInfo.class,new Tag("!connectioninfo"));
-		this.representers.put(Password.class, new RepresentPassword());
+            this.addClassTag(Machine.class,new Tag("!machine"));
+            this.addClassTag(ConnectionInfo.class,new Tag("!connectioninfo"));
+            this.addClassTag(SubmissionScript.class, new Tag("!submissionscript"));
+            this.addClassTag(SGEScript.class, new Tag("!sgescript"));
+            this.addClassTag(SLURMScript.class, new Tag("!slurmscript"));
+            this.addClassTag(FrontendScript.class, new Tag("!frontendscript"));
+            this.representers.put(Password.class, new RepresentPassword());
 	}
 	
 	class RepresentPassword implements Represent

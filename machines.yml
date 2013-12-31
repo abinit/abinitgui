@@ -1,19 +1,25 @@
 - !machine
   abinitPath: /homs/naps/abinit/7.5.3-private/build/src/98_main/
   gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: null, login: tuto01,
-    password: null, useKey: false}
+    password: !password '6i2NGjig240=', useKey: false}
   name: green
   remoteConnect: !connectioninfo {host: green.cism.ucl.ac.be, keyPath: null, login: tuto01,
-    password: null, useKey: false}
+    password: !password '6i2NGjig240=', useKey: false}
   simulationPath: ./MySims
+  submissionScript: !sgescript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+    inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false, postProcessPart: '',
+    preProcessPart: '', simName: simulation, system: SGE, timeLimit: '23:59:59'}
   type: 2
 - !machine
   abinitPath: ''
   gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: null, login: tuto01,
-    password: null, useKey: false}
+    password: !password '6i2NGjig240=', useKey: false}
   name: Manneback
   remoteConnect: !connectioninfo {host: manneback.cism.ucl.ac.be, keyPath: null, login: tuto01,
-    password: null, useKey: false}
+    password: !password '6i2NGjig240=', useKey: false}
   simulationPath: ./MySims
+  submissionScript: !slurmscript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+    inputPath: '', logPath: '', memoryMax: '1200', nbProcs: '4', parallel: true, postProcessPart: '',
+    preProcessPart: '', simName: simulation, system: SLURM, timeLimit: '23:59:59'}
   type: 2
 

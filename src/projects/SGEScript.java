@@ -55,11 +55,16 @@ public class SGEScript extends AbstractSubmissionScript
 {
     private MainFrame mf;
     
-    public SGEScript(MainFrame mf)
+    public SGEScript()
     {
-        this.mf = mf;
         this.system = "SGE";
         this.parallel = true;
+    }
+    
+    public SGEScript(MainFrame mf)
+    {
+        this();
+        this.mf = mf;
     }
     
     @Override

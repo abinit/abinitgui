@@ -55,10 +55,15 @@ public class SLURMScript extends AbstractSubmissionScript
 {
     private MainFrame mf;
     
+    public SLURMScript()
+    {
+        this.system = "SLURM";
+    }
+    
     public SLURMScript(MainFrame mf)
     {
+        this();
         this.mf = mf;
-        this.system = "SLURM";
     }
     
     @Override

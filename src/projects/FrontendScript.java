@@ -63,10 +63,15 @@ public class FrontendScript extends AbstractSubmissionScript
 {
     private MainFrame mf;
     
+    public FrontendScript()
+    {
+        this.system = "Frontend";
+    }
+    
     public FrontendScript(MainFrame mf)
     {
+        this();
         this.mf = mf;
-        this.system = "Frontend";
     }
     
     @Override
