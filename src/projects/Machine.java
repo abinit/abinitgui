@@ -68,6 +68,7 @@ public class Machine
     private String abinitPath;
     private String simulationPath;
     private String name;
+    private SubmissionScript submissionScript;
     
     public final static int LOCAL_MACHINE = 0;
     public final static int REMOTE_MACHINE = 1;
@@ -86,6 +87,7 @@ public class Machine
         this.remoteConnect = null;
         this.gatewayConnect = null;
         this.remoteExec = null;
+        this.submissionScript = null;
         lport = 0;
         sshtun = null;
         isConnected = false;

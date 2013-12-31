@@ -99,6 +99,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.jdom.*;
+import projects.JobDialog;
 import projects.Machine;
 import projects.MachineDatabase;
 import projects.MachinePane;
@@ -127,6 +128,7 @@ public class MainFrame extends javax.swing.JFrame {
     private InOuDialog inouD;
     private TheoDialog theoD;
     private MachineDialog machineD;
+    private JobDialog jobD;
     //private VarsHelp varsHelp;
     // Avant la version 6 de ABINIT, il y avait deux exécutables différents
     private String SequAbinit = "abinit";
@@ -219,6 +221,9 @@ public class MainFrame extends javax.swing.JFrame {
         
         machineD = new MachineDialog(this, false);
         machineD.setTitle(" Select machine !");
+        
+        jobD = new JobDialog(this, false);
+        jobD.setTitle(" New input dialog !");
 
         //varsHelp = new VarsHelp();
         //varsHelp.setTitle("..:: Abinit variables help ::..");
@@ -355,6 +360,8 @@ public class MainFrame extends javax.swing.JFrame {
         
         machineCombo.setModel(model);
         machineCombo.setSelectedItem(mymach);
+        
+        jobD.refresh();
     }
 
     private void initTableHeader(JTable table, String header[], Integer headerWidths[]) {
@@ -539,6 +546,7 @@ public class MainFrame extends javax.swing.JFrame {
         saveAsMenuItem = new javax.swing.JMenuItem();
         LoadMenuItem = new javax.swing.JMenuItem();
         editMachinesMenuItem = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
         outputMSGMenuItem = new javax.swing.JMenuItem();
         clearOutMSGMenuItem = new javax.swing.JMenuItem();
@@ -1423,6 +1431,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         fileMenu.add(editMachinesMenuItem);
+
+        jMenuItem2.setText("New input pane");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItem2);
 
         mainMenuBar.add(fileMenu);
 
@@ -2919,6 +2935,10 @@ public class MainFrame extends javax.swing.JFrame {
             new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
     }//GEN-LAST:event_localAbinitRadioButtonActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        jobD.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     public void sendCommand(String CMD) /*throws CMDException*/ {
         RetMSG retmsg;
         if (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected()) {
@@ -3547,6 +3567,7 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JLabel jLabel9;
     javax.swing.JMenu jMenuClustepAndTB;
     javax.swing.JMenuItem jMenuItem1;
+    javax.swing.JMenuItem jMenuItem2;
     javax.swing.JMenuItem jMenuItemClustep;
     javax.swing.JMenuItem jMenuItemTB;
     javax.swing.JPanel jPanel1;
