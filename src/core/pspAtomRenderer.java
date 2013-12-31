@@ -46,7 +46,6 @@ For more information on the Abinit Project, please see
 
 package core;
 
-import inputgen.Atom;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;

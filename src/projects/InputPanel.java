@@ -10,18 +10,23 @@ import core.DisplayerJDialog;
 import core.MainFrame;
 import core.MyTableModel;
 import core.pspAtomRenderer;
-import inputgen.Atom;
-import inputgen.AtomEditor;
+import core.Atom;
+import core.AtomEditor;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  *
@@ -526,6 +531,36 @@ public class InputPanel extends javax.swing.JPanel {
         //guiEditor.loadFile(openFileTextField.getText());
     }//GEN-LAST:event_testAnalyze1ActionPerformed
 
+    public String getInputFileName()
+    {
+        return openFileTextField.getText();
+    }
+    
+    public ArrayList<Atom> getAtomList()
+    {
+        ArrayList<Atom> list = new ArrayList<>();
+        
+        int row = pspTable.getRowCount();
+        if (row > 0) {
+            for (int i = 0; i < row; i++) {
+                // L'élément pspTable.getValueAt(i, 0) est de type Atom
+                // et toutes les infos du pseudopotentiel sont dedans.
+                // J'aurais pu utiliser cet objet pour obtenir tous les champs!
+                String symbol = (pspTable.getValueAt(i, 0)).toString();
+                String pspfile = (pspTable.getValueAt(i, 1)).toString();
+                String psptype = (pspTable.getValueAt(i, 2)).toString();
+                String psppath = (pspTable.getValueAt(i, 3)).toString();
+
+                Atom atom = new Atom();
+                atom.setBySymbol(symbol);
+                atom.setPSPFileName(pspfile);
+                atom.setPSPType(psptype);
+                atom.setPSPPath(psppath);
+                list.add(atom);
+            }
+        }
+        return list;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SubmissionEditButton1;
@@ -550,4 +585,43 @@ public class InputPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton useCreIFRadioButton;
     private javax.swing.JRadioButton useExtIFRadioButton;
     // End of variables declaration//GEN-END:variables
+
+    void setInputFileName(String inputFileName) {
+        this.openFileTextField.setText(inputFileName);
+    }
+
+    void setAtomList(ArrayList<Atom> listPseudos) {
+     
+        int npsp = listPseudos.size();
+        if (npsp > 1000) {
+            npsp = 1000;
+            Object strTab[][] = new Object[npsp][4];
+            for (int i = 0; i < npsp; i++) {
+                strTab[i] = new Object[]{new Atom(), "", "", ""};
+            }
+            pspModel.setData(strTab);
+            //znuclTable.setModel(znuclModel);
+        } else {
+            Object strTab[][] = new Object[npsp][4];
+            for (int i = 0; i < npsp; i++) {
+                strTab[i] = new Object[]{new Atom(), "", "", ""};
+            }
+            pspModel.setData(strTab);
+            //znuclTable.setModel(znuclModel);
+        }
+        
+        pspTextField.setText(""+npsp);
+        
+        int i = 0;
+        for(Atom at : listPseudos)
+        {
+            String psppath = at.getPSPPath();
+            String pspfile = at.getPSPFileName();
+            String psptype = at.getPSPType();
+            String symbol = at.getSymbol();
+            Atom atom = (Atom) pspTable.getValueAt(i++, 0);
+
+            AtomEditor.setAtom(atom, symbol, psptype, psppath, pspfile);
+        }
+    }
 }

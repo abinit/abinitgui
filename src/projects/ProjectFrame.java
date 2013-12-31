@@ -76,11 +76,11 @@ public class ProjectFrame extends javax.swing.JDialog {
 
         tasksTree.setCellRenderer(new ProjectTreeRenderer());
 
-        project = new Project(mainFrame);
+        //project = new Project(mainFrame);
 
-        project.loadDatabaseFromFile("currentProject.xml");
+        //project.loadDatabaseFromXMLFile("currentProject.xml");
 
-        createNodes(top);
+        //createNodes(top);
 
         setLocationRelativeTo(mainFrame);
         setLocation(800, 0);
@@ -89,7 +89,7 @@ public class ProjectFrame extends javax.swing.JDialog {
     public final void createNodes(DefaultMutableTreeNode top) {
         DefaultMutableTreeNode book;
 
-        Iterator<Simulation> iter = project.getIterator();
+        Iterator<Simulation> iter = project.iterator();
 
         while (iter.hasNext()) {
             Simulation simu = iter.next();
@@ -247,7 +247,7 @@ public class ProjectFrame extends javax.swing.JDialog {
     }//GEN-LAST:event_tasksTreeMousePressed
 
     public void updateAllStatus() {
-        Iterator<Simulation> iter = project.getIterator();
+        Iterator<Simulation> iter = project.iterator();
 
         while (iter.hasNext()) {
             iter.next().updateStatus();

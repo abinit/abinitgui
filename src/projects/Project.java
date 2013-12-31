@@ -48,36 +48,50 @@ package projects;
 
 import core.MainFrame;
 import core.XMLConfigReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import projects.Simulation;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  *
  * @author yannick
  */
-public class Project {
+public class Project implements Iterable<Simulation> {
 
     private HashMap<String, Simulation> dict;
     private MainFrame mf;
+    private String fileName;
 
-    public Project(MainFrame mf) {
-        this.mf = mf;
-
-        dict = new HashMap<String, Simulation>();
-
-
+    public Project(MainFrame mf, String fileName) {
+        try {
+            this.mf = mf;
+            this.fileName = fileName;
+            
+            dict = new HashMap<String, Simulation>();
+            
+            loadFromFile(fileName);
+        } catch (IOException ex) {
+            mf.printERR(ex.getMessage());
+            mf.printDEB("Creating empty project !");
+        }
     }
 
-    public void updateAllStatus() {
-        Iterator<Simulation> iter = getIterator();
-
-        while (iter.hasNext()) {
-            Simulation simu = iter.next();
-
+    public void updateAllStatus() 
+    {
+        for(Simulation simu : this)
+        {
             updateSimulation(simu);
         }
     }
@@ -105,13 +119,47 @@ public class Project {
             return;
         }
     }
+    
+    public void save() throws IOException
+    {
+        this.saveToFile(this.fileName);
+    }
+    
+    public void loadFromFile(String fileName) throws IOException
+    {
+        Yaml yaml = new Yaml(new ProjectConstructor());
+        Object data = yaml.load(new FileReader(fileName));
+        this.dict = (HashMap<String,Simulation>)data;
+    }
+    
+    public void saveToFile(String fileName) throws IOException
+    {
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        options.setIndent(4);
+        options.setPrettyFlow(true);
+        Yaml yaml = new Yaml(new ProjectRepresenter(), new DumperOptions());
+        
+        String txt = yaml.dump(this.dict);
+        System.out.println(txt);
+        
+        PrintWriter pw = new PrintWriter(new FileWriter(fileName));
+        if(pw.checkError())
+        {
+                System.err.println("Error while writing");
+        }
 
-    public Iterator<Simulation> getIterator() {
-        Iterator iter = dict.values().iterator();
-        return iter;
+        pw.println(txt);
+
+        if(pw.checkError())
+        {
+                System.err.println("Error while writing");
+        }
+
+        pw.close();
     }
 
-    public void loadDatabaseFromFile(String fileName) {
+    public void loadDatabaseFromXMLFile(String fileName) {
         XMLConfigReader conf = new XMLConfigReader(fileName);
 
         if (conf.getRoot() != null) {
@@ -138,7 +186,7 @@ public class Project {
                             String attrValue = attr.getValue();
 
                             if (elemName.equals("filename")) {
-                                simu.setFileName(attrValue);
+                                simu.setInputFileName(attrValue);
                             } else if (elemName.equals("name")) {
                                 simu.setName(attrValue);
                             } else if (elemName.equals("status")) {
@@ -166,5 +214,10 @@ public class Project {
 
     public Simulation getSimulation(String name) {
         return dict.get(name);
+    }
+
+    @Override
+    public Iterator<Simulation> iterator() {
+        return dict.values().iterator();
     }
 }

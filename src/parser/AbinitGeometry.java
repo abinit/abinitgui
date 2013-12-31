@@ -46,7 +46,7 @@ For more information on the Abinit Project, please see
 
 package parser;
 
-import inputgen.Atom;
+import core.Atom;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;

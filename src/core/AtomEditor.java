@@ -44,10 +44,12 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package inputgen;
+package core;
 
 import core.MainFrame;
 import core.Utils;
+import inputgen.Geometry;
+import inputgen.MendTabDialog;
 import javax.swing.AbstractCellEditor;
 import javax.swing.table.TableCellEditor;
 import javax.swing.JButton;

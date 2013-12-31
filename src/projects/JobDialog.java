@@ -115,6 +115,7 @@ public class JobDialog extends JDialog {
     public void refresh()
     {
         jobP.refreshMachines();
+        jobP.refreshProject();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

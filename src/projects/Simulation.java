@@ -46,43 +46,57 @@ For more information on the Abinit Project, please see
 
 package projects;
 
+import core.Atom;
+import java.util.ArrayList;
 import projects.RemoteJob;
 
 public class Simulation {
 
     private String name = "default";
-    private String fileName = "default.ab";
+    private String inputFileName = "./test3.in";
     private RemoteJob job;
     public static int RUNNING = 1;
     public static int FINISHED = 2;
     public static int READY = 0;
     private int status;
+    private ArrayList<Atom> listPseudos;
 
     public Simulation() {
         status = READY;
 
         job = new RemoteJob();
+        listPseudos = new ArrayList<>();
     }
 
     public String getName() {
         return name;
+    }
+    
+    public ArrayList<Atom> getListPseudos()
+    {
+        return listPseudos;
+    }
+    
+    public void setListPseudos(ArrayList<Atom> listPseudos)
+    {
+        this.listPseudos = listPseudos;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getInputFileName() {
+        return inputFileName;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setInputFileName(String fileName) {
+        this.inputFileName = fileName;
     }
 
     @Override
     public String toString() {
-        return "Simulation(name = " + name + "; fileName = " + fileName + ")";
+        return "Simulation(name = " + name + "; fileName = " + inputFileName + ")";
     }
 
     public int getStatus() {

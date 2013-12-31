@@ -6,8 +6,14 @@
 
 package projects;
 
+import core.Atom;
 import core.MainFrame;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -17,6 +23,8 @@ public class JobPanel extends javax.swing.JPanel {
 
     private MainFrame mf;
     private Machine currentMachine;
+    private Project currentProject;
+    private Simulation currentSimu;
     
     /**
      * Creates new form JobPanel
@@ -53,6 +61,8 @@ public class JobPanel extends javax.swing.JPanel {
         machineLabel = new javax.swing.JLabel();
         machineCombo = new javax.swing.JComboBox();
         submissionScriptPanel1 = new projects.SubmissionScriptPanel();
+        nameSimuLabel = new javax.swing.JLabel();
+        nameSimuTextField = new javax.swing.JTextField();
 
         simuList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -74,6 +84,11 @@ public class JobPanel extends javax.swing.JPanel {
         });
 
         deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -121,10 +136,12 @@ public class JobPanel extends javax.swing.JPanel {
                     .addComponent(machineLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submissionScriptPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Submission", jPanel1);
+
+        nameSimuLabel.setText("Name of the simulation :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -135,40 +152,83 @@ public class JobPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(newButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
-                    .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 737, Short.MAX_VALUE)
-                .addContainerGap())
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 737, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(nameSimuLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nameSimuTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(newButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(saveButton)))
+                        .addComponent(saveButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nameSimuLabel)
+                            .addComponent(nameSimuTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void simuListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_simuListValueChanged
+        Simulation simu = (Simulation)(simuList.getSelectedValue());
+        System.out.println("simu : "+simu);
         
+        if(simu != null)
+        {
+            currentSimu = simu;
+        }
+        
+        refresh();
     }//GEN-LAST:event_simuListValueChanged
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-        
+        if(currentProject != null)
+        {
+            Simulation simu = new Simulation();
+            simu.setName("New simu");
+            currentProject.addSimulation(simu);
+        }
+        refreshProject();
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         
+        String fileName = inputPanel1.getInputFileName();
+        ArrayList<Atom> listPseudos = inputPanel1.getAtomList();
+        
+        if(currentSimu != null)
+        {
+            currentSimu.setName(nameSimuTextField.getText());
+            currentSimu.setInputFileName(fileName);
+            currentSimu.setListPseudos(listPseudos);
+        }
+        
+        try {
+            currentProject.save();
+        } catch (IOException ex) {
+            Logger.getLogger(JobPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void machineComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_machineComboItemStateChanged
@@ -184,6 +244,16 @@ public class JobPanel extends javax.swing.JPanel {
             // this.submissionScriptPanel1.setDefaultMachine(mach.getDefaultScript());
         }
     }//GEN-LAST:event_machineComboActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        if(currentProject != null && currentSimu != null)
+        {
+            currentProject.removeSimulation(currentSimu);
+            currentSimu = null;
+        }
+        refreshProject();
+        refresh();
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     
     
@@ -201,6 +271,20 @@ public class JobPanel extends javax.swing.JPanel {
         machineCombo.setModel(model);
         machineCombo.setSelectedItem(mymach);
     }
+    
+    public void refreshProject()
+    {
+        this.currentProject = mf.getCurrentProject();
+        
+        DefaultListModel<Simulation> model = new DefaultListModel<>();
+        
+        for(Simulation simu : currentProject)
+        {
+            model.addElement(simu);
+        }
+        
+        simuList.setModel(model);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
@@ -210,9 +294,27 @@ public class JobPanel extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JComboBox machineCombo;
     private javax.swing.JLabel machineLabel;
+    private javax.swing.JLabel nameSimuLabel;
+    private javax.swing.JTextField nameSimuTextField;
     private javax.swing.JButton newButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JList simuList;
     private projects.SubmissionScriptPanel submissionScriptPanel1;
     // End of variables declaration//GEN-END:variables
+
+    private void refresh() {
+        setEmptyFields();
+        if(currentSimu != null)
+        {
+            if(currentSimu.getName() != null)
+                nameSimuTextField.setText(currentSimu.getName());
+            
+            inputPanel1.setInputFileName(currentSimu.getInputFileName());
+            inputPanel1.setAtomList(currentSimu.getListPseudos());
+        }
+    }
+
+    private void setEmptyFields() {
+        nameSimuTextField.setText("");
+    }
 }

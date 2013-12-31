@@ -46,6 +46,8 @@ For more information on the Abinit Project, please see
 
 package inputgen;
 
+import core.Atom;
+import core.AtomEditor;
 import core.MainFrame;
 import core.MyTableModel;
 import core.znuclAtomRenderer;

@@ -1,0 +1,11 @@
+New simu: !simulation
+  inputFileName: ./test3.in
+  listPseudos:
+  - {PSPFileName: 47ag.pspnc, PSPPath: ./PSP/LDA_TM.psps/47, PSPType: LDA_TM, name: '',
+    symbol: Ag, typat: 0, znucl: 47}
+  - {PSPFileName: 15p.pspnc, PSPPath: ./PSP/LDA_TM.psps/15, PSPType: LDA_TM, name: '',
+    symbol: P, typat: 0, znucl: 15}
+  name: New simu
+  remoteJob: {script: null, status: 0}
+  status: 0
+

@@ -6,6 +6,7 @@
 
 package projects;
 
+import core.Atom;
 import core.Password;
 import java.util.Map;
 import org.yaml.snakeyaml.TypeDescription;
@@ -32,6 +33,8 @@ public class ProjectConstructor extends Constructor {
         this.addTypeDescription(new TypeDescription(SGEScript.class, new Tag("!sgescript")));
         this.addTypeDescription(new TypeDescription(SLURMScript.class, new Tag("!slurmscript")));
         this.addTypeDescription(new TypeDescription(FrontendScript.class, new Tag("!frontendscript")));
+        this.addTypeDescription(new TypeDescription(Simulation.class, new Tag("!simulation")));
+        this.addTypeDescription(new TypeDescription(Atom.class, new Tag("!atom")));
         this.yamlConstructors.put(new Tag("!password"), new ConstructPassword());
     }
 

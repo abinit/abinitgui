@@ -44,7 +44,7 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package inputgen;
+package core;
 
 public class Atom {
 

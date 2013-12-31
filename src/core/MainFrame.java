@@ -54,8 +54,6 @@ import inputgen.InOuDialog;
 import inputgen.ReReDialog;
 import projects.MachineDialog;
 import variables.AllInputVars;
-import inputgen.Atom;
-import inputgen.AtomEditor;
 import parser.GUIEditor;
 import parser.AbinitInputVars;
 import scriptbib.ScriptBib;
@@ -88,6 +86,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -103,6 +103,7 @@ import projects.JobDialog;
 import projects.Machine;
 import projects.MachineDatabase;
 import projects.MachinePane;
+import projects.Project;
 
 //@SuppressWarnings({"deprecation", "serial"})
 public class MainFrame extends javax.swing.JFrame {
@@ -152,7 +153,6 @@ public class MainFrame extends javax.swing.JFrame {
     private final ScriptTableModel argsModel;
     private final ScriptTableModel outModel;
     private String curPath = "."; // to save current Path !
-    private ProjectFrame projectManager;
     private GUIEditor guiEditor;
     private AbinitInputVars abinitInputVars;
     private Simulation simulation;
@@ -160,6 +160,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final AllInputVars allInputVars;
     private MachineDatabase machineDatabase;
     private Machine currentMachine;
+    private Project currentProject;
 
     /**
      * Creates new form MainFrame
@@ -323,9 +324,6 @@ public class MainFrame extends javax.swing.JFrame {
         {
             printERR("Unable to load machines config from \"machines.yml\"");
         }
-                
-        projectManager = new ProjectFrame(this);
-        projectManager.setVisible(false);
         
         // Default values
         RemoteJob remoteJob = new RemoteJob();
@@ -334,6 +332,7 @@ public class MainFrame extends javax.swing.JFrame {
         remoteJob.setScript(script);
         simulation = new Simulation();
         simulation.setRemoteJob(remoteJob);
+        currentProject = new Project(this, "currentProject.yml");
         
         refreshMachines();
         
@@ -547,6 +546,8 @@ public class MainFrame extends javax.swing.JFrame {
         LoadMenuItem = new javax.swing.JMenuItem();
         editMachinesMenuItem = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
         outputMSGMenuItem = new javax.swing.JMenuItem();
         clearOutMSGMenuItem = new javax.swing.JMenuItem();
@@ -1439,6 +1440,22 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         fileMenu.add(jMenuItem2);
+
+        jMenuItem3.setText("Save project");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItem3);
+
+        jMenuItem4.setText("Load project");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItem4);
 
         mainMenuBar.add(fileMenu);
 
@@ -2939,6 +2956,29 @@ public class MainFrame extends javax.swing.JFrame {
         jobD.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        if(currentProject != null)
+        {
+            try {
+                currentProject.save();
+            } catch (IOException ex) {
+                Logger.getLogger(MachinePane.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        JFileChooser fc = new JFileChooser(".");
+        fc.setMultiSelectionEnabled(false);
+        int retValue = fc.showOpenDialog(this);
+        if (retValue == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            currentProject = new Project(this, file.getPath());
+        }
+        
+        jobD.refresh();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     public void sendCommand(String CMD) /*throws CMDException*/ {
         RetMSG retmsg;
         if (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected()) {
@@ -3568,6 +3608,8 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JMenu jMenuClustepAndTB;
     javax.swing.JMenuItem jMenuItem1;
     javax.swing.JMenuItem jMenuItem2;
+    javax.swing.JMenuItem jMenuItem3;
+    javax.swing.JMenuItem jMenuItem4;
     javax.swing.JMenuItem jMenuItemClustep;
     javax.swing.JMenuItem jMenuItemTB;
     javax.swing.JPanel jPanel1;
@@ -3655,6 +3697,11 @@ public class MainFrame extends javax.swing.JFrame {
     public MachineDatabase getMachineDatabase() 
     {
         return machineDatabase;
+    }
+    
+    public Project getCurrentProject()
+    {
+        return currentProject;
     }
     
 //    public JToggleButton getConnectionToggleButton()

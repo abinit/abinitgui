@@ -6,6 +6,7 @@
 
 package projects;
 
+import core.Atom;
 import core.Password;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.nodes.Node;
@@ -30,6 +31,8 @@ public class ProjectRepresenter extends Representer {
             this.addClassTag(SGEScript.class, new Tag("!sgescript"));
             this.addClassTag(SLURMScript.class, new Tag("!slurmscript"));
             this.addClassTag(FrontendScript.class, new Tag("!frontendscript"));
+            this.addClassTag(Simulation.class, new Tag("!simulation"));
+            this.addClassTag(Atom.class, new Tag("!atom"));
             this.representers.put(Password.class, new RepresentPassword());
 	}
 	
