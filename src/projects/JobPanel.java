@@ -222,6 +222,8 @@ public class JobPanel extends javax.swing.JPanel {
             currentSimu.setName(nameSimuTextField.getText());
             currentSimu.setInputFileName(fileName);
             currentSimu.setListPseudos(listPseudos);
+            currentSimu.getRemoteJob().setScript(submissionScriptPanel1.getScript());
+            currentSimu.getRemoteJob().setMachine((Machine)machineCombo.getSelectedItem());
         }
         
         try {
@@ -241,7 +243,7 @@ public class JobPanel extends javax.swing.JPanel {
         {
             this.currentMachine = mach;
             // TODO
-            // this.submissionScriptPanel1.setDefaultMachine(mach.getDefaultScript());
+            this.submissionScriptPanel1.setScript(mach.getSubmissionScript());
         }
     }//GEN-LAST:event_machineComboActionPerformed
 
@@ -311,6 +313,8 @@ public class JobPanel extends javax.swing.JPanel {
             
             inputPanel1.setInputFileName(currentSimu.getInputFileName());
             inputPanel1.setAtomList(currentSimu.getListPseudos());
+            machineCombo.setSelectedItem(currentSimu.getRemoteJob().getMachine());
+            submissionScriptPanel1.setScript(currentSimu.getRemoteJob().getScript());
         }
     }
 

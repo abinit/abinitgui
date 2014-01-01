@@ -6,6 +6,24 @@ New simu: !simulation
   - {PSPFileName: 15p.pspnc, PSPPath: ./PSP/LDA_TM.psps/15, PSPType: LDA_TM, name: '',
     symbol: P, typat: 0, znucl: 15}
   name: New simu
-  remoteJob: {script: null, status: 0}
+  remoteJob:
+    machine: !machine
+      abinitPath: ''
+      gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: null, login: tuto01,
+        password: !password '6i2NGjig240=', useKey: false}
+      name: Manneback
+      remoteConnect: !connectioninfo {host: manneback.cism.ucl.ac.be, keyPath: null,
+        login: tuto01, password: !password '6i2NGjig240=', useKey: false}
+      simulationPath: ./MySims
+      submissionScript: !slurmscript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+        inputPath: '', logPath: '', memoryMax: '1200', nbProcs: '4', parallel: true,
+        postProcessPart: '', preProcessPart: '', simName: simulation, system: SLURM,
+        timeLimit: '23:59:59'}
+      type: 2
+    script: !slurmscript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+      inputPath: '', logPath: '', memoryMax: '1200', nbProcs: '4', parallel: true,
+      postProcessPart: '', preProcessPart: '', simName: simulation, system: SLURM,
+      timeLimit: '23:59:59'}
+    status: 0
   status: 0
 
