@@ -57,6 +57,7 @@ import projects.Simulation;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom.Attribute;
@@ -96,8 +97,20 @@ public class Project implements Iterable<Simulation> {
         }
     }
 
-    public void updateSimulation(Simulation simu) {
-        // TODO
+    public void updateSimulation(Simulation simu) 
+    {
+    }
+    
+    public void setAllNames()
+    {
+        for(Entry<String,Simulation> entry : this.dict.entrySet())
+        {
+            if(entry.getKey() != entry.getValue().getName())
+            {
+                dict.remove(entry.getKey());
+                dict.put(entry.getValue().getName(), entry.getValue());
+            }
+        }
     }
 
     public void addSimulation(Simulation simu) {
@@ -122,6 +135,7 @@ public class Project implements Iterable<Simulation> {
     
     public void save() throws IOException
     {
+        setAllNames();
         this.saveToFile(this.fileName);
     }
     

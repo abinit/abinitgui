@@ -27,6 +27,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import parser.GUIEditor;
 
 /**
  *
@@ -38,6 +39,8 @@ public class InputPanel extends javax.swing.JPanel {
     private DisplayerJDialog inputFileDisplayer;
     private String curPath = "."; // to save current Path !
     private MyTableModel pspModel = null;
+    
+    private GUIEditor guiEditor;
 
     /**
      * Creates new form InputPanel
@@ -63,6 +66,9 @@ public class InputPanel extends javax.swing.JPanel {
                 new pspAtomRenderer());
         pspTable.setDefaultEditor(Atom.class,
                 new AtomEditor(mf));
+        
+        guiEditor = new GUIEditor(mf);
+        
     }
     
     
@@ -528,7 +534,7 @@ public class InputPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_createButtonActionPerformed
 
     private void testAnalyze1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testAnalyze1ActionPerformed
-        //guiEditor.loadFile(openFileTextField.getText());
+        guiEditor.loadFile(openFileTextField.getText());
     }//GEN-LAST:event_testAnalyze1ActionPerformed
 
     public String getInputFileName()
