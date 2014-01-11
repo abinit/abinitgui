@@ -7,38 +7,25 @@ New simu2: !simulation
     symbol: P, typat: 0, znucl: 15}
   name: New simu2
   remoteJob:
-    machine: null
-    script: !slurmscript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
-      inputPath: '', logPath: '', memoryMax: '1200', nbProcs: '4', parallel: true,
-      postProcessPart: '', preProcessPart: '', simName: simulation, system: SLURM,
-      timeLimit: '23:59:59'}
+    machineName: green
+    script: !sgescript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+      inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false,
+      postProcessPart: '', preProcessPart: '', simName: simulation, system: SGE, timeLimit: '23:59:59'}
     status: 0
   status: 0
 Test2: !simulation
   inputFileName: ./test1.in
   listPseudos:
-  - {PSPFileName: 03-Li.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
-    symbol: Li, typat: 0, znucl: 3}
-  - {PSPFileName: 41-Nb.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
-    symbol: Nb, typat: 0, znucl: 41}
-  - {PSPFileName: 08-O.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
-    symbol: O, typat: 0, znucl: 8}
+  - {PSPFileName: '', PSPPath: '', PSPType: '', name: '', symbol: Li, typat: 0, znucl: 3}
+  - {PSPFileName: '', PSPPath: '', PSPType: '', name: '', symbol: Nb, typat: 0, znucl: 41}
+  - {PSPFileName: '', PSPPath: '', PSPType: '', name: '', symbol: O, typat: 0, znucl: 8}
   name: Test2
   remoteJob:
-    machine: !machine
-      abinitPath: /homs/naps/abinit/7.5.3-private/build/src/98_main/
-      gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: null, login: tuto01,
-        password: !password '6i2NGjig240=', useKey: false}
-      name: green
-      remoteConnect: !connectioninfo {host: green.cism.ucl.ac.be, keyPath: null, login: tuto01,
-        password: !password '6i2NGjig240=', useKey: false}
-      simulationPath: ./MySims
-      submissionScript: &id001 !sgescript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
-        inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false,
-        postProcessPart: '', preProcessPart: '', simName: simulation, system: SGE,
-        timeLimit: '23:59:59'}
-      type: 2
-    script: *id001
+    machineName: Manneback
+    script: !slurmscript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+      inputPath: '', logPath: '', memoryMax: '1200', nbProcs: '4', parallel: true,
+      postProcessPart: '', preProcessPart: '', simName: simulation, system: SLURM,
+      timeLimit: '23:59:59'}
     status: 0
   status: 0
 

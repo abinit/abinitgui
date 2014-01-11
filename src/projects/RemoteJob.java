@@ -52,21 +52,21 @@ public class RemoteJob
     
     private int status;
     
-    private Machine machine;
+    private String machineName;
     
     public void updateStatus()
     {
         // TODO !
     }
     
-    public Machine getMachine()
+    public String getMachineName()
     {
-        return machine;
+        return machineName;
     }
     
-    public void setMachine(Machine machine)
+    public void setMachineName(String machineName)
     {
-        this.machine = machine;
+        this.machineName = machineName;
     }
 
     /**

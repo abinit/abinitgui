@@ -223,7 +223,7 @@ public class JobPanel extends javax.swing.JPanel {
             currentSimu.setInputFileName(fileName);
             currentSimu.setListPseudos(listPseudos);
             currentSimu.getRemoteJob().setScript(submissionScriptPanel1.getScript());
-            currentSimu.getRemoteJob().setMachine((Machine)machineCombo.getSelectedItem());
+            currentSimu.getRemoteJob().setMachineName(((Machine)machineCombo.getSelectedItem()).getName());
         }
         
         try {
@@ -313,7 +313,9 @@ public class JobPanel extends javax.swing.JPanel {
             
             inputPanel1.setInputFileName(currentSimu.getInputFileName());
             inputPanel1.setAtomList(currentSimu.getListPseudos());
-            machineCombo.setSelectedItem(currentSimu.getRemoteJob().getMachine());
+            String machineName = currentSimu.getRemoteJob().getMachineName();
+            Machine mach = mf.getMachineDatabase().getMachine(machineName);
+            machineCombo.setSelectedItem(mach);
             submissionScriptPanel1.setScript(currentSimu.getRemoteJob().getScript());
         }
     }
