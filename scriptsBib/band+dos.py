@@ -1,13 +1,13 @@
 #!python
 
-import abipy;
+from abipy import abilab;
 import os, sys;
 import argparse;
 
 def bsanddos(inputDos,inputBand,outputDos,outputBand,outputBoth,titleBS,titleDOS,show):
 
-    ebands = abipy.ebands.ElectronBands.from_file(inputBand)
-    ebandsDos = abipy.ebands.ElectronBands.from_file(inputDos)
+    ebands = abilab.abiopen(inputBand).ebands
+    ebandsDos = abilab.abiopen(inputDos).ebands
 
     dos = ebandsDos.get_edos();
 
