@@ -8,8 +8,12 @@ package projects;
 
 import core.Atom;
 import core.MainFrame;
+import core.Utils;
+import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -36,8 +40,12 @@ public class JobPanel extends javax.swing.JPanel {
     public JobPanel(MainFrame mf)
     {
         this();
+        setMainFrame(mf);
+    }
+    
+    public void setMainFrame(MainFrame mf)
+    {
         this.mf = mf;
-        
         inputPanel1.setMainFrame(mf);
     }
 
@@ -63,6 +71,11 @@ public class JobPanel extends javax.swing.JPanel {
         submissionScriptPanel1 = new projects.SubmissionScriptPanel();
         nameSimuLabel = new javax.swing.JLabel();
         nameSimuTextField = new javax.swing.JTextField();
+        saveButton1 = new javax.swing.JButton();
+        openLOGButton = new javax.swing.JButton();
+        openOUTButton = new javax.swing.JButton();
+        pspPathTextField = new javax.swing.JTextField();
+        pspPathLabel = new javax.swing.JLabel();
 
         simuList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -125,7 +138,7 @@ public class JobPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(machineCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(submissionScriptPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,12 +149,40 @@ public class JobPanel extends javax.swing.JPanel {
                     .addComponent(machineLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submissionScriptPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Submission", jPanel1);
 
         nameSimuLabel.setText("Name of the simulation :");
+
+        saveButton1.setText("Send simu");
+        saveButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButton1ActionPerformed(evt);
+            }
+        });
+
+        openLOGButton.setText("Open LOG");
+        openLOGButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openLOGButtonActionPerformed(evt);
+            }
+        });
+
+        openOUTButton.setText("Open OUT");
+        openOUTButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openOUTButtonActionPerformed(evt);
+            }
+        });
+
+        pspPathLabel.setText("Local path to pseudopotentials");
+        pspPathLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pspPathLabelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -150,37 +191,53 @@ public class JobPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(newButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(saveButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(openLOGButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(openOUTButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(newButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 737, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(nameSimuLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nameSimuTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pspPathLabel)
+                            .addComponent(pspPathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(nameSimuLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nameSimuTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(newButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(saveButton))
+                        .addComponent(saveButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(openLOGButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(openOUTButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addComponent(pspPathLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pspPathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(nameSimuLabel)
                             .addComponent(nameSimuTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -216,15 +273,27 @@ public class JobPanel extends javax.swing.JPanel {
         
         String fileName = inputPanel1.getInputFileName();
         ArrayList<Atom> listPseudos = inputPanel1.getAtomList();
+        boolean useEXT = inputPanel1.getUsingExtInputFile();
         
         if(currentSimu != null)
         {
             currentSimu.setName(nameSimuTextField.getText());
             currentSimu.setInputFileName(fileName);
             currentSimu.setListPseudos(listPseudos);
+            currentSimu.setUsingExtInputFile(useEXT);
             currentSimu.getRemoteJob().setScript(submissionScriptPanel1.getScript());
-            currentSimu.getRemoteJob().setMachineName(((Machine)machineCombo.getSelectedItem()).getName());
+            Machine mach = (Machine)machineCombo.getSelectedItem();
+            if(mach != null)
+            {
+                currentSimu.getRemoteJob().setMachineName(mach.getName());
+            }
+            else
+            {
+                currentSimu.getRemoteJob().setMachineName(null);
+            }
         }
+        
+        currentProject.setPSPPath(this.pspPathTextField.getText());
         
         try {
             currentProject.save();
@@ -257,6 +326,200 @@ public class JobPanel extends javax.swing.JPanel {
         refresh();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
+    private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
+        currentSimu.submit(mf);
+    }//GEN-LAST:event_saveButton1ActionPerformed
+
+    private void openLOGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLOGButtonActionPerformed
+
+        
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                        
+                String machineName = currentSimu.getRemoteJob().getMachineName();
+                Machine mach = mf.getMachineDatabase().getMachine(machineName);
+                if(mach == null)
+                {
+                    mf.printERR("Please select a machine !");
+                }
+                
+                if(!mach.isConnected())
+                {
+                    mach.connection(mf);
+                }
+
+                String rootPath = mach.getSimulationPath();
+                String outputFolder = "logfiles";
+
+                String inputFile = "";
+                String inputFileName = "";
+
+                if (currentSimu.isUsingExtInputFile()) {
+                    inputFile = currentSimu.getInputFileName();
+                    inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
+                } else {
+                    mf.printERR("Choose an option please ! (use an external inputfile or created a inputfile)");
+                    return;
+                }
+
+                // Test de l'existance de inputfile
+                if (!Utils.exists(inputFile)) {
+                    mf.printERR("The file " + inputFile + " doesn't exist !");
+                    return;
+                }
+
+                String simName = null;
+                if (inputFileName != null) {
+                    if (!inputFileName.equals("")) {
+                        int idx = inputFileName.indexOf('.');
+                        if (idx > 0 && idx < inputFileName.length()) {
+                            simName = inputFileName.substring(0, idx);
+                        } else {
+                            simName = inputFileName;
+                        }
+                    } else {
+                        mf.printERR("inputFileName == \"\"");
+                        return;
+                    }
+                } else {
+                    mf.printERR("inputFileName == null");
+                    return;
+                }
+
+                if (!inputFile.equals("")) {
+
+                    String outputPath = rootPath + "/" + outputFolder;
+                    String fileName = outputPath + "/" + simName + ".log";
+                    System.out.println(fileName);
+                    // Réception (copie) du fichier d'output si celui-ci est distant
+                    if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
+                        mach.getFile(fileName + " " + fileName, mf);
+                        if (Utils.osName().startsWith("Windows")) {
+                            //sendCommand("dos2unix " + file);
+                            Utils.unix2dos(new File(fileName));
+                        }
+                    }
+
+                    // ****************************************************************************
+                    // Tester l'existence du fichier
+                    mf.editFile(fileName, false);
+                    // ****************************************************************************
+                } else {
+                    mf.printERR("Please setup the inputfile textfield !");
+                    return;
+                }
+            }
+        };
+
+        Thread t = new Thread(r);
+        t.start();
+    }//GEN-LAST:event_openLOGButtonActionPerformed
+
+    private void openOUTButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openOUTButtonActionPerformed
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                        
+                String machineName = currentSimu.getRemoteJob().getMachineName();
+                Machine mach = mf.getMachineDatabase().getMachine(machineName);
+                if(mach == null)
+                {
+                    mf.printERR("Please select a machine !");
+                }
+                
+                if(!mach.isConnected())
+                {
+                    mach.connection(mf);
+                }
+
+                String rootPath = mach.getSimulationPath();
+                String outputFolder = "output";
+
+                String inputFile = "";
+                String inputFileName = "";
+
+                if (currentSimu.isUsingExtInputFile()) {
+                    inputFile = currentSimu.getInputFileName();
+                    inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
+                } else {
+                    mf.printERR("Choose an option please ! (use an external inputfile or created a inputfile)");
+                    return;
+                }
+
+                // Test de l'existance de inputfile
+                if (!Utils.exists(inputFile)) {
+                    mf.printERR("The file " + inputFile + " doesn't exist !");
+                    return;
+                }
+
+                String simName = null;
+                if (inputFileName != null) {
+                    if (!inputFileName.equals("")) {
+                        int idx = inputFileName.indexOf('.');
+                        if (idx > 0 && idx < inputFileName.length()) {
+                            simName = inputFileName.substring(0, idx);
+                        } else {
+                            simName = inputFileName;
+                        }
+                    } else {
+                        mf.printERR("inputFileName == \"\"");
+                        return;
+                    }
+                } else {
+                    mf.printERR("inputFileName == null");
+                    return;
+                }
+
+                if (!inputFile.equals("")) {
+
+                    String outputPath = rootPath + "/" + outputFolder;
+                    String fileName = outputPath + "/" + simName + ".out";
+                    System.out.println(fileName);
+                    // Réception (copie) du fichier d'output si celui-ci est distant
+                    if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
+                        String file = "";
+                        String outputFiles = mach.getOutputFiles(fileName + "*", mf);
+                        StringTokenizer st = new StringTokenizer(outputFiles, "\n");
+                        while (st.hasMoreElements()) {
+                            file = st.nextToken();
+                            mf.printOUT("File = " + file);
+                            //if (Utils.osName().startsWith("Windows")) {
+                            //    sendCommand("unix2dos " + file);
+                            //}
+                            mach.getFile(file + " " + file, mf);
+                            if (Utils.osName().startsWith("Windows")) {
+                                //sendCommand("dos2unix " + file);
+                                Utils.unix2dos(new File(file));
+                            }
+                        }
+                        fileName = file; // Prend le nom du dernier fichier!
+                    }
+
+                    // ****************************************************************************
+                    // Tester l'existence du fichier
+                    mf.editFile(fileName, false);
+                    // ****************************************************************************
+                } else {
+                    mf.printERR("Please setup the inputfile textfield !");
+                    return;
+                }
+            }
+        };
+
+        Thread t = new Thread(r);
+        t.start();
+    }//GEN-LAST:event_openOUTButtonActionPerformed
+
+    private void pspPathLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pspPathLabelMouseClicked
+        mf.printGEN("--- HINT ------------------------------------------", Color.BLACK, false, true);
+        mf.printGEN("Please fill in the path to your local pseudopotential database\n", Color.RED, false, true);
+        mf.printGEN("Examples: ./PSP (when the database is in your root folder or in the"
+            + " same one as AbinitGUI.jar) or something like /home/user/PSP\n", new Color(0, 100, 0), false, true);
+        mf.printGEN("You can find the database at http://www.flavio-abreu.net", Color.DARK_GRAY, false, true);
+        mf.printGEN("---------------------------------------------------", Color.BLACK, false, true);
+    }//GEN-LAST:event_pspPathLabelMouseClicked
+
     
     
     public void refreshMachines()
@@ -286,6 +549,8 @@ public class JobPanel extends javax.swing.JPanel {
         }
         
         simuList.setModel(model);
+        
+        refresh();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -299,7 +564,12 @@ public class JobPanel extends javax.swing.JPanel {
     private javax.swing.JLabel nameSimuLabel;
     private javax.swing.JTextField nameSimuTextField;
     private javax.swing.JButton newButton;
+    private javax.swing.JButton openLOGButton;
+    private javax.swing.JButton openOUTButton;
+    private javax.swing.JLabel pspPathLabel;
+    private javax.swing.JTextField pspPathTextField;
     private javax.swing.JButton saveButton;
+    private javax.swing.JButton saveButton1;
     private javax.swing.JList simuList;
     private projects.SubmissionScriptPanel submissionScriptPanel1;
     // End of variables declaration//GEN-END:variables
@@ -317,6 +587,11 @@ public class JobPanel extends javax.swing.JPanel {
             Machine mach = mf.getMachineDatabase().getMachine(machineName);
             machineCombo.setSelectedItem(mach);
             submissionScriptPanel1.setScript(currentSimu.getRemoteJob().getScript());
+        }
+        
+        if(currentProject != null)
+        {
+            pspPathTextField.setText(currentProject.getPSPPath());
         }
     }
 

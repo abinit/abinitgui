@@ -14,5 +14,7 @@ public interface Exec {
 
     public RetMSG sendCommand(String CMD);
     public RetMSG sendCommand(String CMD[]);
+    public void mkdir(String path);
+    public void createTree(String path);
 
 }

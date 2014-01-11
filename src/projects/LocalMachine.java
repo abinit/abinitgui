@@ -82,6 +82,21 @@ public class LocalMachine extends Machine
     }
     
     @Override
+    public RetMSG sendCommand(String CMD, MainFrame mf)
+    {
+        RetMSG retmsg;
+        retmsg = localExec.sendCommand(CMD);
+        if (retmsg.getRetCode() == RetMSG.SUCCES) {
+            mf.printOUT("Succes: " + retmsg.getCMD() + " => " + Utils.removeEndl(retmsg.getRetMSG()) + ".");
+        } else {
+            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+            mf.printERR("Error: " + Utils.removeEndl(retmsg.getRetMSG()) + " !");
+        }
+        
+        return retmsg;
+    }
+    
+    @Override
     public MySSHTerm newSSHTerm(MainFrame mf)
     {
         mf.printERR("To connect to the local host, please choose the remote option"
@@ -98,4 +113,37 @@ public class LocalMachine extends Machine
         return client;
     }
     
+    public void getFile(String parameters, MainFrame mf) {
+        RetMSG retmsg;
+        retmsg = localExec.sendCommand("cp " + parameters);
+        if (retmsg.getRetCode() == RetMSG.SUCCES) {
+            mf.printOUT("Succes: " + retmsg.getCMD() + " => " + Utils.removeEndl(retmsg.getRetMSG()) + ".");
+        } else {
+            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+            mf.printERR("Error: " + Utils.removeEndl(retmsg.getRetMSG()) + " !");
+        }
+    }
+    
+    @Override
+    public String getOutputFiles(String dir, MainFrame mf) {
+        if(Utils.osName().startsWith("Windows"))
+        {
+            mf.printERR("Not available on Windows");
+            return "";
+        }
+        else
+        {
+            String CMD = "ls " + dir;
+            RetMSG retmsg;
+            retmsg = localExec.sendCommand(CMD);
+            if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                mf.printOUT("Succes: " + retmsg.getCMD());
+                return Utils.removeEndl(retmsg.getRetMSG());
+            } else {
+                //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+                mf.printERR("Error: " + Utils.removeEndl(retmsg.getRetMSG()) + " !");
+                return "";
+            }
+        }
+    }
 }

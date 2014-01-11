@@ -506,7 +506,37 @@ public class RemoteExec implements Exec {
         return b;
     }
 
+    @Override
     public RetMSG sendCommand(String[] CMD) {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+    
+    @Override
+    public void mkdir(String dir) {
+
+        String CMD = "mkdir " + dir;
+        RetMSG retmsg;
+        retmsg = sendCommand(CMD);
+        if (retmsg.getRetCode() == RetMSG.SUCCES) {
+            mainFrame.printOUT("Succes: " + retmsg.getCMD() + " => " + Utils.removeEndl(retmsg.getRetMSG()) + ".");
+        } else {
+            if (retmsg.getRetCode() == 1) {
+                mainFrame.printDEB("The remote directory `" + dir + "' exists !");
+            } else {
+                //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+                mainFrame.printERR("Error: " + Utils.removeEndl(retmsg.getRetMSG()) + " !");
+            }
+        }
+    }
+    
+    public void createTree(String path)
+    {
+        mkdir(path);
+        mkdir(path + "/input");
+        mkdir(path + "/output");
+        mkdir(path + "/wholedata");
+        mkdir(path + "/logfiles");
+        mkdir(path + "/pseudopot");
+        mkdir(path + "/scripts");
     }
 }

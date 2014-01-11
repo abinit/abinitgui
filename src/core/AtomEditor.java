@@ -99,7 +99,7 @@ public class AtomEditor extends AbstractCellEditor
 
         if (CMD.equals(ActionCommand)) {
 
-            String pathToPSP = mainFrame.getPspPathTextField().getText();
+            String pathToPSP = mainFrame.getCurrentProject().getPSPPath();
             String pspType = dialog.getPSPSelected();
 
             Object[][] atomsDB = Atom.getAtomsBD();
@@ -129,7 +129,7 @@ public class AtomEditor extends AbstractCellEditor
                     || ActionCommand.equals("LDA_TM")
                     || ActionCommand.equals("LDA_Teter")) {
 
-                String pathToPSP = mainFrame.getPspPathTextField().getText();
+                String pathToPSP = mainFrame.getCurrentProject().getPSPPath();
 
                 Object[][] atomsDB = Atom.getAtomsBD();
                 int atomsDBlength = atomsDB.length;
@@ -181,7 +181,7 @@ public class AtomEditor extends AbstractCellEditor
                 dialog.setVisible(false);
 
                 String pspType = dialog.getPSPSelected();
-                String pathToPSP = mainFrame.getPspPathTextField().getText();
+                String pathToPSP = mainFrame.getCurrentProject().getPSPPath();
 
                 if (!pathToPSP.equals("")) {
                     setAtomParse(currentAtom, ActionCommand, pspType, pathToPSP);

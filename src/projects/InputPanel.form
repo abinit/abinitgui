@@ -58,7 +58,6 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="testAnalyze1" alignment="1" max="32767" attributes="0"/>
                       <Component id="pspTableScrollPane" alignment="0" pref="0" max="32767" attributes="1"/>
-                      <Component id="sendSIMButton" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="openXMLFileDialogButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -139,9 +138,7 @@
                       <Component id="saveFileAsButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="createButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                  <Component id="sendSIMButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                   <Component id="testAnalyze1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -175,14 +172,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Open the ABINIT input file (usualy *.in)"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="sendSIMButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&lt;HTML&gt; &lt;center&gt; &lt;b&gt;Send the simulation&lt;/b&gt;&lt;br&gt; the simulation will start at server side &lt;/HTML&gt;"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sendSIMButtonActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="pspTextField">
           <Events>
@@ -237,6 +226,7 @@
               <Color blue="ff" green="0" id="blue" palette="1" red="0" type="palette"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Use created input file"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="useCreIFRadioButtonActionPerformed"/>

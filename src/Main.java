@@ -164,7 +164,7 @@ public class Main {
                     for (int i = 0; i < args.length; i++) {
                         if (args[i].equalsIgnoreCase("AutoTest")) {
                             frame.setVisible(false);
-                            frame.autoTestProc(true);
+                            //frame.autoTestProc(true);
 
                         } else {
                             frame.setVisible(true);

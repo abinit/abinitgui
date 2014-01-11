@@ -12,6 +12,7 @@ import core.MyTableModel;
 import core.pspAtomRenderer;
 import core.Atom;
 import core.AtomEditor;
+import core.Utils;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -102,7 +103,6 @@ public class InputPanel extends javax.swing.JPanel {
         openFileTextField = new javax.swing.JTextField();
         openFileDialogButton = new javax.swing.JButton();
         openFileLabel = new javax.swing.JLabel();
-        sendSIMButton = new javax.swing.JButton();
         pspTextField = new javax.swing.JTextField();
         pspTableScrollPane = new javax.swing.JScrollPane();
         pspTable = new javax.swing.JTable();
@@ -138,13 +138,6 @@ public class InputPanel extends javax.swing.JPanel {
         });
 
         openFileLabel.setText("Open the ABINIT input file (usualy *.in)");
-
-        sendSIMButton.setText("<HTML> <center> <b>Send the simulation</b><br> the simulation will start at server side </HTML>");
-        sendSIMButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendSIMButtonActionPerformed(evt);
-            }
-        });
 
         pspTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,6 +180,7 @@ public class InputPanel extends javax.swing.JPanel {
 
         useCreIFRadioButton.setForeground(java.awt.Color.blue);
         useCreIFRadioButton.setText("Use created input file");
+        useCreIFRadioButton.setEnabled(false);
         useCreIFRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 useCreIFRadioButtonActionPerformed(evt);
@@ -246,7 +240,6 @@ public class InputPanel extends javax.swing.JPanel {
                 .addGroup(inputFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(testAnalyze1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pspTableScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(sendSIMButton, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, inputFilePanelLayout.createSequentialGroup()
                         .addComponent(openXMLFileDialogButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -312,9 +305,7 @@ public class InputPanel extends javax.swing.JPanel {
                     .addComponent(saveFileButton)
                     .addComponent(saveFileAsButton)
                     .addComponent(createButton))
-                .addGap(41, 41, 41)
-                .addComponent(sendSIMButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(103, 103, 103)
                 .addComponent(testAnalyze1)
                 .addContainerGap())
         );
@@ -385,11 +376,6 @@ public class InputPanel extends javax.swing.JPanel {
                 }
     }//GEN-LAST:event_openFileDialogButtonActionPerformed
 
-    private void sendSIMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendSIMButtonActionPerformed
-        //newSendSIMButtonActionPerformed(evt);
-        // TODO 
-    }//GEN-LAST:event_sendSIMButtonActionPerformed
-
     private void pspTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pspTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pspTextFieldActionPerformed
@@ -453,10 +439,45 @@ public class InputPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_displayFileButtonActionPerformed
 
     private void geditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_geditButtonActionPerformed
-        //editFile(openFileTextField.getText(), true);
+        editFile(openFileTextField.getText(), true);
         // TODO
     }//GEN-LAST:event_geditButtonActionPerformed
 
+    public void editFile(final String fileName, boolean threaded) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+
+                // ****************************************************************************
+                // Tester l'existance du fichier
+                if (!Utils.exists(fileName)) {
+                    mf.printERR("File " + fileName + " doesn't exist !");
+                    return;
+                } else {
+                    if (Utils.osName().equals("Linux")) {
+                        mf.localCommand("gedit " + fileName);
+                    } else if (Utils.osName().equals("Mac OS X")) {
+                        mf.localCommand("open -a textedit " + fileName);
+                    } else if (Utils.osName().startsWith("Windows")) {
+                        Utils.unix2dos(new File(fileName));
+                        mf.localCommand("notepad " + fileName);
+                    } else {
+                        mf.printDEB("You must be in a UNIX platform to edit the input"
+                                + "\nfile with a text editor from this GUI!");
+                    }
+                }
+                // ****************************************************************************
+            }
+        };
+
+        if (threaded) {
+            Thread t = new Thread(r);
+            t.start();
+        } else {
+            r.run();
+        }
+    }
+    
     private void useCreIFRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useCreIFRadioButtonActionPerformed
         
         mf.printERR("Not yet supported !");
@@ -568,7 +589,6 @@ public class InputPanel extends javax.swing.JPanel {
     private javax.swing.JTextField pspTextField;
     private javax.swing.JButton saveFileAsButton;
     private javax.swing.JButton saveFileButton;
-    private javax.swing.JButton sendSIMButton;
     private javax.swing.JButton testAnalyze1;
     private javax.swing.JRadioButton useCreIFRadioButton;
     private javax.swing.JRadioButton useExtIFRadioButton;
@@ -576,6 +596,10 @@ public class InputPanel extends javax.swing.JPanel {
 
     void setInputFileName(String inputFileName) {
         this.openFileTextField.setText(inputFileName);
+    }
+    
+    public boolean getUsingExtInputFile() {
+        return this.useExtIFRadioButton.isSelected();
     }
 
     void setAtomList(ArrayList<Atom> listPseudos) {

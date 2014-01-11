@@ -74,6 +74,22 @@ public class Project implements Iterable<Simulation> {
     private HashMap<String, Simulation> dict;
     private MainFrame mf;
     private String fileName;
+    private String pspPath;
+    
+    public Project()
+    {
+        
+    }
+    
+    public HashMap<String,Simulation> getDict()
+    {
+        return dict;
+    }
+    
+    public void setDict(HashMap<String, Simulation> map)
+    {
+        this.dict = map;
+    }
 
     public Project(MainFrame mf, String fileName) {
         try {
@@ -82,7 +98,10 @@ public class Project implements Iterable<Simulation> {
             
             dict = new HashMap<String, Simulation>();
             
-            loadFromFile(fileName);
+            if(fileName != null)
+            {
+                loadFromFile(fileName);
+            }
         } catch (IOException ex) {
             mf.printERR(ex.getMessage());
             mf.printDEB("Creating empty project !");
@@ -150,6 +169,14 @@ public class Project implements Iterable<Simulation> {
         this.dict = (HashMap<String,Simulation>)data;
     }
     
+    public static Project fromFile(String fileName) throws IOException
+    {
+        Yaml yaml = new Yaml(new ProjectConstructor());
+        Project p = (Project)(yaml.load(new FileReader(fileName)));
+        p.fileName = fileName;
+        return p;
+    }
+    
     public void saveToFile(String fileName) throws IOException
     {
         DumperOptions options = new DumperOptions();
@@ -158,7 +185,7 @@ public class Project implements Iterable<Simulation> {
         options.setPrettyFlow(true);
         Yaml yaml = new Yaml(new ProjectRepresenter(), new DumperOptions());
         
-        String txt = yaml.dump(this.dict);
+        String txt = yaml.dump(this);
         System.out.println(txt);
         
         PrintWriter pw = new PrintWriter(new FileWriter(fileName));
@@ -237,5 +264,19 @@ public class Project implements Iterable<Simulation> {
     @Override
     public Iterator<Simulation> iterator() {
         return dict.values().iterator();
+    }
+    
+    public String getPSPPath()
+    {
+        return pspPath;
+    }
+    
+    public void setPSPPath(String pspPath)
+    {
+        this.pspPath = pspPath;
+    }
+
+    public void setMainFrame(MainFrame mf) {
+        this.mf = mf;
     }
 }

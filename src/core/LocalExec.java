@@ -114,6 +114,30 @@ public class LocalExec implements Exec {
             return new RetMSG(-1, errorMSG, Arrays.toString(CMD));
         }
     }
+    
+    @Override
+    public void mkdir(String dir) {
+        if (Utils.mkdir(dir)) {
+            mainFrame.printOUT("Succes: mkdir " + dir + ".");
+        } else {
+            if (Utils.exists(dir)) {
+                mainFrame.printDEB("The local directory `" + dir + "' exists !");
+            } else {
+                mainFrame.printERR("Error: mkdir: cannot create directory `" + dir + "' !");
+            }
+        }
+    }
+    
+    @Override
+    public void createTree(String path) {
+        mkdir(path);
+        mkdir(path + "/input");
+        mkdir(path + "/output");
+        mkdir(path + "/wholedata");
+        mkdir(path + "/logfiles");
+        mkdir(path + "/pseudopot");
+        mkdir(path + "/scripts");
+    }
 
     public class LocalExecOutput extends Thread {
 

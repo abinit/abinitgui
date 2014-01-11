@@ -162,4 +162,46 @@ public class RemoteMachine extends Machine {
         
         return client;
     }
+    
+    @Override
+    public RetMSG sendCommand(String CMD, MainFrame mf)
+    {
+        RetMSG retmsg;
+        retmsg = remoteExec.sendCommand(CMD);
+        if (retmsg.getRetCode() == RetMSG.SUCCES) {
+            mf.printOUT("Succes: " + retmsg.getCMD() + " => " + Utils.removeEndl(retmsg.getRetMSG()) + ".");
+        } else {
+            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+            mf.printERR("Error: " + Utils.removeEndl(retmsg.getRetMSG()) + " !");
+        }
+        
+        return retmsg;
+    }
+    
+    @Override
+    public void getFile(String parameters, MainFrame mf) {
+        RetMSG retmsg;
+        retmsg = remoteExec.sendCommand("get " + parameters);
+        if (retmsg.getRetCode() == RetMSG.SUCCES) {
+            mf.printOUT("Succes: " + retmsg.getCMD() + " => " + Utils.removeEndl(retmsg.getRetMSG()) + ".");
+        } else {
+            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+            mf.printERR("Error: " + Utils.removeEndl(retmsg.getRetMSG()) + " !");
+        }
+    }
+    
+    @Override
+    public String getOutputFiles(String dir, MainFrame mf) {
+        String CMD = "ls " + dir;
+        RetMSG retmsg;
+        retmsg = remoteExec.sendCommand(CMD);
+        if (retmsg.getRetCode() == RetMSG.SUCCES) {
+            mf.printOUT("Succes: " + retmsg.getCMD());
+            return Utils.removeEndl(retmsg.getRetMSG());
+        } else {
+            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+            mf.printERR("Error: " + Utils.removeEndl(retmsg.getRetMSG()) + " !");
+            return "";
+        }
+    }
 }

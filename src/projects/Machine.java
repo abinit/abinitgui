@@ -182,7 +182,23 @@ public abstract class Machine
 
     public abstract void putFile(String parameters, MainFrame mf);
     
+    public abstract void getFile(String parameters, MainFrame mf);
+    
     public abstract MySSHTerm newSSHTerm(MainFrame mf);
 
     public abstract MySFTP newSFTP(MainFrame mf);
+    
+    public abstract RetMSG sendCommand(String CMD, MainFrame mf);
+    
+    public abstract String getOutputFiles(String path, MainFrame mf);
+    
+    public void mkdir(String dir, MainFrame mf)
+    {
+        getExec().mkdir(dir);
+    }
+    
+    public void createTree(String path, MainFrame mf)
+    {
+        getExec().createTree(path);
+    }
 }

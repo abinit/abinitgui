@@ -217,4 +217,9 @@ public class Utils {
             return str;
         }
     }
+    
+    public static String getCharset()
+    {
+        return "UTF-8";
+    }
 }

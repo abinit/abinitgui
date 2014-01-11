@@ -1,34 +1,41 @@
-New simu2: !simulation
-  inputFileName: ./test3.in
-  listPseudos:
-  - {PSPFileName: 47ag.pspnc, PSPPath: ./PSP/LDA_TM.psps/47, PSPType: LDA_TM, name: '',
-    symbol: Ag, typat: 0, znucl: 47}
-  - {PSPFileName: 15p.pspnc, PSPPath: ./PSP/LDA_TM.psps/15, PSPType: LDA_TM, name: '',
-    symbol: P, typat: 0, znucl: 15}
-  name: New simu2
-  remoteJob:
-    machineName: green
-    script: !sgescript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
-      inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false,
-      postProcessPart: '', preProcessPart: '', simName: simulation, system: SGE, timeLimit: '23:59:59'}
+!!projects.Project
+PSPPath: ./PSP/
+dict:
+  Test3: !simulation
+    inputFileName: ./test3.in
+    listPseudos:
+    - {PSPFileName: 47ag.pspnc, PSPPath: ./PSP/LDA_TM.psps/47, PSPType: LDA_TM, name: '',
+      symbol: Ag, typat: 0, znucl: 47}
+    - {PSPFileName: 15p.pspnc, PSPPath: ./PSP/LDA_TM.psps/15, PSPType: LDA_TM, name: '',
+      symbol: P, typat: 0, znucl: 15}
+    name: Test3
+    remoteJob:
+      machineName: Manneback
+      script: !slurmscript {MPIPath: mpirun, abinitPath: /home/naps/ygillet/NAPS/src/gmatteo-7.5.4-private/tmp_intel13/src/98_mainabinit,
+        email: yannick.gillet@uclouvain.be, inputPath: /home/users/y/g/ygillet/MySims/test3.files,
+        logPath: /home/users/y/g/ygillet/MySims/logfiles/test3.log, memoryMax: '100',
+        nbProcs: '4', parallel: true, postProcessPart: '', preProcessPart: source /home/naps/ygillet/SetEnv.sh intel13_intel,
+        simName: simulation, system: SLURM, timeLimit: '23:59:59'}
+      status: 0
     status: 0
-  status: 0
-Test2: !simulation
-  inputFileName: ./test1.in
-  listPseudos:
-  - {PSPFileName: 03-Li.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
-    symbol: Li, typat: 0, znucl: 3}
-  - {PSPFileName: 41-Nb.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
-    symbol: Nb, typat: 0, znucl: 41}
-  - {PSPFileName: 08-O.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
-    symbol: O, typat: 0, znucl: 8}
-  name: Test2
-  remoteJob:
-    machineName: Manneback
-    script: !slurmscript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
-      inputPath: '', logPath: '', memoryMax: '1200', nbProcs: '4', parallel: true,
-      postProcessPart: '', preProcessPart: '', simName: simulation, system: SLURM,
-      timeLimit: '23:59:59'}
+    usingExtInputFile: true
+  Test1: !simulation
+    inputFileName: ./test1.in
+    listPseudos:
+    - {PSPFileName: 03-Li.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
+      symbol: Li, typat: 0, znucl: 3}
+    - {PSPFileName: 41-Nb.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
+      symbol: Nb, typat: 0, znucl: 41}
+    - {PSPFileName: 08-O.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
+      symbol: O, typat: 0, znucl: 8}
+    name: Test1
+    remoteJob:
+      machineName: Manneback
+      script: !slurmscript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+        inputPath: '', logPath: '', memoryMax: '1200', nbProcs: '4', parallel: true,
+        postProcessPart: '', preProcessPart: '', simName: simulation, system: SLURM,
+        timeLimit: '23:59:59'}
+      status: 0
     status: 0
-  status: 0
+    usingExtInputFile: true
 
