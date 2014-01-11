@@ -52,21 +52,17 @@ public class MachineDatabase implements Iterable<Machine>
     
     public void setAllNames()
     {
-        for(Map.Entry<String,Machine> entry : this.list.entrySet())
+        ArrayList<Machine> machines = new ArrayList<>();
+        for(Machine mach : this)
         {
-            String key = entry.getKey();
-            Machine mach = entry.getValue();
-            String name = mach.getName();
-            System.out.println("Key = "+key+", machine = "+name);
-            if(mach == null)
-            {
-                
-            }
-            else if(!entry.getKey().equals(entry.getValue().getName()))
-            {
-                list.remove(entry.getKey());
-                list.put(entry.getValue().getName(), entry.getValue());
-            }
+            machines.add(mach);
+        }
+        
+        this.list.clear();
+        
+        for(Machine mach : machines)
+        {
+            this.addMachine(mach);
         }
     }
     

@@ -202,6 +202,7 @@ public class MachinePane extends javax.swing.JPanel {
                 infos.setLogin(this.loginTextField.getText());
                 infos.setPassword(new Password(new String(this.pwdPasswordField.getPassword())));
                 infos.setUseKey(this.jCB_useKey1.isSelected());
+                infos.setKeyPath(this.jTF_key1.getText());
                 this.machine.setRemoteConnect(infos);
                 
                 if(remoteGatewayRadioButton.isSelected())
@@ -212,6 +213,7 @@ public class MachinePane extends javax.swing.JPanel {
                     infosgw.setLogin(this.gatewayLoginTextField.getText());
                     infosgw.setPassword(new Password(new String(this.gatewayPasswordField.getPassword())));
                     infosgw.setUseKey(this.jCB_useKey2.isSelected());
+                    infosgw.setKeyPath(this.jTF_key2.getText());
                     this.machine.setGatewayConnect(infosgw);
                 }
             }

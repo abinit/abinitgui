@@ -103,13 +103,17 @@ public class Project implements Iterable<Simulation> {
     
     public void setAllNames()
     {
-        for(Entry<String,Simulation> entry : this.dict.entrySet())
+        ArrayList<Simulation> simus = new ArrayList<>();
+        for(Simulation simu : this)
         {
-            if(!entry.getKey().equals(entry.getValue().getName()))
-            {
-                dict.remove(entry.getKey());
-                dict.put(entry.getValue().getName(), entry.getValue());
-            }
+            simus.add(simu);
+        }
+        
+        this.dict.clear();
+        
+        for(Simulation simu : simus)
+        {
+            this.addSimulation(simu);
         }
     }
 
