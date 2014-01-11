@@ -49,7 +49,7 @@ package core;
 import java.io.*;
 import java.util.Arrays;
 
-public class LocalExec {
+public class LocalExec implements Exec {
 
     private Runtime rt;
     private Process proc;

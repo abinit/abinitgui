@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
@@ -22,54 +23,74 @@ import org.yaml.snakeyaml.Yaml;
  */
 public class MachineDatabase implements Iterable<Machine>
 {
-    private ArrayList<Machine> list;
+    private HashMap<String,Machine> list;
     
     public MachineDatabase()
     {
-        list = new ArrayList<>();
+        list = new HashMap<>();
     }
     
     public void addMachine(Machine rm)
     {
-        list.add(rm);
+        list.put(rm.getName(),rm);
     }
     
     public void removeMachine(Machine rm)
     {
-        list.remove(rm.getName());
+        this.removeMachineWithName(rm.getName());
     }
     
     public Machine getMachine(String name)
     {
-        for(Machine mach : list)
-        {
-            if(mach.getName().equals(name))
-            {
-                return mach;
-            }
-        }
-        return null;
+        return list.get(name);
     }
     
-    public ArrayList<Machine> getMachineList()
+    public void removeMachineWithName(String name)
+    {
+        list.remove(name);
+    }
+    
+    public void setAllNames()
+    {
+        for(Map.Entry<String,Machine> entry : this.list.entrySet())
+        {
+            String key = entry.getKey();
+            Machine mach = entry.getValue();
+            String name = mach.getName();
+            System.out.println("Key = "+key+", machine = "+name);
+            if(mach == null)
+            {
+                
+            }
+            else if(!entry.getKey().equals(entry.getValue().getName()))
+            {
+                list.remove(entry.getKey());
+                list.put(entry.getValue().getName(), entry.getValue());
+            }
+        }
+    }
+    
+    public HashMap<String,Machine> getMachineList()
     {
         return list;
     }
     
     public Iterator<Machine> iterator()
     {
-        return list.iterator();
+        return list.values().iterator();
     }
     
     public void loadFromFile(String fileName) throws IOException
     {
         Yaml yaml = new Yaml(new ProjectConstructor());
         Object data = yaml.load(new FileReader(fileName));
-        this.list = (ArrayList<Machine>)data;
+        this.list = (HashMap<String,Machine>)data;
     }
     
     public void saveToFile(String fileName) throws IOException
     {
+        setAllNames();
+        
         DumperOptions options = new DumperOptions();
         options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         options.setIndent(4);

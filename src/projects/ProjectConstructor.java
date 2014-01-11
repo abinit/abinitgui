@@ -27,7 +27,11 @@ import variables.Variable;
  */
 public class ProjectConstructor extends Constructor {
     public ProjectConstructor() {
+        
         this.addTypeDescription(new TypeDescription(Machine.class,new Tag("!machine")));
+        this.addTypeDescription(new TypeDescription(LocalMachine.class,new Tag("!localmachine")));
+        this.addTypeDescription(new TypeDescription(RemoteMachine.class,new Tag("!remotemachine")));
+        this.addTypeDescription(new TypeDescription(GatewayMachine.class,new Tag("!gatewaymachine")));
         this.addTypeDescription(new TypeDescription(ConnectionInfo.class,new Tag("!connectioninfo")));
         this.addTypeDescription(new TypeDescription(SubmissionScript.class, new Tag("!submissionscript")));
         this.addTypeDescription(new TypeDescription(SGEScript.class, new Tag("!sgescript")));

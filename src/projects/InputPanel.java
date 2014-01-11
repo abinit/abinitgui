@@ -109,7 +109,6 @@ public class InputPanel extends javax.swing.JPanel {
         pspLabel = new javax.swing.JLabel();
         displayFileButton = new javax.swing.JButton();
         geditButton = new javax.swing.JButton();
-        SubmissionEditButton1 = new javax.swing.JButton();
         useCreIFRadioButton = new javax.swing.JRadioButton();
         openXMLFileLabel = new javax.swing.JLabel();
         openXMLFileTextField = new javax.swing.JTextField();
@@ -186,13 +185,6 @@ public class InputPanel extends javax.swing.JPanel {
             }
         });
 
-        SubmissionEditButton1.setText("Edit submission details");
-        SubmissionEditButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SubmissionEditButton1ActionPerformed(evt);
-            }
-        });
-
         useCreIFRadioButton.setForeground(java.awt.Color.blue);
         useCreIFRadioButton.setText("Use created input file");
         useCreIFRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -253,7 +245,6 @@ public class InputPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(inputFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(testAnalyze1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SubmissionEditButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pspTableScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(sendSIMButton, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, inputFilePanelLayout.createSequentialGroup()
@@ -321,9 +312,7 @@ public class InputPanel extends javax.swing.JPanel {
                     .addComponent(saveFileButton)
                     .addComponent(saveFileAsButton)
                     .addComponent(createButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SubmissionEditButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(41, 41, 41)
                 .addComponent(sendSIMButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(testAnalyze1)
@@ -468,12 +457,6 @@ public class InputPanel extends javax.swing.JPanel {
         // TODO
     }//GEN-LAST:event_geditButtonActionPerformed
 
-    private void SubmissionEditButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmissionEditButton1ActionPerformed
-        //submitScriptFrame.setScript(simulation.getRemoteJob().getScript());
-        //submitScriptFrame.setVisible(true);
-        // TODO
-    }//GEN-LAST:event_SubmissionEditButton1ActionPerformed
-
     private void useCreIFRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useCreIFRadioButtonActionPerformed
         
         mf.printERR("Not yet supported !");
@@ -569,7 +552,6 @@ public class InputPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton SubmissionEditButton1;
     private javax.swing.JButton createButton;
     private javax.swing.JButton displayFileButton;
     private javax.swing.JButton geditButton;

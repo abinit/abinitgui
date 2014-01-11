@@ -209,4 +209,12 @@ public class Utils {
             
             return sb.toString();
     }
+
+    public static String removeEndl(String str) {
+        if (str.endsWith("\n")) {
+            return (String) str.subSequence(0, str.lastIndexOf('\n'));
+        } else {
+            return str;
+        }
+    }
 }

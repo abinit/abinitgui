@@ -97,14 +97,21 @@ public class MachinePane extends javax.swing.JPanel {
             if(machine.getType() == Machine.GATEWAY_MACHINE)
             {
                 this.remoteGatewayRadioButton.setSelected(true);
+                this.remoteGatewayRadioButton.doClick();
             }
             else if(machine.getType() == Machine.REMOTE_MACHINE)
             {
                 this.remoteAbinitRadioButton.setSelected(true);
+                this.remoteAbinitRadioButton.doClick();
             }
             else if(machine.getType() == Machine.LOCAL_MACHINE)
             {
                 this.localAbinitRadioButton.setSelected(true);
+                this.localAbinitRadioButton.doClick();
+            }
+            else
+            {
+                System.err.println("Another type was discovered");
             }
             
             this.submissionScriptPanel1.setScript(machine.getSubmissionScript());
@@ -113,7 +120,7 @@ public class MachinePane extends javax.swing.JPanel {
     
     public void createNewMachine()
     {
-        this.machine = new Machine();
+        this.machine = new LocalMachine();
         this.machine.setName("New machine");
         
         this.mf.getMachineDatabase().addMachine(this.machine);
@@ -142,6 +149,46 @@ public class MachinePane extends javax.swing.JPanel {
     
     public void saveMachineFromFields()
     {
+        int type = -1;
+        
+        if(remoteAbinitRadioButton.isSelected())
+            type = Machine.REMOTE_MACHINE;
+        else if(remoteGatewayRadioButton.isSelected())
+            type = Machine.GATEWAY_MACHINE;
+        else if(localAbinitRadioButton.isSelected())
+            type = Machine.LOCAL_MACHINE;
+        
+        String oldName = null;
+        if(machine != null)
+        {
+            oldName = machine.getName();
+        }
+        
+        boolean changeType = false;
+        if (machine == null || type != machine.getType()) 
+        {
+            changeType = true;
+            // Rebuilt the script !
+            switch (type) {
+                case Machine.REMOTE_MACHINE:
+                    machine = new RemoteMachine();
+                    System.out.println("Machine is Remote !");
+                    break;
+                case Machine.GATEWAY_MACHINE:
+                    machine = new GatewayMachine();
+                    System.out.println("Machine is Gateway !");
+                    break;
+                case Machine.LOCAL_MACHINE:
+                    machine = new LocalMachine();
+                    System.out.println("Machine is Local !");
+                    break;
+                default:
+                    mf.printERR("Please select the type of the machine");
+                    machine = null;
+                    break;
+            }
+        }
+        
         if(this.machine != null)
         {
             this.machine.setAbinitPath(this.abinitPathTextField.getText());
@@ -159,6 +206,7 @@ public class MachinePane extends javax.swing.JPanel {
                 
                 if(remoteGatewayRadioButton.isSelected())
                 {
+                    System.out.println("Is Gateway : "+machine);
                     ConnectionInfo infosgw = new ConnectionInfo();
                     infosgw.setHost(this.gatewayHostTextField.getText());
                     infosgw.setLogin(this.gatewayLoginTextField.getText());
@@ -168,25 +216,22 @@ public class MachinePane extends javax.swing.JPanel {
                 }
             }
             
-            if(remoteGatewayRadioButton.isSelected())
+            if(changeType)
             {
-                this.machine.setType(Machine.GATEWAY_MACHINE);
+                if(oldName != null)
+                {
+                    mf.getMachineDatabase().removeMachineWithName(oldName);
+                }
+                mf.getMachineDatabase().addMachine(machine);
             }
-            else if(remoteAbinitRadioButton.isSelected())
-            {
-                this.machine.setType(Machine.REMOTE_MACHINE);
-            }
-            else if(localAbinitRadioButton.isSelected())
-            {
-                this.machine.setType(Machine.LOCAL_MACHINE);
-            }
+            
+            this.machine.setSubmissionScript(this.submissionScriptPanel1.getScript());
+            
             try {
                 mf.getMachineDatabase().saveToFile("machines.yml");
             } catch (IOException ex) {
                 Logger.getLogger(MachinePane.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            this.machine.setSubmissionScript(this.submissionScriptPanel1.getScript());
         }
         
         mf.refreshMachines();

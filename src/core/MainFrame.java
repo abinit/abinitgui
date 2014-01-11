@@ -3704,6 +3704,11 @@ public class MainFrame extends javax.swing.JFrame {
         return currentProject;
     }
     
+    public LocalExec getLocalExec()
+    {
+        return localExec;
+    }
+    
 //    public JToggleButton getConnectionToggleButton()
 //    {
 //        return connectionToggleButton;

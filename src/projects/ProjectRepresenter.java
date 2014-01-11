@@ -26,6 +26,9 @@ public class ProjectRepresenter extends Representer {
     	public ProjectRepresenter() {
 
             this.addClassTag(Machine.class,new Tag("!machine"));
+            this.addClassTag(LocalMachine.class,new Tag("!localmachine"));
+            this.addClassTag(RemoteMachine.class,new Tag("!remotemachine"));
+            this.addClassTag(GatewayMachine.class,new Tag("!gatewaymachine"));
             this.addClassTag(ConnectionInfo.class,new Tag("!connectioninfo"));
             this.addClassTag(SubmissionScript.class, new Tag("!submissionscript"));
             this.addClassTag(SGEScript.class, new Tag("!sgescript"));

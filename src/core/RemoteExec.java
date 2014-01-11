@@ -53,7 +53,7 @@ import javax.swing.JFileChooser;
 import jsshterm.XDetails;
 
 //@SuppressWarnings("unchecked")
-public class RemoteExec {
+public class RemoteExec implements Exec {
 
     private Session session;
     private InputStream in;
@@ -506,7 +506,7 @@ public class RemoteExec {
         return b;
     }
 
-    RetMSG sendCommand(String[] CMD) {
+    public RetMSG sendCommand(String[] CMD) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }
