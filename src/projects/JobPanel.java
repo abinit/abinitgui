@@ -354,6 +354,8 @@ public class JobPanel extends javax.swing.JPanel {
 
                 String inputFile = "";
                 String inputFileName = "";
+                
+                mf.getLocalExec().createTree(rootPath);
 
                 if (currentSimu.isUsingExtInputFile()) {
                     inputFile = currentSimu.getInputFileName();
@@ -438,6 +440,8 @@ public class JobPanel extends javax.swing.JPanel {
 
                 String inputFile = "";
                 String inputFileName = "";
+                
+                mf.getLocalExec().createTree(rootPath);
 
                 if (currentSimu.isUsingExtInputFile()) {
                     inputFile = currentSimu.getInputFileName();
