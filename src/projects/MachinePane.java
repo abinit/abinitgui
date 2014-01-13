@@ -714,9 +714,24 @@ public class MachinePane extends javax.swing.JPanel {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        deleteCurrentMachine();
         refresh();
     }//GEN-LAST:event_deleteButtonActionPerformed
     
+    private void deleteCurrentMachine()
+    {
+        Machine mach = (Machine)machineList.getSelectedValue();
+        
+        if(mach != null)
+        {
+            mf.getMachineDatabase().removeMachine(mach);
+            mf.refreshMachines();
+        }
+        else
+        {
+            mf.printERR("Please select a machine first");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel abinitPathPathLabel;
