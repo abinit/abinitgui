@@ -41,6 +41,8 @@ public class MachinePane extends javax.swing.JPanel {
     
     public void refresh()
     {
+        Machine curMach = (Machine)machineList.getSelectedValue();
+        
         MachineDatabase ddb = this.mf.getMachineDatabase();
         DefaultListModel<Machine> model = new DefaultListModel<>();
         for(Machine mach : ddb)
@@ -48,6 +50,11 @@ public class MachinePane extends javax.swing.JPanel {
             model.addElement(mach);
         }
         machineList.setModel(model);
+        
+        if(curMach != null)
+        {
+            machineList.setSelectedValue(curMach, true);
+        }
     }
     
     public void fillFieldsFromMachine(Machine machine)
@@ -106,22 +113,21 @@ public class MachinePane extends javax.swing.JPanel {
             if(machine.getType() == Machine.GATEWAY_MACHINE)
             {
                 this.remoteGatewayRadioButton.setSelected(true);
-                this.remoteGatewayRadioButton.doClick();
             }
             else if(machine.getType() == Machine.REMOTE_MACHINE)
             {
                 this.remoteAbinitRadioButton.setSelected(true);
-                this.remoteAbinitRadioButton.doClick();
             }
             else if(machine.getType() == Machine.LOCAL_MACHINE)
             {
                 this.localAbinitRadioButton.setSelected(true);
-                this.localAbinitRadioButton.doClick();
             }
             else
             {
                 System.err.println("Another type was discovered");
             }
+            
+            activateType();
             
             this.submissionScriptPanel1.setScript(machine.getSubmissionScript());
         }
@@ -158,94 +164,99 @@ public class MachinePane extends javax.swing.JPanel {
     
     public void saveMachineFromFields()
     {
-        int type = -1;
+        Machine mach = (Machine)machineList.getSelectedValue();
         
-        if(remoteAbinitRadioButton.isSelected())
-            type = Machine.REMOTE_MACHINE;
-        else if(remoteGatewayRadioButton.isSelected())
-            type = Machine.GATEWAY_MACHINE;
-        else if(localAbinitRadioButton.isSelected())
-            type = Machine.LOCAL_MACHINE;
-        
-        String oldName = null;
-        if(machine != null)
+        if(mach != null)
         {
-            oldName = machine.getName();
-        }
-        
-        boolean changeType = false;
-        if (machine == null || type != machine.getType()) 
-        {
-            changeType = true;
-            // Rebuilt the script !
-            switch (type) {
-                case Machine.REMOTE_MACHINE:
-                    machine = new RemoteMachine();
-                    System.out.println("Machine is Remote !");
-                    break;
-                case Machine.GATEWAY_MACHINE:
-                    machine = new GatewayMachine();
-                    System.out.println("Machine is Gateway !");
-                    break;
-                case Machine.LOCAL_MACHINE:
-                    machine = new LocalMachine();
-                    System.out.println("Machine is Local !");
-                    break;
-                default:
-                    mf.printERR("Please select the type of the machine");
-                    machine = null;
-                    break;
-            }
-        }
-        
-        if(this.machine != null)
-        {
-            this.machine.setAbinitPath(this.abinitPathTextField.getText());
-            this.machine.setSimulationPath(this.mySimulationsTextField.getText());
-            this.machine.setName(this.nameField.getText());
-            
-            if(remoteAbinitRadioButton.isSelected() || remoteGatewayRadioButton.isSelected())
+            int type = -1;
+
+            if(remoteAbinitRadioButton.isSelected())
+                type = Machine.REMOTE_MACHINE;
+            else if(remoteGatewayRadioButton.isSelected())
+                type = Machine.GATEWAY_MACHINE;
+            else if(localAbinitRadioButton.isSelected())
+                type = Machine.LOCAL_MACHINE;
+
+            String oldName = null;
+            if(machine != null)
             {
-                ConnectionInfo infos = new ConnectionInfo();
-                infos.setHost(this.hostTextField.getText());
-                infos.setLogin(this.loginTextField.getText());
-                infos.setPassword(new Password(new String(this.pwdPasswordField.getPassword())));
-                infos.setUseKey(this.jCB_useKey1.isSelected());
-                infos.setKeyPath(this.jTF_key1.getText());
-                this.machine.setRemoteConnect(infos);
-                
-                if(remoteGatewayRadioButton.isSelected())
-                {
-                    System.out.println("Is Gateway : "+machine);
-                    ConnectionInfo infosgw = new ConnectionInfo();
-                    infosgw.setHost(this.gatewayHostTextField.getText());
-                    infosgw.setLogin(this.gatewayLoginTextField.getText());
-                    infosgw.setPassword(new Password(new String(this.gatewayPasswordField.getPassword())));
-                    infosgw.setUseKey(this.jCB_useKey2.isSelected());
-                    infosgw.setKeyPath(this.jTF_key2.getText());
-                    this.machine.setGatewayConnect(infosgw);
+                oldName = machine.getName();
+            }
+
+            boolean changeType = false;
+            if (machine == null || type != machine.getType()) 
+            {
+                changeType = true;
+                // Rebuilt the script !
+                switch (type) {
+                    case Machine.REMOTE_MACHINE:
+                        machine = new RemoteMachine();
+                        System.out.println("Machine is Remote !");
+                        break;
+                    case Machine.GATEWAY_MACHINE:
+                        machine = new GatewayMachine();
+                        System.out.println("Machine is Gateway !");
+                        break;
+                    case Machine.LOCAL_MACHINE:
+                        machine = new LocalMachine();
+                        System.out.println("Machine is Local !");
+                        break;
+                    default:
+                        mf.printERR("Please select the type of the machine");
+                        machine = null;
+                        break;
                 }
             }
-            
-            if(changeType)
+
+            if(this.machine != null)
             {
-                if(oldName != null)
+                this.machine.setAbinitPath(this.abinitPathTextField.getText());
+                this.machine.setSimulationPath(this.mySimulationsTextField.getText());
+                this.machine.setName(this.nameField.getText());
+
+                if(remoteAbinitRadioButton.isSelected() || remoteGatewayRadioButton.isSelected())
                 {
-                    mf.getMachineDatabase().removeMachineWithName(oldName);
+                    ConnectionInfo infos = new ConnectionInfo();
+                    infos.setHost(this.hostTextField.getText());
+                    infos.setLogin(this.loginTextField.getText());
+                    infos.setPassword(new Password(new String(this.pwdPasswordField.getPassword())));
+                    infos.setUseKey(this.jCB_useKey1.isSelected());
+                    infos.setKeyPath(this.jTF_key1.getText());
+                    this.machine.setRemoteConnect(infos);
+
+                    if(remoteGatewayRadioButton.isSelected())
+                    {
+                        System.out.println("Is Gateway : "+machine);
+                        ConnectionInfo infosgw = new ConnectionInfo();
+                        infosgw.setHost(this.gatewayHostTextField.getText());
+                        infosgw.setLogin(this.gatewayLoginTextField.getText());
+                        infosgw.setPassword(new Password(new String(this.gatewayPasswordField.getPassword())));
+                        infosgw.setUseKey(this.jCB_useKey2.isSelected());
+                        infosgw.setKeyPath(this.jTF_key2.getText());
+                        this.machine.setGatewayConnect(infosgw);
+                    }
                 }
-                mf.getMachineDatabase().addMachine(machine);
+
+                if(changeType)
+                {
+                    if(oldName != null)
+                    {
+                        mf.getMachineDatabase().removeMachineWithName(oldName);
+                    }
+                    mf.getMachineDatabase().addMachine(machine);
+                }
+
+                this.machine.setSubmissionScript(this.submissionScriptPanel1.getScript());
+
+                try {
+                    mf.getMachineDatabase().saveToFile("machines.yml");
+                } catch (IOException ex) {
+                    Logger.getLogger(MachinePane.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            
-            this.machine.setSubmissionScript(this.submissionScriptPanel1.getScript());
-            
-            try {
-                mf.getMachineDatabase().saveToFile("machines.yml");
-            } catch (IOException ex) {
-                Logger.getLogger(MachinePane.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+            mf.refreshMachines();
         }
-        
-        mf.refreshMachines();
     }
 
     /**
@@ -592,48 +603,61 @@ public class MachinePane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void localAbinitRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localAbinitRadioButtonActionPerformed
+        activateType();
+    }//GEN-LAST:event_localAbinitRadioButtonActionPerformed
 
-        localAbinitRadioButton.setForeground(Color.red);
-        remoteGatewayRadioButton.setForeground(Color.blue);
-        remoteAbinitRadioButton.setForeground(Color.blue);
+    private void activateType()
+    {
+        if(localAbinitRadioButton.isSelected())
+        {
+            localAbinitRadioButton.setForeground(Color.red);
+            remoteGatewayRadioButton.setForeground(Color.blue);
+            remoteAbinitRadioButton.setForeground(Color.blue);
 
-        gatewayLoginPanel.setVisible(false);
-        loginPanel.setVisible(false);
-        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+            gatewayLoginPanel.setVisible(false);
+            loginPanel.setVisible(false);
+            loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
             javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
             "Local Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
             javax.swing.border.TitledBorder.DEFAULT_POSITION,
             new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
-    }//GEN-LAST:event_localAbinitRadioButtonActionPerformed
+        }
+        else if(remoteGatewayRadioButton.isSelected())
+        {
+            localAbinitRadioButton.setForeground(Color.blue);
+            remoteGatewayRadioButton.setForeground(Color.red);
+            remoteAbinitRadioButton.setForeground(Color.blue);
 
+            gatewayLoginPanel.setVisible(true);
+            loginPanel.setVisible(true);
+            loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
+                "Remote Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
+        }
+        else if(remoteAbinitRadioButton.isSelected())
+        {
+            localAbinitRadioButton.setForeground(Color.blue);
+            remoteGatewayRadioButton.setForeground(Color.blue);
+            remoteAbinitRadioButton.setForeground(Color.red);
+
+            gatewayLoginPanel.setVisible(false);
+            loginPanel.setVisible(true);
+            loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
+                "Remote Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
+        }
+    }
+    
     private void remoteAbinitRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remoteAbinitRadioButtonActionPerformed
-
-        localAbinitRadioButton.setForeground(Color.blue);
-        remoteGatewayRadioButton.setForeground(Color.blue);
-        remoteAbinitRadioButton.setForeground(Color.red);
-
-        gatewayLoginPanel.setVisible(false);
-        loginPanel.setVisible(true);
-        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
-            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
-            "Remote Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-            javax.swing.border.TitledBorder.DEFAULT_POSITION,
-            new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
+        activateType();
     }//GEN-LAST:event_remoteAbinitRadioButtonActionPerformed
 
     private void remoteGatewayRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remoteGatewayRadioButtonActionPerformed
-
-        localAbinitRadioButton.setForeground(Color.blue);
-        remoteGatewayRadioButton.setForeground(Color.red);
-        remoteAbinitRadioButton.setForeground(Color.blue);
-
-        gatewayLoginPanel.setVisible(true);
-        loginPanel.setVisible(true);
-        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
-            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)),
-            "Remote Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-            javax.swing.border.TitledBorder.DEFAULT_POSITION,
-            new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray));
+        activateType();
     }//GEN-LAST:event_remoteGatewayRadioButtonActionPerformed
 
     private void jCB_useKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_useKey1ActionPerformed
