@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -76,12 +79,10 @@ public class MachinePane extends javax.swing.JPanel {
                     if(machine.getRemoteConnect().getPassword() != null)
                         this.pwdPasswordField.setText(machine.getRemoteConnect().getPassword().toString());
                     
-                    if(machine.getRemoteConnect().isUseKey())
-                    {
-                        this.jCB_useKey1.doClick();
-                    }
+                    this.jCB_useKey1.setSelected(machine.getRemoteConnect().isUseKey());
+                    activateKey(jCB_useKey1, jTF_key1, pwdLabel);
                     
-                    this.jTF_key1.setText(machine.getRemoteConnect().getKeyPath());
+                    jTF_key1.setText(machine.getRemoteConnect().getKeyPath());
                 }
                 
                 if(machine.getType() == Machine.GATEWAY_MACHINE)
@@ -95,12 +96,10 @@ public class MachinePane extends javax.swing.JPanel {
                     if(machine.getGatewayConnect().getPassword() != null)
                         this.gatewayPasswordField.setText(machine.getGatewayConnect().getPassword().toString());
                     
-                    if(machine.getGatewayConnect().isUseKey())
-                    {
-                        this.jCB_useKey2.doClick();
-                    }
+                    this.jCB_useKey2.setSelected(machine.getGatewayConnect().isUseKey());
+                    activateKey(jCB_useKey2, jTF_key2, pwdBFELabel);
                     
-                    this.jTF_key2.setText(machine.getGatewayConnect().getKeyPath());
+                    jTF_key2.setText(machine.getGatewayConnect().getKeyPath());
                 }
             }
         
@@ -546,6 +545,11 @@ public class MachinePane extends javax.swing.JPanel {
         });
 
         deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -633,29 +637,26 @@ public class MachinePane extends javax.swing.JPanel {
     }//GEN-LAST:event_remoteGatewayRadioButtonActionPerformed
 
     private void jCB_useKey1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_useKey1ActionPerformed
-        if (jCB_useKey1.isSelected()) {
-            //this.useKey1 = true;
-            pwdLabel.setText("Passphrase");
-            jTF_key1.setEnabled(true);
-        } else {
-            //this.useKey1 = false;
-            pwdLabel.setText("Password");
-            jTF_key1.setEnabled(false);
-        }
+        activateKey(jCB_useKey1, jTF_key1, pwdLabel);
     }//GEN-LAST:event_jCB_useKey1ActionPerformed
 
     private void jCB_useKey2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_useKey2ActionPerformed
-        if (jCB_useKey2.isSelected()) {
-            //this.useKey2 = true;
-            pwdBFELabel.setText("Passphrase");
-            jTF_key2.setEnabled(true);
-        } else {
-            //this.useKey2 = false;
-            pwdBFELabel.setText("Password");
-            jTF_key2.setEnabled(false);
-        }
+        activateKey(jCB_useKey2, jTF_key2, pwdBFELabel);
     }//GEN-LAST:event_jCB_useKey2ActionPerformed
 
+    private void activateKey(JCheckBox checkbox, JTextField field, JLabel label)
+    {
+        if(checkbox.isSelected())
+        {
+            label.setText("Passphrase");
+            field.setEnabled(true);
+        }
+        else
+        {
+            label.setText("Password");
+            field.setEnabled(false);
+        }
+    }
     private void mySimulationsLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mySimulationsLabelMouseClicked
         mf.printGEN("--- HINT ------------------------------------------", Color.BLACK, false, true);
         mf.printGEN("You have to start your path with ./ and give a folder name where"
@@ -680,11 +681,17 @@ public class MachinePane extends javax.swing.JPanel {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         saveMachineFromFields();
+        refresh();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         createNewMachine();
+        refresh();
     }//GEN-LAST:event_newButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        refresh();
+    }//GEN-LAST:event_deleteButtonActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
