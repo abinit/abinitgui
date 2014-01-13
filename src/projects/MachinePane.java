@@ -76,7 +76,12 @@ public class MachinePane extends javax.swing.JPanel {
                     if(machine.getRemoteConnect().getPassword() != null)
                         this.pwdPasswordField.setText(machine.getRemoteConnect().getPassword().toString());
                     
-                    this.jCB_useKey1.setSelected(machine.getRemoteConnect().isUseKey());
+                    if(machine.getRemoteConnect().isUseKey())
+                    {
+                        this.jCB_useKey1.doClick();
+                    }
+                    
+                    this.jTF_key1.setText(machine.getRemoteConnect().getKeyPath());
                 }
                 
                 if(machine.getType() == Machine.GATEWAY_MACHINE)
@@ -90,7 +95,12 @@ public class MachinePane extends javax.swing.JPanel {
                     if(machine.getGatewayConnect().getPassword() != null)
                         this.gatewayPasswordField.setText(machine.getGatewayConnect().getPassword().toString());
                     
-                    this.jCB_useKey2.setSelected(machine.getGatewayConnect().isUseKey());
+                    if(machine.getGatewayConnect().isUseKey())
+                    {
+                        this.jCB_useKey2.doClick();
+                    }
+                    
+                    this.jTF_key2.setText(machine.getGatewayConnect().getKeyPath());
                 }
             }
         
