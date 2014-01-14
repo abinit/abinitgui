@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tabbedpaneconf>
+  <configuration>
+    <hostlocation lacation="Remote" />
+    <remotelogin login="" />
+    <remotehost host="" />
+    <remotepwd pwd="" />
+    <keyRemote checked="0" />
+    <keyFileRemote keyFile="" />
+    <gatewaylogin login="" />
+    <gatewayhost host="" />
+    <gatewaypwd pwd="" />
+    <keyGateway checked="0" />
+    <keyFileGateway keyFile="" />
+    <mySimulationspath path="./MySims" />
+    <psppath path="./PSP" />
+    <abinitpath path="" />
+    <openfile file="./test2.in" />
+    <psp psp="1" />
+    <psptable>
+      <entry i="0" symbol="Si" psppath="./PSP/LDA_TM.psps/14" pspfile="14si.pspnc" psptype="LDA_TM" />
+    </psptable>
+  </configuration>
+  <inputfile />
+
+</tabbedpaneconf>
+

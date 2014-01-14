@@ -1,0 +1,5 @@
+Hartwigsen-Goedecker-Hutter psp for Oxygen, PBE GGA, created in LLN.
+ 8  6  980723                       zatom, zion, pspdat
+ 3  11   0    0    2001    0        pspcod,pspxc,lmax,lloc,mmax,r2well
+ .2449978402  -.1662603932E+02  .2480468061E+01  0 0   rloc,gpot()
+ .2210046468   .1832650221E+02  0 0 0                  rs, h11s,h22s,h33s

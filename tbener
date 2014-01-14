@@ -1,0 +1,36 @@
+Tight-binding on-site energy for diamond-like carbon
+1
+ C   4  1.00000   4.0     (my fit)
+  -5.49  0.0  0.0  0.0
+
+
+TIGHT-BINDING ON-SITE ENERGIES FOR GRAPHITE
+1
+ C   4  0.80000   4.0     (my fit)
+  -5.49  0.0  0.0  0.0
+
+1
+ C   1  0.80000   1.0     (pi-band only)
+   0.00
+1
+2
+ C1  1  0.80000   1.0     (pi-band only)
+   0.00
+ C2  1  0.80000   1.0     (pi-band only)
+   0.00
+2
+ C1  4  0.80000   4.0     (my fit)
+  -5.49  0.0  0.0  0.0
+ C2  4  0.80000   4.0     (my fit)
+  -5.49  0.0  0.0  0.0
+1
+ C   1  0.80000   1.0     (pi-band only)
+   0.00
+
+ C   4  1.25000   4.0     (Tomanek and Louie) 
+  -7.30  0.0  0.0  0.0
+
+ C   4  1.30000   4.0     (Xu et al)
+  -6.70  0.0  0.0  0.0
+
+

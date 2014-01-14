@@ -1,0 +1,64 @@
+\documentclass{beamer}
+\usepackage[english]{babel} %En francais
+\usepackage[latin1]{inputenc} %Caracteres accentues
+\usepackage[T1]{fontenc} 	%Police accentuee
+\usepackage{lmodern}			%Police vectorielle (haute qualite)
+\usepackage{amsmath} %Insertion d'equation
+\usepackage{graphicx} %Images dans le PDF
+\usepackage{float} 		%Flottants : Figures,Tables
+\definecolor{gris}{gray}{0.5}
+\usepackage{eurosym}
+% \usepackage{breakurl}
+\usepackage{wrapfig}
+\usepackage{multirow} 
+\usepackage{rotating}
+\usepackage{textcomp}
+\usepackage{subfigure}
+\usepackage{amsthm}
+\usepackage{pgf}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{scalefnt}
+
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,positioning}
+
+
+% \usepackage{pstricks,pst-plot} 
+% \usepackage{pstcol,pst-fill,pst-grad}
+% \usepackage{pstricks, pstcol,pst-3d,pst-char,pst-coil,pst-eps,pst-fill,pst-grad,pst-node,pst-plot,pst-text,pst-tree}
+% pstricks, pstcol,pst-3d,pst-char,pst-coil,pst-eps,pst-fill,pst-grad,pst-node,pst-plot,pst-text,pst-tree
+
+\setbeamertemplate{navigation symbols}{} 
+%\setbeamertemplate{footline}{}
+% \setbeamertemplate{headline}{}
+% \setbeamertemplate{mini frames}{}
+
+
+%\usetheme{Marburg}
+% \usecolortheme{wolverine}
+% \useoutertheme{infolines}
+\usetheme{Warsaw}
+\usecolortheme{whale}
+%\usecolortheme{dolphin}
+
+%\usefonttheme{default}
+%\usecolortheme{default}
+%\useinnertheme{default}
+%\useoutertheme{default}
+
+
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+\setbeamertemplate{itemize item}{$\bullet$}
+\setbeamertemplate{itemize item item}{$\bullet$}
+
+\newcommand{\ket}[1]{\ensuremath{\left| #1 \left\rangle \right. \right.}}
+\newcommand{\bra}[1]{\ensuremath{\left\langle #1 \left| \right. \right.}}
+\newcommand{\elemm}[3]{\ensuremath{\left\langle #1 \left| #2 \right| #3 \right\rangle}}
+\newcommand{\prodbk}[2]{\ensuremath{\left\langle #1 \left| #2 \right\rangle \right.}}
+\newcommand{\SiGe}{\ensuremath{\text{Si}_{0.5} \text{Ge}_{0.5}}}
+
+\definecolor{myviolet}{RGB}{191,0,191}
+\definecolor{mygreen}{RGB}{0,127,0}
+\definecolor{myorange}{RGB}{222,125,0}

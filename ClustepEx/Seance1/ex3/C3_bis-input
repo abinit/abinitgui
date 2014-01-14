@@ -1,0 +1,7 @@
+0.5   1000          DTIME   NSTEP
+2                    MOVE
+0.05  1000.0         DAMP    TEMP
+.f.   1000.0         TRSV    TFINAL
+3                    NATOM
+0                    NATFIX
+0  0  0  0           IATFIX  IMOV(1..3)
