@@ -135,4 +135,15 @@ public class Simulation {
     {
         throw new UnsupportedOperationException("not yet supported");
     }
+    
+    public void downloadLog(MainFrame mf)
+    {
+        
+        throw new UnsupportedOperationException("not yet supported");
+    }
+    
+    public void downloadOutput(MainFrame mf)
+    {
+        throw new UnsupportedOperationException("not yet supported");
+    }
 }

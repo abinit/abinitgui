@@ -58,6 +58,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import projects.LocalMachine;
 import projects.Machine;
 import projects.RemoteJob;
 import projects.RemoteJob;
@@ -455,4 +456,216 @@ public class ClustepSimulation extends Simulation {
     public void setPositionFileName(String positionFileName) {
         this.positionFileName = positionFileName;
     }
+    
+    @Override
+    public void downloadLog(MainFrame mf)
+    {
+        // Use local machine to enable compilation
+    
+        Machine mach = mf.getMachineDatabase().getMachine(job.getMachineName());
+        
+        if(mach == null)
+        {
+            mf.printERR("No machine selected for this simulation");
+            return;
+        }
+        
+        if(!mach.isConnected())
+        {
+            mach.connection(mf);
+        }
+
+        String rootPath = mach.getSimulationPath();
+        if(rootPath == null || rootPath.isEmpty())
+        {
+            rootPath = ".";
+        }
+
+        String clustepFolder = "clustep";
+
+        String inputFile = "";
+        String inputFN = "";
+
+        inputFile = inputFileName;
+        inputFN = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
+
+        // Test de l'existance de inputfile
+        if (!Utils.exists(inputFile)) {
+            mf.printERR("The file " + inputFile + " doesn't exist !");
+            return;
+        }
+
+        String simName = null;
+        if (inputFN != null) {
+            if (!inputFN.equals("")) {
+                int idx = inputFN.indexOf('-');
+                if (idx > 0 && idx < inputFN.length()) {
+                    simName = inputFN.substring(0, idx);
+                } else {
+                    simName = inputFN;
+                }
+            } else {
+                mf.printERR("inputFileName == \"\"");
+                return;
+            }
+        } else {
+            mf.printERR("inputFileName == null");
+            return;
+        }
+
+        if (!inputFile.equals("")) {
+
+            String fileName = rootPath + "/" + clustepFolder + "/"
+            + simName + "/" + simName + ".log";
+
+            if (!Utils.exists(fileName)) {
+                // Réception (copie) du fichier d'output si celui-ci est distant
+                if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
+                    //                            if (Utils.osName().startsWith("Windows")) {
+                        //                                sendCommand("unix2dos " + fileName);
+                        //                            }
+                    mach.getFile(fileName + " " + fileName, mf);
+                    //                            if (Utils.osName().startsWith("Windows")) {
+                        //                                sendCommand("dos2unix " + fileName);
+                        //                            }
+                    if (Utils.osName().startsWith("Windows")) {
+                        Utils.unix2dos(new File(fileName));
+                    }
+                }
+            } else {
+                mf.printOUT("File " + fileName + " exists in your local filetree!\n"
+                    + "Please remove the local file before you download the new file version!");
+            }
+
+            // ****************************************************************************
+            // Tester l'existance du fichier
+            mf.editFile(fileName, false);
+            // ****************************************************************************
+        } else {
+            mf.printERR("Please setup the inputfile textfield !");
+            return;
+        }
+    }
+    
+    @Override
+    public void downloadOutput(MainFrame mf)
+    {
+        Machine mach = mf.getMachineDatabase().getMachine(job.getMachineName());
+
+        if(!mach.isConnected())
+        {
+            mach.connection(mf);
+        }
+
+        String rootPath = mach.getSimulationPath();
+        if(rootPath == null || rootPath.isEmpty())
+        {
+            rootPath = ".";
+        }
+        String clustepFolder = "clustep";
+
+        String inputFile = "";
+        String inputFN = "";
+
+        inputFile = inputFileName;
+        inputFN = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
+
+        // Test de l'existance de inputfile
+        if (!Utils.exists(inputFile)) {
+            mf.printERR("The file " + inputFile + " doesn't exist !");
+            return;
+        }
+
+        String simName = null;
+        if (inputFN != null) {
+            if (!inputFN.equals("")) {
+                int idx = inputFN.indexOf('-');
+                if (idx > 0 && idx < inputFN.length()) {
+                    simName = inputFN.substring(0, idx);
+                } else {
+                    simName = inputFN;
+                }
+            } else {
+                mf.printERR("inputFileName == \"\"");
+                return;
+            }
+        } else {
+            mf.printERR("inputFileName == null");
+            return;
+        }
+
+        if (!inputFile.equals("")) {
+            String fileNameEvol = rootPath + "/" + clustepFolder + "/"
+            + simName + "/" + simName + "-evol.dat";
+
+            if (!Utils.exists(fileNameEvol)) {
+                // Réception (copie) du fichier d'output si celui-ci est distant
+                if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
+                    //                            if (Utils.osName().startsWith("Windows")) {
+                        //                                sendCommand("unix2dos " + fileName);
+                        //                            }
+                    mach.getFile(fileNameEvol + " " + fileNameEvol, mf);
+                    //                            if (Utils.osName().startsWith("Windows")) {
+                        //                                sendCommand("dos2unix " + fileName);
+                        //                            }
+                    if (Utils.osName().startsWith("Windows")) {
+                        Utils.unix2dos(new File(fileNameEvol));
+                    }
+                }
+            } else {
+                mf.printOUT("File " + fileNameEvol + " exists in your local filetree!\n"
+                    + "Please remove the local file before you download the new file version!");
+            }
+
+            // ****************************************************************************
+            // Tester l'existence du fichier
+            mf.editFile(fileNameEvol.replace("/./", "/"), false);
+            
+
+            String fileNameFilm = rootPath + "/" + clustepFolder + "/"
+            + simName + "/" + simName + "-film.xyz";
+
+            if (!Utils.exists(fileNameFilm)) {
+                // Réception (copie) du fichier d'output si celui-ci est distant
+                if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
+                    //                            if (Utils.osName().startsWith("Windows")) {
+                        //                                sendCommand("unix2dos " + fileName);
+                        //                            }
+                    mach.getFile(fileNameFilm + " " + fileNameFilm, mf);
+                    //                            if (Utils.osName().startsWith("Windows")) {
+                        //                                sendCommand("dos2unix " + fileName);
+                        //                            }
+                    if (Utils.osName().startsWith("Windows")) {
+                        Utils.unix2dos(new File(fileNameFilm));
+                    }
+                }
+            } else {
+                mf.printOUT("File " + fileNameFilm + " exists in your local filetree!\n"
+                    + "Please remove the local file before you download the new file version!");
+            }
+
+            // ****************************************************************************
+            // Tester l'existence du fichier
+            mf.editFile(fileNameFilm.replace("/./", "/"), false);
+
+            if (!Utils.exists(fileNameFilm)) {
+                mf.printERR("File " + fileNameFilm + " doesn't exist !");
+                return;
+            } else {
+                if (Utils.osName().equals("Linux")) {
+                    mf.localCommand("java -jar Jmol.jar " + fileNameFilm.replace("/./", "/"));
+                } else if (Utils.osName().equals("Mac OS X")) {
+                    mf.localCommand("java -jar Jmol.jar " + fileNameFilm.replace("/./", "/"));
+                } else {
+                    mf.localCommand("java -jar Jmol.jar " + fileNameFilm.replace("/./", "/"));
+                }
+            }
+            // ****************************************************************************
+        } else {
+            mf.printERR("Please setup the inputfile textfield !");
+            return;
+        }
+    }
+    
+    
 }

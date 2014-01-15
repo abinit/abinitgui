@@ -58,6 +58,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 import projects.RemoteJob;
 
 public class AbinitSimulation extends Simulation {
@@ -155,6 +156,7 @@ public class AbinitSimulation extends Simulation {
         
     }
     
+    @Override
     public boolean submit(MainFrame mf)
     {
         Machine mach = mf.getMachineDatabase().getMachine(job.getMachineName());
@@ -430,5 +432,175 @@ public class AbinitSimulation extends Simulation {
         }
         mf.printOUT("The submission thread ended successfully! (Abinit)");
         return true;
+    }
+    
+    @Override
+    public void downloadLog(MainFrame mf)
+    {
+        String machineName = getRemoteJob().getMachineName();
+        Machine mach = mf.getMachineDatabase().getMachine(machineName);
+        if(mach == null)
+        {
+            mf.printERR("Please select a machine !");
+            return;
+        }
+
+        if(!mach.isConnected())
+        {
+            mach.connection(mf);
+        }
+
+        String rootPath = mach.getSimulationPath();
+        String outputFolder = "logfiles";
+
+        String inputFile = "";
+        String inputFileName = "";
+
+        mf.getLocalExec().createTree(rootPath);
+
+        if (isUsingExtInputFile()) {
+            inputFile = getInputFileName();
+            inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
+        } else {
+            mf.printERR("Choose an option please ! (use an external inputfile or created a inputfile)");
+            return;
+        }
+
+        // Test de l'existance de inputfile
+        if (!Utils.exists(inputFile)) {
+            mf.printERR("The file " + inputFile + " doesn't exist !");
+            return;
+        }
+
+        String simName = null;
+        if (inputFileName != null) {
+            if (!inputFileName.equals("")) {
+                int idx = inputFileName.indexOf('.');
+                if (idx > 0 && idx < inputFileName.length()) {
+                    simName = inputFileName.substring(0, idx);
+                } else {
+                    simName = inputFileName;
+                }
+            } else {
+                mf.printERR("inputFileName == \"\"");
+                return;
+            }
+        } else {
+            mf.printERR("inputFileName == null");
+            return;
+        }
+
+        if (!inputFile.equals("")) {
+
+            String outputPath = rootPath + "/" + outputFolder;
+            String fileName = outputPath + "/" + simName + ".log";
+            System.out.println(fileName);
+            // Réception (copie) du fichier d'output si celui-ci est distant
+            if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
+                mach.getFile(fileName + " " + fileName, mf);
+                if (Utils.osName().startsWith("Windows")) {
+                    //sendCommand("dos2unix " + file);
+                    Utils.unix2dos(new File(fileName));
+                }
+            }
+
+            // ****************************************************************************
+            // Tester l'existence du fichier
+            mf.editFile(fileName, false);
+            // ****************************************************************************
+        } else {
+            mf.printERR("Please setup the inputfile textfield !");
+            return;
+        }
+    }
+    
+    @Override
+    public void downloadOutput(MainFrame mf)
+    {
+        String machineName = getRemoteJob().getMachineName();
+        Machine mach = mf.getMachineDatabase().getMachine(machineName);
+        if(mach == null)
+        {
+            mf.printERR("Please select a machine !");
+        }
+
+        if(!mach.isConnected())
+        {
+            mach.connection(mf);
+        }
+
+        String rootPath = mach.getSimulationPath();
+        String outputFolder = "output";
+
+        String inputFile = "";
+        String inputFileName = "";
+
+        mf.getLocalExec().createTree(rootPath);
+
+        if (isUsingExtInputFile()) {
+            inputFile = getInputFileName();
+            inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
+        } else {
+            mf.printERR("Choose an option please ! (use an external inputfile or created a inputfile)");
+            return;
+        }
+
+        // Test de l'existance de inputfile
+        if (!Utils.exists(inputFile)) {
+            mf.printERR("The file " + inputFile + " doesn't exist !");
+            return;
+        }
+
+        String simName = null;
+        if (inputFileName != null) {
+            if (!inputFileName.equals("")) {
+                int idx = inputFileName.indexOf('.');
+                if (idx > 0 && idx < inputFileName.length()) {
+                    simName = inputFileName.substring(0, idx);
+                } else {
+                    simName = inputFileName;
+                }
+            } else {
+                mf.printERR("inputFileName == \"\"");
+                return;
+            }
+        } else {
+            mf.printERR("inputFileName == null");
+            return;
+        }
+
+        if (!inputFile.equals("")) {
+
+            String outputPath = rootPath + "/" + outputFolder;
+            String fileName = outputPath + "/" + simName + ".out";
+            System.out.println(fileName);
+            // Réception (copie) du fichier d'output si celui-ci est distant
+            if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
+                String file = "";
+                String outputFiles = mach.getOutputFiles(fileName + "*", mf);
+                StringTokenizer st = new StringTokenizer(outputFiles, "\n");
+                while (st.hasMoreElements()) {
+                    file = st.nextToken();
+                    mf.printOUT("File = " + file);
+                    //if (Utils.osName().startsWith("Windows")) {
+                    //    sendCommand("unix2dos " + file);
+                    //}
+                    mach.getFile(file + " " + file, mf);
+                    if (Utils.osName().startsWith("Windows")) {
+                        //sendCommand("dos2unix " + file);
+                        Utils.unix2dos(new File(file));
+                    }
+                }
+                fileName = file; // Prend le nom du dernier fichier!
+            }
+
+            // ****************************************************************************
+            // Tester l'existence du fichier
+            mf.editFile(fileName, false);
+            // ****************************************************************************
+        } else {
+            mf.printERR("Please setup the inputfile textfield !");
+            return;
+        }
     }
 }
