@@ -67,7 +67,6 @@
         <Menu class="javax.swing.JMenu" name="jMenuClustepAndTB">
           <Properties>
             <Property name="text" type="java.lang.String" value="Clustep &amp; TB"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemClustep">

@@ -199,6 +199,15 @@ public abstract class Machine
     
     public void createTree(String path, MainFrame mf)
     {
-        getExec().createTree(path);
+        Exec exec = getExec();
+        
+        if(exec != null)
+        {
+            getExec().createTree(path);
+        }
+        else
+        {
+            mf.printERR("Exec is null !");
+        }
     }
 }

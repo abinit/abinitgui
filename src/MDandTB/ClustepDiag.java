@@ -63,6 +63,8 @@ import java.io.PrintWriter;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
+import projects.LocalMachine;
+import projects.Machine;
 
 /**
  *
@@ -121,6 +123,7 @@ public class ClustepDiag extends javax.swing.JDialog {
         parallelCheckBox = new javax.swing.JCheckBox();
         abinitParaTextField = new javax.swing.JTextField();
         abinitParaLabel = new javax.swing.JLabel();
+        getLogFileButton = new javax.swing.JButton();
 
         openClustepInputFileLabel.setText("Open the Clustep input file");
 
@@ -304,6 +307,13 @@ public class ClustepDiag extends javax.swing.JDialog {
         abinitParaLabel.setText("(local max = ?)");
         abinitParaLabel.setEnabled(false);
 
+        getLogFileButton.setText("Download log File");
+        getLogFileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                getLogFileButtonActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -339,10 +349,6 @@ public class ClustepDiag extends javax.swing.JDialog {
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(sendClustepCheckBox)
                             .add(layout.createSequentialGroup()
-                                .add(getEvolutionFileButton)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(getFilmFileButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 161, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(layout.createSequentialGroup()
                                 .add(needSGECheckBox)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(sequentialCheckBox)
@@ -351,7 +357,13 @@ public class ClustepDiag extends javax.swing.JDialog {
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(abinitParaTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(abinitParaLabel)))
+                                .add(abinitParaLabel))
+                            .add(layout.createSequentialGroup()
+                                .add(getEvolutionFileButton)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(getFilmFileButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 161, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(getLogFileButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 161, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                         .add(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -383,15 +395,16 @@ public class ClustepDiag extends javax.swing.JDialog {
                 .add(18, 18, 18)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(getEvolutionFileButton)
-                    .add(getFilmFileButton))
+                    .add(getFilmFileButton)
+                    .add(getLogFileButton))
                 .add(18, 18, 18)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(needSGECheckBox, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(sequentialCheckBox)
                         .add(parallelCheckBox)
                         .add(abinitParaTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(abinitParaLabel)))
+                        .add(abinitParaLabel))
+                    .add(needSGECheckBox))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(SGEconfigPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
@@ -404,28 +417,41 @@ public class ClustepDiag extends javax.swing.JDialog {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                if (MF.localAbinitRadioButton().isSelected() && Utils.osName().startsWith("Windows")) {
+                
+                // Use local machine to enable compilation
+                // TODO get machine from combobox !
+                Machine mach = new LocalMachine();
+                
+                
+                if (mach.getType() == Machine.LOCAL_MACHINE && Utils.osName().startsWith("Windows")) {
                     MF.printERR("Please connect to a remote CLUSTEP host before submitting a simulation !");
                     sendSIMClustepButton.setEnabled(true);
                     return;
                 }
 
-                if ((MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) && MF.remoteExec == null) {
-                    MF.printERR("Please connect to a CLUSTEP host before submitting a simulation !");
-                    sendSIMClustepButton.setEnabled(true);
-                    return;
+                if(!mach.isConnected())
+                {
+                    mach.connection(MF);
                 }
-
-                MF.createFiletree();
+                
+                String rootPath = mach.getSimulationPath();
+                
+                if (rootPath == null || rootPath.equals("")) {
+                    rootPath = ".";
+                }
+                mach.createTree(rootPath, MF);
+                if(mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE)
+                {
+                    MF.getLocalExec().createTree(rootPath);
+                }
 
                 String ClustepProgPath = "";
-                if (MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) {
+                if (mach.getType() == Machine.GATEWAY_MACHINE || mach.getType() == Machine.REMOTE_MACHINE) {
                     ClustepProgPath = "~/CLUSTEP/clustep0";
                 } else {
-                    ClustepProgPath = "../../../CLUSTEP/clustep0";
+                    ClustepProgPath = "../../CLUSTEP/clustep0";
                 }
 
-                String rootPath = MF.mySimulationsTextField().getText();
                 String clustepFolder = "clustep";
 
                 // ***************************************************************
@@ -435,34 +461,15 @@ public class ClustepDiag extends javax.swing.JDialog {
                 String CMD = "pwd";
 
                 RetMSG retmsg;
-                if (MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) {
-                    if (MF.remoteExec != null) {
-                        retmsg = MF.remoteExec.sendCommand(CMD);
-                        if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                            MF.printOUT("PWD: " + retmsg.getRetMSG());
-                            cwd = MF.removeEndl(retmsg.getRetMSG());
-                        } else {
-                            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                            MF.printERR("Error: " + retmsg.getRetMSG() + " !");
-                        }
-                    } else {
-                        MF.printERR("First connect to an CLUSTEP host please !");
-                    }
-                } else if (MF.localAbinitRadioButton().isSelected()) {
-                    if (MF.localExec != null) {
-                        retmsg = MF.localExec.sendCommand(CMD);
-                        if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                            MF.printOUT("PWD: " + retmsg.getRetMSG());
-                            cwd = MF.removeEndl(retmsg.getRetMSG());
-                        } else {
-                            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                            MF.printERR("Error: " + retmsg.getRetMSG() + " !");
-                        }
-                    }
-                } else { // Le choix n'a pas été fait
-                    MF.printERR("Choose a destination option please at config. tab !");
+                retmsg = mach.sendCommand(CMD, MF);
+                if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                    MF.printOUT("PWD: " + retmsg.getRetMSG());
+                    cwd = MF.removeEndl(retmsg.getRetMSG());
+                } else {
+                    //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+                    MF.printERR("Error: " + retmsg.getRetMSG() + " !");
                 }
-
+                
                 // ***************************************************************
 
                 String sep = Utils.fileSeparator();
@@ -489,41 +496,35 @@ public class ClustepDiag extends javax.swing.JDialog {
                 }
 
                 // Creation du dossier clustepFolder local
-                MF.mkdir(rootPath + "/" + clustepFolder);
+                MF.getLocalExec().mkdir(rootPath + "/" + clustepFolder);
                 // Creation du dossier simName dans clustepFolder local
-                MF.mkdir(rootPath + "/" + clustepFolder + "/" + simName);
+                MF.getLocalExec().mkdir(rootPath + "/" + clustepFolder + "/" + simName);
 
-                if (MF.remoteGatewayRadioButton().isSelected()
-                        || MF.remoteAbinitRadioButton().isSelected()) {
+                if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                     // Creation du dossier clustepFolder
-                    MF.mkdirR(rootPath + "/" + clustepFolder);
+                    mach.mkdir(rootPath + "/" + clustepFolder, MF);
                     // Creation du dossier simName dans clustepFolder
-                    MF.mkdirR(rootPath + "/" + clustepFolder + "/" + simName);
+                    mach.mkdir(rootPath + "/" + clustepFolder + "/" + simName, MF);
                 }
 
                 if (sendClustepCheckBox.isSelected()) {
-                    if (MF.remoteGatewayRadioButton().isSelected()
-                            || MF.remoteAbinitRadioButton().isSelected()) {
-                        // Creation du dossier CLUSTEP de destination de clustep0
-                        MF.mkdirR("./CLUSTEP");
-                        // Envoie du code source de clustep0
-                        MF.putFile("./CLUSTEP_src.tar.gz ./CLUSTEP_src.tar.gz");
-                    } else {
-                        // Creation du dossier CLUSTEP de destination de clustep0
-                        MF.mkdir("./CLUSTEP");
+                    mach.mkdir("./CLUSTEP", MF);
+                    if(mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE)
+                    {
+                        mach.putFile("./CLUSTEP_src.tar.gz ./CLUSTEP_src.tar.gz", MF);
                     }
 
                     // Unzip the compressed file CLUSTEP_src.tar.gz
-                    MF.sendCommand("tar -zxf ./CLUSTEP_src.tar.gz");
+                    mach.sendCommand("tar -zxf ./CLUSTEP_src.tar.gz", MF);
 
                     // Compilation de clustep0
-                    MF.sendCommand("make -C ./CLUSTEP_src/");
-                    MF.sendCommand("mv ./CLUSTEP_src/clustep0 ./CLUSTEP");
-                    //sendCommand("make clean -C ./CLUSTEP_src/");
-                    MF.sendCommand("rm -rf ./CLUSTEP_src/");
-                    if (MF.remoteGatewayRadioButton().isSelected()
-                            || MF.remoteAbinitRadioButton().isSelected()) {
-                        MF.sendCommand("rm -f ./CLUSTEP_src.tar.gz");
+                    mach.sendCommand("make -C ./CLUSTEP_src/", MF);
+                    mach.sendCommand("mv ./CLUSTEP_src/clustep0 ./CLUSTEP", MF);
+                    mach.sendCommand("rm -rf ./CLUSTEP_src/", MF);
+                    
+                    if(mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE)
+                    {
+                        mach.sendCommand("rm -f ./CLUSTEP_src.tar.gz", MF);
                     }
                 }
 
@@ -662,12 +663,12 @@ public class ClustepDiag extends javax.swing.JDialog {
 
                     // Envoie (copie) du fichier d'input *******************************************************************
                     String inputFileR = rootPath + "/" + clustepFolder + "/" + simName + "/" + simName + "-input";
-                    if (MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) {
+                    if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                         if (Utils.osName().startsWith("Windows")) {
                             Utils.dos2unix(new File(inputFile));
                         }
                     }
-                    MF.putFile(inputFile + " " + inputFileR);
+                    mach.putFile(inputFile + " " + inputFileR, MF);
 
                     //                    if (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected()) {
                     //                        if (Utils.osName().startsWith("Windows")) {
@@ -678,12 +679,12 @@ public class ClustepDiag extends javax.swing.JDialog {
                     // Envoie (copie) du fichier des positions atomiques ***************************************************
                     String positionFile = openClustepPositionFileTextField.getText();
                     String positionFileR = rootPath + "/" + clustepFolder + "/" + simName + "/" + simName + "-pos";
-                    if (MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) {
+                    if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                         if (Utils.osName().startsWith("Windows")) {
                             Utils.dos2unix(new File(positionFile));
                         }
                     }
-                    MF.putFile(positionFile + " " + positionFileR);
+                    mach.putFile(positionFile + " " + positionFileR, MF);
 
                     //                    if (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected()) {
                     //                        if (Utils.osName().startsWith("Windows")) {
@@ -715,14 +716,14 @@ public class ClustepDiag extends javax.swing.JDialog {
                         return;
                     }
 
-                    if (MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) {
+                    if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                         String configFile = rootPath + sep + clustepFolder + sep + simName + sep + simName + ".files";
                         String configFileR = rootPath + "/" + clustepFolder + "/" + simName + "/" + simName + ".files";
                         if (Utils.osName().startsWith("Windows")) {
                             Utils.dos2unix(new File(configFile));
                         }
                         // Envoie du fichier de configuration
-                        MF.putFile(configFile + " " + configFileR);
+                        mach.putFile(configFile + " " + configFileR, MF);
 
                         //                        if (Utils.osName().startsWith("Windows")) {
                         //                            sendCommand("dos2unix " + configFileR);
@@ -730,38 +731,38 @@ public class ClustepDiag extends javax.swing.JDialog {
                     }
 
                     if (needSGECheckBox.isSelected()) {
-                        if (MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) {
+                        if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                             String sgeSHFile = rootPath + sep + clustepFolder + sep + simName + sep + simName + ".SGE.sh";
                             String sgeSHFileR = rootPath + "/" + clustepFolder + "/" + simName + "/" + simName + ".SGE.sh";
                             if (Utils.osName().startsWith("Windows")) {
                                 Utils.dos2unix(new File(sgeSHFile));
                             }
                             // Envoie du fichier SGE
-                            MF.putFile(sgeSHFile + " " + sgeSHFileR);
+                            mach.putFile(sgeSHFile + " " + sgeSHFileR, MF);
 
                             //                            if (Utils.osName().startsWith("Windows")) {
                             //                                sendCommand("dos2unix " + sgeSHFileR);
                             //                            }
                         }
                         // lancement des commandes d'exécution de la simulation
-                        MF.sendCommand("qsub " + rootPath + "/" + clustepFolder + "/"
-                                + simName + "/" + simName + ".SGE.sh");
+                        mach.sendCommand("qsub " + rootPath + "/" + clustepFolder + "/"
+                                + simName + "/" + simName + ".SGE.sh", MF);
                     } else {
                         String SHFile = rootPath + sep + clustepFolder + sep + simName + sep + simName + ".sh";
                         String SHFileR = rootPath + "/" + clustepFolder + "/" + simName + "/" + simName + ".sh";
-                        if (MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) {
+                        if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                             if (Utils.osName().startsWith("Windows")) {
                                 Utils.dos2unix(new File(SHFile));
                             }
                             // Envoie du fichier BASH
-                            MF.putFile(SHFile + " " + SHFileR);
+                            mach.putFile(SHFile + " " + SHFileR, MF);
 
                             //                            if (Utils.osName().startsWith("Windows")) {
                             //                                sendCommand("dos2unix " + SHFileR);
                             //                            }
                         }
                         // lancement des commandes d'exécution de la simulation
-                        MF.sendCommand("bash " + SHFileR);
+                        mach.sendCommand("bash " + SHFileR, MF);
                     }
                 } else {
                     MF.printERR("Please setup the inputfile textfield !");
@@ -769,15 +770,10 @@ public class ClustepDiag extends javax.swing.JDialog {
                     return;
                 }
 
-                if (MF.localAbinitRadioButton().isSelected()) {
-                    MF.printOUT("The simulation was submitted to the local CLUSTEP server.");
+                if (mach.getType() == Machine.LOCAL_MACHINE) {
+                    MF.printOUT("The simulation was submitted to the local CLUSTEP machine.");
                 } else {
-                    MF.printOUT("The simulation was submitted to the remote CLUSTEP server " + MF.hostTextField().getText());
-                    if (MF.remoteGatewayRadioButton().isSelected()) {
-                        MF.printOUT(" via the gateway " + MF.gatewayHostTextField().getText() + ".");
-                    } else {
-                        //printOUT(".");
-                    }
+                    MF.printOUT("The simulation was submitted to the remote CLUSTEP machine " + mach.getName());
                 }
                 MF.printDEB("The submission thread ended successfully! (Clustep)");
                 sendSIMClustepButton.setEnabled(true);
@@ -906,13 +902,19 @@ public class ClustepDiag extends javax.swing.JDialog {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                if ((MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) && MF.remoteExec == null) {
-                    MF.printERR("Please connect to a CLUSTEP host before doing anything!");
-                    getEvolutionFileButton.setEnabled(true);
-                    return;
+                // TODO use combobox !
+                Machine mach = new LocalMachine();
+                if(!mach.isConnected())
+                {
+                    mach.connection(MF);
                 }
 
-                String rootPath = MF.mySimulationsTextField().getText();
+                String rootPath = mach.getSimulationPath();
+                if(rootPath == null || rootPath.isEmpty())
+                {
+                    rootPath = ".";
+                }
+                
                 String clustepFolder = "clustep";
 
                 String inputFile = "";
@@ -953,11 +955,11 @@ public class ClustepDiag extends javax.swing.JDialog {
 
                     if (!Utils.exists(fileName)) {
                         // Réception (copie) du fichier d'output si celui-ci est distant
-                        if (MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) {
+                        if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                             //                            if (Utils.osName().startsWith("Windows")) {
                             //                                sendCommand("unix2dos " + fileName);
                             //                            }
-                            MF.getFile(fileName + " " + fileName);
+                            mach.getFile(fileName + " " + fileName, MF);
                             //                            if (Utils.osName().startsWith("Windows")) {
                             //                                sendCommand("dos2unix " + fileName);
                             //                            }
@@ -967,7 +969,7 @@ public class ClustepDiag extends javax.swing.JDialog {
                         }
                     } else {
                         MF.printOUT("File " + fileName + " exists in your local filetree!\n"
-                                + "Please remove the local file befor you download the new file version!");
+                                + "Please remove the local file before you download the new file version!");
                     }
 
                     // ****************************************************************************
@@ -989,14 +991,19 @@ public class ClustepDiag extends javax.swing.JDialog {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                if ((MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) && MF.remoteExec == null) {
-                    MF.printERR("Please connect to a CLUSTEP host before doing anything!");
-                    //getEvolutionFileButton.setEnabled(true);
-                    getFilmFileButton.setEnabled(true);
-                    return;
+                // TODO get machine from combobox
+                Machine mach = new LocalMachine();
+                
+                if(!mach.isConnected())
+                {
+                    mach.connection(MF);
                 }
 
-                String rootPath = MF.mySimulationsTextField().getText();
+                String rootPath = mach.getSimulationPath();
+                if(rootPath == null || rootPath.isEmpty())
+                {
+                    rootPath = ".";
+                }
                 String clustepFolder = "clustep";
 
                 String inputFile = "";
@@ -1037,11 +1044,11 @@ public class ClustepDiag extends javax.swing.JDialog {
 
                     if (!Utils.exists(fileName)) {
                         // Réception (copie) du fichier d'output si celui-ci est distant
-                        if (MF.remoteGatewayRadioButton().isSelected() || MF.remoteAbinitRadioButton().isSelected()) {
+                        if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                             //                            if (Utils.osName().startsWith("Windows")) {
                             //                                sendCommand("unix2dos " + fileName);
                             //                            }
-                            MF.getFile(fileName + " " + fileName);
+                            mach.getFile(fileName + " " + fileName, MF);
                             //                            if (Utils.osName().startsWith("Windows")) {
                             //                                sendCommand("dos2unix " + fileName);
                             //                            }
@@ -1051,7 +1058,7 @@ public class ClustepDiag extends javax.swing.JDialog {
                         }
                     } else {
                         MF.printOUT("File " + fileName + " exists in your local filetree!\n"
-                                + "Please remove the local file befor you download the new file version!");
+                                + "Please remove the local file before you download the new file version!");
                     }
 
                     // ****************************************************************************
@@ -1106,6 +1113,95 @@ public class ClustepDiag extends javax.swing.JDialog {
         abinitParaLabel.setEnabled(true);
     }//GEN-LAST:event_parallelCheckBoxActionPerformed
 
+    private void getLogFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getLogFileButtonActionPerformed
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                // TODO use combobox !
+                Machine mach = new LocalMachine();
+                if(!mach.isConnected())
+                {
+                    mach.connection(MF);
+                }
+
+                String rootPath = mach.getSimulationPath();
+                if(rootPath == null || rootPath.isEmpty())
+                {
+                    rootPath = ".";
+                }
+                
+                String clustepFolder = "clustep";
+
+                String inputFile = "";
+                String inputFileName = "";
+
+                inputFile = openClustepInputFileTextField.getText();
+                inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
+
+                // Test de l'existance de inputfile
+                if (!Utils.exists(inputFile)) {
+                    MF.printERR("The file " + inputFile + " doesn't exist !");
+                    getEvolutionFileButton.setEnabled(true);
+                    return;
+                }
+
+                String simName = null;
+                if (inputFileName != null) {
+                    if (!inputFileName.equals("")) {
+                        int idx = inputFileName.indexOf('-');
+                        if (idx > 0 && idx < inputFileName.length()) {
+                            simName = inputFileName.substring(0, idx);
+                        } else {
+                            simName = inputFileName;
+                        }
+                    } else {
+                        MF.printERR("inputFileName == \"\"");
+                        return;
+                    }
+                } else {
+                    MF.printERR("inputFileName == null");
+                    return;
+                }
+
+                if (!inputFile.equals("")) {
+
+                    String fileName = rootPath + "/" + clustepFolder + "/"
+                            + simName + "/" + simName + ".log";
+
+                    if (!Utils.exists(fileName)) {
+                        // Réception (copie) du fichier d'output si celui-ci est distant
+                        if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
+                            //                            if (Utils.osName().startsWith("Windows")) {
+                            //                                sendCommand("unix2dos " + fileName);
+                            //                            }
+                            mach.getFile(fileName + " " + fileName, MF);
+                            //                            if (Utils.osName().startsWith("Windows")) {
+                            //                                sendCommand("dos2unix " + fileName);
+                            //                            }
+                            if (Utils.osName().startsWith("Windows")) {
+                                Utils.unix2dos(new File(fileName));
+                            }
+                        }
+                    } else {
+                        MF.printOUT("File " + fileName + " exists in your local filetree!\n"
+                                + "Please remove the local file before you download the new file version!");
+                    }
+
+                    // ****************************************************************************
+                    // Tester l'existance du fichier
+                    MF.editFile(fileName, false);
+                    // ****************************************************************************
+                } else {
+                    MF.printERR("Please setup the inputfile textfield !");
+                    return;
+                }
+            }
+        };
+
+        Thread t = new Thread(r);
+        t.start();
+    }//GEN-LAST:event_getLogFileButtonActionPerformed
+
     public JTextField ramTextField() {
         return ramTextField;
     }
@@ -1147,6 +1243,7 @@ public class ClustepDiag extends javax.swing.JDialog {
     private javax.swing.JButton geditClustepPositionButton;
     private javax.swing.JButton getEvolutionFileButton;
     private javax.swing.JButton getFilmFileButton;
+    private javax.swing.JButton getLogFileButton;
     private javax.swing.JLabel hdmLabel;
     private javax.swing.JTextField hdmTextField;
     private javax.swing.JCheckBox needSGECheckBox;
