@@ -6,6 +6,7 @@
 
 package projects;
 
+import MDandTB.ClustepSimulation;
 import core.Atom;
 import core.Password;
 import org.yaml.snakeyaml.TypeDescription;
@@ -35,6 +36,9 @@ public class ProjectRepresenter extends Representer {
             this.addClassTag(SLURMScript.class, new Tag("!slurmscript"));
             this.addClassTag(FrontendScript.class, new Tag("!frontendscript"));
             this.addClassTag(Simulation.class, new Tag("!simulation"));
+            this.addClassTag(AbinitSimulation.class, new Tag("!abinitsimulation"));
+            this.addClassTag(ClustepSimulation.class, new Tag("!clustepsimulation"));
+        
             this.addClassTag(Atom.class, new Tag("!atom"));
             this.representers.put(Password.class, new RepresentPassword());
 	}

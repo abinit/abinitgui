@@ -77,10 +77,10 @@ public class FrontendScript extends AbstractSubmissionScript
     @Override
     public String toString()
     {
-        String fileContent = "#!/bin/bash" + "\n";
-//                + "\n"
-//                + preProcessPart
-//                + "\n";
+        String fileContent = "#!/bin/bash" + "\n"
+                + "\n"
+                + preProcessPart
+                + "\n";
                 
         if (parallel) {
             fileContent += "mpirun -np " + nbProcs + " " + abinitPath + " < "+ inputPath +" >& " + logPath;

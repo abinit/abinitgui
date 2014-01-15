@@ -34,7 +34,7 @@ import parser.GUIEditor;
  *
  * @author yannick
  */
-public class InputPanel extends javax.swing.JPanel {
+public class AbinitInputPanel extends SimulationPanel {
     
     private MainFrame mf;
     private DisplayerJDialog inputFileDisplayer;
@@ -46,7 +46,7 @@ public class InputPanel extends javax.swing.JPanel {
     /**
      * Creates new form InputPanel
      */
-    public InputPanel() {
+    public AbinitInputPanel() {
         initComponents();
         
     }
@@ -54,6 +54,7 @@ public class InputPanel extends javax.swing.JPanel {
     public void setMainFrame(MainFrame mf)
     {
         this.mf = mf;
+        System.out.println("Set mainframe : "+mf);
         
         inputFileDisplayer = new DisplayerJDialog(mf, false);
         inputFileDisplayer.setTitle("..:: Input file preview ::..");
@@ -88,6 +89,40 @@ public class InputPanel extends javax.swing.JPanel {
         }
         table.setColumnModel(tcm);
     }
+    
+    @Override
+    public void fillFromSimu(Simulation currentSimu)
+    {
+        if(currentSimu instanceof AbinitSimulation)
+        {
+            AbinitSimulation simu = (AbinitSimulation)currentSimu;
+            this.setInputFileName(simu.getInputFileName());
+            this.setAtomList(simu.getListPseudos());
+        }
+        else
+        {
+            throw new UnsupportedOperationException("Not able to tackle Simulation");
+        }
+    }
+    
+    @Override
+    public void fillSimu(Simulation currentSimu)
+    {
+        if(currentSimu instanceof AbinitSimulation)
+        {
+            AbinitSimulation simu = (AbinitSimulation)currentSimu;
+            String fileName = getInputFileName();
+            ArrayList<Atom> listPseudos = getAtomList();
+            boolean useEXT = getUsingExtInputFile();
+            simu.setInputFileName(fileName);
+            simu.setListPseudos(listPseudos);
+            simu.setUsingExtInputFile(useEXT);
+        }
+        else
+        {
+            throw new UnsupportedOperationException("Not able to tackle Simulation");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,13 +144,6 @@ public class InputPanel extends javax.swing.JPanel {
         pspLabel = new javax.swing.JLabel();
         displayFileButton = new javax.swing.JButton();
         geditButton = new javax.swing.JButton();
-        useCreIFRadioButton = new javax.swing.JRadioButton();
-        openXMLFileLabel = new javax.swing.JLabel();
-        openXMLFileTextField = new javax.swing.JTextField();
-        openXMLFileDialogButton = new javax.swing.JButton();
-        saveFileButton = new javax.swing.JButton();
-        saveFileAsButton = new javax.swing.JButton();
-        createButton = new javax.swing.JButton();
         testAnalyze1 = new javax.swing.JButton();
 
         inputFilePanel.setMaximumSize(new java.awt.Dimension(800, 600));
@@ -178,52 +206,6 @@ public class InputPanel extends javax.swing.JPanel {
             }
         });
 
-        useCreIFRadioButton.setForeground(java.awt.Color.blue);
-        useCreIFRadioButton.setText("Use created input file");
-        useCreIFRadioButton.setEnabled(false);
-        useCreIFRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                useCreIFRadioButtonActionPerformed(evt);
-            }
-        });
-
-        openXMLFileLabel.setText("Open the ABINIT input file (usualy *.ab [XML file])");
-        openXMLFileLabel.setEnabled(false);
-
-        openXMLFileTextField.setEnabled(false);
-
-        openXMLFileDialogButton.setText("...");
-        openXMLFileDialogButton.setEnabled(false);
-        openXMLFileDialogButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openXMLFileDialogButtonActionPerformed(evt);
-            }
-        });
-
-        saveFileButton.setText("Save");
-        saveFileButton.setEnabled(false);
-        saveFileButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveFileButtonActionPerformed(evt);
-            }
-        });
-
-        saveFileAsButton.setText("Save As");
-        saveFileAsButton.setEnabled(false);
-        saveFileAsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveFileAsButtonActionPerformed(evt);
-            }
-        });
-
-        createButton.setText("Generate file preview (test)");
-        createButton.setEnabled(false);
-        createButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createButtonActionPerformed(evt);
-            }
-        });
-
         testAnalyze1.setText("Test / Analyze file");
         testAnalyze1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,21 +221,12 @@ public class InputPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(inputFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(testAnalyze1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pspTableScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, inputFilePanelLayout.createSequentialGroup()
-                        .addComponent(openXMLFileDialogButton)
+                        .addComponent(openFileDialogButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(openXMLFileTextField))
+                        .addComponent(openFileTextField))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, inputFilePanelLayout.createSequentialGroup()
                         .addGroup(inputFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(openXMLFileLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(useCreIFRadioButton, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, inputFilePanelLayout.createSequentialGroup()
-                                .addComponent(saveFileButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(saveFileAsButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(createButton))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, inputFilePanelLayout.createSequentialGroup()
                                 .addComponent(pspLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -264,13 +237,10 @@ public class InputPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(displayFileButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(geditButton)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, inputFilePanelLayout.createSequentialGroup()
-                        .addComponent(openFileDialogButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(openFileTextField)))
-                .addGap(414, 414, 414))
+                                .addComponent(geditButton))
+                            .addComponent(pspTableScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         inputFilePanelLayout.setVerticalGroup(
             inputFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,20 +262,7 @@ public class InputPanel extends javax.swing.JPanel {
                     .addComponent(pspTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pspTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(useCreIFRadioButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(openXMLFileLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(inputFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(openXMLFileDialogButton)
-                    .addComponent(openXMLFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(inputFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveFileButton)
-                    .addComponent(saveFileAsButton)
-                    .addComponent(createButton))
-                .addGap(103, 103, 103)
+                .addGap(220, 220, 220)
                 .addComponent(testAnalyze1)
                 .addContainerGap())
         );
@@ -314,27 +271,27 @@ public class InputPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 738, Short.MAX_VALUE)
+            .addGap(0, 397, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(inputFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(inputFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 563, Short.MAX_VALUE)
+            .addGap(0, 587, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(inputFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void useExtIFRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useExtIFRadioButtonActionPerformed
-        useExtIFRadioButton.setForeground(Color.red);
-        useCreIFRadioButton.setForeground(Color.blue);
+        useExtIFRadioButton.setForeground(Color.red);        
+        useExtIFRadioButton.setSelected(true);
 
         openFileLabel.setEnabled(true);
         openFileDialogButton.setEnabled(true);
@@ -345,13 +302,6 @@ public class InputPanel extends javax.swing.JPanel {
         pspTextField.setEnabled(true);
         pspTable.setEnabled(true);
         pspTable.setVisible(true);
-
-        openXMLFileLabel.setEnabled(false);
-        openXMLFileDialogButton.setEnabled(false);
-        openXMLFileTextField.setEnabled(false);
-        saveFileAsButton.setEnabled(false);
-        saveFileButton.setEnabled(false);
-        createButton.setEnabled(false);
         inputFileDisplayer.setVisible(false);
 //        inputFileTabbedPane.setEnabled(false);
 //
@@ -478,65 +428,6 @@ public class InputPanel extends javax.swing.JPanel {
         }
     }
     
-    private void useCreIFRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useCreIFRadioButtonActionPerformed
-        
-        mf.printERR("Not yet supported !");
-        return;
-        
-//        useCreIFRadioButton.setForeground(Color.red);
-//        useExtIFRadioButton.setForeground(Color.blue);
-//
-//        openXMLFileLabel.setEnabled(true);
-//        openXMLFileDialogButton.setEnabled(true);
-//        openXMLFileTextField.setEnabled(true);
-//        saveFileAsButton.setEnabled(true);
-//        saveFileButton.setEnabled(true);
-//        createButton.setEnabled(true);
-//        inputFileTabbedPane.setEnabled(true);
-//
-//        openFileLabel.setEnabled(false);
-//        openFileDialogButton.setEnabled(false);
-//        displayFileButton.setEnabled(false);
-//        geditButton.setEnabled(false);
-//        openFileTextField.setEnabled(false);
-//        pspLabel.setEnabled(false);
-//        pspTextField.setEnabled(false);
-//        pspTable.setEnabled(false);
-//        pspTable.setVisible(false);
-//
-//        inputFileTabbedPane.setSelectedIndex(0);
-    }//GEN-LAST:event_useCreIFRadioButtonActionPerformed
-
-    private void openXMLFileDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openXMLFileDialogButtonActionPerformed
-        mf.printERR("Not yet implemented !");
-        return;
-        
-//        JFileChooser fc = new JFileChooser(mySimulationsTextField.getText());
-//        fc.setMultiSelectionEnabled(false);
-//        int retValue = fc.showOpenDialog(this);
-//        if (retValue == JFileChooser.APPROVE_OPTION) {
-//            File file = fc.getSelectedFile();
-//            openXMLFileTextField.setText(file.getPath());
-//        }
-    }//GEN-LAST:event_openXMLFileDialogButtonActionPerformed
-
-    private void saveFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileButtonActionPerformed
-        mf.printERR("Save file is not implemented yet!");
-    }//GEN-LAST:event_saveFileButtonActionPerformed
-
-    private void saveFileAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileAsButtonActionPerformed
-        mf.printERR("Save file as is not implemented yet!");
-    }//GEN-LAST:event_saveFileAsButtonActionPerformed
-
-    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
-        inputFileDisplayer.setVisible(true);
-        //inputFileDisplayer.setText(getBasics()); // TODO
-        
-        // TODO
-        //inputFileDisplayer.setText(geomD.getData() + alcoD.getData() + rereD.getData()
-        //    + wadeD.getData() + inouD.getData() + theoD.getData() + otherTextArea.getText());
-    }//GEN-LAST:event_createButtonActionPerformed
-
     private void testAnalyze1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testAnalyze1ActionPerformed
         guiEditor.loadFile(openFileTextField.getText());
     }//GEN-LAST:event_testAnalyze1ActionPerformed
@@ -573,24 +464,17 @@ public class InputPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton createButton;
     private javax.swing.JButton displayFileButton;
     private javax.swing.JButton geditButton;
     private javax.swing.JPanel inputFilePanel;
     private javax.swing.JButton openFileDialogButton;
     private javax.swing.JLabel openFileLabel;
     private javax.swing.JTextField openFileTextField;
-    private javax.swing.JButton openXMLFileDialogButton;
-    private javax.swing.JLabel openXMLFileLabel;
-    private javax.swing.JTextField openXMLFileTextField;
     private javax.swing.JLabel pspLabel;
     private javax.swing.JTable pspTable;
     private javax.swing.JScrollPane pspTableScrollPane;
     private javax.swing.JTextField pspTextField;
-    private javax.swing.JButton saveFileAsButton;
-    private javax.swing.JButton saveFileButton;
     private javax.swing.JButton testAnalyze1;
-    private javax.swing.JRadioButton useCreIFRadioButton;
     private javax.swing.JRadioButton useExtIFRadioButton;
     // End of variables declaration//GEN-END:variables
 

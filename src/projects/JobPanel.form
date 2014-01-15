@@ -19,18 +19,19 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="newButton" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="122" max="32767" attributes="0"/>
+                  <Component id="newButton1" alignment="0" max="32767" attributes="0"/>
                   <Component id="deleteButton" alignment="0" max="32767" attributes="0"/>
                   <Component id="saveButton" alignment="0" max="32767" attributes="0"/>
-                  <Component id="saveButton1" alignment="1" max="32767" attributes="0"/>
-                  <Component id="openLOGButton" alignment="1" max="32767" attributes="0"/>
-                  <Component id="openOUTButton" alignment="1" max="32767" attributes="0"/>
-                  <Component id="newButton" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
+                  <Component id="saveButton1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="openLOGButton" alignment="0" max="32767" attributes="0"/>
+                  <Component id="openOUTButton" alignment="0" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTabbedPane1" pref="743" max="32767" attributes="0"/>
+                      <Component id="tabbedPane" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -60,6 +61,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="newButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="newButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="saveButton" min="-2" max="-2" attributes="0"/>
@@ -80,7 +83,7 @@
                           <Component id="nameSimuTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTabbedPane1" min="-2" pref="515" max="-2" attributes="0"/>
+                      <Component id="tabbedPane" min="-2" pref="515" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -116,7 +119,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="newButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="New"/>
+        <Property name="text" type="java.lang.String" value="New Abinit simu"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newButtonActionPerformed"/>
@@ -138,11 +141,11 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+    <Container class="javax.swing.JTabbedPane" name="tabbedPane">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Component class="projects.InputPanel" name="inputPanel1">
+        <Container class="javax.swing.JPanel" name="inputPanel2">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Input">
@@ -150,7 +153,25 @@
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
-        </Component>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
+          <SubComponents>
+            <Component class="projects.AbinitInputPanel" name="abinitInputPanel1">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                  <CardConstraints cardName="abinit"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="MDandTB.ClustepPanel" name="clustepPanel1">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                  <CardConstraints cardName="clustep"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+          </SubComponents>
+        </Container>
         <Container class="javax.swing.JPanel" name="jPanel1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -173,7 +194,7 @@
                           </Group>
                           <Component id="submissionScriptPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="214" max="32767" attributes="0"/>
+                      <EmptySpace pref="337" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -240,7 +261,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="openOUTButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Open OUT"/>
+        <Property name="text" type="java.lang.String" value="Download output"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openOUTButtonActionPerformed"/>
@@ -254,6 +275,14 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pspPathLabelMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="newButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Other simu"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newButton1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

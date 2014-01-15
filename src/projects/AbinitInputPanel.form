@@ -16,24 +16,24 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="738" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="397" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="inputFilePanel" min="-2" pref="738" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="inputFilePanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="563" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="587" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="inputFilePanel" min="-2" pref="563" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -57,23 +57,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="testAnalyze1" alignment="1" max="32767" attributes="0"/>
-                      <Component id="pspTableScrollPane" alignment="0" pref="0" max="32767" attributes="1"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="openXMLFileDialogButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="openFileDialogButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="openXMLFileTextField" max="32767" attributes="0"/>
+                          <Component id="openFileTextField" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="openXMLFileLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="useCreIFRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="saveFileButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="saveFileAsButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="createButton" min="-2" max="-2" attributes="1"/>
-                              </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="pspLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -87,16 +77,12 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="geditButton" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="pspTableScrollPane" alignment="0" min="-2" pref="349" max="-2" attributes="1"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="openFileDialogButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="openFileTextField" max="32767" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="414" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -123,22 +109,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="pspTableScrollPane" min="-2" pref="98" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="useCreIFRadioButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="openXMLFileLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="openXMLFileDialogButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="openXMLFileTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="saveFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="saveFileAsButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="createButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="220" max="-2" attributes="0"/>
                   <Component id="testAnalyze1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -218,65 +189,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="geditButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="useCreIFRadioButton">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="0" id="blue" palette="1" red="0" type="palette"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Use created input file"/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="useCreIFRadioButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="openXMLFileLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Open the ABINIT input file (usualy *.ab [XML file])"/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="openXMLFileTextField">
-          <Properties>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="openXMLFileDialogButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="..."/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openXMLFileDialogButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="saveFileButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Save"/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveFileButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="saveFileAsButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Save As"/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveFileAsButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="createButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Generate file preview (test)"/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="testAnalyze1">

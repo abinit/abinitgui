@@ -6,9 +6,11 @@
 
 package projects;
 
+import MDandTB.ClustepSimulation;
 import core.Atom;
 import core.MainFrame;
 import core.Utils;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,6 +32,8 @@ public class JobPanel extends javax.swing.JPanel {
     private Machine currentMachine;
     private Project currentProject;
     private Simulation currentSimu;
+    private SimulationPanel currentPanel;
+    
     
     /**
      * Creates new form JobPanel
@@ -46,7 +51,8 @@ public class JobPanel extends javax.swing.JPanel {
     public void setMainFrame(MainFrame mf)
     {
         this.mf = mf;
-        inputPanel1.setMainFrame(mf);
+        abinitInputPanel1.setMainFrame(mf);
+        clustepPanel1.setMainFrame(mf);
     }
 
     /**
@@ -63,8 +69,10 @@ public class JobPanel extends javax.swing.JPanel {
         newButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        inputPanel1 = new projects.InputPanel();
+        tabbedPane = new javax.swing.JTabbedPane();
+        inputPanel2 = new javax.swing.JPanel();
+        abinitInputPanel1 = new projects.AbinitInputPanel();
+        clustepPanel1 = new MDandTB.ClustepPanel();
         jPanel1 = new javax.swing.JPanel();
         machineLabel = new javax.swing.JLabel();
         machineCombo = new javax.swing.JComboBox();
@@ -76,6 +84,7 @@ public class JobPanel extends javax.swing.JPanel {
         openOUTButton = new javax.swing.JButton();
         pspPathTextField = new javax.swing.JTextField();
         pspPathLabel = new javax.swing.JLabel();
+        newButton1 = new javax.swing.JButton();
 
         simuList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -89,7 +98,7 @@ public class JobPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(simuList);
 
-        newButton.setText("New");
+        newButton.setText("New Abinit simu");
         newButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newButtonActionPerformed(evt);
@@ -110,7 +119,11 @@ public class JobPanel extends javax.swing.JPanel {
             }
         });
 
-        jTabbedPane1.addTab("Input", inputPanel1);
+        inputPanel2.setLayout(new java.awt.CardLayout());
+        inputPanel2.add(abinitInputPanel1, "abinit");
+        inputPanel2.add(clustepPanel1, "clustep");
+
+        tabbedPane.addTab("Input", inputPanel2);
 
         machineLabel.setText("Select machine on which running the simulation :");
 
@@ -138,7 +151,7 @@ public class JobPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(machineCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(submissionScriptPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addContainerGap(337, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,7 +165,7 @@ public class JobPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Submission", jPanel1);
+        tabbedPane.addTab("Submission", jPanel1);
 
         nameSimuLabel.setText("Name of the simulation :");
 
@@ -170,7 +183,7 @@ public class JobPanel extends javax.swing.JPanel {
             }
         });
 
-        openOUTButton.setText("Open OUT");
+        openOUTButton.setText("Download output");
         openOUTButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openOUTButtonActionPerformed(evt);
@@ -184,6 +197,13 @@ public class JobPanel extends javax.swing.JPanel {
             }
         });
 
+        newButton1.setText("Other simu");
+        newButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -191,17 +211,18 @@ public class JobPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(newButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                    .addComponent(newButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(saveButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(openLOGButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(openOUTButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(newButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saveButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(openLOGButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(openOUTButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, Short.MAX_VALUE)
+                        .addComponent(tabbedPane)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -224,6 +245,8 @@ public class JobPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(newButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(newButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveButton)
@@ -242,7 +265,7 @@ public class JobPanel extends javax.swing.JPanel {
                             .addComponent(nameSimuLabel)
                             .addComponent(nameSimuTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -271,16 +294,15 @@ public class JobPanel extends javax.swing.JPanel {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         
-        String fileName = inputPanel1.getInputFileName();
-        ArrayList<Atom> listPseudos = inputPanel1.getAtomList();
-        boolean useEXT = inputPanel1.getUsingExtInputFile();
         
         if(currentSimu != null)
         {
             currentSimu.setName(nameSimuTextField.getText());
-            currentSimu.setInputFileName(fileName);
-            currentSimu.setListPseudos(listPseudos);
-            currentSimu.setUsingExtInputFile(useEXT);
+            if(currentPanel != null)
+            {
+                currentPanel.fillSimu(currentSimu);
+            }
+            
             currentSimu.getRemoteJob().setScript(submissionScriptPanel1.getScript());
             Machine mach = (Machine)machineCombo.getSelectedItem();
             if(mach != null)
@@ -302,20 +324,6 @@ public class JobPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void machineComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_machineComboItemStateChanged
-
-    }//GEN-LAST:event_machineComboItemStateChanged
-
-    private void machineComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_machineComboActionPerformed
-        Machine mach = (Machine)machineCombo.getSelectedItem();
-        if(mach != null)
-        {
-            this.currentMachine = mach;
-            // TODO
-            this.submissionScriptPanel1.setScript(mach.getSubmissionScript());
-        }
-    }//GEN-LAST:event_machineComboActionPerformed
-
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         if(currentProject != null && currentSimu != null)
         {
@@ -332,7 +340,7 @@ public class JobPanel extends javax.swing.JPanel {
 
     private void openLOGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLOGButtonActionPerformed
 
-        
+        // Ask simulation to do the job !
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -357,13 +365,13 @@ public class JobPanel extends javax.swing.JPanel {
                 
                 mf.getLocalExec().createTree(rootPath);
 
-                if (currentSimu.isUsingExtInputFile()) {
+                //if (currentSimu.isUsingExtInputFile()) {
                     inputFile = currentSimu.getInputFileName();
                     inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
-                } else {
-                    mf.printERR("Choose an option please ! (use an external inputfile or created a inputfile)");
-                    return;
-                }
+                //} else {
+                //    mf.printERR("Choose an option please ! (use an external inputfile or created a inputfile)");
+                //    return;
+                //}
 
                 // Test de l'existance de inputfile
                 if (!Utils.exists(inputFile)) {
@@ -419,6 +427,10 @@ public class JobPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_openLOGButtonActionPerformed
 
     private void openOUTButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openOUTButtonActionPerformed
+        
+        // We will try to gather all results from simulation !
+        // We should ask simulation downloading them !
+        
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -443,13 +455,13 @@ public class JobPanel extends javax.swing.JPanel {
                 
                 mf.getLocalExec().createTree(rootPath);
 
-                if (currentSimu.isUsingExtInputFile()) {
+                //if (currentSimu.isUsingExtInputFile()) {
                     inputFile = currentSimu.getInputFileName();
                     inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
-                } else {
-                    mf.printERR("Choose an option please ! (use an external inputfile or created a inputfile)");
-                    return;
-                }
+                //} else {
+                //    mf.printERR("Choose an option please ! (use an external inputfile or created a inputfile)");
+                //    return;
+                //}
 
                 // Test de l'existance de inputfile
                 if (!Utils.exists(inputFile)) {
@@ -524,6 +536,49 @@ public class JobPanel extends javax.swing.JPanel {
         mf.printGEN("---------------------------------------------------", Color.BLACK, false, true);
     }//GEN-LAST:event_pspPathLabelMouseClicked
 
+    private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
+
+        
+        String[] programs = new String[] {"abinit", "clustep", "other"};
+    
+        String input = (String) JOptionPane.showInputDialog(this,"Please select your program",null, JOptionPane.INFORMATION_MESSAGE, null, programs,"abinit");
+        
+        if(input.equals("abinit"))
+        {
+            if(currentProject != null)
+            {
+                Simulation simu = new Simulation();
+                simu.setName("New simu");
+                currentProject.addSimulation(simu);
+            }
+            refreshProject();
+        }
+        else if(input.equals("clustep"))
+        {
+            if(currentProject != null)
+            {
+                Simulation simu = new ClustepSimulation();
+                simu.setName("clustep simu");
+                currentProject.addSimulation(simu);
+            }
+            refreshProject();
+        }
+    }//GEN-LAST:event_newButton1ActionPerformed
+
+    private void machineComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_machineComboActionPerformed
+        Machine mach = (Machine)machineCombo.getSelectedItem();
+        if(mach != null)
+        {
+            this.currentMachine = mach;
+            // TODO
+            this.submissionScriptPanel1.setScript(mach.getSubmissionScript());
+        }
+    }//GEN-LAST:event_machineComboActionPerformed
+
+    private void machineComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_machineComboItemStateChanged
+
+    }//GEN-LAST:event_machineComboItemStateChanged
+
     
     
     public void refreshMachines()
@@ -558,16 +613,18 @@ public class JobPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private projects.AbinitInputPanel abinitInputPanel1;
+    private MDandTB.ClustepPanel clustepPanel1;
     private javax.swing.JButton deleteButton;
-    private projects.InputPanel inputPanel1;
+    private javax.swing.JPanel inputPanel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JComboBox machineCombo;
     private javax.swing.JLabel machineLabel;
     private javax.swing.JLabel nameSimuLabel;
     private javax.swing.JTextField nameSimuTextField;
     private javax.swing.JButton newButton;
+    private javax.swing.JButton newButton1;
     private javax.swing.JButton openLOGButton;
     private javax.swing.JButton openOUTButton;
     private javax.swing.JLabel pspPathLabel;
@@ -576,17 +633,43 @@ public class JobPanel extends javax.swing.JPanel {
     private javax.swing.JButton saveButton1;
     private javax.swing.JList simuList;
     private projects.SubmissionScriptPanel submissionScriptPanel1;
+    private javax.swing.JTabbedPane tabbedPane;
     // End of variables declaration//GEN-END:variables
 
+    private void setCorrectPanel() {
+        if(currentSimu == null)
+        {
+            
+        }
+        else
+        {
+            if(currentSimu instanceof ClustepSimulation)
+            {
+                CardLayout cl = (CardLayout)(inputPanel2.getLayout());
+                cl.show(inputPanel2, "clustep");
+                this.currentPanel = clustepPanel1;
+            }
+            else
+            {
+                CardLayout cl = (CardLayout)(inputPanel2.getLayout());
+                cl.show(inputPanel2, "abinit");
+                this.currentPanel = abinitInputPanel1;
+            }
+        }
+    }
     private void refresh() {
+        setCorrectPanel();
         setEmptyFields();
         if(currentSimu != null)
         {
+            if(currentPanel != null)
+            {
+                currentPanel.fillFromSimu(currentSimu);
+            }
+            
             if(currentSimu.getName() != null)
                 nameSimuTextField.setText(currentSimu.getName());
             
-            inputPanel1.setInputFileName(currentSimu.getInputFileName());
-            inputPanel1.setAtomList(currentSimu.getListPseudos());
             String machineName = currentSimu.getRemoteJob().getMachineName();
             Machine mach = mf.getMachineDatabase().getMachine(machineName);
             machineCombo.setSelectedItem(mach);

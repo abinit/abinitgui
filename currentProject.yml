@@ -1,7 +1,7 @@
 !!projects.Project
 PSPPath: ./PSP/
 dict:
-  Test3: !simulation
+  Test3: !abinitsimulation
     inputFileName: ./test3.in
     listPseudos:
     - {PSPFileName: 14si.pspnc, PSPPath: ./PSP//LDA_TM.psps/14, PSPType: LDA_TM, name: '',
@@ -17,7 +17,7 @@ dict:
       status: 0
     status: 0
     usingExtInputFile: true
-  Test1: !simulation
+  Test1: !abinitsimulation
     inputFileName: ./test1.in
     listPseudos:
     - {PSPFileName: 41-Nb.LDA.fhi, PSPPath: ./PSP//LDA_FHI, PSPType: LDA_FHI, name: '',
@@ -37,4 +37,17 @@ dict:
       status: 0
     status: 0
     usingExtInputFile: true
+  clustep simu: !clustepsimulation
+    inputFileName: ./ClustepEx/Seance1/ex1/C2-input
+    name: clustep simu
+    positionFileName: ./ClustepEx/Seance1/ex1/C2-pos
+    remoteJob:
+      machineName: Local machine
+      script: !frontendscript {MPIPath: mpirun, abinitPath: ./CLUSTEP/clustep0, email: '',
+        inputPath: /home/yannick/NetBeansProjects/abinitgui/MySims/C2.files, logPath: /home/yannick/NetBeansProjects/abinitgui/MySims/clustep/C2/C2.log,
+        memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
+        simName: simulation, system: Frontend, timeLimit: ''}
+      status: 0
+    sendClustepSources: false
+    status: 0
 

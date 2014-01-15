@@ -237,7 +237,7 @@ public class MainFrame extends javax.swing.JFrame {
         // ---------------------------------------------------------------------
         clustepDiag = new ClustepDiag(this, false);
         clustepDiag.setTitle("..:: Clustep ::..");
-        clustepDiag.setVisible(true);
+        clustepDiag.setVisible(false);
 
         tightBindingDiag = new TightBindingDiag(this, false, clustepDiag);
         tightBindingDiag.setTitle("..:: Tight-Binding ::..");
