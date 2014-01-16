@@ -7,6 +7,7 @@
 package projects;
 
 import MDandTB.ClustepSimulation;
+import MDandTB.TightBindingSimulation;
 import core.Atom;
 import core.MainFrame;
 import core.Utils;
@@ -53,6 +54,7 @@ public class JobPanel extends javax.swing.JPanel {
         this.mf = mf;
         abinitInputPanel1.setMainFrame(mf);
         clustepPanel1.setMainFrame(mf);
+        tightBindingPanel1.setMainFrame(mf);
     }
 
     /**
@@ -73,6 +75,7 @@ public class JobPanel extends javax.swing.JPanel {
         inputPanel2 = new javax.swing.JPanel();
         abinitInputPanel1 = new projects.AbinitInputPanel();
         clustepPanel1 = new MDandTB.ClustepPanel();
+        tightBindingPanel1 = new MDandTB.TightBindingPanel();
         jPanel1 = new javax.swing.JPanel();
         machineLabel = new javax.swing.JLabel();
         machineCombo = new javax.swing.JComboBox();
@@ -122,6 +125,7 @@ public class JobPanel extends javax.swing.JPanel {
         inputPanel2.setLayout(new java.awt.CardLayout());
         inputPanel2.add(abinitInputPanel1, "abinit");
         inputPanel2.add(clustepPanel1, "clustep");
+        inputPanel2.add(tightBindingPanel1, "tb");
 
         tabbedPane.addTab("Input", inputPanel2);
 
@@ -285,7 +289,7 @@ public class JobPanel extends javax.swing.JPanel {
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         if(currentProject != null)
         {
-            Simulation simu = new Simulation();
+            Simulation simu = new AbinitSimulation();
             simu.setName("New simu");
             currentProject.addSimulation(simu);
         }
@@ -386,7 +390,7 @@ public class JobPanel extends javax.swing.JPanel {
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
 
         
-        String[] programs = new String[] {"abinit", "clustep", "other"};
+        String[] programs = new String[] {"abinit", "clustep", "TB", "other"};
     
         String input = (String) JOptionPane.showInputDialog(this,"Please select your program",null, JOptionPane.INFORMATION_MESSAGE, null, programs,"abinit");
         
@@ -406,6 +410,16 @@ public class JobPanel extends javax.swing.JPanel {
             {
                 Simulation simu = new ClustepSimulation();
                 simu.setName("clustep simu");
+                currentProject.addSimulation(simu);
+            }
+            refreshProject();
+        }
+        else if(input.equals("TB"))
+        {
+            if(currentProject != null)
+            {
+                Simulation simu = new TightBindingSimulation();
+                simu.setName("TB simu");
                 currentProject.addSimulation(simu);
             }
             refreshProject();
@@ -481,6 +495,7 @@ public class JobPanel extends javax.swing.JPanel {
     private javax.swing.JList simuList;
     private projects.SubmissionScriptPanel submissionScriptPanel1;
     private javax.swing.JTabbedPane tabbedPane;
+    private MDandTB.TightBindingPanel tightBindingPanel1;
     // End of variables declaration//GEN-END:variables
 
     private void setCorrectPanel() {
@@ -495,6 +510,12 @@ public class JobPanel extends javax.swing.JPanel {
                 CardLayout cl = (CardLayout)(inputPanel2.getLayout());
                 cl.show(inputPanel2, "clustep");
                 this.currentPanel = clustepPanel1;
+            }
+            else if(currentSimu instanceof TightBindingSimulation)
+            {
+                CardLayout cl = (CardLayout)(inputPanel2.getLayout());
+                cl.show(inputPanel2, "tb");
+                this.currentPanel = tightBindingPanel1;
             }
             else
             {

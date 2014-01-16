@@ -7,6 +7,7 @@
 package projects;
 
 import MDandTB.ClustepSimulation;
+import MDandTB.TightBindingSimulation;
 import core.Atom;
 import core.Password;
 import java.util.Map;
@@ -41,6 +42,7 @@ public class ProjectConstructor extends Constructor {
         this.addTypeDescription(new TypeDescription(Simulation.class, new Tag("!simulation")));
         this.addTypeDescription(new TypeDescription(AbinitSimulation.class, new Tag("!abinitsimulation")));
         this.addTypeDescription(new TypeDescription(ClustepSimulation.class, new Tag("!clustepsimulation")));
+        this.addTypeDescription(new TypeDescription(TightBindingSimulation.class, new Tag("!tightbindingsimulation")));
         this.addTypeDescription(new TypeDescription(Atom.class, new Tag("!atom")));
         this.yamlConstructors.put(new Tag("!password"), new ConstructPassword());
     }

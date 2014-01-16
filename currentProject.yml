@@ -50,4 +50,71 @@ dict:
       status: 0
     sendClustepSources: false
     status: 0
+  TB simu DK1: !tightbindingsimulation
+    compileTB: false
+    graphite: false
+    inputFileName: tbener
+    l: 5
+    m: 3
+    name: TB simu DK1
+    remoteJob:
+      machineName: Local machine
+      script: !frontendscript {MPIPath: mpirun, abinitPath: bash execDOS.sh 1 5 3 1,
+        email: '', inputPath: /dev/null, logPath: TB_simu_DK1.log, memoryMax: '',
+        nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '', simName: simulation,
+        system: Frontend, timeLimit: ''}
+      status: 0
+    sendTBSources: false
+    status: 0
+    tbenerFileName: tbener
+    typeDosknee: 1
+    typeGlobal: 101
+    use110: false
+    use120: false
+    use66: false
+    useLANDM: true
+  TB simu DK2: !tightbindingsimulation
+    compileTB: false
+    graphite: false
+    inputFileName: tbener
+    l: 3
+    m: 3
+    name: TB simu DK2
+    remoteJob:
+      machineName: Local machine
+      script: !frontendscript {MPIPath: mpirun, abinitPath: '', email: '', inputPath: '',
+        logPath: '', memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '',
+        preProcessPart: '', simName: simulation, system: Frontend, timeLimit: ''}
+      status: 0
+    sendTBSources: false
+    status: 0
+    tbenerFileName: tbener
+    typeDosknee: 1
+    typeGlobal: 102
+    use110: false
+    use120: false
+    use66: false
+    useLANDM: true
+  TB simu BD: !tightbindingsimulation
+    compileTB: false
+    graphite: false
+    inputFileName: ./tbener
+    l: 3
+    m: 3
+    name: TB simu BD
+    remoteJob:
+      machineName: Local machine
+      script: !frontendscript {MPIPath: mpirun, abinitPath: '', email: '', inputPath: '',
+        logPath: '', memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '',
+        preProcessPart: '', simName: simulation, system: Frontend, timeLimit: ''}
+      status: 0
+    sendTBSources: false
+    status: 0
+    tbenerFileName: ./tbener
+    typeDosknee: 0
+    typeGlobal: 103
+    use110: false
+    use120: false
+    use66: true
+    useLANDM: false
 

@@ -7,6 +7,7 @@
 package projects;
 
 import MDandTB.ClustepSimulation;
+import MDandTB.TightBindingSimulation;
 import core.Atom;
 import core.Password;
 import org.yaml.snakeyaml.TypeDescription;
@@ -38,6 +39,7 @@ public class ProjectRepresenter extends Representer {
             this.addClassTag(Simulation.class, new Tag("!simulation"));
             this.addClassTag(AbinitSimulation.class, new Tag("!abinitsimulation"));
             this.addClassTag(ClustepSimulation.class, new Tag("!clustepsimulation"));
+            this.addClassTag(TightBindingSimulation.class, new Tag("!tightbindingsimulation"));
         
             this.addClassTag(Atom.class, new Tag("!atom"));
             this.representers.put(Password.class, new RepresentPassword());
