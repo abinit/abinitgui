@@ -44,17 +44,8 @@
                       <Component id="openClustepPositionFileTextField" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="sendClustepCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="getEvolutionFileButton" min="-2" max="-2" attributes="1"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="getFilmFileButton" min="-2" pref="161" max="-2" attributes="1"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="getLogFileButton" min="-2" pref="161" max="-2" attributes="1"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="0" pref="52" max="32767" attributes="0"/>
+                      <Component id="sendClustepCheckBox" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="267" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -88,13 +79,7 @@
               </Group>
               <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
               <Component id="sendClustepCheckBox" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="getEvolutionFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="getFilmFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="getLogFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="188" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -172,30 +157,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Send CLUSTEP source code and compile"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="getEvolutionFileButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Download Evolution File"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="getEvolutionFileButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="getFilmFileButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Download Film File"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="getFilmFileButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="getLogFileButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Download log File"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="getLogFileButtonActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>
