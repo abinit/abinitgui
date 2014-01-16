@@ -54,12 +54,12 @@ dict:
     compileTB: false
     graphite: false
     inputFileName: tbener
-    l: 5
+    l: 3
     m: 3
     name: TB simu DK1
     remoteJob:
       machineName: Local machine
-      script: !frontendscript {MPIPath: mpirun, abinitPath: bash execDOS.sh 1 5 3 1,
+      script: !frontendscript {MPIPath: mpirun, abinitPath: bash execDOS.sh 0 5 3 1,
         email: '', inputPath: /dev/null, logPath: TB_simu_DK1.log, memoryMax: '',
         nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '', simName: simulation,
         system: Frontend, timeLimit: ''}

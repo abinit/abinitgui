@@ -88,7 +88,8 @@ public class FrontendScript extends AbstractSubmissionScript
             fileContent += abinitPath + " < "+ inputPath +" >& " + logPath;
         }
         
-        fileContent+= postProcessPart
+        fileContent+= "\n"
+                    +  postProcessPart
                     + "\n";
         
         return fileContent;

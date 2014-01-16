@@ -390,7 +390,7 @@ public class JobPanel extends javax.swing.JPanel {
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
 
         
-        String[] programs = new String[] {"abinit", "clustep", "TB", "other"};
+        String[] programs = new String[] {"abinit", "clustep", "TB"};
     
         String input = (String) JOptionPane.showInputDialog(this,"Please select your program",null, JOptionPane.INFORMATION_MESSAGE, null, programs,"abinit");
         
@@ -398,7 +398,7 @@ public class JobPanel extends javax.swing.JPanel {
         {
             if(currentProject != null)
             {
-                Simulation simu = new Simulation();
+                Simulation simu = new AbinitSimulation();
                 simu.setName("New simu");
                 currentProject.addSimulation(simu);
             }
