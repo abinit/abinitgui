@@ -20,11 +20,11 @@ Local machine: !localmachine
     preProcessPart: '', simName: simulation, system: Frontend, timeLimit: ''}
 Lemaitre2: !gatewaymachine
   abinitPath: ''
-  gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: '',
+  gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: fabreu,
     password: !password '6i2NGjig240=', useKey: false}
   name: Lemaitre2
-  remoteConnect: !connectioninfo {host: lemaitre2.cism.ucl.ac.be, keyPath: '', login: '',
-    password: !password '6i2NGjig240=', useKey: false}
+  remoteConnect: !connectioninfo {host: lemaitre2.cism.ucl.ac.be, keyPath: /home/flavio/.ssh/id_rsa_ceci,
+    login: flavio, password: !password '6i2NGjig240=', useKey: true}
   simulationPath: ./MySims
   submissionScript: !slurmscript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
     inputPath: '', logPath: '', memoryMax: '2000', nbProcs: '2', parallel: true, postProcessPart: '',

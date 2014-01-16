@@ -51,7 +51,7 @@ public class RemoteMachine extends Machine {
             String abLogin = remoteConnect.getLogin();
             if (!abLogin.equals("") && !abHostname.equals("")) {
                 mf.printOUT("Connecting to " + abHostname + " as " + abLogin + ".");
-                RemoteExec remoteExec = new RemoteExec(mf, abLogin, abHostname, 22);
+                remoteExec = new RemoteExec(mf, abLogin, abHostname, 22);
                 String keyFile = remoteConnect.getKeyPath();
                 if (keyFile.equals("")) {
                     keyFile = null;
