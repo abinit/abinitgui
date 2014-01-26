@@ -1,24 +1,14 @@
-Manneback: !gatewaymachine
-  abinitPath: ''
-  gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: '',
-    password: !password '6i2NGjig240=', useKey: false}
-  name: Manneback
-  remoteConnect: !connectioninfo {host: manneback.cism.ucl.ac.be, keyPath: '', login: '',
-    password: !password '6i2NGjig240=', useKey: false}
-  simulationPath: ./MySims
-  submissionScript: !sgescript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
-    inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false, postProcessPart: '',
-    preProcessPart: '', simName: simulation, system: SGE, timeLimit: '23:59:59'}
 Local machine: !localmachine
   abinitPath: ''
   gatewayConnect: null
   name: Local machine
   remoteConnect: null
   simulationPath: ./MySims
-  submissionScript: !frontendscript {MPIPath: mpirun, abinitPath: '', email: '', inputPath: '',
-    logPath: '', memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '',
-    preProcessPart: '', simName: simulation, system: Frontend, timeLimit: ''}
-Lemaitre2: !gatewaymachine
+  submissionScript: !frontendscript {MPIPath: mpirun, abinitPath: bash execBS.sh 0 tbener 1,
+    email: '', inputPath: /dev/null, logPath: TB_simu_BD.log, memoryMax: '', nbProcs: '1',
+    parallel: false, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/BS,
+    simName: simulation, system: Frontend, timeLimit: ''}
+Lemaitre2: !remotemachine
   abinitPath: ''
   gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: fabreu,
     password: !password '6i2NGjig240=', useKey: false}
@@ -29,4 +19,46 @@ Lemaitre2: !gatewaymachine
   submissionScript: !slurmscript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
     inputPath: '', logPath: '', memoryMax: '2000', nbProcs: '2', parallel: true, postProcessPart: '',
     preProcessPart: '', simName: simulation, system: SLURM, timeLimit: '23:59:59'}
+Lemaitre2 (Mac): !remotemachine
+  abinitPath: ''
+  gatewayConnect: null
+  name: Lemaitre2 (Mac)
+  remoteConnect: !connectioninfo {host: lemaitre2.cism.ucl.ac.be, keyPath: /Users/flavio/.ssh/id_rsa_ceci,
+    login: flavio, password: !password '6i2NGjig240=', useKey: true}
+  simulationPath: ./MySims
+  submissionScript: !slurmscript {MPIPath: mpirun, abinitPath: '', email: flavio.abreuaraujo@uclouvain.be,
+    inputPath: '', logPath: '', memoryMax: '500', nbProcs: '1', parallel: false, postProcessPart: '',
+    preProcessPart: '', simName: simulation, system: SLURM, timeLimit: 23h}
+Manneback: !gatewaymachine
+  abinitPath: ''
+  gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: fabreu,
+    password: !password '6i2NGjig240=', useKey: false}
+  name: Manneback
+  remoteConnect: !connectioninfo {host: manneback.cism.ucl.ac.be, keyPath: '', login: fabreu,
+    password: !password '6i2NGjig240=', useKey: false}
+  simulationPath: ./MySims
+  submissionScript: !sgescript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+    inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false, postProcessPart: '',
+    preProcessPart: '', simName: simulation, system: SGE, timeLimit: '23:59:59'}
+Desk: !remotemachine
+  abinitPath: ''
+  gatewayConnect: null
+  name: Desk
+  remoteConnect: !connectioninfo {host: 130.104.134.99, keyPath: '', login: flavio,
+    password: !password '6i2NGjig240=', useKey: false}
+  simulationPath: ./MySims
+  submissionScript: !frontendscript {MPIPath: mpirun, abinitPath: ~/CLUSTEP/clustep0,
+    email: '', inputPath: /home/flavio/MySyms/clustep/C2/C2.files, logPath: /home/flavio/MySyms/clustep/C2/C2.log,
+    memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
+    simName: simulation, system: Frontend, timeLimit: ''}
+remloc: !remotemachine
+  abinitPath: ''
+  gatewayConnect: null
+  name: remloc
+  remoteConnect: !connectioninfo {host: localhost, keyPath: '', login: flavio, password: !password '6i2NGjig240=',
+    useKey: false}
+  simulationPath: ''
+  submissionScript: !frontendscript {MPIPath: mpirun, abinitPath: '', email: '', inputPath: '',
+    logPath: '', memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '',
+    preProcessPart: '', simName: simulation, system: Frontend, timeLimit: ''}
 

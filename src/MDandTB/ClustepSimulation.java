@@ -351,8 +351,8 @@ public class ClustepSimulation extends Simulation {
             if (isRemoteGatewayMachine
                     || isRemoteAbinitMachine) {
                 // Envoie du fichier de configuration
-                String configFile = rootPath + sep + clustepFolder + sep + simName+ sep + ".files";
-                String configFileR = rootPath + "/" + clustepFolder + "/" + simName+ "/" +  ".files";
+                String configFile  = rootPath + sep + clustepFolder + sep + simName + sep + simName + ".files";
+                String configFileR = rootPath + "/" + clustepFolder + "/" + simName + "/" +  simName + ".files";
 
                 if (Utils.osName().startsWith("Windows")) {
                     Utils.dos2unix(new File(configFile));

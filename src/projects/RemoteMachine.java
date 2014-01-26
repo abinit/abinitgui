@@ -91,7 +91,6 @@ public class RemoteMachine extends Machine {
                 remoteExec = null;
                 isConnected = false;
             }
-           
         }
     }
     

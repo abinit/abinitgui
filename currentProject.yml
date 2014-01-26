@@ -42,49 +42,47 @@ dict:
     name: clustep simu
     positionFileName: ./ClustepEx/Seance1/ex1/C2-pos
     remoteJob:
-      machineName: Local machine
-      script: !frontendscript {MPIPath: mpirun, abinitPath: ./CLUSTEP/clustep0, email: '',
-        inputPath: /home/yannick/NetBeansProjects/abinitgui/MySims/C2.files, logPath: /home/yannick/NetBeansProjects/abinitgui/MySims/clustep/C2/C2.log,
+      machineName: Desk
+      script: !frontendscript {MPIPath: mpirun, abinitPath: ~/CLUSTEP/clustep0, email: '',
+        inputPath: /home/flavio/MySims/clustep/C2/C2.files, logPath: /home/flavio/MySims/clustep/C2/C2.log,
         memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
         simName: simulation, system: Frontend, timeLimit: ''}
       status: 0
     sendClustepSources: false
     status: 0
-  TB simu DK1: !tightbindingsimulation
-    compileTB: false
+  TB simu DK12: !tightbindingsimulation
+    compileTB: true
     graphite: false
     inputFileName: tbener
     l: 3
     m: 3
-    name: TB simu DK1
+    name: TB simu DK12
     remoteJob:
-      machineName: Local machine
-      script: !frontendscript {MPIPath: mpirun, abinitPath: bash execDOS.sh 0 5 3 1,
-        email: '', inputPath: /dev/null, logPath: TB_simu_DK1.log, memoryMax: '',
-        nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '', simName: simulation,
-        system: Frontend, timeLimit: ''}
+      machineName: Desk
+      script: &id001 !frontendscript {MPIPath: mpirun, abinitPath: bash execDOS.sh 0 3 3 3,
+        email: '', inputPath: /dev/null, logPath: TB_simu_DK3.log, memoryMax: '',
+        nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/DOS,
+        simName: simulation, system: Frontend, timeLimit: ''}
       status: 0
-    sendTBSources: false
+    sendTBSources: true
     status: 0
     tbenerFileName: tbener
-    typeDosknee: 1
+    typeDosknee: 2
     typeGlobal: 101
     use110: false
     use120: false
     use66: false
     useLANDM: true
-  TB simu DK2: !tightbindingsimulation
+  TB simu DK3: !tightbindingsimulation
     compileTB: false
     graphite: false
     inputFileName: tbener
     l: 3
     m: 3
-    name: TB simu DK2
+    name: TB simu DK3
     remoteJob:
-      machineName: Local machine
-      script: !frontendscript {MPIPath: mpirun, abinitPath: '', email: '', inputPath: '',
-        logPath: '', memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '',
-        preProcessPart: '', simName: simulation, system: Frontend, timeLimit: ''}
+      machineName: Desk
+      script: *id001
       status: 0
     sendTBSources: false
     status: 0
@@ -98,23 +96,24 @@ dict:
   TB simu BD: !tightbindingsimulation
     compileTB: false
     graphite: false
-    inputFileName: ./tbener
+    inputFileName: ./tbener2
     l: 3
     m: 3
     name: TB simu BD
     remoteJob:
-      machineName: Local machine
-      script: !frontendscript {MPIPath: mpirun, abinitPath: '', email: '', inputPath: '',
-        logPath: '', memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '',
-        preProcessPart: '', simName: simulation, system: Frontend, timeLimit: ''}
+      machineName: Desk
+      script: !frontendscript {MPIPath: mpirun, abinitPath: bash execBS.sh 0 tbener 3,
+        email: '', inputPath: /dev/null, logPath: TB_simu_BD.log, memoryMax: '', nbProcs: '1',
+        parallel: false, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/BS,
+        simName: simulation, system: Frontend, timeLimit: ''}
       status: 0
     sendTBSources: false
     status: 0
     tbenerFileName: ./tbener
-    typeDosknee: 0
+    typeDosknee: 1
     typeGlobal: 103
     use110: false
-    use120: false
-    use66: true
-    useLANDM: false
+    use120: true
+    use66: false
+    useLANDM: true
 

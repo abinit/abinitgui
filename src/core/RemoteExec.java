@@ -280,7 +280,7 @@ public class RemoteExec implements Exec {
             channel.connect();
 
             long t1 = System.nanoTime();
-
+            
             retVal = checkAck(in);
             if (retVal != 0) {
                 return new RetMSG(retVal, errorMSG, "scp " + lfile + " " + rfile);
@@ -296,7 +296,7 @@ public class RemoteExec implements Exec {
             command += "\n";
             out.write(command.getBytes());
             out.flush();
-
+            
             retVal = checkAck(in);
             if (retVal != 0) {
                 return new RetMSG(retVal, errorMSG, "scp " + lfile + " " + rfile);
@@ -330,7 +330,7 @@ public class RemoteExec implements Exec {
             mainFrame.printDEB("File " + lfile + " was uploaded in " + Utils.formatTime(((double) (t2 - t1)) / 1000000000.0));
 
             channel.disconnect();
-
+            
             return new RetMSG(RetMSG.SUCCES, "", "scp " + lfile + " " + rfile);
         } catch (Exception e) {
             //mainFrame.printERR(e.getMessage());

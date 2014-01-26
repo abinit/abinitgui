@@ -301,8 +301,6 @@ public class JobPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        
-        
         if(currentSimu != null)
         {
             currentSimu.setName(nameSimuTextField.getText());
@@ -343,6 +341,7 @@ public class JobPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
+        saveButtonActionPerformed(evt); // Save before run!
         currentSimu.submit(mf);
     }//GEN-LAST:event_saveButton1ActionPerformed
 

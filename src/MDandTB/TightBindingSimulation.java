@@ -340,7 +340,8 @@ public class TightBindingSimulation extends Simulation {
 
         if (script.getSystem().equals("SGE")) {
             String sgeSHFile = rootPath + "/" + TBrootL + "/" + simName + ".SGE.sh";
-            String sgeSHFileR = rootPath + "/" + TBrootL + "/" + simName + ".SGE.sh";
+            //String sgeSHFileR = rootPath + "/" + TBrootL + "/" + simName + ".SGE.sh";
+            String sgeSHFileR = TBrootR + "/" + simName + ".SGE.sh";
             if (mach.getType() == Machine.GATEWAY_MACHINE || mach.getType() == Machine.REMOTE_MACHINE) {
 
                 // Envoie du fichier SGE
@@ -354,12 +355,14 @@ public class TightBindingSimulation extends Simulation {
             mach.sendCommand("qsub " + sgeSHFileR, mf);
         } else if (script.getSystem().equals("Frontend")) {
             String SHFile = rootPath + "/" + TBrootL + "/" + simName + ".sh";
-            String SHFileR = rootPath + "/" + TBrootL + "/" + simName + ".sh";
+            //String SHFileR = rootPath + "/" + TBrootL + "/" + simName + ".sh";
+            String SHFileR = TBrootR + "/" + simName + ".sh";
 
             if (mach.getType() == Machine.GATEWAY_MACHINE || mach.getType() == Machine.REMOTE_MACHINE) {
                 /*if (Utils.osName().startsWith("Windows")) {
                  Utils.dos2unix(new File(SHFileR));
                  }*/
+                
                 // Envoie du fichier BASH
                 mach.putFile(SHFile + " " + SHFileR, mf);
 
@@ -371,7 +374,8 @@ public class TightBindingSimulation extends Simulation {
             mach.sendCommand("bash "+SHFileR, mf);
         } else if (script.getSystem().equals("SLURM")) {
             String slurmSHFile = rootPath + "/" + TBrootL + "/" + simName + ".SLURM.sh";
-            String slurmSHFileR = rootPath + "/" + TBrootL + "/" + simName + ".SLURM.sh";
+            //String slurmSHFileR = rootPath + "/" + TBrootL + "/" + simName + ".SLURM.sh";
+            String slurmSHFileR = TBrootR + "/" + simName + ".SLURM.sh";
             if (mach.getType() == Machine.GATEWAY_MACHINE || mach.getType() == Machine.REMOTE_MACHINE) {
 
                 // Envoie du fichier SGE
