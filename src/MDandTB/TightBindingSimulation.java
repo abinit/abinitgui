@@ -342,10 +342,11 @@ public class TightBindingSimulation extends Simulation {
             String sgeSHFile = rootPath + "/" + TBrootL + "/" + simName + ".SGE.sh";
             //String sgeSHFileR = rootPath + "/" + TBrootL + "/" + simName + ".SGE.sh";
             String sgeSHFileR = TBrootR + "/" + simName + ".SGE.sh";
+            // Envoie du fichier SGE
+            mach.putFile(sgeSHFile + " " + sgeSHFileR, mf);
+                
             if (mach.getType() == Machine.GATEWAY_MACHINE || mach.getType() == Machine.REMOTE_MACHINE) {
 
-                // Envoie du fichier SGE
-                mach.putFile(sgeSHFile + " " + sgeSHFileR, mf);
 
                 if (Utils.osName().startsWith("Windows")) {
                     mach.sendCommand("dos2unix " + sgeSHFileR, mf);
@@ -357,15 +358,17 @@ public class TightBindingSimulation extends Simulation {
             String SHFile = rootPath + "/" + TBrootL + "/" + simName + ".sh";
             //String SHFileR = rootPath + "/" + TBrootL + "/" + simName + ".sh";
             String SHFileR = TBrootR + "/" + simName + ".sh";
+            
+            /*if (Utils.osName().startsWith("Windows")) {
+             Utils.dos2unix(new File(SHFileR));
+             }*/
 
-            if (mach.getType() == Machine.GATEWAY_MACHINE || mach.getType() == Machine.REMOTE_MACHINE) {
-                /*if (Utils.osName().startsWith("Windows")) {
-                 Utils.dos2unix(new File(SHFileR));
-                 }*/
+            // Envoie du fichier BASH
+            mach.putFile(SHFile + " " + SHFileR, mf);
+
                 
-                // Envoie du fichier BASH
-                mach.putFile(SHFile + " " + SHFileR, mf);
-
+            if (mach.getType() == Machine.GATEWAY_MACHINE || mach.getType() == Machine.REMOTE_MACHINE) {
+                
                 if (Utils.osName().startsWith("Windows")) {
                     mach.sendCommand("dos2unix " + SHFileR, mf);
                 }
@@ -376,10 +379,11 @@ public class TightBindingSimulation extends Simulation {
             String slurmSHFile = rootPath + "/" + TBrootL + "/" + simName + ".SLURM.sh";
             //String slurmSHFileR = rootPath + "/" + TBrootL + "/" + simName + ".SLURM.sh";
             String slurmSHFileR = TBrootR + "/" + simName + ".SLURM.sh";
+            
+            // Envoie du fichier SGE
+            mach.putFile(slurmSHFile + " " + slurmSHFileR, mf);
+            
             if (mach.getType() == Machine.GATEWAY_MACHINE || mach.getType() == Machine.REMOTE_MACHINE) {
-
-                // Envoie du fichier SGE
-                mach.putFile(slurmSHFile + " " + slurmSHFileR, mf);
 
                 if (Utils.osName().startsWith("Windows")) {
                     mach.sendCommand("dos2unix " + slurmSHFileR, mf);
