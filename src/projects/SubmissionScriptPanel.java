@@ -68,7 +68,8 @@ public class SubmissionScriptPanel extends javax.swing.JPanel {
                 // Save to script instance !
         int index = typeChooser.getSelectedIndex();
         if (index == -1) {
-            mf.printERR("Please choose a type !");
+            mf.printERR("Please choose a type of submission (Frontend, SGE, Slurm, ...) !");
+            return null;
         }
         String type = (String) typeChooser.getSelectedItem();
         if (script == null || !type.equals(script.getSystem())) {

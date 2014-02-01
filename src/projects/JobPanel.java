@@ -55,6 +55,7 @@ public class JobPanel extends javax.swing.JPanel {
         abinitInputPanel1.setMainFrame(mf);
         clustepPanel1.setMainFrame(mf);
         tightBindingPanel1.setMainFrame(mf);
+        submissionScriptPanel1.setMainFrame(mf);
     }
 
     /**
@@ -309,7 +310,9 @@ public class JobPanel extends javax.swing.JPanel {
                 currentPanel.fillSimu(currentSimu);
             }
             
-            currentSimu.getRemoteJob().setScript(submissionScriptPanel1.getScript());
+            SubmissionScript currentScript = submissionScriptPanel1.getScript();
+            currentSimu.getRemoteJob().setScript(currentScript);
+            
             Machine mach = (Machine)machineCombo.getSelectedItem();
             if(mach != null)
             {
