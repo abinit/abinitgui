@@ -279,8 +279,15 @@ public class MainFrame extends javax.swing.JFrame {
                 new ScriptArgumentRenderer());
 
         scriptBibs = new ScriptBib();
-
-        scriptBibs.loadScriptsFromFile("listScripts.xml");
+        
+        if(Utils.exists("listScripts.xml"))
+        {
+            scriptBibs.loadScriptsFromFile("listScripts.xml");
+        }
+        else
+        {
+            printERR("No file listScripts.xml in the directory : you won't be able to use post-processing tools");
+        }
 
         scriptModel = new DefaultListModel();
         scriptList.setModel(scriptModel);
@@ -309,6 +316,13 @@ public class MainFrame extends javax.swing.JFrame {
         catch(IOException e)
         {
             printERR("Unable to load machines config from \"machines.yml\"");
+            try{
+                machineDatabase.saveToFile("machines.yml");
+            }
+            catch(IOException exc)
+            {
+                printERR("Error saving new file machines.yml");
+            }
         }
         
         // Default values
@@ -324,9 +338,14 @@ public class MainFrame extends javax.swing.JFrame {
         }
         catch(IOException e)
         {
-            e.printStackTrace();
-            printERR("Unable to load project");
-            currentProject = new Project(this, null);
+            printERR("Unable to load project file");
+            currentProject = new Project(this, "currentProject.yml");
+            try{
+                currentProject.save();
+            } catch(IOException exc)
+            {
+                printERR("Error saving new project !");
+            }
         }
         
         machinePane1.setMainFrame(this);

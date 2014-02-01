@@ -60,6 +60,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jsftp.Utils;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.yaml.snakeyaml.DumperOptions;
@@ -103,8 +104,7 @@ public class Project implements Iterable<Simulation> {
                 loadFromFile(fileName);
             }
         } catch (IOException ex) {
-            mf.printERR(ex.getMessage());
-            mf.printDEB("Creating empty project !");
+            mf.printERR("Creating empty project !");
         }
     }
 
