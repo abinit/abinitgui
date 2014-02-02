@@ -46,9 +46,7 @@ For more information on the Abinit Project, please see
 
 package core;
 
-import java.awt.Color;
-import jsftp.JSFTP;
-import jsftp.JSFTPErrorHandler;
+import jsftp.core.JSFTP;
 
 public class MySFTP implements Runnable {
 
@@ -84,52 +82,15 @@ public class MySFTP implements Runnable {
 
     @Override
     public void run() {
-        JSFTPErrorHandler errHandler = new JSFTPErrorHandler() {
-            @Override
-            public void printOUT(String msg) {
-                if (parent != null) {
-                    parent.printOUT(msg);
-                } else {
-                    System.out.println(msg);
-                }
-            }
-
-            @Override
-            public void printERR(String msg) {
-                if (parent != null) {
-                    parent.printERR(msg);
-                } else {
-                    System.err.println(msg);
-                }
-            }
-
-            @Override
-            public void printDEB(String msg) {
-                if (parent != null) {
-                    parent.printDEB(msg);
-                } else {
-                    System.out.println(msg);
-                }
-            }
-
-            @Override
-            public void printGEN(String msg) {
-                if (parent != null) {
-                    parent.printGEN(msg, Color.BLACK, false, false);
-                } else {
-                    System.out.println(msg);
-                }
-            }
-        };
 
         final JSFTP dialog;
         
         if(authPWD) {
             dialog = new JSFTP(null, false, host, port, username, password,
-                    errHandler);
+                    parent.msgdisp);
         } else {
             dialog = new JSFTP(null, false, host, port, username, userkey,
-                    passphrase, errHandler);
+                    passphrase, parent.msgdisp);
         }
         dialog.setTitle("SFTP Client driven by AbinitGUI (JSFTP)");
         dialog.addWindowListener(new java.awt.event.WindowAdapter() {

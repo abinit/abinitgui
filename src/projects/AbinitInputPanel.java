@@ -6,7 +6,6 @@
 
 package projects;
 
-import core.DisplayerJDialog;
 import core.MainFrame;
 import core.MyTableModel;
 import core.pspAtomRenderer;
@@ -26,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import msgdisp.core.MessageDisplayer;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import parser.GUIEditor;
@@ -37,7 +37,8 @@ import parser.GUIEditor;
 public class AbinitInputPanel extends SimulationPanel {
     
     private MainFrame mf;
-    private DisplayerJDialog inputFileDisplayer;
+    //private DisplayerJDialog inputFileDisplayer;
+    private MessageDisplayer msgdispInputFile;
     private String curPath = "."; // to save current Path !
     private MyTableModel pspModel = null;
     
@@ -56,8 +57,10 @@ public class AbinitInputPanel extends SimulationPanel {
         this.mf = mf;
         System.out.println("Set mainframe : "+mf);
         
-        inputFileDisplayer = new DisplayerJDialog(mf, false);
-        inputFileDisplayer.setTitle("..:: Input file preview ::..");
+        msgdispInputFile = new MessageDisplayer(mf, false);
+        msgdispInputFile.setTitle("..:: Input file preview ::..");
+        //inputFileDisplayer = new DisplayerJDialog(mf, false);
+        //inputFileDisplayer.setTitle("..:: Input file preview ::..");
         
         pspModel = new MyTableModel(pspTable);
         pspModel.setNotEditableCol("1-3");
@@ -295,7 +298,8 @@ public class AbinitInputPanel extends SimulationPanel {
         pspTextField.setEnabled(true);
         pspTable.setEnabled(true);
         pspTable.setVisible(true);
-        inputFileDisplayer.setVisible(false);
+        //inputFileDisplayer.setVisible(false);
+        msgdispInputFile.hide();
 //        inputFileTabbedPane.setEnabled(false);
 //
 //        inputFileTabbedPane.setSelectedIndex(inputFileTabbedPane.getTabCount() - 1);
@@ -351,7 +355,8 @@ public class AbinitInputPanel extends SimulationPanel {
     }//GEN-LAST:event_pspTextFieldKeyReleased
 
     private void displayFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayFileButtonActionPerformed
-        inputFileDisplayer.setVisible(true);
+        //inputFileDisplayer.setVisible(true);
+        msgdispInputFile.show();
         // TODO : pour quand ce sera éditable
         //inputFileDisplayer.setEditable(true);
 
@@ -378,7 +383,8 @@ public class AbinitInputPanel extends SimulationPanel {
             mf.printERR(e.getMessage());
         }
 
-        inputFileDisplayer.setText(fileContent);
+        //inputFileDisplayer.setText(fileContent);
+        msgdispInputFile.setText(fileContent);
     }//GEN-LAST:event_displayFileButtonActionPerformed
 
     private void geditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_geditButtonActionPerformed

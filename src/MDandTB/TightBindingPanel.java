@@ -555,7 +555,7 @@ public class TightBindingPanel extends SimulationPanel {
     }//GEN-LAST:event_RB_notLMActionPerformed
 
     private void displayClustepInputFileButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayClustepInputFileButton3ActionPerformed
-        mf.clustepInputFileDisplayer.setVisible(true);
+        mf.clustepInputFileDisplayer.show();
         // TODO : pour quand ce sera éditable
         //clustepInputFileDisplayer.setEditable(true);
 

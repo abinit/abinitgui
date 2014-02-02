@@ -98,6 +98,7 @@ import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import msgdisp.core.MessageDisplayer;
 import org.jdom.*;
 import projects.JobDialog;
 import projects.Machine;
@@ -118,10 +119,10 @@ public class MainFrame extends javax.swing.JFrame {
     private boolean useKey2 = false;
     private AboutDialog about;
     private int lport = 0;
-    private DisplayerJDialog outDialog;
-    private DisplayerJDialog inputFileDisplayer;
-    public DisplayerJDialog clustepInputFileDisplayer;
-    public DisplayerJDialog clustepPositionFileDisplayer;
+    public MessageDisplayer msgdisp;
+    private MessageDisplayer inputFileDisplayer;
+    public MessageDisplayer clustepInputFileDisplayer;
+    public MessageDisplayer clustepPositionFileDisplayer;
     private GeomDialog geomD;
     private AlCoDialog alcoD;
     private ReReDialog rereD;
@@ -191,16 +192,16 @@ public class MainFrame extends javax.swing.JFrame {
         this.setTitle("AbinitGUI (v. " + Version + " " + VerMonth
                 + " " + VerYear + ")");
 
-        outDialog = new DisplayerJDialog(this, false);
-        outDialog.setTitle("..:: Global MSG Display ::..");
+        msgdisp = new MessageDisplayer(this, false);
+        msgdisp.setTitle("..:: Global MSG Display ::..");
 
-        inputFileDisplayer = new DisplayerJDialog(this, false);
+        inputFileDisplayer = new MessageDisplayer(this, false);
         inputFileDisplayer.setTitle("..:: Input file preview ::..");
 
-        clustepInputFileDisplayer = new DisplayerJDialog(this, false);
+        clustepInputFileDisplayer = new MessageDisplayer(this, false);
         clustepInputFileDisplayer.setTitle("..:: Clustep input file preview ::..");
 
-        clustepPositionFileDisplayer = new DisplayerJDialog(this, false);
+        clustepPositionFileDisplayer = new MessageDisplayer(this, false);
         clustepPositionFileDisplayer.setTitle("..:: Clustep position file preview ::..");
 
         geomD = new GeomDialog(this, false);
@@ -249,8 +250,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         //loadConfig("config.xml");
 
-        outDialog.setLocationRelativeTo(this);
-        outDialog.setVisible(true);
+        msgdisp.show();
+        msgdisp.setLocationRelativeTo(this);
 
         // TODO rendre visible
         //mainTabbedPane.setEnabledAt(4, false);
@@ -406,26 +407,16 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public void printERR(String s) {
-        if (s.endsWith("\n")) {
-            outDialog.appendERR(s);
-            pw.print("ERR>> " + s);
-        } else {
-            outDialog.appendERR(s + "\n");
-            pw.print("ERR>> " + s + "\n");
-            System.err.println("ERR>> " + s);
-        }
+        msgdisp.printERR(removeEndl(s));
+        pw.print("ERR>> " + removeEndl(s) + "\n");
+        System.err.println("ERR>> " + removeEndl(s) + "\n");
         pw.flush();
     }
 
     public void printOUT(String s) {
-        if (s.endsWith("\n")) {
-            outDialog.appendOUT(s);
-            pw.print("OUT>> " + s);
-        } else {
-            outDialog.appendOUT(s + "\n");
-            pw.print("OUT>> " + s + "\n");
-            System.out.println("OUT>> " + s);
-        }
+        msgdisp.printOUT(removeEndl(s));
+        pw.print("OUT>> " + removeEndl(s) + "\n");
+        System.out.println("OUT>> " + removeEndl(s) + "\n");
         pw.flush();
     }
 
@@ -437,27 +428,18 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
 
-    public void printDEB(String str) {
-        if (str.endsWith("\n")) {
-            outDialog.appendDEB("DEB: " + str);
-            pw.print("DEB>> " + str);
-        } else {
-            outDialog.appendDEB("DEB: " + str + "\n");
-            pw.print("DEB>> " + str + "\n");
-            System.out.println("DEB>> " + str);
-        }
+    public void printDEB(String s) {
+        msgdisp.printDEB("DEB: " + removeEndl(s));
+        pw.print("DEB>> " + removeEndl(s) + "\n");
+        System.out.println("DEB>> " + removeEndl(s) + "\n");
         pw.flush();
     }
 
-    public void printGEN(String str, Color color, boolean underline, boolean bolt) {
-        if (str.endsWith("\n")) {
-            outDialog.appendGEN(str, color, underline, bolt);
-            pw.print("GEN>> " + str);
-        } else {
-            outDialog.appendGEN(str + "\n", color, underline, bolt);
-            pw.print("GEN>> " + str + "\n");
-            System.out.println("GEN>> " + str);
-        }
+    public void printGEN(String s, Color color, boolean underline, boolean bolt) {
+        //msgdisp.printGEN(removeEndl(s), color, underline, bolt);
+        msgdisp.printGEN(removeEndl(s));
+        pw.print("GEN>> " + removeEndl(s) + "\n");
+        System.out.println("GEN>> " + removeEndl(s) + "\n");
         pw.flush();
     }
 
@@ -929,12 +911,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void outputMSGMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputMSGMenuItemActionPerformed
-        outDialog.setLocationRelativeTo(this);
-        outDialog.setVisible(true);
+        msgdisp.setLocationRelativeTo(this);
+        msgdisp.show();
     }//GEN-LAST:event_outputMSGMenuItemActionPerformed
 
     private void clearOutMSGMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearOutMSGMenuItemActionPerformed
-        outDialog.clear();
+        //outDialog.clear();
+        msgdisp.clear();
     }//GEN-LAST:event_clearOutMSGMenuItemActionPerformed
 
     private void connectionToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectionToggleButtonActionPerformed

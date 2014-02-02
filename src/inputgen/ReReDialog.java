@@ -47,16 +47,12 @@ For more information on the Abinit Project, please see
 package inputgen;
 
 //@SuppressWarnings("serial")
-
-import core.DisplayerJDialog;
 import core.MainFrame;
 import inputgen.RealRecip;
 
 public class ReReDialog extends javax.swing.JDialog {
 
     private RealRecip rereP;
-
-    private DisplayerJDialog outDialog;
 
     private MainFrame mainFrame;
 

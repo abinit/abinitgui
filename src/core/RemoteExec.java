@@ -50,7 +50,7 @@ import com.jcraft.jsch.*;
 import java.io.*;
 import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
-import jsshterm.XDetails;
+import jsshterm.core.XDetails;
 
 //@SuppressWarnings("unchecked")
 public class RemoteExec implements Exec {
@@ -129,7 +129,7 @@ public class RemoteExec implements Exec {
             XDetails xd = new XDetails();
             String X11Cookie = null;
             try {
-                X11Cookie = jsshterm.Utils.byteArrayToHexString(
+                X11Cookie = jsshterm.core.Utils.byteArrayToHexString(
                         xd.getX11Cookie());
                 session.setX11Cookie(X11Cookie);
             } catch (Exception ex) {

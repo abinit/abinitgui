@@ -175,7 +175,7 @@ public class ClustepPanel extends SimulationPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void displayClustepInputFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayClustepInputFileButtonActionPerformed
-        mf.clustepInputFileDisplayer.setVisible(true);
+        mf.clustepInputFileDisplayer.show();
         // TODO : pour quand ce sera éditable
         //clustepInputFileDisplayer.setEditable(true);
 
@@ -264,7 +264,7 @@ public class ClustepPanel extends SimulationPanel {
     }//GEN-LAST:event_openClustepInputFileDialogButtonActionPerformed
 
     private void displayClustepPositionFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayClustepPositionFileButtonActionPerformed
-        mf.clustepPositionFileDisplayer.setVisible(true);
+        mf.clustepPositionFileDisplayer.show();
         // TODO : pour quand ce sera éditable
         //clustepPositionFileDisplayer.setEditable(true);
 

@@ -98,6 +98,7 @@ import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import msgdisp.core.MessageDisplayer;
 import org.jdom.*;
 import projects.JobDialog;
 import projects.Machine;
@@ -118,10 +119,16 @@ public class OldMainFrame extends MainFrame {
     private boolean useKey2 = false;
     private AboutDialog about;
     private int lport = 0;
-    private DisplayerJDialog outDialog;
+    /*private DisplayerJDialog outDialog;
     private DisplayerJDialog inputFileDisplayer;
     public DisplayerJDialog clustepInputFileDisplayer;
-    public DisplayerJDialog clustepPositionFileDisplayer;
+    public DisplayerJDialog clustepPositionFileDisplayer;*/
+    
+    private MessageDisplayer outDialog;
+    private MessageDisplayer inputFileDisplayer;
+    public MessageDisplayer clustepInputFileDisplayer;
+    public MessageDisplayer clustepPositionFileDisplayer;
+    
     private GeomDialog geomD;
     private AlCoDialog alcoD;
     private ReReDialog rereD;
@@ -190,16 +197,16 @@ public class OldMainFrame extends MainFrame {
         this.setTitle("AbinitGUI (v. " + Version + " " + VerMonth
                 + " " + VerYear + ")");
 
-        outDialog = new DisplayerJDialog(this, false);
+        outDialog = new MessageDisplayer(this, false);
         outDialog.setTitle("..:: Global MSG Display ::..");
 
-        inputFileDisplayer = new DisplayerJDialog(this, false);
+        inputFileDisplayer = new MessageDisplayer(this, false);
         inputFileDisplayer.setTitle("..:: Input file preview ::..");
 
-        clustepInputFileDisplayer = new DisplayerJDialog(this, false);
+        clustepInputFileDisplayer = new MessageDisplayer(this, false);
         clustepInputFileDisplayer.setTitle("..:: Clustep input file preview ::..");
 
-        clustepPositionFileDisplayer = new DisplayerJDialog(this, false);
+        clustepPositionFileDisplayer = new MessageDisplayer(this, false);
         clustepPositionFileDisplayer.setTitle("..:: Clustep position file preview ::..");
 
         geomD = new GeomDialog(this, false);
@@ -258,8 +265,8 @@ public class OldMainFrame extends MainFrame {
 
         loadConfig("config.xml");
 
-        outDialog.setLocationRelativeTo(this);
-        outDialog.setVisible(true);
+        //outDialog.setLocationRelativeTo(this); // TODO
+        outDialog.show();
 
         // TODO rendre visible
         //mainTabbedPane.setEnabledAt(4, false);
@@ -381,10 +388,10 @@ public class OldMainFrame extends MainFrame {
 
     public void printERR(String s) {
         if (s.endsWith("\n")) {
-            outDialog.appendERR(s);
+            outDialog.printERR(s);
             pw.print("ERR>> " + s);
         } else {
-            outDialog.appendERR(s + "\n");
+            outDialog.printERR(s + "\n");
             pw.print("ERR>> " + s + "\n");
             System.err.println("ERR>> " + s);
         }
@@ -393,10 +400,10 @@ public class OldMainFrame extends MainFrame {
 
     public void printOUT(String s) {
         if (s.endsWith("\n")) {
-            outDialog.appendOUT(s);
+            outDialog.printOUT(s);
             pw.print("OUT>> " + s);
         } else {
-            outDialog.appendOUT(s + "\n");
+            outDialog.printOUT(s + "\n");
             pw.print("OUT>> " + s + "\n");
             System.out.println("OUT>> " + s);
         }
@@ -413,10 +420,10 @@ public class OldMainFrame extends MainFrame {
 
     public void printDEB(String str) {
         if (str.endsWith("\n")) {
-            outDialog.appendDEB("DEB: " + str);
+            outDialog.printDEB("DEB: " + str);
             pw.print("DEB>> " + str);
         } else {
-            outDialog.appendDEB("DEB: " + str + "\n");
+            outDialog.printDEB("DEB: " + str + "\n");
             pw.print("DEB>> " + str + "\n");
             System.out.println("DEB>> " + str);
         }
@@ -425,10 +432,12 @@ public class OldMainFrame extends MainFrame {
 
     public void printGEN(String str, Color color, boolean underline, boolean bolt) {
         if (str.endsWith("\n")) {
-            outDialog.appendGEN(str, color, underline, bolt);
+            //outDialog.printGEN(str, color, underline, bolt);
+            outDialog.printGEN(str);
             pw.print("GEN>> " + str);
         } else {
-            outDialog.appendGEN(str + "\n", color, underline, bolt);
+            //outDialog.printGEN(str + "\n", color, underline, bolt);
+            outDialog.printGEN(str + "\n");
             pw.print("GEN>> " + str + "\n");
             System.out.println("GEN>> " + str);
         }
@@ -1628,8 +1637,8 @@ public class OldMainFrame extends MainFrame {
     }//GEN-LAST:event_saveAsMenuItemActionPerformed
 
     private void outputMSGMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputMSGMenuItemActionPerformed
-        outDialog.setLocationRelativeTo(this);
-        outDialog.setVisible(true);
+        // outDialog.setLocationRelativeTo(this); // TODO
+        outDialog.show();
     }//GEN-LAST:event_outputMSGMenuItemActionPerformed
 
     private void clearOutMSGMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearOutMSGMenuItemActionPerformed
@@ -1813,7 +1822,7 @@ public class OldMainFrame extends MainFrame {
 }//GEN-LAST:event_geditButtonActionPerformed
 
     private void displayFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayFileButtonActionPerformed
-        inputFileDisplayer.setVisible(true);
+        inputFileDisplayer.show();
         // TODO : pour quand ce sera éditable
         //inputFileDisplayer.setEditable(true);
 
@@ -2225,7 +2234,7 @@ public class OldMainFrame extends MainFrame {
         saveFileAsButton.setEnabled(false);
         saveFileButton.setEnabled(false);
         createButton.setEnabled(false);
-        inputFileDisplayer.setVisible(false);
+        inputFileDisplayer.hide();
         inputFileTabbedPane.setEnabled(false);
 
         inputFileTabbedPane.setSelectedIndex(inputFileTabbedPane.getTabCount() - 1);
@@ -2725,7 +2734,7 @@ public class OldMainFrame extends MainFrame {
     }//GEN-LAST:event_openXMLFileDialogButtonActionPerformed
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
-        inputFileDisplayer.setVisible(true);
+        inputFileDisplayer.show();
         //inputFileDisplayer.setText(getBasics()); // TODO
         inputFileDisplayer.setText(geomD.getData() + alcoD.getData() + rereD.getData()
                 + wadeD.getData() + inouD.getData() + theoD.getData() + otherTextArea.getText());

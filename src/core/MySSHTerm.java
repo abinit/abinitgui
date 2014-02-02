@@ -49,8 +49,7 @@ package core;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import jsshterm.JSSHErrorHandler;
-import jsshterm.JSSHTerm;
+import jsshterm.core.JSSHTerm;
 
 public class MySSHTerm implements Runnable {
 
@@ -86,51 +85,14 @@ public class MySSHTerm implements Runnable {
 
     @Override
     public void run() {
-        JSSHErrorHandler errHandler = new JSSHErrorHandler() {
-            @Override
-            public void printOUT(String msg) {
-                if (parent != null) {
-                    parent.printOUT(msg);
-                } else {
-                    System.out.println(msg);
-                }
-            }
-
-            @Override
-            public void printERR(String msg) {
-                if (parent != null) {
-                    parent.printERR(msg);
-                } else {
-                    System.err.println(msg);
-                }
-            }
-
-            @Override
-            public void printDEB(String msg) {
-                if (parent != null) {
-                    parent.printDEB(msg);
-                } else {
-                    System.out.println(msg);
-                }
-            }
-
-            @Override
-            public void printGEN(String msg) {
-                if (parent != null) {
-                    parent.printGEN(msg, Color.BLACK, false, false);
-                } else {
-                    System.out.println(msg);
-                }
-            }
-        };
-
+        
         final JSSHTerm dialog;
         
         if(authPWD) {
-            dialog = new JSSHTerm(host, port, username, password, errHandler);
+            dialog = new JSSHTerm(host, port, username, password, parent.msgdisp);
         } else {
             dialog = new JSSHTerm(host, port, username, userkey,
-                    passphrase, errHandler);
+                    passphrase, parent.msgdisp);
         }
         dialog.setTitle("SSH2 Client driven by AbinitGUI (JSSHTerm)");
         dialog.addWindowListener(new WindowAdapter() {
