@@ -8,12 +8,11 @@ dict:
       symbol: Si, typat: 0, znucl: 14}
     name: Test3
     remoteJob:
-      machineName: Manneback
-      script: !slurmscript {MPIPath: mpirun, abinitPath: /home/naps/ygillet/NAPS/src/gmatteo-7.5.4-private/tmp_intel13/src/98_main/abinit,
-        email: yannick.gillet@uclouvain.be, inputPath: /home/users/y/g/ygillet/MySims/test3.files,
-        logPath: /home/users/y/g/ygillet/MySims/logfiles/test3.log, memoryMax: '100',
-        nbProcs: '4', parallel: true, postProcessPart: '', preProcessPart: source /home/naps/ygillet/SetEnv.sh intel13_intel,
-        simName: simulation, system: SLURM, timeLimit: '23:59:59'}
+      machineName: Green
+      script: &id001 !sgescript {MPIPath: mpirun, abinitPath: abinit, email: yannick.gillet@uclouvain.be,
+        inputPath: /home/users/t/u/tuto04/MySims/test1.files, logPath: /home/users/t/u/tuto04/MySims/logfiles/test1.log,
+        memoryMax: '200', nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: source ~ygillet/MAPR2451-2014/bashrc_students_2014,
+        simName: simulation, system: SGE, timeLimit: '02:00:00'}
       status: 0
     status: 0
     usingExtInputFile: true
@@ -24,16 +23,12 @@ dict:
       symbol: Nb, typat: 0, znucl: 41}
     - {PSPFileName: 03-Li.LDA.fhi, PSPPath: ./PSP//LDA_FHI, PSPType: LDA_FHI, name: '',
       symbol: Li, typat: 0, znucl: 3}
-    - {PSPFileName: 08-O.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
+    - {PSPFileName: 08-O.LDA.fhi, PSPPath: ./PSP//LDA_FHI, PSPType: LDA_FHI, name: '',
       symbol: O, typat: 0, znucl: 8}
     name: Test1
     remoteJob:
-      machineName: Manneback
-      script: !slurmscript {MPIPath: mpirun, abinitPath: /home/naps/ygillet/NAPS/src/gmatteo-7.5.4-private/tmp_intel13/src/98_main/abinit,
-        email: yannick.gillet@uclouvain.be, inputPath: /home/users/y/g/ygillet/MySims/test1.files,
-        logPath: /home/users/y/g/ygillet/MySims/logfiles/test1.log, memoryMax: '100',
-        nbProcs: '4', parallel: true, postProcessPart: '', preProcessPart: source /home/naps/ygillet/SetEnv.sh intel13_intel,
-        simName: simulation, system: SLURM, timeLimit: '23:59:59'}
+      machineName: Green
+      script: *id001
       status: 0
     status: 0
     usingExtInputFile: true
@@ -42,29 +37,26 @@ dict:
     name: clustep simu
     positionFileName: ./ClustepEx/Seance1/ex1/C2-pos
     remoteJob:
-      machineName: Desk
-      script: !frontendscript {MPIPath: mpirun, abinitPath: ~/CLUSTEP/clustep0, email: '',
-        inputPath: /home/flavio/MySims/clustep/C2/C2.files, logPath: /home/flavio/MySims/clustep/C2/C2.log,
-        memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
-        simName: simulation, system: Frontend, timeLimit: ''}
+      machineName: Green
+      script: &id002 !sgescript {MPIPath: mpirun, abinitPath: bash execDOS.sh 0 3 3 3,
+        email: yannick.gillet@uclouvain.be, inputPath: /dev/null, logPath: TB_simu_DK3.log,
+        memoryMax: '200', nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/DOS,
+        simName: simulation, system: SGE, timeLimit: '02:00:00'}
       status: 0
-    sendClustepSources: false
+    sendClustepSources: true
     status: 0
   TB simu DK12: !tightbindingsimulation
-    compileTB: true
-    graphite: false
+    compileTB: false
+    graphite: true
     inputFileName: tbener
     l: 3
     m: 3
     name: TB simu DK12
     remoteJob:
-      machineName: Desk
-      script: &id001 !frontendscript {MPIPath: mpirun, abinitPath: bash execDOS.sh 0 3 3 3,
-        email: '', inputPath: /dev/null, logPath: TB_simu_DK3.log, memoryMax: '',
-        nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/DOS,
-        simName: simulation, system: Frontend, timeLimit: ''}
+      machineName: Green
+      script: *id002
       status: 0
-    sendTBSources: true
+    sendTBSources: false
     status: 0
     tbenerFileName: tbener
     typeDosknee: 2
@@ -81,8 +73,8 @@ dict:
     m: 3
     name: TB simu DK3
     remoteJob:
-      machineName: Desk
-      script: *id001
+      machineName: Green
+      script: *id002
       status: 0
     sendTBSources: false
     status: 0
@@ -96,16 +88,13 @@ dict:
   TB simu BD: !tightbindingsimulation
     compileTB: false
     graphite: false
-    inputFileName: ./tbener2
+    inputFileName: ./tbener
     l: 3
     m: 3
     name: TB simu BD
     remoteJob:
-      machineName: Desk
-      script: !frontendscript {MPIPath: mpirun, abinitPath: bash execBS.sh 0 tbener 3,
-        email: '', inputPath: /dev/null, logPath: TB_simu_BD.log, memoryMax: '', nbProcs: '1',
-        parallel: false, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/BS,
-        simName: simulation, system: Frontend, timeLimit: ''}
+      machineName: Green
+      script: *id002
       status: 0
     sendTBSources: false
     status: 0

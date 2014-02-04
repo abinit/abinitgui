@@ -345,7 +345,17 @@ public class JobPanel extends javax.swing.JPanel {
 
     private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
         saveButtonActionPerformed(evt); // Save before run!
-        currentSimu.submit(mf);
+        
+        Runnable r = new Runnable() {
+            @Override
+            public void run()
+            {
+                currentSimu.submit(mf);
+            }
+        };
+        
+        Thread t = new Thread(r);
+        t.start();
     }//GEN-LAST:event_saveButton1ActionPerformed
 
     private void openLOGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLOGButtonActionPerformed
