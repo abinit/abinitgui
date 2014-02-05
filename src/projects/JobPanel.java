@@ -8,6 +8,7 @@ package projects;
 
 import MDandTB.ClustepSimulation;
 import MDandTB.TightBindingSimulation;
+import MDandTB.TightBindingSimulationOld;
 import core.Atom;
 import core.MainFrame;
 import core.Utils;
@@ -77,6 +78,7 @@ public class JobPanel extends javax.swing.JPanel {
         clustepPanel1 = new MDandTB.ClustepPanel();
         tightBindingPanel1 = new MDandTB.TightBindingPanel();
         abinitInputPanel1 = new projects.AbinitInputPanel();
+        tightBindingPanelOld1 = new MDandTB.TightBindingPanelOld();
         jPanel1 = new javax.swing.JPanel();
         machineLabel = new javax.swing.JLabel();
         machineCombo = new javax.swing.JComboBox();
@@ -127,6 +129,7 @@ public class JobPanel extends javax.swing.JPanel {
         inputPanel2.add(clustepPanel1, "clustep");
         inputPanel2.add(tightBindingPanel1, "tb");
         inputPanel2.add(abinitInputPanel1, "abinit");
+        inputPanel2.add(tightBindingPanelOld1, "tbold");
 
         tabbedPane.addTab("Input", inputPanel2);
 
@@ -434,7 +437,7 @@ public class JobPanel extends javax.swing.JPanel {
         {
             if(currentProject != null)
             {
-                Simulation simu = new TightBindingSimulation();
+                Simulation simu = new TightBindingSimulationOld();
                 simu.setName("TB simu");
                 currentProject.addSimulation(simu);
             }
@@ -512,6 +515,7 @@ public class JobPanel extends javax.swing.JPanel {
     private projects.SubmissionScriptPanel submissionScriptPanel1;
     private javax.swing.JTabbedPane tabbedPane;
     private MDandTB.TightBindingPanel tightBindingPanel1;
+    private MDandTB.TightBindingPanelOld tightBindingPanelOld1;
     // End of variables declaration//GEN-END:variables
 
     private void setCorrectPanel() {
@@ -527,17 +531,21 @@ public class JobPanel extends javax.swing.JPanel {
                 cl.show(inputPanel2, "clustep");
                 this.currentPanel = clustepPanel1;
             }
-            else if(currentSimu instanceof TightBindingSimulation)
+            else if(currentSimu instanceof TightBindingSimulationOld)
             {
                 CardLayout cl = (CardLayout)(inputPanel2.getLayout());
-                cl.show(inputPanel2, "tb");
-                this.currentPanel = tightBindingPanel1;
+                cl.show(inputPanel2, "tbold");
+                this.currentPanel = tightBindingPanelOld1;
             }
-            else
+            else if(currentSimu instanceof AbinitSimulation)
             {
                 CardLayout cl = (CardLayout)(inputPanel2.getLayout());
                 cl.show(inputPanel2, "abinit");
                 this.currentPanel = abinitInputPanel1;
+            }
+            else
+            {
+                mf.printERR("This simulation is not supported anymore !");
             }
         }
     }

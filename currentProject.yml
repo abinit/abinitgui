@@ -9,9 +9,10 @@ dict:
     name: Test3
     remoteJob:
       machineName: Green
-      script: &id001 !sgescript {MPIPath: mpirun, abinitPath: abinit, email: yannick.gillet@uclouvain.be,
-        inputPath: /home/users/t/u/tuto04/MySims/test1.files, logPath: /home/users/t/u/tuto04/MySims/logfiles/test1.log,
-        memoryMax: '200', nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: source ~ygillet/MAPR2451-2014/bashrc_students_2014,
+      script: &id001 !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: abinit,
+        email: yannick.gillet@uclouvain.be, inputPath: /home/users/t/u/tuto04/MySims/test1.files,
+        logPath: /home/users/t/u/tuto04/MySims/logfiles/test1.log, memoryMax: '200',
+        nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: source ~ygillet/MAPR2451-2014/bashrc_students_2014,
         simName: simulation, system: SGE, timeLimit: '02:00:00'}
       status: 0
     status: 0
@@ -38,71 +39,54 @@ dict:
     positionFileName: ./ClustepEx/Seance1/ex1/C2-pos
     remoteJob:
       machineName: Green
-      script: &id002 !sgescript {MPIPath: mpirun, abinitPath: bash execDOS.sh 0 3 3 3,
-        email: yannick.gillet@uclouvain.be, inputPath: /dev/null, logPath: TB_simu_DK3.log,
-        memoryMax: '200', nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/DOS,
+      script: !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: bash execBS.sh 0 tbener 2,
+        email: yannick.gillet@uclouvain.be, inputPath: /dev/null, logPath: TB_simu_BD.log,
+        memoryMax: '200', nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/BS,
         simName: simulation, system: SGE, timeLimit: '02:00:00'}
       status: 0
     sendClustepSources: true
     status: 0
-  TB simu DK12: !tightbindingsimulation
-    compileTB: false
-    graphite: true
-    inputFileName: tbener
-    l: 3
-    m: 3
-    name: TB simu DK12
+  TB simu 2: !!MDandTB.TightBindingSimulationOld
+    inputFileName: ./test3.in
+    l: 8
+    m: 8
+    model: 1
+    name: TB simu 2
+    nkpt: 1
     remoteJob:
       machineName: Green
-      script: *id002
+      script: !sgescript
+        CDPart: cd ./MySims/Tight-Binding
+        MPIPath: mpirun
+        abinitPath: bash run_TB.sh 8 8 2 1
+        email: yannick.gillet@uclouvain.be
+        inputPath: /dev/null
+        logPath: TB_simu.log
+        memoryMax: '200'
+        nbProcs: '1'
+        parallel: false
+        postProcessPart: ''
+        preProcessPart: |-
+          source ~ygillet/MAPR2451-2014/bashrc_students_2014
+          which gnuplot
+        simName: simulation
+        system: SGE
+        timeLimit: 02:00:00
       status: 0
-    sendTBSources: false
     status: 0
-    tbenerFileName: tbener
-    typeDosknee: 2
-    typeGlobal: 101
-    use110: false
-    use120: false
-    use66: false
-    useLANDM: true
-  TB simu DK3: !tightbindingsimulation
-    compileTB: false
-    graphite: false
-    inputFileName: tbener
-    l: 3
-    m: 3
-    name: TB simu DK3
+  TB simu new: !!MDandTB.TightBindingSimulationOld
+    inputFileName: ./test3.in
+    l: 1
+    m: 5
+    model: 1
+    name: TB simu new
+    nkpt: 10
     remoteJob:
       machineName: Green
-      script: *id002
+      script: !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: yannick.gillet@uclouvain.be,
+        inputPath: '', logPath: '', memoryMax: '200', nbProcs: '1', parallel: false,
+        postProcessPart: '', preProcessPart: source ~ygillet/MAPR2451-2014/bashrc_students_2014,
+        simName: simulation, system: Frontend, timeLimit: '02:00:00'}
       status: 0
-    sendTBSources: false
     status: 0
-    tbenerFileName: tbener
-    typeDosknee: 1
-    typeGlobal: 102
-    use110: false
-    use120: false
-    use66: false
-    useLANDM: true
-  TB simu BD: !tightbindingsimulation
-    compileTB: false
-    graphite: false
-    inputFileName: ./tbener
-    l: 3
-    m: 3
-    name: TB simu BD
-    remoteJob:
-      machineName: Green
-      script: *id002
-      status: 0
-    sendTBSources: false
-    status: 0
-    tbenerFileName: ./tbener
-    typeDosknee: 1
-    typeGlobal: 103
-    use110: false
-    use120: true
-    use66: false
-    useLANDM: true
 

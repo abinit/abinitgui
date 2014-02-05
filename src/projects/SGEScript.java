@@ -112,6 +112,8 @@ public class SGEScript extends AbstractSubmissionScript
                 //+ "# ---------------------------" + "\n"
                 + "\n"
                 + preProcessPart
+                + "\n"
+                + cdPart
                 + "\n";
                 
         if (parallel) {

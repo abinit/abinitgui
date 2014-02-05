@@ -76,6 +76,10 @@ public interface SubmissionScript
     
     public void setPreProcessPart(String part);
     
+    public String getCDPart();
+    
+    public void setCDPart(String part);
+    
     public String getPostProcessPart();
     
     public void setPostProcessPart(String part);

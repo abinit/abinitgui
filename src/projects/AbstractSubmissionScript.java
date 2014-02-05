@@ -62,6 +62,7 @@ public abstract class AbstractSubmissionScript implements SubmissionScript
     protected boolean parallel = false;
     protected String simName = "simulation";
     protected String system = "";
+    protected String cdPart = "";
 
     @Override
     public String getSimName() 
@@ -193,6 +194,16 @@ public abstract class AbstractSubmissionScript implements SubmissionScript
     @Override
     public void setSystem(String system) {
         this.system = system;
+    }
+    
+    @Override
+    public String getCDPart() {
+        return cdPart;
+    }
+
+    @Override
+    public void setCDPart(String part) {
+        this.cdPart = part;
     }
     
 }

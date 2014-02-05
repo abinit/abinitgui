@@ -80,6 +80,8 @@ public class FrontendScript extends AbstractSubmissionScript
         String fileContent = "#!/bin/bash" + "\n"
                 + "\n"
                 + preProcessPart
+                + "\n"
+                + cdPart
                 + "\n";
                 
         if (parallel) {

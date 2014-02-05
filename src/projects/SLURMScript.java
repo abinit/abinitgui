@@ -82,6 +82,8 @@ public class SLURMScript extends AbstractSubmissionScript
                 + "#unset SLURM_CPUS_PER_TASKS\n"
                 + "\n"
                 + preProcessPart
+                + "\n"
+                + cdPart
                 + "\n";
                 
         if (parallel) {
