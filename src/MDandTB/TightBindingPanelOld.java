@@ -45,7 +45,7 @@ public class TightBindingPanelOld extends SimulationPanel {
             TightBindingSimulationOld simu = (TightBindingSimulationOld)currentSimu;
             
             jRB_model1.setSelected(simu.getModel() == 1);
-            jRB_model1.setSelected(simu.getModel() == 2);
+            jRB_model2.setSelected(simu.getModel() == 2);
             LTextField.setText(""+simu.getL());
             MTextField.setText(""+simu.getM());
             NkptTextField.setText(""+simu.getNkpt());

@@ -78,11 +78,11 @@ dict:
     inputFileName: ./test3.in
     l: 1
     m: 5
-    model: 1
+    model: 2
     name: TB simu new
     nkpt: 10
     remoteJob:
-      machineName: Green
+      machineName: null
       script: !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: yannick.gillet@uclouvain.be,
         inputPath: '', logPath: '', memoryMax: '200', nbProcs: '1', parallel: false,
         postProcessPart: '', preProcessPart: source ~ygillet/MAPR2451-2014/bashrc_students_2014,

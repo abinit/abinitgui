@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Ant-Version: Apache Ant 1.8.4
-Created-By: 1.7.0_17-b02 (Oracle Corporation)
+Ant-Version: Apache Ant 1.9.1
+Created-By: 1.7.0_51-b13 (Oracle Corporation)
 Main-Class: ${main.class}
 Bundle-Name: AbinitGUI
 Bundle-Version: 2014
-Bundle-Date: 2014-02-05 18:35:13 CET
-Bundle-Revision: 129
+Bundle-Date: 2014-02-06 00:24:37 CET
+Bundle-Revision: 130
 Implementation-Author: Flavio ABREU ARAUJO (abreuaraujo.flavio@gmail.c
  om); Yannick GILLET (yannick.gillet@uclouvain.be)
 Implementation-Title: AbinitGUI
