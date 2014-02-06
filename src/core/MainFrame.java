@@ -409,14 +409,14 @@ public class MainFrame extends javax.swing.JFrame {
     public void printERR(String s) {
         msgdisp.printERR(removeEndl(s));
         pw.print("ERR>> " + removeEndl(s) + "\n");
-        System.err.println("ERR>> " + removeEndl(s) + "\n");
+        System.err.println("ERR>> " + removeEndl(s));
         pw.flush();
     }
 
     public void printOUT(String s) {
         msgdisp.printOUT(removeEndl(s));
         pw.print("OUT>> " + removeEndl(s) + "\n");
-        System.out.println("OUT>> " + removeEndl(s) + "\n");
+        System.out.println("OUT>> " + removeEndl(s));
         pw.flush();
     }
 
@@ -431,7 +431,7 @@ public class MainFrame extends javax.swing.JFrame {
     public void printDEB(String s) {
         msgdisp.printDEB("DEB: " + removeEndl(s));
         pw.print("DEB>> " + removeEndl(s) + "\n");
-        System.out.println("DEB>> " + removeEndl(s) + "\n");
+        System.out.println("DEB>> " + removeEndl(s));
         pw.flush();
     }
 
@@ -439,7 +439,7 @@ public class MainFrame extends javax.swing.JFrame {
         //msgdisp.printGEN(removeEndl(s), color, underline, bolt);
         msgdisp.printGEN(removeEndl(s));
         pw.print("GEN>> " + removeEndl(s) + "\n");
-        System.out.println("GEN>> " + removeEndl(s) + "\n");
+        System.out.println("GEN>> " + removeEndl(s));
         pw.flush();
     }
 

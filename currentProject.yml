@@ -46,47 +46,31 @@ dict:
       status: 0
     sendClustepSources: true
     status: 0
-  TB simu 2: !!MDandTB.TightBindingSimulationOld
+  TB model 1: !!MDandTB.TightBindingSimulationOld
     inputFileName: ./test3.in
     l: 8
     m: 8
     model: 1
-    name: TB simu 2
+    name: TB model 1
     nkpt: 1
     remoteJob:
       machineName: Green
-      script: !sgescript
-        CDPart: cd ./MySims/Tight-Binding
-        MPIPath: mpirun
-        abinitPath: bash run_TB.sh 8 8 2 1
-        email: yannick.gillet@uclouvain.be
-        inputPath: /dev/null
-        logPath: TB_simu.log
-        memoryMax: '200'
-        nbProcs: '1'
-        parallel: false
-        postProcessPart: ''
-        preProcessPart: |-
-          source ~ygillet/MAPR2451-2014/bashrc_students_2014
-          which gnuplot
-        simName: simulation
-        system: SGE
-        timeLimit: 02:00:00
+      script: &id002 !frontendscript {CDPart: cd ./MySims/Tight-Binding, MPIPath: mpirun,
+        abinitPath: bash run_TB.sh 8 8 1 1, email: '', inputPath: /dev/null, logPath: TB_model_1.log,
+        memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
+        simName: simulation, system: Frontend, timeLimit: ''}
       status: 0
     status: 0
-  TB simu new: !!MDandTB.TightBindingSimulationOld
+  TB model 2: !!MDandTB.TightBindingSimulationOld
     inputFileName: ./test3.in
     l: 1
     m: 5
     model: 2
-    name: TB simu new
+    name: TB model 2
     nkpt: 10
     remoteJob:
-      machineName: null
-      script: !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: yannick.gillet@uclouvain.be,
-        inputPath: '', logPath: '', memoryMax: '200', nbProcs: '1', parallel: false,
-        postProcessPart: '', preProcessPart: source ~ygillet/MAPR2451-2014/bashrc_students_2014,
-        simName: simulation, system: Frontend, timeLimit: '02:00:00'}
+      machineName: Green
+      script: *id002
       status: 0
     status: 0
 
