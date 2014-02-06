@@ -4,8 +4,8 @@ Created-By: 1.7.0_17-b02 (Oracle Corporation)
 Main-Class: ${main.class}
 Bundle-Name: AbinitGUI
 Bundle-Version: 2014
-Bundle-Date: 2014-02-06 10:25:03 CET
-Bundle-Revision: 132
+Bundle-Date: 2014-02-06 14:25:31 CET
+Bundle-Revision: 133
 Implementation-Author: Flavio ABREU ARAUJO (abreuaraujo.flavio@gmail.c
  om); Yannick GILLET (yannick.gillet@uclouvain.be)
 Implementation-Title: AbinitGUI

@@ -281,7 +281,7 @@ public class ClustepSimulation extends Simulation {
                     + rootPath.replaceFirst("./", "") + "/" + clustepFolder + "/" + simName+ "/" + simName + ".files");
             script.setLogPath(cwd + "/"
                     + rootPath.replaceFirst("./", "") + "/" + clustepFolder + "/" + simName+ "/" + simName + ".log");
-            script.setPreProcessPart("cd "+cwd+"/" + rootPath.replaceFirst("./", "") + "/" + clustepFolder + "/" + simName);
+            script.setCDPart("cd "+cwd+"/" + rootPath.replaceFirst("./", "") + "/" + clustepFolder + "/" + simName);
 
             if (script.getSystem().equals("SGE")) {
                 String PBSfileName = rootPath + sep + clustepFolder + sep + simName+ sep + simName + ".SGE.sh";

@@ -1,76 +1,17 @@
 !!projects.Project
 PSPPath: ./PSP/
 dict:
-  Test3: !abinitsimulation
-    inputFileName: ./test3.in
-    listPseudos:
-    - {PSPFileName: 14si.pspnc, PSPPath: ./PSP//LDA_TM.psps/14, PSPType: LDA_TM, name: '',
-      symbol: Si, typat: 0, znucl: 14}
-    name: Test3
-    remoteJob:
-      machineName: Green
-      script: &id001 !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: abinit,
-        email: yannick.gillet@uclouvain.be, inputPath: /home/users/t/u/tuto04/MySims/test1.files,
-        logPath: /home/users/t/u/tuto04/MySims/logfiles/test1.log, memoryMax: '200',
-        nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: source ~ygillet/MAPR2451-2014/bashrc_students_2014,
-        simName: simulation, system: SGE, timeLimit: '02:00:00'}
-      status: 0
-    status: 0
-    usingExtInputFile: true
-  Test1: !abinitsimulation
-    inputFileName: ./test1.in
-    listPseudos:
-    - {PSPFileName: 41-Nb.LDA.fhi, PSPPath: ./PSP//LDA_FHI, PSPType: LDA_FHI, name: '',
-      symbol: Nb, typat: 0, znucl: 41}
-    - {PSPFileName: 03-Li.LDA.fhi, PSPPath: ./PSP//LDA_FHI, PSPType: LDA_FHI, name: '',
-      symbol: Li, typat: 0, znucl: 3}
-    - {PSPFileName: 08-O.LDA.fhi, PSPPath: ./PSP//LDA_FHI, PSPType: LDA_FHI, name: '',
-      symbol: O, typat: 0, znucl: 8}
-    name: Test1
-    remoteJob:
-      machineName: Green
-      script: *id001
-      status: 0
-    status: 0
-    usingExtInputFile: true
   clustep simu: !clustepsimulation
     inputFileName: ./ClustepEx/Seance1/ex1/C2-input
     name: clustep simu
     positionFileName: ./ClustepEx/Seance1/ex1/C2-pos
     remoteJob:
       machineName: Green
-      script: !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: bash execBS.sh 0 tbener 2,
-        email: yannick.gillet@uclouvain.be, inputPath: /dev/null, logPath: TB_simu_BD.log,
-        memoryMax: '200', nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/BS,
-        simName: simulation, system: SGE, timeLimit: '02:00:00'}
+      script: !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: yannick.gillet@uclouvain.be,
+        inputPath: '', logPath: '', memoryMax: '200', nbProcs: '1', parallel: false,
+        postProcessPart: '', preProcessPart: '', simName: simulation, system: Frontend,
+        timeLimit: '02:00:00'}
       status: 0
     sendClustepSources: true
-    status: 0
-  TB model 1: !!MDandTB.TightBindingSimulationOld
-    inputFileName: ./test3.in
-    l: 8
-    m: 8
-    model: 1
-    name: TB model 1
-    nkpt: 1
-    remoteJob:
-      machineName: Green
-      script: &id002 !frontendscript {CDPart: cd ./MySims/Tight-Binding, MPIPath: mpirun,
-        abinitPath: bash run_TB.sh 8 8 1 1, email: '', inputPath: /dev/null, logPath: TB_model_1.log,
-        memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
-        simName: simulation, system: Frontend, timeLimit: ''}
-      status: 0
-    status: 0
-  TB model 2: !!MDandTB.TightBindingSimulationOld
-    inputFileName: ./test3.in
-    l: 1
-    m: 5
-    model: 2
-    name: TB model 2
-    nkpt: 10
-    remoteJob:
-      machineName: Green
-      script: *id002
-      status: 0
     status: 0
 
