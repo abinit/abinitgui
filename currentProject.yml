@@ -1,5 +1,5 @@
-!!projects.Project
-PSPPath: ./PSP/
+!!abinitgui.projects.Project
+PSPPath: ./PSP
 dict:
   clustep simu: !clustepsimulation
     inputFileName: ./ClustepEx/Seance1/ex1/C2-input
@@ -13,5 +13,20 @@ dict:
         timeLimit: '02:00:00'}
       status: 0
     sendClustepSources: true
+    status: 0
+  TB simu: !!abinitgui.mdtb.TightBindingSimulationOld
+    inputFileName: ./test3.in
+    l: 0
+    m: 0
+    model: 1
+    name: TB simu
+    nkpt: 0
+    remoteJob:
+      machineName: Green
+      script: !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: '',
+        inputPath: '', logPath: '', memoryMax: '', nbProcs: '1', parallel: false,
+        postProcessPart: '', preProcessPart: '', simName: simulation, system: Frontend,
+        timeLimit: ''}
+      status: 0
     status: 0
 

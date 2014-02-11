@@ -1,7 +1,9 @@
-/*--
- Main.java - Created in July 2009
+/*
+ AbinitGUI - Created in July 2009
+ 
+ Copyright (c) 2009-2014 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
+                         Yannick GILLET (yannick.gillet@uclouvain.be)
 
- Copyright (c) 2009-2013 Flavio Miguel ABREU ARAUJO.
  Université catholique de Louvain, Louvain-la-Neuve, Belgium
  All rights reserved.
 
@@ -44,8 +46,10 @@
  <http://www.abinit.org/>.
  */
 
-import core.MainFrame;
-import core.Utils;
+package abinitgui.main;
+
+import abinitgui.core.MainFrame;
+import abinitgui.core.Utils;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
@@ -55,8 +59,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 
-//@SuppressWarnings("unchecked")
 public class Main {
 
     public static OutputStream out;
@@ -116,7 +120,8 @@ public class Main {
                             }
                         }
                     }
-                } catch (Exception e) {
+                } catch (ClassNotFoundException | InstantiationException |
+                        IllegalAccessException | UnsupportedLookAndFeelException e) {
                     // If Nimbus is not available, you can set the GUI to another look and feel.
                 }
 
@@ -143,16 +148,20 @@ public class Main {
                     String javaVersion = Utils.javaVersion();
                     String osArch = Utils.osArch();
                     System.err.println("Java version number: " + javaVersion);
-
-                    if (osName.equals("Linux")) {
-                        System.err.print("OS name: ");
-                        System.err.println(osName);
-                    } else if (osName.equals("Windows Vista")) {
-                        System.err.print("OS name: ");
-                        System.err.println(osName);
-                    } else {
-                        System.err.print("OS name: ");
-                        System.err.println(osName);
+                    
+                    switch (osName) {
+                        case "Linux":
+                            System.err.print("OS name: ");
+                            System.err.println(osName);
+                            break;
+                        case "Windows Vista":
+                            System.err.print("OS name: ");
+                            System.err.println(osName);
+                            break;
+                        default:
+                            System.err.print("OS name: ");
+                            System.err.println(osName);
+                            break;
                     }
                     System.err.println("OS arch: " + osArch);
                     //SwingUtilities.updateComponentTreeUI(frame);
@@ -165,7 +174,6 @@ public class Main {
                         if (args[i].equalsIgnoreCase("AutoTest")) {
                             frame.setVisible(false);
                             //frame.autoTestProc(true);
-
                         } else {
                             frame.setVisible(true);
                         }
