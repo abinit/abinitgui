@@ -130,15 +130,6 @@ public class Main {
                 frame.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-
-                        try {
-                            MainFrame.pw.close();
-                            MainFrame.bw.close();
-                            MainFrame.fw.close();
-                        } catch (IOException ex) {
-                            System.err.println("IOException (windowClosing(...))");
-                        }
-
                         System.exit(0);
                     }
                 });

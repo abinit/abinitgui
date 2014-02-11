@@ -130,10 +130,7 @@ public class MainFrame extends javax.swing.JFrame {
     public static String SubVersion = "0.1";
     public static String VerMonth = "Feb";
     public static String VerYear = "2014";
-    private String outputFile = "out.log";
-    public static OutputStreamWriter fw;
-    public static BufferedWriter bw;
-    public static PrintWriter pw;
+    private String outputFile = "AbinitGUI.log";
     public static MainFrame mainFrame;
     public static boolean DEBUG = true;
     private ClustepDiag clustepDiag;
@@ -158,7 +155,8 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
 
-        msgdisp = new MessageDisplayer(this, false);
+        //msgdisp = new MessageDisplayer(this, false);
+        msgdisp = new MessageDisplayer(outputFile);
         msgdisp.setTitle("..:: Global MSG Display ::..");
         
         // ---------------------------------------------------------------------
@@ -169,19 +167,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         //JFrame.setDefaultLookAndFeelDecorated(true);
         //JDialog.setDefaultLookAndFeelDecorated(true);
-
-        // -------------- Output stream files ----------------------------------
-        try {
-            fw = new OutputStreamWriter(new FileOutputStream(outputFile),
-                    CharSet);
-            bw = new BufferedWriter(fw);
-            pw = new PrintWriter(bw);
-        } catch (UnsupportedEncodingException ex) {
-            printERR("UnsupportedEncodingException (MainFrame())");
-        } catch (FileNotFoundException ex) {
-            printERR("FileNotFoundException (MainFrame())");
-        }
-        // ---------------------------------------------------------------------
 
         this.setTitle("AbinitGUI (v. " + Version + " " + VerMonth
                 + " " + VerYear + ")");
@@ -393,31 +378,18 @@ public class MainFrame extends javax.swing.JFrame {
 
     public static void printERR(String s) {
         msgdisp.printERR(Utils.removeEndl(s));
-        pw.print("ERR>> " + Utils.removeEndl(s) + "\n");
-        System.err.println("ERR>> " + Utils.removeEndl(s));
-        pw.flush();
     }
 
     public static void printOUT(String s) {
         msgdisp.printOUT(Utils.removeEndl(s));
-        pw.print("OUT>> " + Utils.removeEndl(s) + "\n");
-        System.out.println("OUT>> " + Utils.removeEndl(s));
-        pw.flush();
     }
 
     public static void printDEB(String s) {
         msgdisp.printDEB("DEB: " + Utils.removeEndl(s));
-        pw.print("DEB>> " + Utils.removeEndl(s) + "\n");
-        System.out.println("DEB>> " + Utils.removeEndl(s));
-        pw.flush();
     }
 
     public static void printGEN(String s, Color color, boolean underline, boolean bolt) {
-        //msgdisp.printGEN(removeEndl(s), color, underline, bolt);
-        msgdisp.printGEN(Utils.removeEndl(s));
-        pw.print("GEN>> " + Utils.removeEndl(s) + "\n");
-        System.out.println("GEN>> " + Utils.removeEndl(s));
-        pw.flush();
+        msgdisp.printGEN(Utils.removeEndl(s), color, underline, bolt);
     }
 
     /**
