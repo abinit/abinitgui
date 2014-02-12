@@ -84,10 +84,11 @@ public class MySSHTerm implements Runnable {
         final JSSHTerm dialog;
         
         if(authPWD) {
-            dialog = new JSSHTerm(host, port, username, password, MainFrame.msgdisp);
+            dialog = new JSSHTerm(host, port, username, password,
+                    MainFrame.msgdisp, MainFrame.mainFrame, false);
         } else {
             dialog = new JSSHTerm(host, port, username, userkey,
-                    passphrase, MainFrame.msgdisp);
+                    passphrase, MainFrame.msgdisp, MainFrame.mainFrame, false);
         }
         dialog.setTitle("SSH2 Terminal Client (JSSHTerm by F. ABREU ARAUJO)");
         dialog.addWindowListener(new WindowAdapter() {

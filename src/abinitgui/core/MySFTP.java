@@ -83,11 +83,11 @@ public class MySFTP implements Runnable {
         final JSFTP dialog;
         
         if(authPWD) {
-            dialog = new JSFTP(null, false, host, port, username, password,
-                    MainFrame.msgdisp);
+            dialog = new JSFTP(host, port, username, password,
+                    MainFrame.msgdisp, MainFrame.mainFrame, false);
         } else {
-            dialog = new JSFTP(null, false, host, port, username, userkey,
-                    passphrase, MainFrame.msgdisp);
+            dialog = new JSFTP(host, port, username, userkey,
+                    passphrase, MainFrame.msgdisp, MainFrame.mainFrame, false);
         }
         dialog.setTitle("SFTP Client (JSFTP by F. ABREU ARAUJO)");
         dialog.addWindowListener(new java.awt.event.WindowAdapter() {
