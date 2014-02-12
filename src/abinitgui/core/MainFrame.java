@@ -132,7 +132,7 @@ public class MainFrame extends javax.swing.JFrame {
     public static String VerYear = "2014";
     private String outputFile = "AbinitGUI.log";
     public static MainFrame mainFrame;
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
     private ClustepDiag clustepDiag;
     private TightBindingDiag tightBindingDiag;
     private DefaultListModel scriptModel;
@@ -155,8 +155,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
 
-        //msgdisp = new MessageDisplayer(this, false);
-        msgdisp = new MessageDisplayer(outputFile);
+        msgdisp = new MessageDisplayer(this, false, outputFile);
         msgdisp.setTitle("..:: Global MSG Display ::..");
         
         // ---------------------------------------------------------------------
@@ -171,13 +170,13 @@ public class MainFrame extends javax.swing.JFrame {
         this.setTitle("AbinitGUI (v. " + Version + " " + VerMonth
                 + " " + VerYear + ")");
 
-        inputFileDisplayer = new MessageDisplayer(this, false);
+        inputFileDisplayer = new MessageDisplayer(this, false, null);
         inputFileDisplayer.setTitle("..:: Input file preview ::..");
 
-        clustepInputFileDisplayer = new MessageDisplayer(this, false);
+        clustepInputFileDisplayer = new MessageDisplayer(this, false, null);
         clustepInputFileDisplayer.setTitle("..:: Clustep input file preview ::..");
 
-        clustepPositionFileDisplayer = new MessageDisplayer(this, false);
+        clustepPositionFileDisplayer = new MessageDisplayer(this, false, null);
         clustepPositionFileDisplayer.setTitle("..:: Clustep position file preview ::..");
 
         geomD = new GeomDialog(this, false);
@@ -261,7 +260,8 @@ public class MainFrame extends javax.swing.JFrame {
         {
             scriptBibs.loadScriptsFromFile("listScripts.xml");
         } else {
-            printERR("No file listScripts.xml in the directory: you won't be able to use post-processing tools.");
+            printERR("No file listScripts.xml in the directory: you won't"
+                    + " be able to use post-processing tools.");
         }
 
         scriptModel = new DefaultListModel();
@@ -385,7 +385,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public static void printDEB(String s) {
-        msgdisp.printDEB("DEB: " + Utils.removeEndl(s));
+        msgdisp.printDEB(Utils.removeEndl(s));
     }
 
     public static void printGEN(String s, Color color, boolean underline, boolean bolt) {

@@ -547,15 +547,15 @@ public class TightBindingSimulation extends Simulation {
             fileNameL = TBrootL + "/result-" + LMParams;
         }
 
-        if (!Utils.exists(fileNameL)) {
+        //if (!Utils.exists(fileNameL)) {
             mach.getFile(fileNameR + " " + fileNameL);
             if (Utils.osName().startsWith("Windows")) {
                 Utils.unix2dos(new File(fileNameL));
             }
-        } else {
+        /*} else {
             MainFrame.printOUT("File " + fileNameL + " exists in your local filetree!\n"
                 + "Please remove the local file before you download the new file version!");
-        }
+        }*/
         
         // ****************************************************************************
         // Tester l'existance du fichier

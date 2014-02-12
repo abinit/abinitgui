@@ -368,39 +368,39 @@ public class TightBindingSimulationOld extends Simulation {
         
         String fileName = rootPath + "/bands" + LMParams+".png"; 
 
-        if (!Utils.exists(fileName)) {
+        //if (!Utils.exists(fileName)) {
             mach.getFile(fileName + " " + fileName);
             if (Utils.osName().startsWith("Windows")) {
                 Utils.unix2dos(new File(fileName));
             }
-        } else {
+        /*} else {
             MainFrame.printOUT("File " + fileName + " exists in your local filetree!\n"
                 + "Please remove the local file before you download the new file version!");
-        }
+        }*/
         
         fileName = rootPath + "/dos" + LMParams+".dat"; 
 
-        if (!Utils.exists(fileName)) {
+        //if (!Utils.exists(fileName)) {
             mach.getFile(fileName + " " + fileName);
             if (Utils.osName().startsWith("Windows")) {
                 Utils.unix2dos(new File(fileName));
             }
-        } else {
+        /*} else {
             MainFrame.printOUT("File " + fileName + " exists in your local filetree!\n"
                 + "Please remove the local file before you download the new file version!");
-        }
+        }*/
         
         fileName = rootPath + "/nt" + LMParams+".aims"; 
 
-        if (!Utils.exists(fileName)) {
+        //if (!Utils.exists(fileName)) {
             mach.getFile(fileName + " " + fileName);
             if (Utils.osName().startsWith("Windows")) {
                 Utils.unix2dos(new File(fileName));
             }
-        } else {
+        /*} else {
             MainFrame.printOUT("File " + fileName + " exists in your local filetree!\n"
                 + "Please remove the local file before you download the new file version!");
-        }
+        }*/
         
         // ****************************************************************************
         // Tester l'existance du fichier

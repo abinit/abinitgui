@@ -431,13 +431,14 @@ public class AbinitSimulation extends Simulation {
         return true;
     }
     
+    @Override
     public void downloadLog()
     {
         String machineName = getRemoteJob().getMachineName();
         Machine mach = MainFrame.getMachineDatabase().getMachine(machineName);
         if(mach == null)
         {
-            MainFrame.printERR("Please select a machine !");
+            MainFrame.printERR("Please select a machine!");
             return;
         }
 
@@ -449,8 +450,8 @@ public class AbinitSimulation extends Simulation {
         String rootPath = mach.getSimulationPath();
         String outputFolder = "logfiles";
 
-        String inputFile = "";
-        String inputFileName = "";
+        String inputFile;
+        String inputFileName;
 
         MainFrame.getLocalExec().createTree(rootPath);
 

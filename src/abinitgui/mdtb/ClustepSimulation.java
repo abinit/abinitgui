@@ -524,7 +524,7 @@ public class ClustepSimulation extends Simulation {
             String fileName = rootPath + "/" + clustepFolder + "/"
             + simName + "/" + simName + ".log";
 
-            if (!Utils.exists(fileName)) {
+            //if (!Utils.exists(fileName)) {
                 // Réception (copie) du fichier d'output si celui-ci est distant
                 if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                     //                            if (Utils.osName().startsWith("Windows")) {
@@ -538,10 +538,10 @@ public class ClustepSimulation extends Simulation {
                         Utils.unix2dos(new File(fileName));
                     }
                 }
-            } else {
+            /*} else {
                 MainFrame.printOUT("File " + fileName + " exists in your local filetree!\n"
                     + "Please remove the local file before you download the new file version!");
-            }
+            }*/
 
             // ****************************************************************************
             // Tester l'existance du fichier
@@ -603,7 +603,7 @@ public class ClustepSimulation extends Simulation {
             String fileNameEvol = rootPath + "/" + clustepFolder + "/"
             + simName + "/" + simName + "-evol.dat";
 
-            if (!Utils.exists(fileNameEvol)) {
+            /*if (!Utils.exists(fileNameEvol)) {
                 // Réception (copie) du fichier d'output si celui-ci est distant
                 if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                     //                            if (Utils.osName().startsWith("Windows")) {
@@ -617,10 +617,10 @@ public class ClustepSimulation extends Simulation {
                         Utils.unix2dos(new File(fileNameEvol));
                     }
                 }
-            } else {
+            /*} else {
                 MainFrame.printOUT("File " + fileNameEvol + " exists in your local filetree!\n"
                     + "Please remove the local file before you download the new file version!");
-            }
+            }*/
 
             // ****************************************************************************
             // Tester l'existence du fichier
@@ -630,7 +630,7 @@ public class ClustepSimulation extends Simulation {
             String fileNameFilm = rootPath + "/" + clustepFolder + "/"
             + simName + "/" + simName + "-film.xyz";
 
-            if (!Utils.exists(fileNameFilm)) {
+            //if (!Utils.exists(fileNameFilm)) {
                 // Réception (copie) du fichier d'output si celui-ci est distant
                 if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                     //                            if (Utils.osName().startsWith("Windows")) {
@@ -644,10 +644,10 @@ public class ClustepSimulation extends Simulation {
                         Utils.unix2dos(new File(fileNameFilm));
                     }
                 }
-            } else {
+            /*} else {
                 MainFrame.printOUT("File " + fileNameFilm + " exists in your local filetree!\n"
                     + "Please remove the local file before you download the new file version!");
-            }
+            }*/
 
             // ****************************************************************************
             // Tester l'existence du fichier

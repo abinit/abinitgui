@@ -76,7 +76,7 @@ public class AbinitInputPanel extends SimulationPanel {
     public AbinitInputPanel() {
         initComponents();
         
-        msgdispInputFile = new MessageDisplayer(MainFrame.mainFrame, false);
+        msgdispInputFile = new MessageDisplayer(MainFrame.mainFrame, false, null);
         msgdispInputFile.setTitle("..:: Input file preview ::..");
         
         pspModel = new MyTableModel(pspTable);
