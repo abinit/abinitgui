@@ -48,6 +48,7 @@ package abinitgui.projects;
 
 import abinitgui.core.MainFrame;
 import abinitgui.core.XMLConfigReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -68,6 +69,8 @@ public final class Project implements Iterable<Simulation> {
     private String pspPath;
 
     public Project() {
+        dict = new HashMap<>();
+        this.fileName = null;
     }
 
     public HashMap<String, Simulation> getDict() {
@@ -76,6 +79,11 @@ public final class Project implements Iterable<Simulation> {
 
     public void setDict(HashMap<String, Simulation> map) {
         this.dict = map;
+    }
+    
+    public void setFileName(String fileName)
+    {
+        this.fileName = fileName;
     }
 
     public Project(String fileName) {
@@ -140,15 +148,27 @@ public final class Project implements Iterable<Simulation> {
 
     public void loadFromFile(String fileName) throws IOException {
         Yaml yaml = new Yaml(new ProjectConstructor());
-        Object data = yaml.load(new FileReader(fileName));
-        this.dict = (HashMap<String, Simulation>) data;
+        try{
+            Object data = yaml.load(new FileReader(fileName));
+            this.dict = (HashMap<String, Simulation>) data;
+        }
+        catch(RuntimeException e)
+        {
+            throw new IOException(e.getMessage());
+        }
     }
 
     public static Project fromFile(String fileName) throws IOException {
         Yaml yaml = new Yaml(new ProjectConstructor());
-        Project p = (Project) (yaml.load(new FileReader(fileName)));
-        p.fileName = fileName;
-        return p;
+        try{
+            Project p = (Project) (yaml.load(new FileReader(fileName)));
+            p.fileName = fileName;
+            return p;
+        }
+        catch (RuntimeException e)
+        {
+            throw new IOException(e.getMessage());
+        }
     }
 
     public void saveToFile(String fileName) throws IOException {

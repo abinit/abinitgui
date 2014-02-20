@@ -103,9 +103,14 @@ public class MachineDatabase implements Iterable<Machine> {
     }
 
     public void loadFromFile(String fileName) throws IOException {
-        Yaml yaml = new Yaml(new ProjectConstructor());
-        Object data = yaml.load(new FileReader(fileName));
-        this.list = (HashMap<String, Machine>) data;
+        try{
+            Yaml yaml = new Yaml(new ProjectConstructor());
+            Object data = yaml.load(new FileReader(fileName));
+            this.list = (HashMap<String, Machine>) data;
+        } catch(RuntimeException e)
+        {
+            throw new IOException(e.getMessage());
+        }
     }
 
     public void saveToFile(String fileName) throws IOException {

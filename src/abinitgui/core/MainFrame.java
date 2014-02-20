@@ -309,16 +309,23 @@ public class MainFrame extends javax.swing.JFrame {
         simulation.setRemoteJob(remoteJob);
         try{
             currentProject = Project.fromFile("currentProject.yml");
+            if(currentProject == null)
+            {
+                printERR("Error in the file currentProject.yml. The file will be overwritten on save !");
+                currentProject = new Project(null);
+                currentProject.setFileName("currentProject.yml");
+            }
         } catch(IOException e) {
             printERR("Unable to load project file! (IOException: " + e.getMessage() + ")");
-            currentProject = new Project("currentProject.yml");
-            try{
+            currentProject = new Project(null);
+            currentProject.setFileName("currentProject.yml");
+            /*try{
                 currentProject.save();
             } catch(IOException exc) {
                 printERR("Error saving new project! (IOException: " + exc.getMessage() + ")");
             } catch(Exception exc) {
                 printERR("Error saving new project! (Exception: " + exc.getMessage() + ")");
-            }
+            }*/
         }
         
         machinePane1.refresh();
@@ -339,6 +346,8 @@ public class MainFrame extends javax.swing.JFrame {
     
     public final void refreshMachines()
     {
+        jobPanel1.refreshMachines();
+        
         Machine mymach = (Machine)(machineCombo.getSelectedItem());
         Machine mymach2 = (Machine)(machineCombo1.getSelectedItem());
         
