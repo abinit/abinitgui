@@ -170,7 +170,7 @@ public class LocalMachine extends Machine
         }
         else
         {
-            String CMD = "ls " + dir;
+            String[] CMD = new String[]{"sh","-c","ls " + dir};
             RetMSG retmsg;
             retmsg = localExec.sendCommand(CMD);
             if (retmsg.getRetCode() == RetMSG.SUCCES) {

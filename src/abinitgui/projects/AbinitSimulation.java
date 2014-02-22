@@ -569,9 +569,8 @@ public class AbinitSimulation extends Simulation {
 
             String outputPath = rootPath + "/" + outputFolder;
             String fileName = outputPath + "/" + simName + ".out";
-            System.out.println(fileName);
             // Réception (copie) du fichier d'output si celui-ci est distant
-            if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
+            //if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                 String file = "";
                 String outputFiles = mach.getOutputFiles(fileName + "*");
                 StringTokenizer st = new StringTokenizer(outputFiles, "\n");
@@ -581,14 +580,17 @@ public class AbinitSimulation extends Simulation {
                     //if (Utils.osName().startsWith("Windows")) {
                     //    sendCommand("unix2dos " + file);
                     //}
-                    mach.getFile(file + " " + file);
-                    if (Utils.osName().startsWith("Windows")) {
-                        //sendCommand("dos2unix " + file);
-                        Utils.unix2dos(new File(file));
+                    if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
+                        mach.getFile(file + " " + file);
+                        if (Utils.osName().startsWith("Windows")) {
+                            //sendCommand("dos2unix " + file);
+                            Utils.unix2dos(new File(file));
+                        }
                     }
                 }
                 fileName = file; // Prend le nom du dernier fichier!
-            }
+            //}
+            System.out.println(fileName);
 
             // ****************************************************************************
             // Tester l'existence du fichier
