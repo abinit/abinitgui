@@ -363,11 +363,11 @@ public class AbinitGeometry {
         }
 
         if (xangst == null) {
-            xangst = new Double[natom][3];
+            xangst = new Double[3][natom];
             if (xcart != null) {
                 for (int i = 0; i < natom; i++) {
                     for (int j = 0; j < 3; j++) {
-                        xangst[i][j] = xcart[j][i] * ANGSTROMPERBOHR;
+                        xangst[j][i] = xcart[j][i] * ANGSTROMPERBOHR;
                     }
                 }
             }
@@ -375,10 +375,10 @@ public class AbinitGeometry {
                 for (int i = 0; i < natom; i++) {
                     for (int j = 0; j < 3; j++) {
 
-                        xangst[i][j] = 0.0D;
+                        xangst[j][i] = 0.0D;
                         for (int k = 0; k < 3; k++) {
                             // Should check order of indices
-                            xangst[i][j] = xangst[i][j] + rprimd[j][k] * xred[k][i];
+                            xangst[j][i] = xangst[j][i] + rprimd[j][k] * xred[k][i];
                         }
                     }
                 }
@@ -404,7 +404,7 @@ public class AbinitGeometry {
                         for (int j = 0; j < 3; j++) {
                             allznucl[atomindex] = znucl[typat[i] - 1];
                             allpositions[atomindex][j] =
-                                    x * rprimd[j][0] + y * rprimd[j][1] + z * rprimd[j][2] + xangst[i][j];
+                                    x * rprimd[j][0] + y * rprimd[j][1] + z * rprimd[j][2] + xangst[j][i];
                         }
                     }
                 }

@@ -1,0 +1,10 @@
+DEB>> The file ./PSP/LDA_TM.psps/14/14si.pspnc exists!
+DEB>> The file ./PSP/LDA_TM.psps/14/14si.pspnc exists!
+OUT>> Writing inside C:/Users/Yannick/Downloads/abinit-7.6.2/tests/v1/Input/t08.in1.aims latticevect = lattice_vector	3.7042407393455505	0.0	0.0	.
+OUT>> Writing inside C:/Users/Yannick/Downloads/abinit-7.6.2/tests/v1/Input/t08.in1.aims latticevect = lattice_vector	0.0	3.7042407393455505	0.0	.
+OUT>> Writing inside C:/Users/Yannick/Downloads/abinit-7.6.2/tests/v1/Input/t08.in1.aims latticevect = lattice_vector	0.0	0.0	4.762595236301422	.
+ERR>> Unable to parse fileName =  C:/Users/Yannick/Downloads/abinit-7.6.2/tests/bigdft/Input/t22.in.
+ERR>> Error =  C:\Users\Yannick\Downloads\abinit-7.6.2\tests\bigdft\Input\t22.in (La syntaxe du nom de fichier, de répertoire ou de volume est incorrecte).
+OUT>> Writing inside C:/Users/Yannick/Downloads/abinit-7.6.2/tests/bigdft/Input/t22.in1.aims latticevect = lattice_vector	5.291772484779358	0.0	0.0	.
+OUT>> Writing inside C:/Users/Yannick/Downloads/abinit-7.6.2/tests/bigdft/Input/t22.in1.aims latticevect = lattice_vector	0.0	5.291772484779358	0.0	.
+OUT>> Writing inside C:/Users/Yannick/Downloads/abinit-7.6.2/tests/bigdft/Input/t22.in1.aims latticevect = lattice_vector	0.0	0.0	5.291772484779358	.

@@ -7,13 +7,14 @@
 <h1>ABINIT, first (basic) lesson of the tutorial (GUI version):</h1>
 <h2>The H<sub>2</sub> molecule, without convergence studies. </h2>
 <hr>
-<p>This lesson aims at showing how to get the following physical properties :
+<p>This lesson aims at showing how to get the following physical properties :</p>
   <ul>
     <li>the (pseudo)total energy
     <li>the bond length
     <li>the charge density
     <li>the atomisation energy
   </ul>
+  <p>
   You will learn about the two input files, the basic input variables, the existence
   of defaults, the actions of the parser, and the use of the multi-dataset
   feature. You will also learn about the two output files as well as the density
@@ -45,9 +46,36 @@ http://www.gnu.org/copyleft/gpl.txt </a>.
   <li><a href="lesson_base1.html#15">1.5.</a> Computation of the atomisation energy
   <li><a href="lesson_base1.html#answers">Answers</a> to questions
 </ul>
+<script type="text/javascript">
+  function hide(id)
+  {
+  	document.getElementById(id).style.display='none'
+  }
+  
+  function show(id)
+  {
+  	document.getElementById(id).style.display='block'
+  }
+  
+</script>
 <hr>
-<p><a name="11"></a><br>
+<p><a name="11"></a><map id="ImgMap0" name="ImgMap0">
+<area alt="" coords="19, 70, 232, 90" onmouseover="javascript:show('Coucou');" onmouseleave="javascript:hide('Coucou');" shape="rect">
+<area alt="" coords="85, 195, 45" onmouseover="javascript:show('Circle');" onmouseleave="javascript:hide('Circle');" href="lesson_base1_gui.html" shape="circle">
+</map>
+<table>
+<tr>
+<td>
+<img alt="Texte" height="400" longdesc="Description" src="PRTSCR/f1.png" usemap="#ImgMap0" width="400">
+</td>
+<td>
 
+<span id="Coucou">Salut !</span>
+
+<span id="Circle">Circle</span>
+
+</td></tr></table>
+<br>
 
 
 <h3><b>1.1. The first step (the most important, and the most difficult !): <br>
@@ -114,7 +142,7 @@ Change the working directory of windows 2 to "Work":
  Later, you will again modify these lines, to treat more cases. You should also change the last line,
 that gives the location of the pseudopotential (suppress one occurrence of "../"). Close the tbase1_x.files file.
  Then, copy the file
- ~abinit/tests/tutorial/Input/tbase1_1.in</a> in "Work" :<br>
+ ~abinit/tests/tutorial/Input/tbase1_1.in in "Work" :<br>
 <li><i> cp ../tbase1_1.in . </i></li>
 
 <p>
@@ -131,7 +159,7 @@ that gives the location of the pseudopotential (suppress one occurrence of "../"
   ../../../../src/main/abinit . (Suggestion : use an alias, copy the abinit executable, or declare the path).
 <p>
   So, in the Work directory, type : <br>
-  <li><i> abinit < tbase1_x.files >& log </i></li> <br>
+  <li><i> abinit < tbase1_x.files >&amp; log </i></li> <br>
   Wait a few seconds ... it's done !
   You can look at the content of the Work directory.
   <li><i> ls </i></li>
@@ -153,39 +181,39 @@ that gives the location of the pseudopotential (suppress one occurrence of "../"
 <p>
 <pre>
 2,3c2,3
-< .Version 5.5.4  of ABINIT
-< .(sequential version, prepared for a powerpc_darwin8.6.0_gfortran4.2 computer)
+&lt; .Version 5.5.4  of ABINIT
+&lt; .(sequential version, prepared for a powerpc_darwin8.6.0_gfortran4.2 computer)
 ---
-> .Version 5.5.3  of ABINIT
-> .(sequential version, prepared for a x86_64_linux_intel9.1 computer)
+&gt; .Version 5.5.3  of ABINIT
+&gt; .(sequential version, prepared for a x86_64_linux_intel9.1 computer)
 17c17
-< .Starting date : Sat 24 May 2008.
+&lt; .Starting date : Sat 24 May 2008.
 ---
-> .Starting date : Fri 29 Feb 2008.
+&gt; .Starting date : Fri 29 Feb 2008.
 27c27
-< - input  file    -> tbase1_1.in
+&lt; - input  file    -&gt; tbase1_1.in
 ---
-> - input  file    -> ../tbase1_1.in
+&gt; - input  file    -&gt; ../tbase1_1.in
 29,30c29,30
-< - root for input  files -> tbase1_xi
-< - root for output files -> tbase1_xo
+&lt; - root for input  files -&gt; tbase1_xi
+&lt; - root for output files -&gt; tbase1_xo
 ---
-> - root for input  files -> tbase1_1i
-> - root for output files -> tbase1_1o
+&gt; - root for input  files -&gt; tbase1_1i
+&gt; - root for output files -&gt; tbase1_1o
 92,93c92,93
-< - pspini: atom type   1  psp file is ../../../Psps_for_tests/01h.pspgth
-< - pspatm: opening atomic psp file    ../../../Psps_for_tests/01h.pspgth
+&lt; - pspini: atom type   1  psp file is ../../../Psps_for_tests/01h.pspgth
+&lt; - pspatm: opening atomic psp file    ../../../Psps_for_tests/01h.pspgth
 ---
-> - pspini: atom type   1  psp file is /home/gonze/ABINIT/ABINITv5.5.3/trunk/5.5.3-private/tests/Psps_for_tests/01h.pspgth
-> - pspatm: opening atomic psp file    /home/gonze/ABINIT/ABINITv5.5.3/trunk/5.5.3-private/tests/Psps_for_tests/01h.pspgth
+&gt; - pspini: atom type   1  psp file is /home/gonze/ABINIT/ABINITv5.5.3/trunk/5.5.3-private/tests/Psps_for_tests/01h.pspgth
+&gt; - pspatm: opening atomic psp file    /home/gonze/ABINIT/ABINITv5.5.3/trunk/5.5.3-private/tests/Psps_for_tests/01h.pspgth
 166c166
-<  prteigrs : about to open file tbase1_xo_EIG
+&lt;  prteigrs : about to open file tbase1_xo_EIG
 ---
->  prteigrs : about to open file tbase1_1o_EIG
+&gt;  prteigrs : about to open file tbase1_1o_EIG
 214c214
-< - Total cpu        time (s,m,h):          4.7        0.08      0.001
+&lt; - Total cpu        time (s,m,h):          4.7        0.08      0.001
 ---
-> - Total cpu        time (s,m,h):          4.6        0.08      0.001
+&gt; - Total cpu        time (s,m,h):          4.6        0.08      0.001
 221,229c221,228
 </pre>
 (... and what comes after that is related only to timing
@@ -735,7 +763,7 @@ in the quoted results !</i>
  ETOT  6  -1.1037224213136    -9.037E-11 5.808E-12 3.076E-07 1.238E-06 3.741E-02
 
  At SCF step    6, etot is converged :
-  for the second time, diff in etot=  9.037E-11 < toldfe=  1.000E-06
+  for the second time, diff in etot=  9.037E-11 &lt; toldfe=  1.000E-06
 </pre>
 Note that the number of steps that were allowed, <a href="../input_variables/varbas.html#nstep" target="kwimg">nstep</a>=10,
 is larger than the number of steps effectively needed to reach the stopping criterion.

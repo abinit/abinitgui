@@ -14684,7 +14684,9 @@
     defaultval: null
     definition: 'vectors (X) of atom positions in cartesian coordinates -length in
         ANGSTrom- '
-    dimensions: null
+    dimensions: 
+        - 3
+        - '[[natom]]'
     errordefault: None [error reading default]
     errordimensions: real array xangst(3,[[natom]]) (or xangst(3,[[natrd]]) if the
         geometry builder is used) [error reading dimensions]
