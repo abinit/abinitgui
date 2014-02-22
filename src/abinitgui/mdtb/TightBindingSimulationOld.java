@@ -370,9 +370,6 @@ public class TightBindingSimulationOld extends Simulation {
 
         //if (!Utils.exists(fileName)) {
             mach.getFile(fileName + " " + fileName);
-            if (Utils.osName().startsWith("Windows")) {
-                Utils.unix2dos(new File(fileName));
-            }
         /*} else {
             MainFrame.printOUT("File " + fileName + " exists in your local filetree!\n"
                 + "Please remove the local file before you download the new file version!");
