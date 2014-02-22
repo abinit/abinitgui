@@ -367,7 +367,7 @@ public class AbinitGeometry {
             if (xcart != null) {
                 for (int i = 0; i < natom; i++) {
                     for (int j = 0; j < 3; j++) {
-                        xangst[i][j] = xcart[i][j] * ANGSTROMPERBOHR;
+                        xangst[i][j] = xcart[j][i] * ANGSTROMPERBOHR;
                     }
                 }
             }

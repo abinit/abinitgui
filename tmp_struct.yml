@@ -14754,7 +14754,9 @@
     category: '<a href="../users/abinit_help.html#evolving">EVOLVING</a>, <a href="../users/abinit_help.html#length">LENGTH</a> '
     defaultval: null
     definition: 'vectors (X) of atom positions in CARTesian coordinates  '
-    dimensions: null
+    dimensions: 
+        - 3
+        - '[[natom]]'
     errordefault: None [error reading default]
     errordimensions: real array xcart(3,[[natom]]) (or xcart(3,[[natrd]]) if the geometry
         builder is used)  [error reading dimensions]

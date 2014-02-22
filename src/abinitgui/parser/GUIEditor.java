@@ -302,9 +302,10 @@ public class GUIEditor extends JFrame {
 //                }).start();
             //}
         } catch (IOException e) {
+            e.printStackTrace();
             MainFrame.printERR(e.getMessage());
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             MainFrame.printERR(e.getMessage());
         }
     }//GEN-LAST:event_viewGeomButtonActionPerformed
