@@ -13372,9 +13372,11 @@
     vartype: real
 - !variable
     category: ' '
-    defaultval: null
+    defaultval: 
+        - 1
     definition: 'TYPE of atoms '
-    dimensions: null
+    dimensions: 
+        - '[[natom]]'
     errordefault: 1 (for [[natom]]=1) [error reading default]
     errordimensions: 'integer array typat([[natom]]) (or : typat([[natrd]]), if the
         geometry builder is used)  [error reading dimensions]'
