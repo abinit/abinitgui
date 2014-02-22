@@ -55,6 +55,7 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import abinitgui.variables.Variable;
+import java.util.Map.Entry;
 
 // TODO : Change the way we build things. We should start by filling the table variable : value with the default values
 public class AbinitInput 
@@ -332,14 +333,16 @@ public class AbinitInput
         {
             for(int idtset : getJdtsets())
             {
-                HashMap<String,Object> values = readDataSet(mapString,idtset);
+                HashMap<String,ArrayList<Object>> valueArray = firstRead(mapString, idtset);
+                HashMap<String,Object> values = readDataSet2(valueArray, idtset);
                 
                 getAllDatasets().put(idtset, values);
             }
         }
         else
         {
-            HashMap<String,Object> values = readDataSet(mapString,0);
+            HashMap<String,ArrayList<Object>> valueArray = firstRead(mapString,0);
+            HashMap<String,Object> values = readDataSet2(valueArray,0);
             
             getAllDatasets().put(0, values);
         }
@@ -347,10 +350,11 @@ public class AbinitInput
         //System.out.println(getAllDatasets());
         
     }
-
-    private HashMap<String, Object> readDataSet(HashMap<String, String> mapString, int idtset) throws InvalidInputFileException {
-        
-        HashMap<String,Object> curMap = new HashMap<>();
+    
+    private HashMap<String, ArrayList<Object>> firstRead(HashMap<String, String> mapString, int idtset) 
+        throws InvalidInputFileException
+    {
+        HashMap<String,ArrayList<Object>> curMap = new HashMap<>();
         
         Iterator<String> iter = allInputs.getListKeys().iterator();
 
@@ -450,9 +454,24 @@ public class AbinitInput
             if(value != null)
             {
                 ArrayList<Object> valueArray = getValue(name,value,var.getVartype(), var.getDimensions(),idtset);
-                Object o = getObjectFromArray(valueArray,name,var.getVartype(),var.getDimensions(), idtset);
-                curMap.put(name,o);
+                curMap.put(name,valueArray);
             }
+        }
+        
+        return curMap;
+    }
+    
+    private HashMap<String, Object> readDataSet2(HashMap<String, ArrayList<Object>> mapData, int idtset) throws InvalidInputFileException {
+                
+        HashMap<String,Object> curMap = new HashMap<>();
+        
+        for(Entry<String,ArrayList<Object>> entry : mapData.entrySet())
+        {
+            String name = entry.getKey();
+            ArrayList<Object> valueArray = entry.getValue();
+            Variable var = allInputs.getVar(name);
+            Object o = getObjectFromArray(valueArray,name,var.getVartype(),var.getDimensions(), idtset, mapData);
+            curMap.put(name,o);
         }
         
         return curMap;
@@ -604,7 +623,7 @@ public class AbinitInput
         return listValues;
     }
     
-    public int getDim(Object dim) throws InvalidInputFileException
+    public int getDim(Object dim, HashMap<String, ArrayList<Object>> mapArray, int idtset) throws InvalidInputFileException
     {
         int nb = 0;
         if(dim instanceof String)
@@ -617,6 +636,42 @@ public class AbinitInput
                 var = var.replaceAll("\\[\\[","").replaceAll("\\]\\]", "");
             }
             try{
+                
+                Variable vard = allInputs.getVar(var);
+                if(vard == null)
+                {
+                    throw new InvalidInputFileException("Error in the dimensions in tmp_struct.yml");
+                }
+                ArrayList<Object> array = mapArray.get(var);
+                if(array != null)
+                {
+                    Object o = getObjectFromArray(array,var,vard.getVartype(),vard.getDimensions(), idtset, mapArray);
+                    if(o instanceof Integer)
+                    {
+                        return (int)o;
+                    }
+                }
+//                else
+//                {
+//                    // default value ?
+//                    switch(var)
+//                    {
+//                        // Since we have not yet decided how to deal with 
+//                        // the default value, ntypat and natom are hard-coded
+//                        // to make the parser with abinit test input files
+//                        case "ntypat":
+//                            nb = 1;
+//                            break;
+//                        case "natom":
+//                            nb = 1;
+//                            break;
+//                        default:
+//                            throw new Exception(var);
+//                    }
+//                }
+                
+                // If not yet found, still try directly :
+                
                 String data = mapString.get(var);
                 if(data == null)
                 {
@@ -773,7 +828,8 @@ public class AbinitInput
         return usejdtset;
     }
 
-    private Object getObjectFromArray(ArrayList<Object> listValues, String name, String type, Object dimensions, int jdtset) 
+    private Object getObjectFromArray(ArrayList<Object> listValues, String name, String type, 
+            Object dimensions, int jdtset, HashMap<String, ArrayList<Object>> mapArray) 
             throws InvalidInputFileException 
     {
         int[] dims = null;
@@ -788,7 +844,7 @@ public class AbinitInput
                 
                 for(int i = 0; i < tab.length; i++)
                 {
-                    dims[i] = getDim(tab[i]);
+                    dims[i] = getDim(tab[i], mapArray, jdtset);
                     if(dims[i] == -1)
                     {
                         checkDim = false;
