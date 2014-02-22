@@ -76,7 +76,7 @@ public class AllInputVars
         Yaml yaml2 = new Yaml(constructor);
 
         try {
-            String s2 = Utils.fileToString("tmp_struct.yml");
+            String s2 = Utils.fileToString("abinit_vars.yml");
             Object obj2 = yaml2.load(s2);
             listKeys2.clear();
             Iterator<Variable> iter2 = ((ArrayList<Variable>)obj2).iterator();
