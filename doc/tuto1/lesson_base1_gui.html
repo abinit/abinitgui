@@ -1,6 +1,13 @@
 <html>
 <head>
 <title>Tutorial #1</title>
+<link href="base-cachekey6829.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.auto-style1 {
+	color: #DD0000;
+	font-size: large;
+}
+</style>
 </head>
 <body bgcolor="#ffffff">
 <hr>
@@ -20,7 +27,7 @@
   feature. You will also learn about the two output files as well as the density
   file. <p></p>
 <p>This first lesson covers the sections 1, 3, 4 and 6 of the
-  <a href="../users/abinit_help.html" target="helpsimg">abinit_help</a> file.</p>
+  <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html" target="helpsimg">abinit_help</a> file.</p>
 <p>The very first step is a detailed tour of the input and output files : you
   are like a tourist, and you discover a town in a coach. You will have a bit
   more freedom after that first step ... <br>
@@ -59,57 +66,52 @@ http://www.gnu.org/copyleft/gpl.txt </a>.
   
 </script>
 <hr>
-<p><a name="11"></a><map id="ImgMap0" name="ImgMap0">
-<area alt="" coords="19, 70, 232, 90" onmouseover="javascript:show('Coucou');" onmouseleave="javascript:hide('Coucou');" shape="rect">
-<area alt="" coords="85, 195, 45" onmouseover="javascript:show('Circle');" onmouseleave="javascript:hide('Circle');" href="lesson_base1_gui.html" shape="circle">
-</map>
+<p><a name="11"></a>
 <table>
 <tr>
 <td>
-<img alt="Texte" height="400" longdesc="Description" src="PRTSCR/f1.png" usemap="#ImgMap0" width="400">
-</td>
+&nbsp;</td>
 <td>
 
-<span id="Coucou">Salut !</span>
-
-<span id="Circle">Circle</span>
-
-</td></tr></table>
+&nbsp;</td></tr></table>
 <br>
 
 
 <h3><b>1.1. The first step (the most important, and the most difficult !): <br>
   Computing the (pseudo) total energy, and some associated quantities.</b> </h3>
 <h3>&nbsp;</h3>
+<p>
+<img alt="" height="768" src="jobs-annotated.png" width="1024"></p>
 
-If it is your first trial of the GUI, please read the GUI manual first (LINK).
-For this lesson, we suppose you have already configured a machine on which abinit is installed.<br />
+<p>If it is your first trial of the GUI, please read the GUI manual first (LINK).
+For this lesson, we suppose you have already configured a machine on which abinit is installed.<br>
 
-The first step is to create a simulation, click on the button "New Abinit Simu".<br />
-Select the machine on which Abinit is compiled and installed in "Where to run simulation".
-Now you have access to different sections: input file, pseudopotentials and pre-processing of the input file.<br />
+The first step is to create a simulation, click on the button "New Abinit simu" 
+(1).<br>
+Select the machine on which Abinit is compiled and installed in the list "Where to run 
+the simulation" (2).
+Now you have access to different sections: input file, pseudopotentials and pre-processing of the input file.<br>
 
-As a starting point, click on the Browse button next to the input field text and select tbase1_1.in file.<br />
-Now you can display the content and edit the file.<br />
+As a starting point, click on the Browse button (3) next to the input field text and select tbase1_1.in file 
+(you can find it in ~abinit/tests/tutorial/Input/tbase1_1.in).<br>
+Now you can display the content (4) and edit the file (5).<p>
+<img alt="" height="361" src="pseudos-annotated.png" width="686"><p><br>
 
-Afterwards, please put "1" as ntypat and select the pseudopotential for hydrogen atom.<br />
+Afterwards, put "1" as ntypat (6) and select the pseudopotential for the hydrogen 
+atom: click on the &quot;Atom&quot; column (7), check the box &quot;LDA GTH&quot; 
+(8) to choose the 
+pseudopotential type and click on &quot;H&quot; button (9).<br>
 
-If you want, you can also modify the "Submission" section with a different number of processors, for submission script or frontend.
+If you want, you can also modify the "Submission" section with a different number of processors, for submission script or frontend 
+job.
 
-Now let's try to run the simulation. Click on 
-
-
-Note that the present tutorial will use four different windows:
-one to visualize the text of the tutorial (the present window),
-a second to run the code, a third to visualize
-sections of the abinit_help file (that will open automatically),
-and a fourth one for the description of input variables (that will also open automatically).
-Try to manage adequately these four windows ...
-
-<p><b>1.1.a</b> In addition to the present window,
-open the second window. Go to the Tutorial directory (that we refer as ~abinit/tests/tutorial/Input).
-<li> <i>cd ~abinit/tests/tutorial/Input</i></li><br>
-In that directory, you will find the necessary input files to run the examples
+<br>Now the simulation is ready for running. Check carefully that the path to 
+the Abinit remote executable is correctly setup in the Machines tab.<p>
+Click on &quot;Send simu&quot; (10). Normally the display should show several 
+messages, about creation of files and finally submission of the job. When the 
+job is completed, you can download the log, clicking on &quot;Open LOG&quot; (11) and 
+download the output file by clicking on &quot;Download output&quot; (12).<p>
+In the directory ~abinit/tests/tutorial, you will find the necessary input files to run the examples
 related to this tutorial.
 Take a few seconds to read the names of the files already
 present in ~abinit/tests/tutorial/Input. Compare with the lessons mentioned in
@@ -117,68 +119,15 @@ the index of the <A href="welcome.html"><B>Tutorial home page</B></A>.
 You will find other input files,
 specifics for the Density Functional Perturbation Theory
 ("Response functions") capabilities of ABINIT
-in the directory <i>~abinit/tests/tutorespfn/Input</i>.<br>
-
-<p><b>1.1.b </b>You also need a working directory.
-So, you should create a subdirectory
-of this directory, whose name might be "Work" (so ~abinit/tests/tutorial/Input/Work).
-Change the working directory of windows 2 to "Work":
-<li> <i>mkdir Work</i> </li>
-<li> <i>cd Work</i> </li>
-<p> You will do most of the actions of this tutorial in this working directory.
-  Copy the file tbase1_x.files in "Work" :
-<li><i>cp ../tbase1_x.files . </i></li>
-
-<p><b>1.1.c</b> Edit the tbase1_x.files.
-  It is not very long (only 6 lines). It gives the information needed for the
-  code to build other file names ... You will discover more about this file in
-  the <a href="../users/abinit_help.html#intro1" target="helpsimg">section 1.1</a>
-  of the abinit_help file. Please, read it now (it will take one minute or so).
-  <a name="ref1"></a></p>
-
-<p><b>1.1.d</b> Modify the first and second lines of tbase1_x.files file, so that they read:<br>
- tbase1_1.in <br>
- tbase1_1.out<br>
- Later, you will again modify these lines, to treat more cases. You should also change the last line,
-that gives the location of the pseudopotential (suppress one occurrence of "../"). Close the tbase1_x.files file.
- Then, copy the file
- ~abinit/tests/tutorial/Input/tbase1_1.in in "Work" :<br>
-<li><i> cp ../tbase1_1.in . </i></li>
-
+in the directory ~abinit/tests/tutorespfn. The folder &quot;Input&quot; contains the input 
+file, and the folder &quot;Refs&quot; contains the reference output files. Normally, you 
+should be able to compare your results with these reference files.
+</p>
 <p>
-  Also later, we will look at this file, and learn about its content. For now,
-  you will try to run the code. Its name is 'abinit'. The place where it can be
-  found varies, according to the installation procedure. We will denote the
-  directory where you have installed the package ~abinit. Supposing that
-  you dumped the binaries from the Web site, then 'abinit' is to be found
-  in the package, with location ~abinit/opt . If you dumped the sources
-  from the Web site, and issued ./configure in the ~abinit directory,
-  then it is located in ~abinit/src/main . In what follows, we will suppose
-  that you can call it by simply typing "abinit", even if the
-  actual command must be something like ../../../../opt/abinit or
-  ../../../../src/main/abinit . (Suggestion : use an alias, copy the abinit executable, or declare the path).
-<p>
-  So, in the Work directory, type : <br>
-  <li><i> abinit < tbase1_x.files >&amp; log </i></li> <br>
-  Wait a few seconds ... it's done !
-  You can look at the content of the Work directory.
-  <li><i> ls </i></li>
-  <br>
-  You should get something like
-  <pre>
-  abinit  log  tbase1_1.in  tbase1_1.out  tbase1_x.files  tbase1_xo_DDB  tbase1_xo_DEN  tbase1_xo_EIG  tbase1_xo_WFK
-  </pre>
-  Different output files have been created, including a "log" file and the
-  output file "tbase1_1.out".
-  To check that everything is correct, you
-  can make a diff of tbase1_1.out with a reference file contained in the
-  ~abinit/tests/tutorial/Refs directory :
- <li><i>diff tbase1_1.out ../../Refs/tbase1_1.out | more</i></li>
-<p>(Perhaps you will need to ignore the blanks, with the command "diff -b" instead of "diff")
-<p>That reference file uses slightly different file names. You should get some difference,
- but rather inoffensive ones, like differences in the name of input
-  files or timing differences, e.g. : </p>
-<p>
+Try to compare the downloaded output file with 
+~abinit/tests/tutorial/Refs/tbase1_1.out to see if everything was correct. You 
+can use your preferred software to do that (diff on Unix-like systems, Notepad++ 
+on Windows, ...). Here is an example <span class="auto-style1">(TO BE UPDATED)</span>:</p>
 <pre>
 2,3c2,3
 &lt; .Version 5.5.4  of ABINIT
@@ -216,17 +165,16 @@ that gives the location of the pseudopotential (suppress one occurrence of "../"
 &gt; - Total cpu        time (s,m,h):          4.6        0.08      0.001
 221,229c221,228
 </pre>
-(... and what comes after that is related only to timing
-  ...). If you do not run on a PC under Linux with Intel Fortran compiler, you might also have small numerical
+If you do not run on a PC under Linux with Intel Fortran compiler, you might also have small numerical
 differences, on the order of 1.0d-10 at most. You might also have other differences
-in the paths of files. If you get something else, you should ask for help ! </p>
+in the paths of files. If you get something else, you should ask for help ! <br>
 <p>Supposing everything went well, we will now detail the different
   steps that took place : how to run the code, what is in the "tbase1_1.in"
   input file, and, later, what is in the "tbase1_1.out"
   and "log" output files.</p>
 
 <p><b>1.1.e</b> Running the code is described in the
-  <a href="../users/abinit_help.html#exec" target="helpsimg">section 1.2</a>
+  <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#exec" target="helpsimg">section 1.2</a>
   of the abinit_help file. Please, read it now (it will take 30 seconds or less).<a name="ref2"></a></p>
 
 <p><b>1.1.f</b> It is now time to edit the tbase1_1.in file.
@@ -234,24 +182,24 @@ in the paths of files. If you get something else, you should ask for help ! </p>
   comments. Do not try to understand everything immediately. After having gone
   through it, you should read general explanation about its content, and
   the format of such input files in the
-  <a href="../users/abinit_help.html#intro3" target="helpsimg">section 3.1</a> of the abinit_help file.
+  <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#intro3" target="helpsimg">section 3.1</a> of the abinit_help file.
   <a name="ref3"></a></p>
 
 <p><b>1.1.g</b> You might now examine in more details some input variables. An
-  alphabetically ordered <a href="../input_variables/keyhr.html" target="kwimg">index of all
+  alphabetically ordered <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/keyhr.html" target="kwimg">index of all
   variables</a> is
   provided, and their description is found in the following files:
 <ul>
-<li> Basic variables, <A href="../input_variables/varbas.html">VARBAS</a></li>
-<li> Developpement variables, <A href="../input_variables/vardev.html">VARDEV</a></li>
-<li> Files handling variables, <A href="../input_variables/varfil.html">VARFIL</a></li>
-<li> Geometry builder + symmetry related variables, <A href="../input_variables/vargeo.html">VARGEO</a></li>
-<li> Ground-state calculation variables, <A href="../input_variables/vargs.html">VARGS</a></li>
-<li> GW variables, <A href="../input_variables/vargw.html">VARGW</a></li>
-<li> Internal variables, <A href="../input_variables/varint.html">VARINT</a></li>
-<li> Parallelisation variables, <A href="../input_variables/varpar.html">VARPAR</a></li>
-<li> Response Function variables, <A href="../input_variables/varrf.html">VARRF</a></li>
-<li> Structure optimization variables, <A href="../input_variables/varrlx.html">VARRLX</a></li>
+<li> Basic variables, <A href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html">VARBAS</a></li>
+<li> Developpement variables, <A href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vardev.html">VARDEV</a></li>
+<li> Files handling variables, <A href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varfil.html">VARFIL</a></li>
+<li> Geometry builder + symmetry related variables, <A href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vargeo.html">VARGEO</a></li>
+<li> Ground-state calculation variables, <A href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vargs.html">VARGS</a></li>
+<li> GW variables, <A href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vargw.html">VARGW</a></li>
+<li> Internal variables, <A href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varint.html">VARINT</a></li>
+<li> Parallelisation variables, <A href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varpar.html">VARPAR</a></li>
+<li> Response Function variables, <A href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varrf.html">VARRF</a></li>
+<li> Structure optimization variables, <A href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varrlx.html">VARRLX</a></li>
 </ul>
   However, the number of such variables is rather large ! Note that
   a dozen of input variables were needed to run the first test case. This is possible
@@ -265,36 +213,36 @@ in the paths of files. If you get something else, you should ask for help ! </p>
   are particularly important input variables.
   So, take a few minutes to have a look at the input variables of tbase1_1.in :
   <ul>
-  <li><a href="../input_variables/varbas.html#acell" target="kwimg">acell</a>,</li>
-  <li><a href="../input_variables/varbas.html#ntypat" target="kwimg">ntypat</a>,</li>
-  <li><a href="../input_variables/varbas.html#znucl" target="kwimg">znucl</a>,</li>
-  <li><a href="../input_variables/varbas.html#natom" target="kwimg">natom</a>,</li>
-  <li><a href="../input_variables/varbas.html#typat" target="kwimg">typat</a>,</li>
-  <li><a href="../input_variables/varbas.html#xcart" target="kwimg">xcart</a>,</li>
-  <li><a href="../input_variables/varbas.html#ecut" target="kwimg">ecut</a>,</li>
-  <li><a href="../input_variables/varbas.html#nkpt" target="kwimg">nkpt</a>,</li>
-  <li><a href="../input_variables/varbas.html#nstep" target="kwimg">nstep</a>,</li>
-  <li><a href="../input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>,</li>
-  <li><a href="../input_variables/vargs.html#diemac" target="kwimg">diemac</a>.</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#acell" target="kwimg">acell</a>,</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#ntypat" target="kwimg">ntypat</a>,</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#znucl" target="kwimg">znucl</a>,</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#natom" target="kwimg">natom</a>,</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#typat" target="kwimg">typat</a>,</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#xcart" target="kwimg">xcart</a>,</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#ecut" target="kwimg">ecut</a>,</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#nkpt" target="kwimg">nkpt</a>,</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#nstep" target="kwimg">nstep</a>,</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>,</li>
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vargs.html#diemac" target="kwimg">diemac</a>.</li>
   </ul>
-  Have also a look at <a href="../input_variables/varbas.html#kpt" target="kwimg">kpt</a>
-  and <a href="../input_variables/varbas.html#iscf" target="kwimg">iscf</a>.
+  Have also a look at <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#kpt" target="kwimg">kpt</a>
+  and <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#iscf" target="kwimg">iscf</a>.
 
   <p> It is now time to have a look at the two output files of the run. </p>
 
-<p><b>1.1.h</b> First, edit the "log" file. You
+<p><b>1.1.h</b> First, open the "log" file. You
   can begin to read it. It is nasty. Jump to its end. You will find
   there the number of WARNINGS and COMMENTS that were issued by the code
   during execution. You might try to find them in the file
   (localize the keywords "WARNING" or "COMMENT" in this file). Some of them
   are for the experienced user. For the present time, we will ignore them. You
   can find more information about messages in the log file in the
-  <a href="../users/abinit_help.html#logfile" target="helpsimg">section 6.1</a>
+  <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#logfile" target="helpsimg">section 6.1</a>
   of the abinit_help file.<a name="ref4"></a></p>
 
-<p><b>1.1.i</b> Then, edit the "tbase1_1.out" file.
+<p><b>1.1.i</b> Then, open the output file ("tbase1_1.out").
   You find some general information about the output file
-  in <a href="../users/abinit_help.html#outputfile" target="helpsimg"> section 6.2</a>
+  in <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#outputfile" target="helpsimg"> section 6.2</a>
   of the abinit_help file. You should also
   :
 <ul>
@@ -315,20 +263,20 @@ in the paths of files. If you get something else, you should ask for help ! </p>
   that were NOT defined in the input file, but that appear in the echo written
   in "tbase1_1.out" : <br>
   <br>
-  - "<a href="../input_variables/varbas.html#nband" target="kwimg">nband</a>" : its value is 2.
+  - "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#nband" target="kwimg">nband</a>" : its value is 2.
   <br>
   It is the number of electronic states that will be treated by the code. It has
   been computed by counting the number of valence electrons in the unit cell (summing
   the valence electrons brought by each pseudopotential) then occupying the lowest
-  states (look at the "<a href="../input_variables/vargs.html#occ" target="kwimg">occ</a>" variable),
+  states (look at the "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vargs.html#occ" target="kwimg">occ</a>" variable),
   and adding some states (at least one, maybe more, depending on the size of the
   system). <br>
   <br>
-  - "<a href="../input_variables/vargs.html#ngfft" target="kwimg">ngfft</a>" : its value is 30
+  - "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vargs.html#ngfft" target="kwimg">ngfft</a>" : its value is 30
   30 30 . <br>
   It is the number of points of the three-dimensional FFT grid. It has been derived
-  from "<a href="../input_variables/varbas.html#ecut" target="kwimg">ecut</a>" and the dimension
-  of the cell ("<a href="../input_variables/varbas.html#acell" target="kwimg">acell</a>"). <br>
+  from "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#ecut" target="kwimg">ecut</a>" and the dimension
+  of the cell ("<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#acell" target="kwimg">acell</a>"). <br>
   <br>
   The maximal number of plane waves "<b>mpw</b>" is mentioned in the memory evaluation
   section: it is <b>752</b>. <br>
@@ -336,23 +284,23 @@ in the paths of files. If you get something else, you should ask for help ! </p>
   symmetry, valid for the k-point (0 0 0), to decrease the number of planewave
   by about a factor of two. <br>
   The full set of plane waves is <b>1503</b> (see later in the "tbase1_1.out" file). <br>
-  The code indicates the time-reversal symmetry by a value of <a href="../input_variables/vardev.html#istwfk" target="kwimg">istwfk</a>=2
-  , instead of the usual <a href="../input_variables/vardev.html#istwfk" target="kwimg">istwfk</a>=1
+  The code indicates the time-reversal symmetry by a value of <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vardev.html#istwfk" target="kwimg">istwfk</a>=2
+  , instead of the usual <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vardev.html#istwfk" target="kwimg">istwfk</a>=1
   default. <br>
   <br>
-  - "<a href="../input_variables/varbas.html#nsym" target="kwimg">nsym</a>" : its value is 16. <br>
-  It is the number of symmetries of the system. The 3x3 matrices <a href="../input_variables/varbas.html#symrel" target="kwimg">symrel</a>
+  - "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#nsym" target="kwimg">nsym</a>" : its value is 16. <br>
+  It is the number of symmetries of the system. The 3x3 matrices <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#symrel" target="kwimg">symrel</a>
   define the symmetries operation. In this case, none of the symmetries is accompanied
-  by a translation, that would appear in the variable "<a href="../input_variables/varbas.html#tnons" target="kwimg">tnons</a>".
+  by a translation, that would appear in the variable "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#tnons" target="kwimg">tnons</a>".
   The code did an automatic analysis of symmetries. <br>
   They could alternatively be set by hand, or using the symmetry builder (to be
   described later). <br>
   <br>
-  - "<a href="../input_variables/varbas.html#xangst" target="kwimg">xangst</a>" and "<a href="../input_variables/varbas.html#xred" target="kwimg">xred</a>"
-  are alternative ways to "<a href="../input_variables/varbas.html#xcart" target="kwimg">xcart</a>"
+  - "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#xangst" target="kwimg">xangst</a>" and "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#xred" target="kwimg">xred</a>"
+  are alternative ways to "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#xcart" target="kwimg">xcart</a>"
   to specify the positions of atoms within the primitive cell. </p>
   <p>Now, you can start reading the description of the remaining
-  of the tbase1_1.out file, in the <a href="../users/abinit_help.html#6.3" target="helpsimg"> section 6.3
+  of the tbase1_1.out file, in the <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#6.3" target="helpsimg"> section 6.3
   </a> of the abinit_help file.
   <a name="ref6"></a>Look at the tbase1_1.out
   file at the same time. </p>
@@ -362,9 +310,9 @@ in the paths of files. If you get something else, you should ask for help ! </p>
 <p>
 
 <ul>
-  <li><a name="q1">Q1</a>. How many SCF cycles were needed to have the <a href="../input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>
+  <li><a name="q1">Q1</a>. How many SCF cycles were needed to have the <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>
     criterion satisfied ?
-  <li><a name="q2">Q2</a>. Is the energy likely more converged than <a href="../input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>
+  <li><a name="q2">Q2</a>. Is the energy likely more converged than <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>
     ?
   <li><a name="q3">Q3</a>. What is the value of the force on each atom, in Ha/Bohr ?
   <li><a name="q4">Q4</a>. What is the difference of eigenenergies between the two electronic states ?
@@ -387,7 +335,7 @@ in the paths of files. If you get something else, you should ask for help ! </p>
   still a few indications that you should be aware of, even if you will not use
   them in the tutorial. These might appear in the description of some input variables
   ...
-  For this, you should read the <a href="../users/abinit_help.html#parameters" target="helpsimg">
+  For this, you should read the <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#parameters" target="helpsimg">
   section 3.2</a> of the abinit_help file.<a name="ref7"></a></p>
 <p><b>1.2.b</b> There are three methodologies to compute the optimal distance
   between the two Hydrogen atoms:
@@ -408,28 +356,28 @@ in the paths of files. If you get something else, you should ask for help ! </p>
   to examine the interatomic distances from 1.0 Bohr to 2.0 Bohr, by steps of
   0.05 Bohr. That is, 21 calculations. <br>
   If you are a UNIX guru, it will be easy for you to write a script that will
-  drive these 21 calculations, changing automatically the variable "<a href="../input_variables/varbas.html#xcart" target="kwimg">xcart</a>"
+  drive these 21 calculations, changing automatically the variable "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#xcart" target="kwimg">xcart</a>"
   in the input file, and then gather all the data, in a convenient form to be
   plotted. <br>
   Well, are you a UNIX guru ? If not, there is an easier path, all within ABINIT
   ! </p>
 <p>This is the multi-dataset mode. Detailed explanations about it can be found in
-  sections <a href="../users/abinit_help.html#multidataset" target="helpsimg">3.3</a>,
-  <a href="../users/abinit_help.html#series" target="helpsimg">3.4</a>,
-  <a href="../users/abinit_help.html#loop" target="helpsimg">3.5</a>
-  and <a href="../users/abinit_help.html#3.6" target="helpsimg">3.6</a>,
+  sections <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#multidataset" target="helpsimg">3.3</a>,
+  <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#series" target="helpsimg">3.4</a>,
+  <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#loop" target="helpsimg">3.5</a>
+  and <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#3.6" target="helpsimg">3.6</a>,
   of the abinit_help file.<a name="ref8"></a></p>
 <p><b>1.2.c</b> Now, can you write an input file that will do the computation
   described above (interatomic distances from 1.0 Bohr to 2.0 Bohr, by steps of
   0.05 Bohr) ? You might start from tbase1_1.in .
   Try to define a series, and to use
-  the "<a href="../input_variables/varfil.html#getwfk" target="kwimg">getwfk</a>"
+  the "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varfil.html#getwfk" target="kwimg">getwfk</a>"
   input variable (the latter will make the computation much faster). </p>
-<p>You should likely have a look at the section that describes the "<a href="../input_variables/varfil.html#irdwfk" target="kwimg">irdwfk</a>"
-  and "<a href="../input_variables/varfil.html#getwfk" target="kwimg">getwfk</a>" input variables:
+<p>You should likely have a look at the section that describes the "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varfil.html#irdwfk" target="kwimg">irdwfk</a>"
+  and "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varfil.html#getwfk" target="kwimg">getwfk</a>" input variables:
   in particular, look at the meaning of <i><b>getwfk -1</b></i> </p>
 <p>Also, define explicitely the number of states (or supercell "bands") to be
-  one, using the input variables "<a href="../input_variables/varbas.html#nband" target="kwimg">nband</a>".
+  one, using the input variables "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#nband" target="kwimg">nband</a>".
   The input file ~abinit/tests/tutorial/Input/tbase1_2.in is an example of
   file that will do the job, while ~abinit/tests/tutorial/Refs/tbase1_2.out
   is an example of output file. If you decide to use the ~abinit/tests/tutorial/Input/tbase1_2.in file,
@@ -462,7 +410,10 @@ in the paths of files. If you get something else, you should ask for help ! </p>
     etotal21 -1.0867972868E+00
 </pre>
 <p> You might try to <a href="lesson_base1/Plot1.jpg" target="helpsimg">plot</a>
-  these data. The minimum of energy in the above list is clearly between dataset
+  these data. For this, you can use FlavioChart. You open a file with a text 
+editor, you create a two-column file. The first column will contain the acell 
+value and the second column will contain the etotal value. The drag and drop the 
+file inside FlavioChart and you have the plot. The minimum of energy in the above list is clearly between dataset
   11 and 12, that is : </p>
 <pre>
      xcart11 -7.5000000000E-01  0.0000000000E+00  0.0000000000E+00
@@ -492,29 +443,29 @@ The forces vanish also between 1.5 Bohr and
 <p><br><b>1.3.a</b> The other methodology is based on an automatic computation of
   the minimum. <br>
   There are different algorithms to do that.
-  See the input variable "<a href="../input_variables/varrlx.html#ionmov" target="kwimg">ionmov</a>",
+  See the input variable "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varrlx.html#ionmov" target="kwimg">ionmov</a>",
   with values 2, 3 and 7. In the present case, with only one degree of freedom
   to be optimized, the best choice
-  is <a href="../input_variables/varrlx.html#ionmov" target="kwimg">ionmov</a> 3 . </p>
+  is <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varrlx.html#ionmov" target="kwimg">ionmov</a> 3 . </p>
 <p>You have also to define the maximal number of timesteps for this optimization.
-  Set the input variable "<a href="../input_variables/varrlx.html#ntime" target="kwimg">ntime</a>"
+  Set the input variable "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varrlx.html#ntime" target="kwimg">ntime</a>"
   to 10, it will be largely enough.
-  For the stopping criterion "<a href="../input_variables/varrlx.html#tolmxf" target="kwimg">tolmxf</a>",
+  For the stopping criterion "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varrlx.html#tolmxf" target="kwimg">tolmxf</a>",
   use the reasonable value of 5.0d-4 Ha/Bohr. This defines the force treshold
   to consider that the geometry is converged. The code will stop if the residual
   forces are below that value before
-  reaching "<a href="../input_variables/varrlx.html#ntime" target="kwimg">ntime</a>".
+  reaching "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varrlx.html#ntime" target="kwimg">ntime</a>".
 </p>
 <p>It is also worth to change the stopping criterion for the SCF cycle, in order
   to be sure that the forces generated for each trial interatomic distance are
   sufficiently converged. Indeed, the value used for 
-  <a href="../input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>, namely 1.0d-6,
+  <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>, namely 1.0d-6,
   might be sufficient for total energy calculations, but definitely not for
   the accurate computation of other properties.
-  So, change "<a href="../input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>"
-  in "<a href="../input_variables/varbas.html#toldff" target="kwimg">toldff</a>", and set the latter
+  So, change "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>"
+  in "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#toldff" target="kwimg">toldff</a>", and set the latter
   input variable to ten times smaller than
-  "<a href="../input_variables/varrlx.html#tolmxf" target="kwimg">tolmxf</a>".
+  "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varrlx.html#tolmxf" target="kwimg">tolmxf</a>".
   The input file ~abinit/tests/tutorial/Input/tbase1_3.in is an example of
   file that will do the job, while ~abinit/tests/tutorial/Refs/tbase1_3.out
   is an example of output file. If you decide to use these files, do not forget
@@ -532,7 +483,7 @@ The forces vanish also between 1.5 Bohr and
               7.6091015760E-01  0.0000000000E+00  0.0000000000E+00
 </pre>
 
-<p> According to these data (see <a href="../input_variables/varbas.html#xcart" target="kwimg">xcart</a>),
+<p> According to these data (see <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#xcart" target="kwimg">xcart</a>),
   the optimal interatomic distance is about 1.522 Bohr, in good agreement
   with the estimation of tbase1_2.out .
   If you have time (this is to be done at home), you might try to change the
@@ -556,12 +507,12 @@ Here, we will print this quantity.
 
 <p><b>1.4.a</b> We start from the optimized interatomic distance 1.522 Bohr,
   and make a run at fixed geometry.
-  The input variable "<a href="../input_variables/varfil.html#prtden" target="kwimg">prtden</a>"
+  The input variable "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varfil.html#prtden" target="kwimg">prtden</a>"
   must be set to 1.
   To understand correctly the content of the
-  "<a href="../input_variables/varfil.html#prtden" target="kwimg">prtden</a>"
+  "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varfil.html#prtden" target="kwimg">prtden</a>"
   description, it is worth to read a much more detailed description of the "files" file,
-  in <a href="../users/abinit_help.html#4" target="helpsimg">section 4 </a> of the abinit_help file.
+  in <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#4" target="helpsimg">section 4 </a> of the abinit_help file.
   <a name="ref9"></a></p>
 
 <p><b>1.4.b</b> The input file ~abinit/tests/tutorial/Input/tbase1_4.in is
@@ -569,31 +520,64 @@ Here, we will print this quantity.
   If you decide to use this file,
   do not forget to change the file names in tbase1_x.files.
   The run will take a few seconds. </p>
-<p>The density will be output in the <b>tbase1_xo_DEN</b> file. Try to edit it ...
+<p>In order to obtain the DEN file, you can download it with the FTP client 
+included in the GUI.</p>
+<p><img alt="" height="400" src="jftp-annotated.png" width="800"></p>
+<p>On the left side of the panel (1) you have the local files, on the right side 
+of the panel (2) you find the remote files. You can browse the directories by 
+double-clicking on the [folder], and upload files (3) and download files (4).</p>
+<p>Now go to the working directory (by default, it is called &quot;MySims&quot;), then you 
+have a hierarchy of files:</p>
+<ul>
+	<li>output : contains the output files generated by Abinit</li>
+	<li>logfiles: contains the log files generated by Abinit</li>
+	<li>input : input files uploaded by the GUI</li>
+	<li>pseudopot : pseudo potentials uploaded by the GUI</li>
+	<li>scripts : used for post-processing (you should not consider it during 
+	this tutorial)</li>
+	<li>wholedata : contains all the other files generated by Abinit</li>
+</ul>
+<p>The density will be output in the <b>wholedata/tbase1_1/tbase1_1o_DEN</b> file. Try to 
+download it and edit it ...
   No luck ! This file is unformatted, not written using the ASCII code. Even if
   you cannot read it, its description is provided in the abinit_help. It contains
   first a header, then the density numbers. The description of the header
-  is presented in <a href="../users/abinit_help.html#header" target="helpsimg">section 6.4</a>
+  is presented in <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#header" target="helpsimg">section 6.4</a>
   of the abinit_help file, while the body of the _DEN file is presented
-  in <a href="../users/abinit_help.html#densoutputfile" target="helpsimg">section 6.5</a>.
+  in <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#densoutputfile" target="helpsimg">section 6.5</a>.
   It is the appropriate time to read also the description of the potential
   files and wavefunctions files, as these files contain the same header as the
   density file, see sections
-  <a href="../users/abinit_help.html#localpotfile" target="helpsimg">6.6</a>
+  <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#localpotfile" target="helpsimg">6.6</a>
   and
-  <a href="../users/abinit_help.html#wavefctfile" target="helpsimg">6.7</a>
+  <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#wavefctfile" target="helpsimg">6.7</a>
   <a name="ref10"></a></p>
 
 <p><b>1.4.c</b> Such a density file can be read by ABINIT, to restart a calculation
-  (see the input variable <a href="../input_variables/varbas.html#iscf" target="kwimg">iscf</a>,
+  (see the input variable <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#iscf" target="kwimg">iscf</a>,
   when its value is -2), but more usually, by an utility called "cut3d". This
   utility is available in the ABINIT package.
   You might try to use it now, to generate two-dimensional
   cuts in the density, and visualize the charge density contours.
-<br>Read the corresponding <a href="../users/cut3d_help.html" target="helpsimg">Cut3D help file</a>.
-  Then, try to run cut3d to analyse <b>tbase1_xo_DEN</b>.
+
+<p>In order to use it, you will need to use the SSH terminal since the tool is 
+not yet available in the Graphical Interface.<p>At the bottom of the main 
+interface, select the machine where Abinit is configured. Click on &quot;SSH2 Client&quot; 
+button in the main interface.<br>Now you are on the frontend of the remote 
+machine. In principle, it should be a Unix-like environment (otherwise, just 
+skip the next paragraph).<p>You can get the current working directory by typing 
+the command &quot;pwd&quot;. You can see the content of the current directory by typing 
+the command &quot;ls&quot;. You will see the directory &quot;.&quot; (current directory), &quot;..&quot; 
+(parent directory) and several other files and &quot;MySims&quot; if you have already run 
+Abinit with the default simulation path. Then you can change directory by using 
+the command &quot;cd&quot;. Try &quot;cd MySims&quot; and then type &quot;pwd&quot; to check you're well in 
+the subfolder MySims of the root. Then navigate to &quot;wholedata/tbase1_1&quot;. Your 
+&quot;pwd&quot; should now end with MySims/wholedata/tbase1_1. If you ls, you should get 
+several files, among one the &quot;tbase1_1o_DEN&quot;. Now, if the computer is correctly 
+configured, just type &quot;cut3d&quot;, to launch the post-processing tool.<p>Read the corresponding <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/cut3d_help.html" target="helpsimg">Cut3D help file</a>.
+  Then, try to run cut3d to analyse <b>tbase1_1o_DEN</b>.
   You should first try to translate the unformatted density data to indexed formatted data,
-  by using option 6 in the adequate menu. Save the indexed formatted data to file <b>tbase1_xo_DEN_indexed</b>.
+  by using option 6 in the adequate menu. Save the indexed formatted data to file <b>tbase1_1o_DEN_indexed</b>.
   Then, edit this file, to have an idea of the content of the _DEN files.
 <br>For further treatment, you might choose to select another option than 6. In particular,
  if you have access to MATLAB, choose option 5. With minor modifications (set ngx=ngy=ngz to 30)
@@ -614,23 +598,23 @@ in its constituent atoms, each being neutral.
   There are some subtleties in the calculation of an isolated atom.
 <ul>
   <li>in many cases, the ground state of an isolated atom is spin-polarized, see
-    the variables "<a href="../input_variables/varbas.html#nsppol" target="kwimg">nsppol</a>" and
-    "<a href="../input_variables/vargs.html#spinat" target="kwimg">spinat</a>" ;
+    the variables "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#nsppol" target="kwimg">nsppol</a>" and
+    "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vargs.html#spinat" target="kwimg">spinat</a>" ;
   <li>the highest occupied level might be degenerate with the lowest unoccupied
     level of the same spin, in which case the techniques usually appropriate for metals
     are to be used (see <a href="lesson_base4.html">lesson_base4</a>)
   <li>also often, the symmetry of the ground-state charge density will NOT be
     spherical, so that the automatic determination of symmetries by the code,
     based on the atomic coordinates, should be disabled, see the input variable
-    "<a href="../input_variables/varbas.html#nsym" target="kwimg">nsym</a>", to be set to 1 in this
+    "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#nsym" target="kwimg">nsym</a>", to be set to 1 in this
     case.
 </ul>
 <br>
 For Hydrogen, we are lucky that the ground state is spherical (1s orbital), and
 that the highest occupied level and lowest unoccupied level, although degenerate,
 have a different spin. We will define by hand the occupation of each spin, see
-the input variables <a href="../input_variables/varbas.html#occopt" target="kwimg">occopt</a> (to
-be set to 2), and <a href="../input_variables/vargs.html#occ" target="kwimg">occ</a> . <br>
+the input variables <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#occopt" target="kwimg">occopt</a> (to
+be set to 2), and <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/vargs.html#occ" target="kwimg">occ</a> . <br>
 Finally, in order to make numerical errors cancel, it is important
 to compute the above-mentioned difference in the same box, for the same
 cut-off, and even for a location in the box that is similar to the
@@ -717,10 +701,10 @@ and the atomisation energy is a bit too low, 5 % off.
 <br>Well, are you sure that the input parameters that we did not discuss
 are correct ? These are :
 <ul>
-  <li><a href="../input_variables/varbas.html#ecut" target="kwimg">ecut</a> (the plane-wave kinetic
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#ecut" target="kwimg">ecut</a> (the plane-wave kinetic
     energy cut-off)
-  <li><a href="../input_variables/varbas.html#acell" target="kwimg">acell</a> (the supercell size)
-  <li><a href="../input_variables/varbas.html#ixc" target="kwimg">ixc</a> (not even mentioned until
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#acell" target="kwimg">acell</a> (the supercell size)
+  <li><a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#ixc" target="kwimg">ixc</a> (not even mentioned until
     now, this input variable specifies what kind of exchange-correlation functional
     is to be used ...)
   <li>the pseudopotential
@@ -738,10 +722,10 @@ B 54, 1703 (1996)</cite>).
 <p><b>Answers to the questions, section <a href=#1.1.j >1.1.j </a> </b> :
 <ul>
   <li><a href="lesson_base1.html#aq1">Q1</a>. How many SCF cycles were needed to have
-    the <a href="../input_variables/varbas.html#toldfe" target="kwimg">toldfe</a> criterion satisfied
+    the <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#toldfe" target="kwimg">toldfe</a> criterion satisfied
     ?
   <li><a href="lesson_base1.html#aq2">Q2</a>. Is the energy likely more converged than
-    <a href="../input_variables/varbas.html#toldfe" target="kwimg">toldfe</a> ?
+    <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#toldfe" target="kwimg">toldfe</a> ?
   <li><a href="lesson_base1.html#aq3">Q3</a>. What is the value of the force on each atom, in Ha/Bohr ?
   <li><a href="lesson_base1.html#aq4">Q4</a>. What is the difference of eigenenergies between the two electronic states ?
   <li><a href="lesson_base1.html#aq5">Q5</a>. Where is located the maximum of the electronic density, and how much is it, in electrons/Bohr^3 ?
@@ -765,12 +749,12 @@ in the quoted results !</i>
  At SCF step    6, etot is converged :
   for the second time, diff in etot=  9.037E-11 &lt; toldfe=  1.000E-06
 </pre>
-Note that the number of steps that were allowed, <a href="../input_variables/varbas.html#nstep" target="kwimg">nstep</a>=10,
+Note that the number of steps that were allowed, <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#nstep" target="kwimg">nstep</a>=10,
 is larger than the number of steps effectively needed to reach the stopping criterion.
 As a rule, you should always check that the number of steps that you allowed
 was sufficient to reach the target tolerance. You might now play a bit with nstep, as e.g. set it
 to 5, to see how ABINIT reacts.
-<p>Side note : in most of the tutorial examples, <a href="../input_variables/varbas.html#nstep" target="kwimg">nstep</a>
+<p>Side note : in most of the tutorial examples, <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#nstep" target="kwimg">nstep</a>
 will be enough to reach the
 target tolerance, defined by one of the "tolXXX" input variables. However, this is not always the case
 (e.g. the test case 1 of the <a href="lesson_rf1.html">lesson response-function 1</a>),
@@ -780,9 +764,9 @@ before the required tolerance.
 <p>&nbsp;
 
 <a name="aq2">&nbsp;</a>
-<p><b>Q2.</b> The information is contained in the same piece of the output file. Yes, the energy is more converged than <a href="../input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>,
+<p><b>Q2.</b> The information is contained in the same piece of the output file. Yes, the energy is more converged than <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>,
   since the stopping criterion asked for the difference between successive evaluations
-  of the energy to be smaller than <a href="../input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>
+  of the energy to be smaller than <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#toldfe" target="kwimg">toldfe</a>
   twice in a row, while the evolution of the energy is nice, and always decreasing
   by smaller and smaller amounts.
 
@@ -809,7 +793,7 @@ before the required tolerance.
   -0.36525  -0.01379
 </pre>
 <p><br>
-  As mentioned in the <a href="../users/abinit_help.html#averagepot">abinit_help</a> file, the
+  As mentioned in the <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/users/abinit_help.html#averagepot">abinit_help</a> file, the
   absolute value of eigenenergies is not meaningful. Only differences of eigenenergies,
   as well as differences with the potential. <br>
   The difference is 0.35147 Hartree, that is 9.564 eV . <br>
