@@ -640,7 +640,7 @@ public class AbinitInput
                 Variable vard = allInputs.getVar(var);
                 if(vard == null)
                 {
-                    throw new InvalidInputFileException("Error in the dimensions in tmp_struct.yml");
+                    throw new InvalidInputFileException("Error in the dimensions in abinit_vars.yml");
                 }
                 ArrayList<Object> array = mapArray.get(var);
                 if(array != null)

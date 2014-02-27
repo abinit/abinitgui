@@ -2,12 +2,6 @@
 <head>
 <title>Tutorial #1</title>
 <link href="base-cachekey6829.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-.auto-style1 {
-	color: #DD0000;
-	font-size: large;
-}
-</style>
 </head>
 <body bgcolor="#ffffff">
 <hr>
@@ -82,11 +76,16 @@ http://www.gnu.org/copyleft/gpl.txt </a>.
 <h3>&nbsp;</h3>
 <p>
 <img alt="" height="768" src="jobs-annotated.png" width="1024"></p>
-
+<!--
 <p>If it is your first trial of the GUI, please read the GUI manual first (LINK).
 For this lesson, we suppose you have already configured a machine on which abinit is installed.<br>
-
-The first step is to create a simulation, click on the button "New Abinit simu" 
+-->
+<p>We suppose in this tutorial you were able to configure and install Abinit on 
+a machine.</p>
+<p>We also suppose you were able to specify the parameters of the machine in the &quot;Machines&quot; panel. 
+If it is not the case, ask for help ! </p>
+<p>Note for MAPR2451 students, we have done it for you !</p>
+<p>The first step is to create a simulation, click on the button "New Abinit simu" 
 (1).<br>
 Select the machine on which Abinit is compiled and installed in the list "Where to run 
 the simulation" (2).
@@ -94,8 +93,10 @@ Now you have access to different sections: input file, pseudopotentials and pre-
 
 As a starting point, click on the Browse button (3) next to the input field text and select tbase1_1.in file 
 (you can find it in ~abinit/tests/tutorial/Input/tbase1_1.in).<br>
-Now you can display the content (4) and edit the file (5).<p>
-<img alt="" height="361" src="pseudos-annotated.png" width="686"><p><br>
+Now you can display the content (4) and edit the file (5).</p>
+<p>
+<img alt="" height="361" src="pseudos-annotated.png" width="686"></p>
+<p><br>
 
 Afterwards, put "1" as ntypat (6) and select the pseudopotential for the hydrogen 
 atom: click on the &quot;Atom&quot; column (7), check the box &quot;LDA GTH&quot; 
@@ -127,7 +128,7 @@ should be able to compare your results with these reference files.
 Try to compare the downloaded output file with 
 ~abinit/tests/tutorial/Refs/tbase1_1.out to see if everything was correct. You 
 can use your preferred software to do that (diff on Unix-like systems, Notepad++ 
-on Windows, ...). Here is an example <span class="auto-style1">(TO BE UPDATED)</span>:</p>
+on Windows, ...). Here is an example:</p>
 <pre>
 2,3c2,3
 &lt; .Version 5.5.4  of ABINIT
@@ -380,8 +381,7 @@ in the paths of files. If you get something else, you should ask for help ! <br>
   one, using the input variables "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varbas.html#nband" target="kwimg">nband</a>".
   The input file ~abinit/tests/tutorial/Input/tbase1_2.in is an example of
   file that will do the job, while ~abinit/tests/tutorial/Refs/tbase1_2.out
-  is an example of output file. If you decide to use the ~abinit/tests/tutorial/Input/tbase1_2.in file,
-  do not forget to change the file names in the tbase1_x.files file ... </p>
+  is an example of output file. </p>
 <p>So, you run the code with your input file (this might take fifteen seconds or so on a PC at 3 GHz),
   examine the output file quickly
   (there are many repetition of sections, for the different datasets), and get
@@ -409,10 +409,10 @@ in the paths of files. If you get something else, you should ask for help ! <br>
     etotal20 -1.0899835224E+00
     etotal21 -1.0867972868E+00
 </pre>
-<p> You might try to <a href="lesson_base1/Plot1.jpg" target="helpsimg">plot</a>
+<p> You might try to <a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/tutorial/lesson_base1/Plot1.jpg" target="helpsimg">plot</a>
   these data. For this, you can use FlavioChart. You open a file with a text 
 editor, you create a two-column file. The first column will contain the acell 
-value and the second column will contain the etotal value. The drag and drop the 
+value and the second column will contain the etotal value. Then drag and drop the 
 file inside FlavioChart and you have the plot. The minimum of energy in the above list is clearly between dataset
   11 and 12, that is : </p>
 <pre>
@@ -435,8 +435,19 @@ The forces vanish also between 1.5 Bohr and
   of 1.522 Bohr . <br>
   Note that <i>the number of SCF cycles drops from 6 to 5 when the wavefunctions
   are read from the previous dataset.</i> </p>
+<p>At this stage, you can also try to visualize the unit cell of the different 
+input files. You only need to press the button &quot;Test/Analyze input file&quot; (Button 
+13 of the Main Frame panel).<p>
+<img height="450" src="analyze-annotated.png" width="1000"></p>
 
-<hr>
+<p>In the section (1), you can select the dataset you want to analyze. All the 
+input variables values are summarized in section (2). In section (3), you can 
+select the number of replicas you want to compute. Clicking on the button (4) 
+refreshes the JMol panel (5) containing the number of replicas you have 
+specified for the selected dataset. You should test your input file before 
+submitting large files in order to avoid human errors. While familiarizing with 
+the tutorials and Abinit in general, you can use this tool to compare the 
+datasets of the input files and check how multi-datasets work.<hr>
 
 <h3><b><a name="13"></a>1.3 Computation of the interatomic distance (method 2). </b></h3>
 
@@ -468,9 +479,7 @@ The forces vanish also between 1.5 Bohr and
   "<a href="http://www.abinit.org/documentation/helpfiles/for-v7.4/input_variables/varrlx.html#tolmxf" target="kwimg">tolmxf</a>".
   The input file ~abinit/tests/tutorial/Input/tbase1_3.in is an example of
   file that will do the job, while ~abinit/tests/tutorial/Refs/tbase1_3.out
-  is an example of output file. If you decide to use these files, do not forget
-  to change the file names in the tbase1_x.files"
-  file ... So, you run the code with your input file (a few seconds),
+  is an example of output file. So, you run the code with your input file (a few seconds),
   examine quietly this file (which
   is much smaller than the tbase1_2.out file), and get some significant output data gathered in the
   final echo of variables : </p>
@@ -517,8 +526,6 @@ Here, we will print this quantity.
 
 <p><b>1.4.b</b> The input file ~abinit/tests/tutorial/Input/tbase1_4.in is
   an example of input file for a run that will print a density.
-  If you decide to use this file,
-  do not forget to change the file names in tbase1_x.files.
   The run will take a few seconds. </p>
 <p>In order to obtain the DEN file, you can download it with the FTP client 
 included in the GUI.</p>
@@ -561,7 +568,7 @@ download it and edit it ...
   cuts in the density, and visualize the charge density contours.
 
 <p>In order to use it, you will need to use the SSH terminal since the tool is 
-not yet available in the Graphical Interface.<p>At the bottom of the main 
+not available in the Graphical Interface yet.<p>At the bottom of the main 
 interface, select the machine where Abinit is configured. Click on &quot;SSH2 Client&quot; 
 button in the main interface.<br>Now you are on the frontend of the remote 
 machine. In principle, it should be a Unix-like environment (otherwise, just 
@@ -582,10 +589,8 @@ configured, just type &quot;cut3d&quot;, to launch the post-processing tool.<p>R
 <br>For further treatment, you might choose to select another option than 6. In particular,
  if you have access to MATLAB, choose option 5. With minor modifications (set ngx=ngy=ngz to 30)
  you will be able to use the file dim.m present in ~abinit/doc/tutorial/lesson_base1 to visualize the
- 3-Dimensional isosurfaces. Another option might be to use the XCrysDen software,
- for which you need to use option 9.
-
-<hr>
+ 3-Dimensional isosurfaces. Another option might be to use the XCrysDen or VESTA software,
+ for which you need to use option 9.<hr>
 <h3><b><a name="15"></a>1.5. Computation of the atomisation energy.</b>
 </h3>
 <p><b>1.5.a</b>
@@ -622,8 +627,7 @@ molecule case (although the latter might not be so important).
 
 <p>The input file ~abinit/tests/tutorial/Input/tbase1_5.in is an example
   of file that will do the job, while ~abinit/tests/tutorial/Refs/tbase1_5.out
-  is an example of output file. If you decide to use the tbase1_5.in file, do not forget
-  to change the file names in the tbase1_x.files file. The run lasts a few seconds.
+  is an example of output file. The run lasts a few seconds.
 
 <p>You should read the output file, and note the tiny differences
 related with the spin-polarisation :
