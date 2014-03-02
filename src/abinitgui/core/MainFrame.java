@@ -71,14 +71,8 @@ import abinitgui.mdtb.ClustepDiag;
 import abinitgui.mdtb.TightBindingDiag;
 import java.awt.Color;
 import java.awt.Desktop;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -95,8 +89,9 @@ import abinitgui.projects.Machine;
 import abinitgui.projects.MachineDatabase;
 import abinitgui.projects.MachinePane;
 import abinitgui.projects.Project;
+import javax.swing.JFrame;
 
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends JFrame {
 
     private SSH ssh = null;
     private MyTableModel pspModel = null;
@@ -198,10 +193,10 @@ public class MainFrame extends javax.swing.JFrame {
         theoD.setTitle("..:: Theory (DFT) ::..");
         
         machineD = new MachineDialog(this, false);
-        machineD.setTitle(" Select machine !");
+        machineD.setTitle("Select machine!");
         
         jobD = new JobDialog(this, false);
-        jobD.setTitle(" New input dialog !");
+        jobD.setTitle("New input dialog!");
 
         //varsHelp = new VarsHelp();
         //varsHelp.setTitle("..:: Abinit variables help ::..");
@@ -605,7 +600,7 @@ public class MainFrame extends javax.swing.JFrame {
                                         .add(jLabel1)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                         .add(scriptName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 287, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                                .add(0, 0, Short.MAX_VALUE)))
+                                .add(0, 30, Short.MAX_VALUE)))
                         .add(12, 12, 12))
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)

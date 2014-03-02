@@ -29,4 +29,19 @@ dict:
         timeLimit: ''}
       status: 0
     status: 0
+  New simu: !abinitsimulation
+    inputFileName: ./test3.in
+    listPseudos:
+    - {PSPFileName: 2he.pspnc, PSPPath: ./PSP/LDA_TM.psps/02, PSPType: LDA_TM, name: Hellium,
+      symbol: He, typat: 0, znucl: 2}
+    name: New simu
+    remoteJob:
+      machineName: Manneback
+      script: !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+        inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false,
+        postProcessPart: '', preProcessPart: '', simName: simulation, system: SGE,
+        timeLimit: '23:59:59'}
+      status: 0
+    status: 0
+    usingExtInputFile: true
 
