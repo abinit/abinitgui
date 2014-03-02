@@ -121,9 +121,9 @@ public class MainFrame extends JFrame {
     private String ParaAbinit = "abinit";
     public String CharSet = "UTF-8";
     private static boolean autoTest;
-    public static String Version = "0.6";
+    public static String Version = "0.7";
     public static String SubVersion = "0.1";
-    public static String VerMonth = "Feb";
+    public static String VerMonth = "March";
     public static String VerYear = "2014";
     private String outputFile = "AbinitGUI.log";
     public static MainFrame mainFrame;

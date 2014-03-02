@@ -16,31 +16,94 @@ dict:
     status: 0
   TB simu: !!abinitgui.mdtb.TightBindingSimulationOld
     inputFileName: ./test3.in
-    l: 0
-    m: 0
+    l: 4
+    m: 4
     model: 1
     name: TB simu
-    nkpt: 0
+    nkpt: 20
     remoteJob:
       machineName: Green
-      script: !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: '',
-        inputPath: '', logPath: '', memoryMax: '', nbProcs: '1', parallel: false,
-        postProcessPart: '', preProcessPart: '', simName: simulation, system: Frontend,
-        timeLimit: ''}
+      script: !frontendscript {CDPart: cd ./MySims/Tight-Binding, MPIPath: mpirun,
+        abinitPath: bash run_TB.sh 4 4 1 0, email: '', inputPath: /dev/null, logPath: TB_simu.log,
+        memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
+        simName: simulation, system: Frontend, timeLimit: ''}
       status: 0
     status: 0
-  New simu: !abinitsimulation
-    inputFileName: ./test3.in
+  Tbase1_1: !abinitsimulation
+    inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_1.in
     listPseudos:
-    - {PSPFileName: 2he.pspnc, PSPPath: ./PSP/LDA_TM.psps/02, PSPType: LDA_TM, name: Hellium,
-      symbol: He, typat: 0, znucl: 2}
-    name: New simu
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
+      symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_1
     remoteJob:
-      machineName: Manneback
-      script: !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
-        inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false,
-        postProcessPart: '', preProcessPart: '', simName: simulation, system: SGE,
-        timeLimit: '23:59:59'}
+      machineName: Green
+      script: !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: abinit, email: yannick.gillet@uclouvain.be,
+        inputPath: /home/users/t/u/tuto05/MySims/tbase1_1.files, logPath: /home/users/t/u/tuto05/MySims/logfiles/tbase1_1.log,
+        memoryMax: '4000', nbProcs: '4', parallel: true, postProcessPart: '', preProcessPart: '',
+        simName: simulation, system: SGE, timeLimit: '00:15:00'}
+      status: 0
+    status: 0
+    usingExtInputFile: true
+  Tbase1_2: !abinitsimulation
+    inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_2.in
+    listPseudos:
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
+      symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_2
+    remoteJob:
+      machineName: Green
+      script: &id001 !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: abinit,
+        email: '', inputPath: /home/users/t/u/tuto05/MySims/tbase4_7.files, logPath: /home/users/t/u/tuto05/MySims/logfiles/tbase4_7.log,
+        memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
+        simName: simulation, system: Frontend, timeLimit: ''}
+      status: 0
+    status: 0
+    usingExtInputFile: true
+  Tbase1_3: !abinitsimulation
+    inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_3.in
+    listPseudos:
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
+      symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_3
+    remoteJob:
+      machineName: Green
+      script: *id001
+      status: 0
+    status: 0
+    usingExtInputFile: true
+  Tbase1_4: !abinitsimulation
+    inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_4.in
+    listPseudos:
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
+      symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_4
+    remoteJob:
+      machineName: Green
+      script: *id001
+      status: 0
+    status: 0
+    usingExtInputFile: true
+  Tbase1_5: !abinitsimulation
+    inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_5.in
+    listPseudos:
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
+      symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_5
+    remoteJob:
+      machineName: Green
+      script: *id001
+      status: 0
+    status: 0
+    usingExtInputFile: true
+  Others: !abinitsimulation
+    inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase4_8.in
+    listPseudos:
+    - {PSPFileName: 13al.981214.fhi, PSPPath: 'C:/Users/Yannick/Downloads/abinit-7.6.2/tests/Psps_for_tests',
+      PSPType: UserPSP, name: '', symbol: Al, typat: 0, znucl: 13}
+    name: Others
+    remoteJob:
+      machineName: Green
+      script: *id001
       status: 0
     status: 0
     usingExtInputFile: true
