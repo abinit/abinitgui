@@ -61,13 +61,30 @@ public class SLURMScript extends AbstractSubmissionScript {
 
     @Override
     public String toString() {
-        String fileContent = "#!/bin/bash" + "\n"
-                + "#SBATCH --ntasks=" + nbProcs + "\n"
-                + "#SBATCH --job-name=" + simName + "\n"
-                + "#SBATCH --mem-per-cpu=" + memoryMax + "\n"
-                + "#SBATCH --time=" + timeLimit + "\n"
+        String fileContent = "#!/bin/bash" + "\n";
+        if(nbProcs != null && !nbProcs.isEmpty())
+        {
+            fileContent += "#SBATCH --ntasks=" + nbProcs + "\n";
+        }
+        if(simName != null && !simName.isEmpty())
+        {
+            fileContent += "#SBATCH --job-name=" + simName + "\n";
+        }
+        if(memoryMax != null && !memoryMax.isEmpty())
+        {
+            fileContent += "#SBATCH --mem-per-cpu=" + memoryMax + "\n";
+        }
+        if(timeLimit != null && !timeLimit.isEmpty())
+        {
+            fileContent += "#SBATCH --time=" + timeLimit + "\n";
+        }
+        if(email != null && !email.isEmpty())
+        {
+            fileContent += "#SBATCH --mail-user=" + email + "\n";
+        }
+        
+        fileContent += ""
                 + "#SBATCH --cpus-per-task=1\n"
-                + "#SBATCH --mail-user=" + email + "\n"
                 + "#SBATCH --mail-type=ALL\n"
                 //+ "# ---------------------------" + "\n"
                 + "#export OMP_NUM_THREADS=1\n"

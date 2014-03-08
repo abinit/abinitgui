@@ -69,18 +69,40 @@ public class SGEScript extends AbstractSubmissionScript {
                 + "#$ -l nb=false" + "\n"
                 + "#" + "\n"
                 + "# Ask for pe=parrallel environment, snode or openmpi" + "\n"
-                + "# snode= same node, as the shared memory communication is the fastest" + "\n"
-                + "#$ -pe openmpi " + nbProcs + "\n"
-                + "# -pe snode8 8" + "\n"
-                + "\n"
+                + "# snode= same node, as the shared memory communication is the fastest" + "\n";
+        if(isParallel())
+        {
+            fileContent += 
+                    "#$ -pe openmpi " + nbProcs + "\n"
+                    + "# -pe snode8 8" + "\n"
+                    + "\n";
+        }
+        else
+        {
+            fileContent +=
+                    "#$ -pe openmpi 1 \n"
+                    + "\n";
+        }
+
+        fileContent += ""
                 + "# keep current working directory" + "\n"
                 + "#$ -cwd" + "\n"
                 + "\n"
                 + "#$ -o SGE_out-$JOB_ID.log" + "\n"
                 + "#$ -e SGE_err-$JOB_ID.log" + "\n"
                 + "\n"
-                + "# give a name to your job" + "\n"
-                + "#$ -N " + simName + "\n"
+                + "# give a name to your job" + "\n";
+        
+        if(simName != null && !simName.isEmpty())
+        {
+            fileContent += "#$ -N " + simName + "\n";
+        }
+        else
+        {
+            fileContent += "#$ -N simulation \n";
+        }
+        
+        fileContent += ""
                 + "\n"
                 + "# keep all the defined variables" + "\n"
                 + "#$ -V" + "\n"
@@ -93,15 +115,32 @@ public class SGEScript extends AbstractSubmissionScript {
                 + "\n"
                 + "# IMPORTANT: You need to specify the mem_free" + "\n"
                 + "# h_vmem can also be set but mf is mandatory!" + "\n"
-                + "# max 31G if hm=true and max 15G if hm=false" + "\n"
-                + "#$ -l mf=" + memoryMax + "\n"
+                + "# max 31G if hm=true and max 15G if hm=false" + "\n";
+        
+        if(memoryMax != null && !memoryMax.isEmpty())
+        {
+            fileContent += "#$ -l mf=" + memoryMax + "\n";
+        }
+        
+        fileContent += ""
                 + "\n"
-                + "# Specify the requested time" + "\n"
-                + "#$ -l h_rt=" + timeLimit + "\n"
+                + "# Specify the requested time" + "\n";
+        if(timeLimit != null && !timeLimit.isEmpty())
+        {
+            fileContent += "#$ -l h_rt=" + timeLimit + "\n";
+        }
+        
+        fileContent += ""
                 + "\n"
-                + "# To be informed by email (besa= begin,end,stop,abort)" + "\n"
-                + "#$ -M " + email + "\n"
-                + "#$ -m besa" + "\n"
+                + "# To be informed by email (besa= begin,end,stop,abort)" + "\n";
+        
+        if(email != null && !email.isEmpty())
+        {
+            fileContent += "#$ -M " + email + "\n"
+                + "#$ -m besa" + "\n";
+        }
+        
+        fileContent += ""
                 //+ "# ---------------------------" + "\n"
                 + "\n"
                 + preProcessPart
