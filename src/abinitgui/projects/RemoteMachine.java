@@ -136,7 +136,7 @@ public class RemoteMachine extends Machine {
             MainFrame.printOUT("Succes: " + retmsg.getCMD() + " => " +
                     Utils.removeEndl(retmsg.getRetMSG()) + ".");
         } else {
-            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+            MainFrame.printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
             MainFrame.printERR("Error: " +
                     Utils.removeEndl(retmsg.getRetMSG()) + " !");
         }
@@ -207,8 +207,7 @@ public class RemoteMachine extends Machine {
             MainFrame.printOUT("Succes: " + retmsg.getCMD() + " => " +
                     Utils.removeEndl(retmsg.getRetMSG()) + ".");
         } else {
-            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-            MainFrame.printERR("Error: " +
+            MainFrame.printERR("Error (Code = " + retmsg.getRetCode() + "): " +
                     Utils.removeEndl(retmsg.getRetMSG()) + " !");
         }
         return retmsg;
@@ -222,8 +221,7 @@ public class RemoteMachine extends Machine {
             MainFrame.printOUT("Succes: " + retmsg.getCMD() + " => " +
                     Utils.removeEndl(retmsg.getRetMSG()) + ".");
         } else {
-            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-            MainFrame.printERR("Error: " +
+            MainFrame.printERR("Error (Code = " + retmsg.getRetCode() + "): " +
                     Utils.removeEndl(retmsg.getRetMSG()) + " !");
         }
     }
@@ -237,8 +235,7 @@ public class RemoteMachine extends Machine {
             MainFrame.printOUT("Succes: " + retmsg.getCMD());
             return Utils.removeEndl(retmsg.getRetMSG());
         } else {
-            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-            MainFrame.printERR("Error: " +
+            MainFrame.printERR("Error (Code = " + retmsg.getRetCode() + "): " +
                     Utils.removeEndl(retmsg.getRetMSG()) + " !");
             return "";
         }
