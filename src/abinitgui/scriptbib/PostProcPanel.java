@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -26,9 +30,9 @@ public class PostProcPanel extends javax.swing.JPanel {
     
     
     private DefaultListModel scriptModel;
-    private ScriptBib scriptBibs;
-    private ScriptTableModel argsModel;
-    private ScriptTableModel outModel;
+    private final ScriptBib scriptBibs;
+    private final ScriptTableModel argsModel;
+    private final ScriptTableModel outModel;
     private Machine currentMachineForScript;
 
     /**
@@ -36,6 +40,75 @@ public class PostProcPanel extends javax.swing.JPanel {
      */
     public PostProcPanel() {
         initComponents();
+        scriptBibs = new ScriptBib();
+        outModel = new ScriptTableModel(scriptOutTable);
+        
+        scriptOutTable.setModel(outModel);
+        initTableHeader(scriptOutTable, new String[]{"Name", "Value"},
+                new Integer[]{null, null});
+        scriptOutTable.setDefaultRenderer(ScriptArgument.class,
+                new ScriptArgumentRenderer());
+        
+        argsModel = new ScriptTableModel(scriptArgTable);
+
+        scriptArgTable.setModel(argsModel);
+        initTableHeader(scriptArgTable, new String[]{"Name", "Value"},
+                new Integer[]{null, null});
+        scriptArgTable.setDefaultRenderer(ScriptArgument.class,
+                new ScriptArgumentRenderer());
+    }
+    
+    public void refresh() {
+
+        /**
+         * Script section *
+         */
+        
+        if(Utils.exists("listScripts.xml"))
+        {
+            scriptBibs.loadScriptsFromFile("listScripts.xml");
+        } else {
+            MainFrame.printERR("No file listScripts.xml in the directory: you won't"
+                    + " be able to use post-processing tools.");
+        }
+
+        scriptModel = new DefaultListModel();
+        scriptList.setModel(scriptModel);
+
+        showScripts();
+    }
+    
+    private void initTableHeader(JTable table, String header[], Integer headerWidths[]) {
+        TableColumnModel tcm = new DefaultTableColumnModel();
+        for (int i = 0; i < header.length; i++) {
+            TableColumn tc = new TableColumn(i);
+            tc.setHeaderValue(header[i]);
+            tc.setResizable(false);
+            if (headerWidths[i] != null) {
+                tc.setMinWidth(headerWidths[i]);
+                tc.setPreferredWidth(headerWidths[i]);
+                tc.setMaxWidth(headerWidths[i]);
+            }
+            tcm.addColumn(tc);
+        }
+        table.setColumnModel(tcm);
+    }
+    
+    
+    
+    public final void refreshMachines()
+    {        
+        Machine mymach2 = (Machine)(machineCombo1.getSelectedItem());
+        
+        DefaultComboBoxModel<Machine> model2 = new DefaultComboBoxModel<>();
+        
+        for(Machine mach : MainFrame.getMachineDatabase())
+        {
+            model2.addElement(mach);
+        }
+        
+        machineCombo1.setModel(model2);
+        machineCombo1.setSelectedItem(mymach2);
     }
     
     private void showScripts() {
@@ -193,57 +266,53 @@ public class PostProcPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scriptScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(editScripts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(reloadScripts, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(machineLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(154, 154, 154)
-                                .addComponent(machineCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(scriptName, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane1))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(scriptProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(launchScript, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(openOutput)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(30, 30, 30))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(machineLabel1)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(154, 154, 154)
+                                        .addComponent(machineCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(scriptName, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(scriptProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel6)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(launchScript, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(openOutput)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(30, 30, 30))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(scriptScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(editScripts)
-                        .addGap(3, 3, 3)
-                        .addComponent(reloadScripts))
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(machineLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(machineCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,7 +339,14 @@ public class PostProcPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(launchScript)
-                            .addComponent(openOutput))))
+                            .addComponent(openOutput)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(scriptScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editScripts)
+                        .addGap(3, 3, 3)
+                        .addComponent(reloadScripts)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -343,7 +419,7 @@ public class PostProcPanel extends javax.swing.JPanel {
                     path = ".";
                 }
 
-                mach.createTree(path);
+                MainFrame.getLocalExec().createTree(path);
 
                 int index = scriptList.getSelectedIndex();
 
@@ -366,7 +442,7 @@ public class PostProcPanel extends javax.swing.JPanel {
                 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
                 if (Utils.osName().startsWith("Windows") || Utils.osName().startsWith("MAC")) {
-                    MainFrame.printERR("Scripts are not yet supported for Windows platform");
+                    MainFrame.printERR("Scripts are not supported for Windows platform yet");
                     launchScript.setEnabled(true);
                     return;
                 }

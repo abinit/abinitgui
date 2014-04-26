@@ -89,6 +89,7 @@ import abinitgui.projects.Machine;
 import abinitgui.projects.MachineDatabase;
 import abinitgui.projects.MachinePane;
 import abinitgui.projects.Project;
+import abinitgui.scriptbib.PostProcPanel;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
@@ -122,18 +123,14 @@ public class MainFrame extends JFrame {
     public String CharSet = "UTF-8";
     private static boolean autoTest;
     public static String Version = "0.7";
-    public static String SubVersion = "0.1";
-    public static String VerMonth = "March";
+    public static String SubVersion = "0.2";
+    public static String VerMonth = "April";
     public static String VerYear = "2014";
     private String outputFile = "AbinitGUI.log";
     public static MainFrame mainFrame;
     public static boolean DEBUG = false;
     private ClustepDiag clustepDiag;
     private TightBindingDiag tightBindingDiag;
-    private DefaultListModel scriptModel;
-    private final ScriptBib scriptBibs;
-    private final ScriptTableModel argsModel;
-    private final ScriptTableModel outModel;
     private String curPath = "."; // to save current Path !
     private GUIEditor guiEditor;
     private AbinitInputVars abinitInputVars;
@@ -230,44 +227,6 @@ public class MainFrame extends JFrame {
 
         // ---------------------------------------------------------------------
 
-        /**
-         * Script section *
-         */
-
-        argsModel = new ScriptTableModel(scriptArgTable);
-        scriptArgTable.setModel(argsModel);
-        initTableHeader(scriptArgTable, new String[]{"Name", "Value"},
-                new Integer[]{null, null});
-        scriptArgTable.setDefaultRenderer(ScriptArgument.class,
-                new ScriptArgumentRenderer());
-
-
-        outModel = new ScriptTableModel(scriptOutTable);
-        scriptOutTable.setModel(outModel);
-        initTableHeader(scriptOutTable, new String[]{"Name", "Value"},
-                new Integer[]{null, null});
-        scriptOutTable.setDefaultRenderer(ScriptArgument.class,
-                new ScriptArgumentRenderer());
-
-        scriptBibs = new ScriptBib();
-        
-        if(Utils.exists("listScripts.xml"))
-        {
-            scriptBibs.loadScriptsFromFile("listScripts.xml");
-        } else {
-            printERR("No file listScripts.xml in the directory: you won't"
-                    + " be able to use post-processing tools.");
-        }
-
-        scriptModel = new DefaultListModel();
-        scriptList.setModel(scriptModel);
-
-        showScripts();
-
-        /**
-         * End of script section *
-         */
-
         guiEditor = new GUIEditor();
         allInputVars = new AllInputVars();
         abinitInputVars = new AbinitInputVars(allInputVars);
@@ -326,6 +285,8 @@ public class MainFrame extends JFrame {
         machinePane1.refresh();
         jobPanel1.refreshProject();
         jobPanel1.refreshMachines();
+        postProcPanel1.refresh();
+        postProcPanel1.refreshMachines();
         
         refreshMachines();
         
@@ -344,22 +305,16 @@ public class MainFrame extends JFrame {
         jobPanel1.refreshMachines();
         
         Machine mymach = (Machine)(machineCombo.getSelectedItem());
-        Machine mymach2 = (Machine)(machineCombo1.getSelectedItem());
         
         DefaultComboBoxModel<Machine> model = new DefaultComboBoxModel<>();
-        DefaultComboBoxModel<Machine> model2 = new DefaultComboBoxModel<>();
         
         for(Machine mach : machineDatabase)
         {
             model.addElement(mach);
-            model2.addElement(mach);
         }
         
         machineCombo.setModel(model);
         machineCombo.setSelectedItem(mymach);
-        
-        machineCombo1.setModel(model2);
-        machineCombo1.setSelectedItem(mymach2);
         
         jobD.refresh();
     }
@@ -412,29 +367,7 @@ public class MainFrame extends JFrame {
         mainTabbedPane = new javax.swing.JTabbedPane();
         machinePane1 = new abinitgui.projects.MachinePane();
         jobPanel1 = new abinitgui.projects.JobPanel();
-        postProcPanel = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        scriptScrollPane = new javax.swing.JScrollPane();
-        scriptList = new javax.swing.JList();
-        jLabel1 = new javax.swing.JLabel();
-        scriptName = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        scriptDescription = new javax.swing.JTextArea();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        scriptArgTable = new ScriptTable();
-        launchScript = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        scriptOutTable = new ScriptTable();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        scriptProgram = new javax.swing.JTextField();
-        openOutput = new javax.swing.JButton();
-        editScripts = new javax.swing.JButton();
-        reloadScripts = new javax.swing.JButton();
-        machineCombo1 = new javax.swing.JComboBox();
-        machineLabel1 = new javax.swing.JLabel();
+        postProcPanel1 = new abinitgui.scriptbib.PostProcPanel();
         connectionToggleButton = new javax.swing.JToggleButton();
         SSH2ClientButton = new javax.swing.JButton();
         SFTPButton = new javax.swing.JButton();
@@ -464,226 +397,7 @@ public class MainFrame extends JFrame {
         mainTabbedPane.setPreferredSize(new java.awt.Dimension(800, 650));
         mainTabbedPane.addTab("Machines", machinePane1);
         mainTabbedPane.addTab("Jobs", jobPanel1);
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Scripts Library", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray)); // NOI18N
-        jPanel1.setToolTipText("");
-
-        scriptList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        scriptList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                scriptListValueChanged(evt);
-            }
-        });
-        scriptScrollPane.setViewportView(scriptList);
-
-        jLabel1.setText("Name of the script :");
-
-        scriptName.setText("Name");
-
-        jLabel3.setText("Description : ");
-
-        scriptDescription.setEditable(false);
-        scriptDescription.setColumns(20);
-        scriptDescription.setLineWrap(true);
-        scriptDescription.setRows(5);
-        scriptDescription.setText("Description of the script");
-        scriptDescription.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(scriptDescription);
-
-        jLabel5.setText("Arguments :");
-
-        scriptArgTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane2.setViewportView(scriptArgTable);
-
-        launchScript.setText("Launch script !");
-        launchScript.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                launchScriptActionPerformed(evt);
-            }
-        });
-
-        scriptOutTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane3.setViewportView(scriptOutTable);
-
-        jLabel6.setText("Output files :");
-
-        jLabel9.setText("Program :");
-
-        scriptProgram.setEditable(false);
-        scriptProgram.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                scriptProgramActionPerformed(evt);
-            }
-        });
-
-        openOutput.setText("Open output files !");
-        openOutput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openOutputActionPerformed(evt);
-            }
-        });
-
-        editScripts.setText("Edit script");
-        editScripts.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editScriptsActionPerformed(evt);
-            }
-        });
-
-        reloadScripts.setText("Reload scripts");
-        reloadScripts.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reloadScriptsActionPerformed(evt);
-            }
-        });
-
-        machineCombo1.setModel(new DefaultComboBoxModel<Machine>());
-        machineCombo1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                machineCombo1ItemStateChanged(evt);
-            }
-        });
-        machineCombo1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                machineCombo1ActionPerformed(evt);
-            }
-        });
-
-        machineLabel1.setText("Select machine on which running the simulation :");
-
-        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(scriptScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 220, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                        .add(editScripts, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, reloadScripts, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 220, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(machineLabel1)
-                        .add(0, 0, Short.MAX_VALUE))
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel1Layout.createSequentialGroup()
-                                .add(jLabel3)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jScrollPane1))
-                            .add(jPanel1Layout.createSequentialGroup()
-                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jPanel1Layout.createSequentialGroup()
-                                        .add(154, 154, 154)
-                                        .add(machineCombo1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 135, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                    .add(jPanel1Layout.createSequentialGroup()
-                                        .add(jLabel1)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(scriptName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 287, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                                .add(0, 30, Short.MAX_VALUE)))
-                        .add(12, 12, 12))
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
-                            .add(jPanel1Layout.createSequentialGroup()
-                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jPanel1Layout.createSequentialGroup()
-                                        .add(jLabel9)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(scriptProgram, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 211, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                    .add(jLabel6)
-                                    .add(jPanel1Layout.createSequentialGroup()
-                                        .add(launchScript, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 191, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(openOutput)))
-                                .add(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .add(jLabel5)
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(scriptScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(editScripts)
-                        .add(3, 3, 3)
-                        .add(reloadScripts))
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(machineLabel1)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(machineCombo1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jLabel1)
-                            .add(scriptName))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel3)
-                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(4, 4, 4)
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jLabel9)
-                            .add(scriptProgram, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel5)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 194, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel6)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(launchScript)
-                    .add(openOutput))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        org.jdesktop.layout.GroupLayout postProcPanelLayout = new org.jdesktop.layout.GroupLayout(postProcPanel);
-        postProcPanel.setLayout(postProcPanelLayout);
-        postProcPanelLayout.setHorizontalGroup(
-            postProcPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(postProcPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        postProcPanelLayout.setVerticalGroup(
-            postProcPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(postProcPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        mainTabbedPane.addTab("Post-processing", postProcPanel);
+        mainTabbedPane.addTab("Post-processing", postProcPanel1);
 
         connectionToggleButton.setText("Connect");
         connectionToggleButton.addActionListener(new java.awt.event.ActionListener() {
@@ -987,298 +701,6 @@ public class MainFrame extends JFrame {
         jobD.refresh();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void reloadScriptsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadScriptsActionPerformed
-        scriptBibs.getList().clear();
-        scriptBibs.loadScriptsFromFile("listScripts.xml");
-        showScripts();
-    }//GEN-LAST:event_reloadScriptsActionPerformed
-
-    private void editScriptsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editScriptsActionPerformed
-        int idScript = scriptList.getSelectedIndex();
-
-        if (idScript == -1) {
-            printERR("Please select a script first!");
-        } else {
-            Script scr = scriptBibs.getList().get(idScript);
-
-            String inputFile = scr.fileName;
-
-            if (Utils.osName().startsWith("Windows")) {
-                Utils.unix2dos(new File(inputFile));
-            }
-            editFile(inputFile, true);
-        }
-    }//GEN-LAST:event_editScriptsActionPerformed
-
-    private void openOutputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openOutputActionPerformed
-
-        Machine mach = currentMachineForScript;
-        if(mach == null)
-        {
-            printERR("Please select a machine first");
-        }
-        
-        int index = scriptList.getSelectedIndex();
-        if (index < 0) {
-            return;
-        }
-
-        Script scr = scriptBibs.getList().get(index);
-        if (scr == null) {
-            return;
-        }
-
-        ArrayList<ScriptArgument> listOut = scr.listOutput;
-
-        String rootPath;
-        if(mach != null) {
-            rootPath = mach.getSimulationPath();
-        } else {
-            // TODO: error report
-            rootPath = "";
-        }
-
-        // Open files
-        for (int i = 0; i < listOut.size(); i++) {
-            String outFile = (String) scriptOutTable.getValueAt(i, 1);
-            //String outFileR = rootPath + "/" + folder + "/" + outFile;
-
-            File f = new File(rootPath);
-
-            if (!f.exists()) {
-                localExec.createTree(rootPath);
-                f = new File(rootPath);
-            }
-
-            String abs = "";
-            try {
-                abs = f.getCanonicalPath();
-            } catch (IOException ex) {
-                printERR("Unable to get output file canonical path");
-                return;
-            }
-
-            f = new File(outFile);
-
-            printOUT("Trying to open file : " + outFile);
-            if (f.exists()) {
-                try {
-                    if (Desktop.isDesktopSupported()) {
-                        if (Utils.osName().contains("Windows")) {
-                            if (outFile.endsWith(".txt") || outFile.endsWith(".dbs") || outFile.endsWith(".agr")
-                                || outFile.endsWith(".files") || outFile.endsWith(".in") || outFile.endsWith(".out")
-                                || outFile.endsWith(".sh")) {
-                                editFile(outFile, true);
-                            } else {
-                                Desktop.getDesktop().open(f);
-                            }
-                        } else {
-                            Desktop.getDesktop().open(f);
-                        }
-                    } else {
-                        printOUT("Not able to open the file with the default editor. Use basic editor instead.");
-                        editFile(outFile, true);
-                    }
-                } catch (IOException ex) {
-                    printOUT("Not able to open the file with the default editor. Use editor instead.");
-                    editFile(outFile, true);
-                }
-            } else {
-                printERR("Please execute the script before opening the output files.");
-            }
-
-        }
-    }//GEN-LAST:event_openOutputActionPerformed
-
-    private void scriptProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scriptProgramActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_scriptProgramActionPerformed
-
-    private void launchScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchScriptActionPerformed
-
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-
-                Machine mach = currentMachineForScript;
-                
-                if(mach == null)
-                {
-                    printERR("Please select a machine first");
-                    return;
-                }
-                
-                String rootPath = mach.getSimulationPath();
-
-                String folder = "scripts";
-
-                String path = mach.getSimulationPath();
-                if (path.equals("")) {
-                    path = ".";
-                }
-
-                createLocalTree(path);
-
-                int index = scriptList.getSelectedIndex();
-
-                if (index == -1) {
-                    printERR("Please select a script before running");
-                    return;
-                }
-
-                Script scr = scriptBibs.getList().get(index);
-
-                if (scr == null) {
-                    printERR("Please select a script before running");
-                    return;
-                }
-
-                String inputFile = scr.fileName;
-
-                String program = scr.program;
-
-                // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-                if (Utils.osName().startsWith("Windows") || Utils.osName().startsWith("MAC")) {
-                    printERR("Scripts are not yet supported for Windows platform");
-                    launchScript.setEnabled(true);
-                    return;
-                }
-
-                // ********************************************************************************************************************************
-
-                String cwd = "";
-
-                String CMD = "pwd";
-
-                RetMSG retmsg;
-
-                retmsg = localExec.sendCommand(CMD);
-                if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                    printOUT("PWD: " + retmsg.getRetMSG());
-                    cwd = Utils.removeEndl(retmsg.getRetMSG());
-                } else {
-                    printERR("Error: " + retmsg.getRetMSG() + " !");
-                }
-
-                String inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
-
-                // Test de l'existance de inputfile
-                if (!Utils.exists(inputFile)) {
-                    printERR("The file " + inputFile + " doesn't exist!");
-                    launchScript.setEnabled(true);
-                    return;
-                }
-
-                if (!inputFile.equals("")) {
-                    // Will do the computation in rootpath/folder
-                    String inputFileR = rootPath + "/" + folder + "/" + inputFileName;
-                    retmsg = localExec.sendCommand("cp "+inputFile+" "+inputFileR);
-                    if (retmsg.getRetCode() != RetMSG.SUCCES) {
-                        printERR("Error: " + retmsg.getRetMSG() + "!");
-                    }
-
-                    ArrayList<String> allCommand = new ArrayList<>();
-                    ArrayList<ScriptArgument> listArgs = scr.listArgs;
-                    allCommand.add(program);
-                    allCommand.add(inputFileR);
-
-                    String command = program + " " + inputFileR;
-
-                    for (int i = 0; i < listArgs.size(); i++) {
-                        String input = (String) scriptArgTable.getValueAt(i, 1);
-                        command = command + " --" + listArgs.get(i).name + " \'" + input + "\'";
-                        allCommand.add("--" + listArgs.get(i).name );
-                        allCommand.add(input);
-                    }
-
-                    System.out.println("CWD = "+cwd);
-
-                    ArrayList<ScriptArgument> listOut = scr.listOutput;
-
-                    for (int i = 0; i < listOut.size(); i++) {
-                        String outFile = (String) scriptOutTable.getValueAt(i, 1);
-                        //                        String outFileR = rootPath + "/" + folder + "/" + outFile;
-                        command = command + " --" + listOut.get(i).name + " \'" + outFile + "\'";
-                        allCommand.add("--" + listOut.get(i).name);
-                        allCommand.add(outFile);
-                    }
-
-                    String[] arrayCMD = allCommand.toArray(new String[0]);
-                    retmsg = localExec.sendCommand(arrayCMD);
-                    if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                        printOUT("Script output : \n"+retmsg.getRetMSG());
-                    } else {
-                        printERR("Error: " + retmsg.getRetMSG() + "!");
-                    }
-                    printDEB(command);
-
-                }
-
-            }
-        };
-
-        Thread t = new Thread(r);
-        t.start();
-    }//GEN-LAST:event_launchScriptActionPerformed
-
-    private void scriptListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_scriptListValueChanged
-        int index = scriptList.getSelectedIndex();
-        if (index < 0) {
-            scriptName.setText("Name");
-            scriptDescription.setText("Description of the script");
-            scriptProgram.setText("");
-            argsModel.resetScripts();
-            outModel.resetScripts();
-        } else {
-            Script scr = scriptBibs.getList().get(index);
-            if (scr == null) {
-                scriptName.setText("Name");
-                scriptDescription.setText("Description of the script");
-                scriptProgram.setText("");
-                argsModel.resetScripts();
-                outModel.resetScripts();
-                return;
-            }
-
-            scriptName.setText(scr.title);
-
-            scriptDescription.setText(scr.description.replace("\\n", "\n"));
-
-            scriptProgram.setText(scr.program);
-            argsModel.resetScripts();
-            outModel.resetScripts();
-
-            ArrayList<ScriptArgument> listArgs = scr.listArgs;
-
-            int nbArgs = listArgs.size();
-
-            for (int i = 0; i < nbArgs; i++) {
-                argsModel.addScript(listArgs.get(i));
-            }
-
-            ArrayList<ScriptArgument> outArgs = scr.listOutput;
-
-            int nbOut = outArgs.size();
-
-            for (int i = 0; i < nbOut; i++) {
-                outModel.addScript(outArgs.get(i));
-            }
-        }
-    }//GEN-LAST:event_scriptListValueChanged
-
-    private void machineCombo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_machineCombo1ItemStateChanged
-
-    }//GEN-LAST:event_machineCombo1ItemStateChanged
-
-    private void machineCombo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_machineCombo1ActionPerformed
-        Machine mach = (Machine)machineCombo1.getSelectedItem();
-        if(mach != null)
-        {
-            this.currentMachineForScript = mach;
-        }
-    }//GEN-LAST:event_machineCombo1ActionPerformed
-
     public static void localCommand(String CMD) /*throws CMDException*/ {
         RetMSG retmsg;
         retmsg = localExec.sendCommand(CMD);
@@ -1311,24 +733,6 @@ public class MainFrame extends JFrame {
             //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
             printERR("Error: " + Utils.removeEndl(retmsg.getRetMSG()) + "!");
         }
-    }
-
-    private void showScripts() {
-        scriptList.clearSelection();
-        scriptModel.clear();
-
-        ArrayList<Script> list = scriptBibs.getList();
-        int nbScripts = list.size();
-
-        String strName[] = new String[nbScripts];
-
-        for (int i = 0; i < nbScripts; i++) {
-            Script scr = list.get(i);
-
-            strName[i] = scr.title;
-        }
-
-        scriptList.setListData(strName);
     }
     
     public void createLocalTree(String path)
@@ -1389,46 +793,24 @@ public class MainFrame extends JFrame {
     javax.swing.JMenuItem aboutMenuItem;
     javax.swing.JMenuItem clearOutMSGMenuItem;
     javax.swing.JToggleButton connectionToggleButton;
-    javax.swing.JButton editScripts;
     javax.swing.JMenu fileMenu;
     javax.swing.JMenu helpMenu;
     javax.swing.ButtonGroup inputFilebuttonGroup;
-    javax.swing.JLabel jLabel1;
-    javax.swing.JLabel jLabel3;
-    javax.swing.JLabel jLabel5;
-    javax.swing.JLabel jLabel6;
-    javax.swing.JLabel jLabel9;
     javax.swing.JMenu jMenuClustepAndTB;
     javax.swing.JMenuItem jMenuItem1;
     javax.swing.JMenuItem jMenuItem3;
     javax.swing.JMenuItem jMenuItem4;
     javax.swing.JMenuItem jMenuItemClustep;
     javax.swing.JMenuItem jMenuItemTB;
-    javax.swing.JPanel jPanel1;
-    javax.swing.JScrollPane jScrollPane1;
-    javax.swing.JScrollPane jScrollPane2;
-    javax.swing.JScrollPane jScrollPane3;
     abinitgui.projects.JobPanel jobPanel1;
-    javax.swing.JButton launchScript;
     javax.swing.ButtonGroup lookAndFeelbuttonGroup;
     javax.swing.JComboBox machineCombo;
-    javax.swing.JComboBox machineCombo1;
     javax.swing.JLabel machineLabel;
-    javax.swing.JLabel machineLabel1;
     abinitgui.projects.MachinePane machinePane1;
     javax.swing.JMenuBar mainMenuBar;
     javax.swing.JTabbedPane mainTabbedPane;
-    javax.swing.JButton openOutput;
     javax.swing.JMenuItem outputMSGMenuItem;
-    javax.swing.JPanel postProcPanel;
-    javax.swing.JButton reloadScripts;
-    javax.swing.JTable scriptArgTable;
-    javax.swing.JTextArea scriptDescription;
-    javax.swing.JList scriptList;
-    javax.swing.JLabel scriptName;
-    javax.swing.JTable scriptOutTable;
-    javax.swing.JTextField scriptProgram;
-    javax.swing.JScrollPane scriptScrollPane;
+    abinitgui.scriptbib.PostProcPanel postProcPanel1;
     javax.swing.JMenu viewMenu;
     javax.swing.ButtonGroup whereIsAbinitbuttonGroup;
     // End of variables declaration//GEN-END:variables
