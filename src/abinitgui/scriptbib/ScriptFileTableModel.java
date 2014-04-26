@@ -91,7 +91,7 @@ public class ScriptFileTableModel extends AbstractTableModel {
             case 0:
                 return data.get(row);
             case 1:
-                return false;
+                return data.get(row).type.equals("REMOTEFILE");
             case 2:
                 return data.get(row).value;
             default:
@@ -106,21 +106,39 @@ public class ScriptFileTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        return col == 2;
+        return (col == 1 || col == 2);
     }
 
     @Override
     public void setValueAt(Object value, int row, int col) {
+        if(col == 1)
+        {
+            if(value instanceof Boolean)
+            {
+                boolean isRemote = (boolean)value;
+                if(isRemote)
+                {
+                    data.get(row).type = "REMOTEFILE";
+                }
+                else
+                {
+                    data.get(row).type = "FILE";
+                }
+            }
+        }
         switch(col)
         {
             case 0:
                 return; // Not possible to modify name
             case 1:
-                return; // Not possible to modify remote file now
+                // Not possible to modify remote file now
+                break;
             case 2:
                 data.get(row).value = (String)value;
+                break;
         }
         fireTableCellUpdated(row, col);
+        //fireTableStructureChanged();
     }
 
     public void setHeader(String[] header) {

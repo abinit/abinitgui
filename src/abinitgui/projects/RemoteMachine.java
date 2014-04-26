@@ -213,6 +213,23 @@ public class RemoteMachine extends Machine {
         return retmsg;
     }
     
+    
+    
+    @Override
+    public RetMSG sendCommand(String CMD[])
+    {
+        RetMSG retmsg;
+        retmsg = remoteExec.sendCommand(CMD);
+        if (retmsg.getRetCode() == RetMSG.SUCCES) {
+            MainFrame.printOUT("Succes: " + retmsg.getCMD() + " => " +
+                    Utils.removeEndl(retmsg.getRetMSG()) + ".");
+        } else {
+            MainFrame.printERR("Error (Code = " + retmsg.getRetCode() + "): " +
+                    Utils.removeEndl(retmsg.getRetMSG()) + " !");
+        }
+        return retmsg;
+    }
+    
     @Override
     public void getFile(String parameters) {
         RetMSG retmsg;

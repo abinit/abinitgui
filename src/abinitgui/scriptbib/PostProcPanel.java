@@ -305,7 +305,6 @@ public class PostProcPanel extends javax.swing.JPanel {
         jLabel7.setText("Input files :");
 
         remoteCB.setText("Run the script remotely ?");
-        remoteCB.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -471,17 +470,6 @@ public class PostProcPanel extends javax.swing.JPanel {
                     return;
                 }
 
-                String rootPath = mach.getSimulationPath();
-
-                String folder = "scripts";
-
-                String path = mach.getSimulationPath();
-                if (path.equals("")) {
-                    path = ".";
-                }
-
-                MainFrame.getLocalExec().createTree(path);
-
                 int index = scriptList.getSelectedIndex();
 
                 if (index == -1) {
@@ -495,17 +483,44 @@ public class PostProcPanel extends javax.swing.JPanel {
                     MainFrame.printERR("Please select a script before running");
                     return;
                 }
+                
+                String rootPath = mach.getSimulationPath();
 
+                String folder = "scripts";
+                
+                boolean isLocalMachine = (mach.getType() == Machine.LOCAL_MACHINE);
+                boolean isRemoteGatewayMachine = (mach.getType() == Machine.GATEWAY_MACHINE);
+                boolean isRemoteAbinitMachine = (mach.getType() == Machine.REMOTE_MACHINE);
+
+                boolean isRunRemote = scr.runRemote;
+                isRunRemote = remoteCB.isSelected();
+                
+                String path = mach.getSimulationPath();
+                if (path.equals("")) {
+                    path = ".";
+                }
+                
+                if(!mach.isConnected())
+                {
+                    MainFrame.printOUT("Trying to connect ...");
+                    mach.connection();
+                }
+                
+                mach.createTree(path);
+                if(isRunRemote && (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE))
+                {
+                    MainFrame.getLocalExec().createTree(path);
+                }
+                
                 String inputFile = scr.fileName;
 
                 String program = scr.program;
 
                 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-                if (Utils.osName().startsWith("Windows") || Utils.osName().startsWith("MAC")) {
+                if ((!isRunRemote || isLocalMachine) && Utils.osName().startsWith("Windows")) {
                     MainFrame.printERR("Scripts are not supported for Windows platform yet");
                     launchScript.setEnabled(true);
-                    return;
                 }
 
                 // ********************************************************************************************************************************
@@ -518,7 +533,15 @@ public class PostProcPanel extends javax.swing.JPanel {
 
                 RetMSG retmsg;
 
-                retmsg = localExec.sendCommand(CMD);
+                if(isRunRemote)
+                {
+                    retmsg = mach.sendCommand(CMD);
+                }
+                else
+                {
+                    retmsg = localExec.sendCommand(CMD);
+                }
+                
                 if (retmsg.getRetCode() == RetMSG.SUCCES) {
                     MainFrame.printOUT("PWD: " + retmsg.getRetMSG());
                     cwd = Utils.removeEndl(retmsg.getRetMSG());
@@ -538,10 +561,23 @@ public class PostProcPanel extends javax.swing.JPanel {
                 if (!inputFile.equals("")) {
                     // Will do the computation in rootpath/folder
                     String inputFileR = rootPath + "/" + folder + "/" + inputFileName;
-                    retmsg = localExec.sendCommand("cp "+inputFile+" "+inputFileR);
-                    if (retmsg.getRetCode() != RetMSG.SUCCES) {
-                        MainFrame.printERR("Error: " + retmsg.getRetMSG() + "!");
+                    // Copy script file
+                    if(isRunRemote)
+                    {
+                        mach.putFile(inputFile+" "+inputFileR);
+                        if((isRemoteAbinitMachine || isRemoteGatewayMachine) && Utils.osName().startsWith("Windows"))
+                        {
+                            mach.sendCommand("dos2unix " + inputFileR);
+                        }
                     }
+                    else
+                    {
+                        retmsg = localExec.sendCommand("cp "+inputFile+" "+inputFileR);
+                        if (retmsg.getRetCode() != RetMSG.SUCCES) {
+                            MainFrame.printERR("Error: " + retmsg.getRetMSG() + "!");
+                        }
+                    }
+                    
 
                     ArrayList<String> allCommand = new ArrayList<>();
                     ArrayList<ScriptArgument> listArgs = scr.listArgs;
@@ -552,9 +588,11 @@ public class PostProcPanel extends javax.swing.JPanel {
 
                     for (int i = 0; i < listArgs.size(); i++) {
                         String input = (String) scriptArgTable.getValueAt(i, 1);
-                        command = command + " --" + listArgs.get(i).name + " \'" + input + "\'";
                         allCommand.add("--" + listArgs.get(i).name );
+                        
+                        command = command + " --" + listArgs.get(i).name + " \'" + input + "\'";
                         allCommand.add(input);
+                        
                     }
 
                     System.out.println("CWD = "+cwd);
@@ -563,30 +601,126 @@ public class PostProcPanel extends javax.swing.JPanel {
 
                     for (int i = 0; i < listOut.size(); i++) {
                         String outFile = (String) scriptOutTable.getValueAt(i, 2);
-                        //                        String outFileR = rootPath + "/" + folder + "/" + outFile;
-                        command = command + " --" + listOut.get(i).name + " \'" + outFile + "\'";
+                        
+                        String outputFN = Utils.getLastToken(outFile.replace('\\', '/'), "/");
+                        
                         allCommand.add("--" + listOut.get(i).name);
-                        allCommand.add(outFile);
+                        String outFileR = rootPath + "/" + folder + "/" + outputFN;
+                        
+                        if(isRunRemote)
+                        {
+                            if((boolean)(scriptOutTable.getValueAt(i,1))) // Remote file
+                            {
+                                command = command + " --" + listOut.get(i).name + " \'" + outFile + "\'";
+                                allCommand.add(outFile);
+                            }
+                            else
+                            {
+                                command = command + " --" + listOut.get(i).name + " \'" + outFileR + "\'";
+                                allCommand.add(outFileR);
+                            }
+                        }
+                        else
+                        {
+                            if((boolean)(scriptOutTable.getValueAt(i,1))) // Remote file
+                            {
+                                command = command + " --" + listOut.get(i).name + " \'" + outFileR + "\'";
+                                allCommand.add(outFileR); // If remote file, we should produce it inside outFileR
+                            }
+                            else
+                            {
+                                command = command + " --" + listOut.get(i).name + " \'" + outFile + "\'";
+                                allCommand.add(outFile);
+                            }
+                        }
                     }
 
                     ArrayList<ScriptArgument> listIn = scr.listInput;
 
                     for (int i = 0; i < listIn.size(); i++) {
                         String inFile = (String) scriptInTable.getValueAt(i, 2);
-                        //                        String outFileR = rootPath + "/" + folder + "/" + outFile;
-                        command = command + " --" + listIn.get(i).name + " \'" + inFile + "\'";
+                        
+                        String inputFN = Utils.getLastToken(inFile.replace('\\', '/'), "/");
+                        String inFileR = rootPath + "/" + folder + "/" + inputFN;
                         allCommand.add("--" + listIn.get(i).name);
-                        allCommand.add(inFile);
+                        if(isRunRemote)
+                        {
+                            if( (boolean) scriptInTable.getValueAt(i,1) ) // Remote file, give directly correct name !
+                            {
+                                command = command + " --" + listIn.get(i).name + " \'" + inFile + "\'";
+                                allCommand.add(inFile); 
+                            }
+                            else
+                            {
+                                mach.putFile(inFile + " " + inFileR);
+                                command = command + " --" + listIn.get(i).name + " \'" + inFileR + "\'";
+                                allCommand.add(inFileR);
+                            }
+                        }
+                        else
+                        {
+                            if( (boolean) scriptInTable.getValueAt(i,1) ) // Remote file
+                            {
+                                mach.getFile(inFile+" "+inFileR);
+                                command = command + " --" + listIn.get(i).name + " \'" + inFileR + "\'";
+                                allCommand.add(inFileR);
+                            }
+                            else
+                            {
+                                command = command + " --" + listIn.get(i).name + " \'" + inFile + "\'";
+                                allCommand.add(inFile);
+                            }
+                        }
                     }
 
                     String[] arrayCMD = allCommand.toArray(new String[0]);
-                    retmsg = localExec.sendCommand(arrayCMD);
+                    if(isRunRemote)
+                    {
+                        retmsg = mach.sendCommand(command);
+                    }
+                    else
+                    {
+                        retmsg = localExec.sendCommand(arrayCMD);
+                    }
                     if (retmsg.getRetCode() == RetMSG.SUCCES) {
                         MainFrame.printOUT("Script output : \n"+retmsg.getRetMSG());
                     } else {
                         MainFrame.printERR("Error: " + retmsg.getRetMSG() + "!");
                     }
+                    
                     MainFrame.printDEB(command);
+                    
+                    for (int i = 0; i < listOut.size(); i++) {
+                        String outFile = (String) scriptOutTable.getValueAt(i, 2);
+                        
+                        String outputFN = Utils.getLastToken(outFile.replace('\\', '/'), "/");
+                        
+                        allCommand.add("--" + listOut.get(i).name);
+                        String outFileR = rootPath + "/" + folder + "/" + outputFN;
+                        if(isRunRemote)
+                        {
+                            if((boolean)scriptOutTable.getValueAt(i,1)) // Remote file
+                            {
+                                // Since remote, we don't want to get it back ! It is already good !
+                            }
+                            else
+                            {
+                                mach.getFile(outFileR + " " + outFile);
+                            }
+                        }
+                        else
+                        {
+                            if((boolean)scriptOutTable.getValueAt(i,1)) // Remote file
+                            {
+                                // Since remote, we want to send it to the cluster !
+                                mach.putFile(outFileR + " " + outFile);
+                            }
+                            else
+                            {
+                                // File is already there !
+                            }
+                        }
+                    }
 
                 }
 
@@ -629,11 +763,30 @@ public class PostProcPanel extends javax.swing.JPanel {
             // TODO: error report
             rootPath = "";
         }
+        
+        if(!mach.isConnected())
+        {
+            mach.connection();
+        }
+        
+        String folder = "scripts";
 
         // Open files
         for (int i = 0; i < listOut.size(); i++) {
             String outFile = (String) scriptOutTable.getValueAt(i, 2);
-            //String outFileR = rootPath + "/" + folder + "/" + outFile;
+            
+            String outputFN = Utils.getLastToken(outFile.replace('\\', '/'), "/");
+            String outFileR = rootPath + "/" + folder + "/" + outputFN;
+            
+            boolean isRemote = (boolean) scriptOutTable.getValueAt(i,1);
+            if(isRemote)
+            {
+                // Remote file
+                mach.getFile(outFile+" "+outFileR);
+                outFile = outFileR;
+            }
+            
+            // Now we have outFile locally
 
             File f = new File(rootPath);
 
@@ -651,7 +804,7 @@ public class PostProcPanel extends javax.swing.JPanel {
             }
 
             f = new File(outFile);
-
+            
             MainFrame.printOUT("Trying to open file : " + outFile);
             if (f.exists()) {
                 try {

@@ -132,6 +132,24 @@ public class LocalMachine extends Machine
         return retmsg;
     }
     
+    
+    @Override
+    public RetMSG sendCommand(String CMD[])
+    {
+        RetMSG retmsg;
+        retmsg = localExec.sendCommand(CMD);
+        if (retmsg.getRetCode() == RetMSG.SUCCES) {
+            MainFrame.printOUT("Succes: " + retmsg.getCMD() + " => " +
+                    Utils.removeEndl(retmsg.getRetMSG()) + ".");
+        } else {
+            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+            MainFrame.printERR("Error: " +
+                    Utils.removeEndl(retmsg.getRetMSG()) + " !");
+        }
+        
+        return retmsg;
+    }
+    
     @Override
     public MySSHTerm newSSHTerm()
     {

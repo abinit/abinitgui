@@ -2,12 +2,12 @@
   description: Creates a band structure from an ETSF-IO WFK file (accesswff 3 is mandatory in the input file)
   fileName: scriptsBib/bandstructure.py
   listArgs:
-  - {help: The fileName which will be read, name: inputFile, type: file, value: ./MySims/wholedata/test3/test3o_DS2_GSR.nc}
-  - {help: True to show the figure, name: show, type: boolean, value: 'True'}
-  - {help: The title of the graph, name: title, type: text, value: A sample title}
-  listInput: []
+  - {help: True to show the figure, name: show, type: BOOLEAN, value: 'True'}
+  - {help: The title of the graph, name: title, type: TEXT, value: A sample title}
+  listInput:
+  - {help: The fileName which will be read, name: inputFile, type: FILE, value: ./MySims/wholedata/test3/test3o_DS2_GSR.nc}
   listOutput:
-  - {help: The fileName which contains the plot, name: outputFile, type: file, value: bs.eps}
+  - {help: The fileName which contains the plot, name: outputFile, type: FILE, value: bs.eps}
   program: python
   runRemote: false
   title: Band structure (Abipy)
@@ -15,15 +15,15 @@
   description: Creates a density of states from an ETSF-IO WFK file (accesswff 3 is mandatory in the input file)
   fileName: scriptsBib/dos.py
   listArgs:
-  - {help: The fileName which will be read, name: inputFile, type: file, value: ./MySims/wholedata/test3/test3o_DS1_GSR.nc}
-  - {help: True to show the graph, name: show, type: boolean, value: 'True'}
-  - {help: The title of the graph, name: title, type: text, value: A sample title}
-  - {help: Method used to generate the dos, name: method, type: text, value: gaussian}
-  - {help: Defines the sampling of the energies, name: step, type: number, value: '0.2'}
-  - {help: Width of the gaussians, name: width, type: number, value: '0.3'}
-  listInput: []
+  - {help: True to show the graph, name: show, type: BOOLEAN, value: 'True'}
+  - {help: The title of the graph, name: title, type: TEXT, value: A sample title}
+  - {help: Method used to generate the dos, name: method, type: TEXT, value: gaussian}
+  - {help: Defines the sampling of the energies, name: step, type: NUMBER, value: '0.2'}
+  - {help: Width of the gaussians, name: width, type: NUMBER, value: '0.3'}
+  listInput:
+  - {help: The fileName which will be read, name: inputFile, type: FILE, value: ./MySims/wholedata/test3/test3o_DS1_GSR.nc}
   listOutput:
-  - {help: The fileName which contains the plot, name: outputFile, type: file, value: dos.eps}
+  - {help: The fileName which contains the plot, name: outputFile, type: FILE, value: dos.eps}
   program: python
   runRemote: false
   title: Density of States (Abipy)
@@ -31,19 +31,19 @@
   description: Creates a density of states and the band structure from two ETSF-IO WFK file  (accesswff 3 is mandatory in the input file)
   fileName: scriptsBib/band+dos.py
   listArgs:
-  - {help: The WFK file used to compute the DOS, name: inputDos, type: file, value: ./MySims/wholedata/test3/test3o_DS1_GSR.nc}
-  - {help: The WFK file used to compute the BS, name: inputBand, type: file, value: ./MySims/wholedata/test3/test3o_DS2_GSR.nc}
-  - {help: True to show the graphs, name: show, type: boolean, value: 'True'}
-  - {help: The title of the BS, name: titleBS, type: text, value: A sample title}
-  - {help: The title of the DOS, name: titleDOS, type: text, value: A sample title}
-  listInput: []
+  - {help: True to show the graphs, name: show, type: BOOLEAN, value: 'True'}
+  - {help: The title of the BS, name: titleBS, type: TEXT, value: A sample title}
+  - {help: The title of the DOS, name: titleDOS, type: TEXT, value: A sample title}
+  listInput:
+  - {help: The WFK file used to compute the DOS, name: inputDos, type: FILE, value: ./MySims/wholedata/test3/test3o_DS1_GSR.nc}
+  - {help: The WFK file used to compute the BS, name: inputBand, type: FILE, value: ./MySims/wholedata/test3/test3o_DS2_GSR.nc}
   listOutput:
-  - {help: The fileName which contains the plot of DOS, name: outputDos, type: file,
+  - {help: The fileName which contains the plot of DOS, name: outputDos, type: FILE,
     value: dos.eps}
-  - {help: The fileName which contains the plot of BS, name: outputBand, type: file,
+  - {help: The fileName which contains the plot of BS, name: outputBand, type: FILE,
     value: band.eps}
   - {help: The fileName which contains the plot of both simultaneously, name: outputBoth,
-    type: file, value: bs+dos.eps}
+    type: FILE, value: bs+dos.eps}
   program: python
   runRemote: false
   title: BS + DOS (Abipy)
@@ -51,11 +51,11 @@
   description: Reads the output file of a simulation to create an intermediate file (.dbs)
   fileName: scriptsBib/AbinitBandStructureMaker.py
   listArgs:
-  - {help: Abinit Output file, name: abinitoutput, type: INPUTFILE, value: ./MySims/output/test3.out}
   - {help: idtset to use, name: idtset, type: NUMBER, value: '2'}
-  listInput: []
+  listInput:
+  - {help: Abinit Output file, name: abinitoutput, type: FILE, value: ./MySims/output/test3.out}
   listOutput:
-  - {help: DBS Output, name: outputFile, type: OUTPUTFILE, value: test3.dbs}
+  - {help: DBS Output, name: outputFile, type: FILE, value: test3.dbs}
   program: python
   runRemote: false
   title: AbinitBandStructureMaker (#1)
@@ -63,13 +63,13 @@
   description: Uses the input dbs file to create an XMGrace file (.agr) and a picture (.eps)
   fileName: scriptsBib/AbinitBandStructureMaker.py
   listArgs:
-  - {help: DBS file, name: abinitoutput, type: INPUTFILE, value: ./test3.dbs}
   - {help: Set it to yes if you want xmgrace to be runned automatically, name: autolaunch,
     type: BOOLEAN, value: 'no'}
-  listInput: []
+  listInput:
+  - {help: DBS file, name: abinitoutput, type: FILE, value: ./test3.dbs}
   listOutput:
-  - {help: AGR output, name: outputFile, type: OUTPUTFILE, value: test3.agr}
-  - {help: IMG output, name: outputIMG, type: OUTPUTFILE, value: test3.png}
+  - {help: AGR output, name: outputFile, type: FILE, value: test3.agr}
+  - {help: IMG output, name: outputIMG, type: FILE, value: test3.png}
   program: python
   runRemote: false
   title: AbinitBandStructureMaker (#2)
@@ -79,10 +79,10 @@
   listArgs:
   - {help: help, name: varConv, type: TEXT, value: ecut}
   - {help: help, name: varOut, type: TEXT, value: etotal}
+  listInput:
   - {help: Input file you want to analyze, name: inputFile, type: REMOTEFILE, value: ./MySims/output/test2.out}
-  listInput: []
   listOutput:
-  - {help: Output file, name: outputFile, type: OUTPUTFILE, value: output.txt}
+  - {help: Output file, name: outputFile, type: FILE, value: output.txt}
   program: bash
   runRemote: false
   title: Get simple output

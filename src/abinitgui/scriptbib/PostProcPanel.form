@@ -334,7 +334,6 @@
     <Component class="javax.swing.JCheckBox" name="remoteCB">
       <Properties>
         <Property name="text" type="java.lang.String" value="Run the script remotely ?"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
   </SubComponents>

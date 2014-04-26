@@ -185,6 +185,8 @@ public abstract class Machine
     
     public abstract RetMSG sendCommand(String CMD);
     
+    public abstract RetMSG sendCommand(String CMD[]);
+    
     public abstract String getOutputFiles(String path);
     
     public void mkdir(String dir)
