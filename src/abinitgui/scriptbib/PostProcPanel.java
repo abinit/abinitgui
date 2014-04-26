@@ -31,8 +31,9 @@ public class PostProcPanel extends javax.swing.JPanel {
     
     private DefaultListModel scriptModel;
     private final ScriptBib scriptBibs;
-    private final ScriptTableModel argsModel;
-    private final ScriptTableModel outModel;
+    private final ScriptArgTableModel argsModel;
+    private final ScriptFileTableModel outModel;
+    private final ScriptFileTableModel inModel;
     private Machine currentMachineForScript;
 
     /**
@@ -41,15 +42,23 @@ public class PostProcPanel extends javax.swing.JPanel {
     public PostProcPanel() {
         initComponents();
         scriptBibs = new ScriptBib();
-        outModel = new ScriptTableModel(scriptOutTable);
+        outModel = new ScriptFileTableModel(scriptOutTable);
         
         scriptOutTable.setModel(outModel);
-        initTableHeader(scriptOutTable, new String[]{"Name", "Value"},
-                new Integer[]{null, null});
+        initTableHeader(scriptOutTable, new String[]{"Name", "Remote ?", "Value"},
+                new Integer[]{null, null, null});
         scriptOutTable.setDefaultRenderer(ScriptArgument.class,
                 new ScriptArgumentRenderer());
         
-        argsModel = new ScriptTableModel(scriptArgTable);
+        inModel = new ScriptFileTableModel(scriptInTable);
+        
+        scriptInTable.setModel(inModel);
+        initTableHeader(scriptInTable, new String[]{"Name", "Remote ?", "Value"},
+                new Integer[]{null, null, null});
+        scriptInTable.setDefaultRenderer(ScriptArgument.class,
+                new ScriptArgumentRenderer());
+        
+        argsModel = new ScriptArgTableModel(scriptArgTable);
 
         scriptArgTable.setModel(argsModel);
         initTableHeader(scriptArgTable, new String[]{"Name", "Value"},
@@ -64,11 +73,29 @@ public class PostProcPanel extends javax.swing.JPanel {
          * Script section *
          */
         
-        if(Utils.exists("listScripts.xml"))
+        if(Utils.exists("listScripts.yml"))
+        {
+            try{
+                scriptBibs.loadFromFile("listScripts.yml");
+            } catch(IOException e)
+            {
+                MainFrame.printERR("Error while IO listScripts.yml : "+e.getMessage());
+            }
+        } 
+        else if(Utils.exists("listScripts.xml"))
         {
             scriptBibs.loadScriptsFromFile("listScripts.xml");
-        } else {
-            MainFrame.printERR("No file listScripts.xml in the directory: you won't"
+            MainFrame.printOUT("creating listScripts.yml from your obsolete listScripts.xml");
+            try{
+                scriptBibs.saveToFile("listScripts.yml");
+                scriptBibs.loadFromFile("listScripts.yml");
+            } catch(IOException e)
+            {
+                MainFrame.printERR("Error while IO listScripts.yml : "+e.getMessage());
+            }
+        }
+        else {
+            MainFrame.printERR("No file listScripts.yml nor listScripts.xml in the directory: you won't"
                     + " be able to use post-processing tools.");
         }
 
@@ -147,10 +174,10 @@ public class PostProcPanel extends javax.swing.JPanel {
         scriptDescription = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        scriptArgTable = new ScriptTable();
+        scriptArgTable = new abinitgui.scriptbib.ScriptArgTable();
         launchScript = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        scriptOutTable = new ScriptTable();
+        scriptOutTable = new abinitgui.scriptbib.ScriptArgTable();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         scriptProgram = new javax.swing.JTextField();
@@ -159,6 +186,10 @@ public class PostProcPanel extends javax.swing.JPanel {
         reloadScripts = new javax.swing.JButton();
         machineCombo1 = new javax.swing.JComboBox();
         machineLabel1 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        scriptInTable = new abinitgui.scriptbib.ScriptArgTable();
+        jLabel7 = new javax.swing.JLabel();
+        remoteCB = new javax.swing.JCheckBox();
 
         scriptList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -259,7 +290,22 @@ public class PostProcPanel extends javax.swing.JPanel {
             }
         });
 
-        machineLabel1.setText("Select machine on which running the simulation :");
+        machineLabel1.setText("Select machine on which the simulation runs :");
+
+        scriptInTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane4.setViewportView(scriptInTable);
+
+        jLabel7.setText("Input files :");
+
+        remoteCB.setText("Run the script remotely ?");
+        remoteCB.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -274,49 +320,51 @@ public class PostProcPanel extends javax.swing.JPanel {
                         .addComponent(reloadScripts, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(scriptName, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(scriptProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(launchScript, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(openOutput))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(machineLabel1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(154, 154, 154)
-                                        .addComponent(machineCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(scriptName, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(scriptProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel6)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(launchScript, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(openOutput)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(30, 30, 30))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(remoteCB))
+                                .addGap(67, 67, 67)
+                                .addComponent(machineCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(machineLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(machineLabel1)
+                            .addComponent(machineCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(machineCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(remoteCB)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(scriptName))
@@ -329,9 +377,13 @@ public class PostProcPanel extends javax.swing.JPanel {
                             .addComponent(jLabel9)
                             .addComponent(scriptProgram, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addGap(5, 5, 5)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -341,7 +393,6 @@ public class PostProcPanel extends javax.swing.JPanel {
                             .addComponent(launchScript)
                             .addComponent(openOutput)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(scriptScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editScripts)
@@ -371,12 +422,22 @@ public class PostProcPanel extends javax.swing.JPanel {
             }
 
             scriptName.setText(scr.title);
+            remoteCB.setSelected(scr.runRemote);
 
             scriptDescription.setText(scr.description.replace("\\n", "\n"));
 
             scriptProgram.setText(scr.program);
             argsModel.resetScripts();
             outModel.resetScripts();
+            inModel.resetScripts();
+            
+            ArrayList<ScriptArgument> inArgs = scr.listInput;
+
+            int nbIn = inArgs.size();
+
+            for (int i = 0; i < nbIn; i++) {
+                inModel.addScript(inArgs.get(i));
+            }
 
             ArrayList<ScriptArgument> listArgs = scr.listArgs;
 
@@ -501,11 +562,21 @@ public class PostProcPanel extends javax.swing.JPanel {
                     ArrayList<ScriptArgument> listOut = scr.listOutput;
 
                     for (int i = 0; i < listOut.size(); i++) {
-                        String outFile = (String) scriptOutTable.getValueAt(i, 1);
+                        String outFile = (String) scriptOutTable.getValueAt(i, 2);
                         //                        String outFileR = rootPath + "/" + folder + "/" + outFile;
                         command = command + " --" + listOut.get(i).name + " \'" + outFile + "\'";
                         allCommand.add("--" + listOut.get(i).name);
                         allCommand.add(outFile);
+                    }
+
+                    ArrayList<ScriptArgument> listIn = scr.listInput;
+
+                    for (int i = 0; i < listIn.size(); i++) {
+                        String inFile = (String) scriptInTable.getValueAt(i, 2);
+                        //                        String outFileR = rootPath + "/" + folder + "/" + outFile;
+                        command = command + " --" + listIn.get(i).name + " \'" + inFile + "\'";
+                        allCommand.add("--" + listIn.get(i).name);
+                        allCommand.add(inFile);
                     }
 
                     String[] arrayCMD = allCommand.toArray(new String[0]);
@@ -536,6 +607,7 @@ public class PostProcPanel extends javax.swing.JPanel {
         if(mach == null)
         {
             MainFrame.printERR("Please select a machine first");
+            return;
         }
 
         int index = scriptList.getSelectedIndex();
@@ -560,7 +632,7 @@ public class PostProcPanel extends javax.swing.JPanel {
 
         // Open files
         for (int i = 0; i < listOut.size(); i++) {
-            String outFile = (String) scriptOutTable.getValueAt(i, 1);
+            String outFile = (String) scriptOutTable.getValueAt(i, 2);
             //String outFileR = rootPath + "/" + folder + "/" + outFile;
 
             File f = new File(rootPath);
@@ -652,17 +724,21 @@ public class PostProcPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton launchScript;
     private javax.swing.JComboBox machineCombo1;
     private javax.swing.JLabel machineLabel1;
     private javax.swing.JButton openOutput;
     private javax.swing.JButton reloadScripts;
+    private javax.swing.JCheckBox remoteCB;
     private javax.swing.JTable scriptArgTable;
     private javax.swing.JTextArea scriptDescription;
+    private javax.swing.JTable scriptInTable;
     private javax.swing.JList scriptList;
     private javax.swing.JLabel scriptName;
     private javax.swing.JTable scriptOutTable;

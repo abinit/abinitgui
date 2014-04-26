@@ -57,24 +57,14 @@ public class Script {
     public String title;
     public String description;
     public String program;
+    public boolean runRemote;
     
     public Script()
     {
         listArgs = new ArrayList<>();
         listOutput = new ArrayList<>();
         listInput = new ArrayList<>();
-    }
-    
-    /**
-     * This launches the script on the remote server
-     * STEP 1 : copy to the remote server
-     * STEP 2 : launch remotely
-     * STEP 3 : get results back
-     * @return True if the computation was successful (To be modified)
-     */
-    public boolean run()
-    {   
-        return false;
+        runRemote = false;
     }
 
     void setFileName(String fileName) 
@@ -95,6 +85,11 @@ public class Script {
     void setProgram(String program)
     {
         this.program = program;
+    }
+    
+    void setRunRemote(boolean runRemote)
+    {
+        this.runRemote = runRemote;
     }
 
     void addArgs(ScriptArgument arg) 

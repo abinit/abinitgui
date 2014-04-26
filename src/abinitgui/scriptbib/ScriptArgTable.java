@@ -58,7 +58,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
-public class ScriptTable extends JTable
+public class ScriptArgTable extends JTable
 {
     private String curPath = ".";
     
@@ -166,7 +166,7 @@ public class ScriptTable extends JTable
             String currPath = currDir.getAbsolutePath();
             String basePath = currPath.replace("\\", "/").replace(".", "");
             
-            int returnVal = fc.showOpenDialog(ScriptTable.this);
+            int returnVal = fc.showOpenDialog(ScriptArgTable.this);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();

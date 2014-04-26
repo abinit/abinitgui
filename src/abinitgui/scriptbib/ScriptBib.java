@@ -46,12 +46,23 @@ For more information on the Abinit Project, please see
 
 package abinitgui.scriptbib;
 
+import abinitgui.core.MainFrame;
 import abinitgui.core.XMLConfigReader;
+import abinitgui.projects.Machine;
+import abinitgui.projects.ProjectConstructor;
+import abinitgui.projects.ProjectRepresenter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
 public class ScriptBib {
 
@@ -59,6 +70,42 @@ public class ScriptBib {
 
     public ScriptBib() {
         listOfScripts = new ArrayList<>();
+    }
+    
+    public void loadFromFile(String fileName) throws IOException {
+        try{
+            Yaml yaml = new Yaml(new ScriptConstructor());
+            Object data = yaml.load(new FileReader(fileName));
+            this.listOfScripts = (ArrayList<Script>) data;
+        } catch(RuntimeException e)
+        {
+            throw new IOException(e.getMessage());
+        }
+    }
+
+    public void saveToFile(String fileName) throws IOException {
+
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        options.setIndent(4);
+        options.setPrettyFlow(true);
+        Yaml yaml = new Yaml(new ProjectRepresenter(), new DumperOptions());
+
+        String txt = yaml.dump(this.listOfScripts);
+        System.out.println(txt);
+
+        PrintWriter pw;
+        pw = new PrintWriter(new FileWriter(fileName));
+        if (pw.checkError()) {
+            MainFrame.printERR("Error while writing.");
+        }
+
+        pw.println(txt);
+
+        if (pw.checkError()) {
+            MainFrame.printERR("Error while writing.");
+        }
+        pw.close();
     }
 
     /**

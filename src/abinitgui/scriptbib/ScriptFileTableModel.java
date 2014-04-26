@@ -53,13 +53,13 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-public class ScriptTableModel extends AbstractTableModel {
+public class ScriptFileTableModel extends AbstractTableModel {
 
     private String[] columnNames = null;
     private ArrayList<ScriptArgument> data;
     private JTable table = null;
 
-    public ScriptTableModel(JTable table) {
+    public ScriptFileTableModel(JTable table) {
         super();
         this.table = table;
         data = new ArrayList<>();
@@ -70,7 +70,7 @@ public class ScriptTableModel extends AbstractTableModel {
         if (getRowCount() == 0) {
             return 0;
         } else {
-            return 2;
+            return 3;
         }
     }
 
@@ -91,6 +91,8 @@ public class ScriptTableModel extends AbstractTableModel {
             case 0:
                 return data.get(row);
             case 1:
+                return false;
+            case 2:
                 return data.get(row).value;
             default:
                 return null;
@@ -104,7 +106,7 @@ public class ScriptTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        return col == 1;
+        return col == 2;
     }
 
     @Override
@@ -114,6 +116,8 @@ public class ScriptTableModel extends AbstractTableModel {
             case 0:
                 return; // Not possible to modify name
             case 1:
+                return; // Not possible to modify remote file now
+            case 2:
                 data.get(row).value = (String)value;
         }
         fireTableCellUpdated(row, col);
