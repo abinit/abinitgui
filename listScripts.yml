@@ -86,4 +86,13 @@
   program: bash
   runRemote: false
   title: Get simple output
+- !!abinitgui.scriptbib.Script
+  description: Launch APPA post-processing tool for molecular dynamics
+  fileName: scriptsBib/appa.py
+  listArgs: []
+  listInput: []
+  listOutput: []
+  program: python
+  runRemote: false
+  title: APPA
 
