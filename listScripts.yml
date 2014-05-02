@@ -87,7 +87,7 @@
   runRemote: false
   title: Get simple output
 - !!abinitgui.scriptbib.Script
-  description: Launch APPA post-processing tool for molecular dynamics
+  description: Launch APPA post-processing tool for molecular dynamics\nPlease check that appa package is in your PYTHONPATH and that all requirements are fulfilled !
   fileName: scriptsBib/appa.py
   listArgs: []
   listInput: []
