@@ -509,6 +509,11 @@ public class PostProcPanel extends javax.swing.JPanel {
                     MainFrame.printOUT("Trying to connect ...");
                     mach.connection();
                 }
+                if(!mach.isConnected())
+                {
+                    MainFrame.printERR("Error while connecting to the machine !");
+                    return;
+                }
                 
                 mach.createTree(path);
                 if((mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE))
