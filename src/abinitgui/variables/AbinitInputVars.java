@@ -73,24 +73,31 @@ public class AbinitInputVars extends JFrame {
         
         namePane.setEditable(false);
         namePane.setEditorKit(new HTMLEditorKit());
+        namePane.addHyperlinkListener(new HyperlinkListen());
         
         sectionPane.setEditable(false);
         sectionPane.setEditorKit(new HTMLEditorKit());
+        sectionPane.addHyperlinkListener(new HyperlinkListen());
         
         categoryPane.setEditable(false);
         categoryPane.setEditorKit(new HTMLEditorKit());
+        categoryPane.addHyperlinkListener(new HyperlinkListen());
         
         defaultValPane.setEditable(false);
         defaultValPane.setEditorKit(new HTMLEditorKit());
+        defaultValPane.addHyperlinkListener(new HyperlinkListen());
         
         typePane.setEditable(false);
         typePane.setEditorKit(new HTMLEditorKit());
+        typePane.addHyperlinkListener(new HyperlinkListen());
         
         mnemoPane.setEditable(false);
         mnemoPane.setEditorKit(new HTMLEditorKit());
+        mnemoPane.addHyperlinkListener(new HyperlinkListen());
         
         dimensionsPane.setEditable(false);
         dimensionsPane.setEditorKit(new HTMLEditorKit());
+        dimensionsPane.addHyperlinkListener(new HyperlinkListen());
         
         showInputVars();
         

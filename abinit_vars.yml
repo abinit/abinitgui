@@ -74,6 +74,32 @@
     varname: acell
     vartype: real
 - !variable
+    category: ''
+    defaultval: 0
+    definition: 'ADiabatic Path-Integral Molecular Dynamics '
+    dimensions: null
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: varrlx
+    text: <p>To be documented
+    varname: adpimd
+    vartype: integer
+- !variable
+    category: ''
+    defaultval: 1
+    definition: 'ADiabatic Path-Integral Molecular Dynamics : GAMMA factor '
+    dimensions: null
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: varrlx
+    text: <p>To be documented
+    varname: adpimd_gamma
+    vartype: real
+- !variable
     category: ' '
     defaultval: null
     definition: ALGorithm for generating ALCHemical pseudopotentials
@@ -114,23 +140,24 @@
     section: varrlx
     text: <p>Gives the masses in atomic mass units for each kindof atom in cell. These
         masses are used in performingmolecular dynamical atomic motion if[[ionmov]]=1,
-        6, 7 or 8.Note that one may set all masses to 1 for certain casesin which
-        merely structural relaxation is desired and notactual molecular dynamics.<p>sing
-        1986 recommended values, 1 atomic mass unit =1.6605402e-27 kg.In this unit
-        the mass of Carbon 12 is exactly 12.<p>A database of atomic masses is provided,
-        givingdefault values.Note that the default database uses mixed isotope masses
-        (for Carbonthe natural occurence of Carbon 13 is taken into account).The values
-        are those recommended by the commission on Atomic WeightsandIsotopic Abundances,
-        Inorganic Chemistry Division, IUPAC, in<i>Pure Appl. Chem.</i> <b>60</b>,
-        841 (1988).For Tc, Pm, Po to Ac, Pa and beyond U,none of the isotopes has
-        a half-life greater than 3.0d10 years, andthe values provided in the database
-        do not come from that source.<p>For alchemical pseudoatoms, the masses of
-        the constituentsatoms are mixed, according to the alchemical miwingcoefficients
-        [[mixalch]]<p> In most cases, the use of <b>amu</b>will be as a static (non-evolving)
-        variable. However, the possibility to havedifferent values of <b>amu</b> for
-        different images has been coded. A population ofcells with different atomic
-        characteristics can thus be considered,and can be made to evolve, e.g. with
-        a genetic algorithm (not coded in v7.0.0 though).
+        6, 7 or 8.They are also used in phonon calculations, in the diagonalization
+        of the dynamical matrix.Note that one may set all masses to 1 for certain
+        casesin which merely structural relaxation is desired and notactual molecular
+        dynamics.<p>Using 1986 recommended values, 1 atomic mass unit =1.6605402e-27
+        kg.In this unit the mass of Carbon 12 is exactly 12.<p>A database of atomic
+        masses is provided, givingdefault values.Note that the default database uses
+        mixed isotope masses (for Carbonthe natural occurence of Carbon 13 is taken
+        into account).The values are those recommended by the commission on Atomic
+        WeightsandIsotopic Abundances, Inorganic Chemistry Division, IUPAC, in<i>Pure
+        Appl. Chem.</i> <b>60</b>, 841 (1988).For Tc, Pm, Po to Ac, Pa and beyond
+        U,none of the isotopes has a half-life greater than 3.0d10 years, andthe values
+        provided in the database do not come from that source.<p>For alchemical pseudoatoms,
+        the masses of the constituentsatoms are mixed, according to the alchemical
+        miwingcoefficients [[mixalch]]<p> In most cases, the use of <b>amu</b>will
+        be as a static (non-evolving) variable. However, the possibility to havedifferent
+        values of <b>amu</b> for different images has been coded. A population ofcells
+        with different atomic characteristics can thus be considered,and can be made
+        to evolve, e.g. with a genetic algorithm (not coded in v7.0.0 though).
     varname: amu
     vartype: real
 - !variable
@@ -200,32 +227,35 @@
         file).Given a total number of processors, ABINIT can find a suitable distribution
         that fill (when possible)all the differents levels of parallelization. ABINIT
         can also determine optimal parameters forthe use of parallel Linear Algebra
-        routines (using Scalapack or Cuda, at present, v7.2).<br>The different values
-        for <b>autoparal</b> are:<ul><li><b>0:</b> The number of processors per parallelization
-        level is determined by mean ofa simple (but relatively efficient) heuristic.
-        A scaling factor is attributed to each leveland an simple speedup factor is
-        computed. The selected parameters are those giving the best speedup factor.<br>Possibly
-        concerned parameters: [[npimage]], [[npkpt]],[[npspinor]], [[npfft]],[[npband]],
-        [[bandpp]].</li><li><b>1:</b> The number of processors per parallelization
-        level is first determined by mean ofa simple (but relatively efficient) heuristic
-        (see 0 above). Then the code perfoms a seriesof small benchmarks using the
-        scheme applied for the LOBPCG algorithm(see: [[wfoptalg]]=4 or 14). The parallel
-        distribution is thenchanged according to the benchmarks.<br>Possibly concerned
-        parameters: [[npimage]], [[npkpt]],[[npspinor]], [[npfft]],[[npband]], [[bandpp]].</li><li><b>2:</b>Same
-        as <b>autoparal</b>=0, plus automatic determination of Linear Algebra routines
+        routines (using Scalapack or Cuda, at present).<br>The different values for
+        <b>autoparal</b> are:<ul><li><b>0:</b> The <b>autoparal</b> feature is deactivated.
+        For ground-state  abd response function calculations,ABINIT can only activate
+        automatically the parallelism over spins and k-points.</li><li><b>1:</b> The
+        number of processors per parallelization level is determined by mean ofa simple
+        (but relatively efficient) heuristic. A scaling factor is attributed to each
+        leveland an simple speedup factor is computed. The selected parameters are
+        those giving the best speedup factor.<br>Possibly concerned parameters: [[npimage]],
+        [[npkpt]],[[npspinor]], [[npfft]],[[npband]], [[bandpp]].</li><li><b>2:</b>
+        The number of processors per parallelization level is first determined by
+        mean ofa simple (but relatively efficient) heuristic (see 1 above). Then the
+        code perfoms a seriesof small benchmarks using the scheme applied for the
+        LOBPCG algorithm(see: [[wfoptalg]]=4 or 14). The parallel distribution is
+        thenchanged according to the benchmarks.<br>Possibly concerned parameters:
+        [[npimage]], [[npkpt]],[[npspinor]], [[npfft]],[[npband]], [[bandpp]].</li><li><b>3:</b>Same
+        as <b>autoparal</b>=1, plus automatic determination of Linear Algebra routines
         parameters.<br>In addition, the code perfoms a series of small benchmarks
         using the Linear Algebra routines(ScaLapack or Cuda-GPU). The parameters used
         to optimize Linear Algebra work distributionare then changed according to
         the benchmarks.<br>Possibly concerned parameters (in addition to those modified
-        for <b>autoparal</b>=0):[[use_slk]], [[np_slk]],[[gpu_linalg_limit]]</li><li><b>3:</b>
-        combination of <b>autoparal</b>=1 and <b>autoparal</b>=2.</li></ul>Note that
-        <b>autoparal</b>=0 can be used on every set of processors; <b>autoparal</b>>0
-        should be used on a sufficiently large number of MPI process.<br>Also note
-        that <b>autoparal</b> can be used simultaneously with[[paral_kgb]]<0; in this
-        case, ABINIT performsan optimization of process distribution for each total
-        number of processors from 2to -[[paral_kgb]]. A weight is associated toeach
-        distribution and the higher this weight is the better the distribution is.
-        After havingprinted out the weights, the code stops.'
+        for <b>autoparal</b>=1):[[use_slk]], [[np_slk]],[[gpu_linalg_limit]]</li><li><b>4:</b>
+        combination of <b>autoparal</b>=2 and <b>autoparal</b>=3.</li></ul>Note that
+        <b>autoparal</b>=1 can be used on every set of processors; <b>autoparal</b>
+        &gt; 1 should be used on a sufficiently large number of MPI process.<br>Also
+        note that <b>autoparal</b> can be used simultaneously with[[max_ncpus]]; in
+        this case, ABINIT performsan optimization of process distribution for each
+        total number of processors from 2to [[max_ncpus]].A weight is associated to
+        each distribution and the higher this weight is the better the distribution
+        is.After having printed out the weights, the code stops.'
     varname: autoparal
     vartype: integer
 - !variable
@@ -721,10 +751,9 @@
     text: <p>Only relevant if [[optdriver]]=99, that is, Bethe-Salpeter calculations.<p>bs_freq_mesh(1)
         defines the first frequency for the calculation of the macroscopic dielectric
         function.bs_freq_mesh(2) gives the last frequency for the calculation of the
-        macroscopic dielectric function.If zero, bs_omegae is automatically calculated
-        inside the code such that the frequency mesh covers the entire set of e-h
-        transitions.bs_freq_mesh(3) gives the step of the linear mesh used for evaluating
-        the macroscopic dielectric function.
+        macroscopic dielectric function.If zero, bs_freq_mesh(2) is set automatically
+        to MAX(resonant_energy) + 10%.bs_freq_mesh(3) gives the step of the linear
+        mesh used for evaluating the macroscopic dielectric function.
     varname: bs_freq_mesh
     vartype: real
 - !variable
@@ -798,7 +827,8 @@
     category: 'BS  '
     defaultval: 0
     definition: Bethe-Salpeter Lowest Occupied BAND
-    dimensions: null
+    dimensions:
+    - nsppol
     errordefault: ''
     errordimensions: ''
     errortype: ''
@@ -806,8 +836,9 @@
     section: vargw
     text: <p>Only relevant if [[optdriver]]=99, that is, Bethe-Salpeter calculations.<p>This
         variable defines the index of the lowest occupied band used for the construction
-        of the electron-hole basis setAn additional cutoff energy can be applied by
-        means of the bs_eh_window input variable.
+        of the electron-hole basis set.For spin polarized calculations, one must provide
+        two separated indices for spin up and spin down.An additional cutoff energy
+        can be applied by means of the bs_eh_window input variable.
     varname: bs_loband
     vartype: integer
 - !variable
@@ -1107,6 +1138,25 @@
         with the <b>mrgscr</b> utility.</p><p><br>Note that this does <b>NOT</b>have
         to be used in conjunction with [[gw_frqre_tangrid]].
     varname: cd_subset_freq
+    vartype: integer
+- !variable
+    category: '<a href="../users/abinit_help.html#develop">DEVELOP</a> '
+    defaultval: null
+    definition: Type of Conjugate Gradient used for Fock exact exchange
+    dimensions: null
+    errordefault: 0 if [[usefock]] &lt;=0, and 2 [[usefock]] &lt;=1. [error reading
+        default]
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: vardev
+    text: '<p>Gives how is calculated Fock exact exchange contribution in the conjugate
+        gradient,in the SCF case.<br>The Default value is 0 when [[usefock]] &lt;=0.Default
+        value is 2 when [[usefock]] &lt;=1 and corresponds to calculate the Fockexact
+        exchange contribution each time in the conjugate gradient. The value 1 corresponds
+        to calculate the Fockexact exchange contribution only for the initial guess
+        (not for the gradient direction) in the conjugate gradient '
+    varname: cgtyphf
     vartype: integer
 - !variable
     category: ' '
@@ -1619,13 +1669,13 @@
     category: ''
     defaultval: null
     definition: 'initial Density MATrix for PAW+U '
-    errordimensions: ''
-    errordefault: -10(not defined) [error reading default]
     dimensions: 
         - '2*max([[lpawu]])+1'
         - '2*max([[lpawu]])+1'
         - 'max([[nsppol]])'
         - '[[nspinor]]'
+    errordefault: -10(not defined) [error reading default]
+    errordimensions: ''
     errortype: ''
     range: null
     section: varpaw
@@ -1801,7 +1851,8 @@
         where it stopped.<ul><li> 0=&gt;  Occupations are written but never read.<li>
         1=&gt;  Occupations are read from I_DMFTOCCND, where I is the root for input
         files.<li> 2=&gt;  Occupations are read from O_DMFTOCCND, where O is the root
-        for output files.</ul>
+        for output files.</ul>An alternative and more simple way to restart a DFT+DMFT
+        calculation is to use the density file (obtained with [[prtden]]=1or [[prtden]]=-1)
     varname: dmft_read_occnd
     vartype: integer
 - !variable
@@ -1829,12 +1880,18 @@
     range: null
     section: vardev
     text: '<p><br> Choice of solver for the Impurity model.<ul><li> 1=&gt; LDA+U self-energy
-        is used (for testing purpose)<li> 2=&gt; Hubbard one solver.<li> 5=&gt; Continuous
-        Time Quantum Monte Carlo solver CT-Hyb (Hybridization expansion) in the density
-        density representation and without Spin Orbit Coupling.</ul><br> WARNING:
-        CT-QMC should be used for correlated metals. Even of correlated (Mott) insulators,
-        QMC is expected to be much more precise: Hubbard one is an approximation !<br>
-        See the usefull variables for CT-QMC solver :[[dmftctqmc_check]],[[dmftctqmc_correl]],[[dmftctqmc_gmove]],[[dmftctqmc_grnns]],[[dmftctqmc_meas]],[[dmftctqmc_mrka]],[[dmftctqmc_mov]],[[dmftctqmc_order]],[[dmftqmc_l]],[[dmftqmc_n]],[[dmftqmc_therm]],'
+        is used (for testing purpose)<li> 2=&gt; Hubbard one solver. The Hubbard one
+        solver is an approximation which gives a rough description of correlated Mott
+        insulators. It should not be used for metals.<li> 5=&gt; Continuous Time Quantum
+        Monte Carlo (CTQMC) solver CT-Hyb (Hybridization expansion as published in<a
+        href="http://journals.aps.org/prl/abstract/10.1103/PhysRevLett.97.076405">
+        Phys. Rev. Lett 97, 076405, (2006)</a>) in the density density representation
+        and without Spin Orbit Coupling.CTQMC calculations are much more time consuming
+        that Hubbard I calculations. Nevertheless, the calculation if fully parallelised.</ul><br>
+        WARNING: CT-QMC should be used for correlated metals. Even if correlated (Mott)
+        insulators, QMC is expected to be much more precise: Hubbard one is an approximation
+        !<br> See the usefull variables for CT-QMC solver :[[dmftctqmc_check]],[[dmftctqmc_correl]],[[dmftctqmc_gmove]],[[dmftctqmc_grnns]],[[dmftctqmc_meas]],[[dmftctqmc_mrka]],[[dmftctqmc_mov]],[[dmftctqmc_order]],[[dmftqmc_l]],[[dmftqmc_n]],<a
+        href="vardev.html#dmftqmc_therm">dmftqmc_seed</a>,[[dmftqmc_therm]]'
     varname: dmft_solv
     vartype: real
 - !variable
@@ -1847,7 +1904,8 @@
     errortype: ''
     range: null
     section: vardev
-    text: <p><br> Set to 1 only if in cubic symetric and use dmft on t2g orbitals.
+    text: <p><br> Can be set to 1 only if in cubic symetric. It enable to carry a
+        DFT+DMFT calculations only on t2g orbitals.
     varname: dmft_t2g
     vartype: integer
 - !variable
@@ -2070,6 +2128,22 @@
     text: <p><br> Number of Monte Carlo sweeps. Should be at least 10^6.
     varname: dmftqmc_n
     vartype: 'double precision  '
+- !variable
+    category: '<a href="../users/abinit_help.html#develop">DEVELOP</a>  '
+    defaultval: '[[jdtset]]'
+    definition: 'Dynamical Mean Fied Theory: Quantum Monte Carlo seed '
+    dimensions: null
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: vardev
+    text: '<p><br> Seed to initilize the random number generator.<br> Should not be
+        relevant except for testing purpose.<br> NOTE : In the CT-QMC ([[dmft_solv]]=5)
+        is used on many CPUs, each CPU initilizes its random number generator with
+        dmftqmc_seed+rank where rank is the rank of the cpu in the MPI communicator.'
+    varname: dmftqmc_seed
+    vartype: integer
 - !variable
     category: '<a href="../users/abinit_help.html#develop">DEVELOP</a>  '
     defaultval: 1000
@@ -2601,16 +2675,11 @@
         fourwf.f),as well as whenapplied to densities and potentials (routine fourdp.f).Presently,
         it is the concatenation of three digits,labelled (A), (B) and (C).<br><br>The
         first digit (A) is to be chosen among 1, 2, 3 and 4 :<ul><li> 1=&gt; use FFT
-        routines written by S. Goedecker.</li><li> 2=&gt; use machine-dependent FFT
-        algorithm, taken from the vendorlibrary, if it exists and if it has been implemented.The
-        bare <b>fftalg</b>=200 has little chance to befaster than <b>fftalg</b>=112,but
-        it might be tried. Implementing librarysubroutines with <b>fftalg</b>/=200
-        has not yet been done.Currently implemented library subroutines (<b>fftalg</b>=200)are:<ul><li>      on
-        HP, z3dfft from Veclib; </li><li>      on DEC Alpha, zfft_3d from DXML;</li><li>      on
-        NEC, ZFC3FB from ASL lib;</li><li>      on SGI, zfft3d from complib.sgimath</li></ul></li><li>3=&gt;
-        use serial or multi-threaded FFTW fortran routines (<a href="http://www.fftw.org">http://www.fftw.org</a>).Currently
-        implemented with <b>fftalg</b>=300.</li><li> 4=&gt; use FFT routines written
-        by S. Goedecker, 2002 version, that willbe suited for MPI and OpenMP parallelism.</li></ul>The
+        routines written by S. Goedecker.</li><li> 2=&gt; not available anymore<li>
+        3=&gt; use serial or multi-threaded FFTW3 fortran routines (<a href="http://www.fftw.org">http://www.fftw.org</a>).Currently
+        implemented with <b>fftalg</b>=312.</li><li> 4=&gt; use FFT routines written
+        by S. Goedecker, 2002 version, that willbe suited for MPI and OpenMP parallelism.</li><li>5=&gt;
+        use serial or multi-threaded MKL routinesCurrently implemented with <b>fftalg</b>=512.</li></ul>The
         second digit (B) is related to fourdp.f :<ul><li> 0=&gt; only use Complex-to-complex
         FFT</li><li> 1=&gt; real-to-complex is also allowed (only coded for A==1)</li></ul>The
         third digit (C) is related to fourwf.f :<ul><li> 0=&gt; no use of zero padding
@@ -2978,13 +3047,15 @@
     errortype: ''
     range: null
     section: varfil
-    text: '<p>Relevant only when [[optdriver]]=5.Indicate the files from which first-order
-        densities must be obtained,in multi-dataset mode (in single dataset mode,
-        use<a href="varfil.html#irdden">ird1den</a>).<br>NOTE : a negative value of
-        a "get" variable indicates the number of datasets to go backwards;it is not
-        the number to be subtracted from the current dataset to find the proper dataset.As
-        an example : <pre>ndtset 3   jdtset 1 2 4  getXXX -1</pre> refers to dataset
-        2 when dataset 4 is initialized.'
+    text: '<p>Relevant only for non self consistent RF calculations (e.g. to get electron
+        phonon matrix elements)or for non linear RF calculations (to get mixed higher
+        order derivatives you need several perturbeddensities and wave functions).Indicate
+        the files from which first-order densities must be obtained,in multi-dataset
+        mode (in single dataset mode, use<a href="varfil.html#irdden">ird1den</a>).<br>NOTE
+        : a negative value of a "get" variable indicates the number of datasets to
+        go backwards;it is not the number to be subtracted from the current dataset
+        to find the proper dataset.As an example : <pre>ndtset 3   jdtset 1 2 4  getXXX
+        -1</pre> refers to dataset 2 when dataset 4 is initialized.'
     varname: get1den
     vartype: integer
 - !variable
@@ -3920,6 +3991,40 @@
         are evaluated for each direction specified by <b>gw_qlwl</b>.<p>
     varname: gw_qlwl
     vartype: real
+- !variable
+    category: '<a href="../users/abinit_help.html#gw">GW</a> '
+    defaultval: 0
+    definition: GW Policy for K-point and Bands selection
+    dimensions: null
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: vargw
+    text: <p>Only relevant if [[optdriver]]=4, that is sigma calculations.<p><b>gw_qprange</b>
+        is active only when [[nkptgw]] is equal to zero (default value).This variable
+        simplifies the specification of the list of kpoints and of the bands to be
+        usedfor the computation of the quasi-particle corrections.The possible values
+        are:<ul><li>0    => Compute the QP corrections only for the fundamental and
+        the optical gap</li><li>+num => Compute the QP corrections for all the k-points
+        in the irreducible zone.and include `num` bands above and below the Fermi
+        level. </li><li>-num => Compute the QP corrections for all the k-points in
+        the irreducible zone.Include all occupied states and `num` empty states.</li></ul>The
+        default value is 0 and is very handy for one-shot calculations.It is important
+        to strees, however, that the position of the optical/fundamental gaps is deduced
+        from the energies computedon the k-mesh used for the WFK file. Therefore the
+        computed gaps might differ from the correct ones that can only beobtained
+        with an appropriate sampling of the irreducible zone.Positive values are useful
+        if we don't know the position of the GW HOMO, LOMO and we want to investigatethe
+        effect of the GW corrections on the states close to the gapNegative values
+        are usually used for self-consistent calculationsNote that, in the case of
+        self-consistency or symsigma=1, the code might change the bands rangeso that
+        all the degenerate states are included.Note also that [[kptgw]], and <a href=vargw.html#bdgw">bdgw</a>
+        are ignored when this options is used.If you want to select manually the list
+        of k-points and bands, you haveto provide the three variables [[nkptgw]],
+        [[kptgw]], and <a href=vargw.html#bdgw">bdgw</a>.
+    varname: gw_qprange
+    vartype: integer
 - !variable
     category: '<a href="../users/abinit_help.html#gw">GW</a>  '
     defaultval: null
@@ -5366,10 +5471,10 @@
         6264 (1998)</li><li>17=> GGA, HTCH120 of A.D. Boese, N.L. Doltsinis, N.C.
         Handy, and M. Sprik, J. Chem. Phys 112, 1670 (1998) - The usual HCTH functional.</li><li>18=>
         (NOT AVAILABLE : used internally for GGA BLYP pseudopotentials fromM. Krack,
-        see Theor. Chem. Acc. 114, 145 (2005),available from the <a href="http://cvs.berlios.de/cgi-bin/viewcvs.cgi/cp2k/potentials/Goedecker/abinit/blyp/">CP2K
+        see Theor. Chem. Acc. 114, 145 (2005),available from the <a href="https://github.com/cp2k/cp2k/tree/master/potentials/Goedecker/abinit/blyp">CP2K
         repository</a>- use the LibXC instead, with <b>ixc</b>=-106131.</li><li>19=>
         (NOT AVAILABLE : used internally for GGA BP86 pseudopotentials fromM. Krack,
-        see Theor. Chem. Acc. 114, 145 (2005),available from the <a href="http://cvs.berlios.de/cgi-bin/viewcvs.cgi/cp2k/potentials/Goedecker/abinit/bp/">CP2K
+        see Theor. Chem. Acc. 114, 145 (2005),available from the <a href="https://github.com/cp2k/cp2k/tree/master/potentials/Goedecker/abinit/bp">CP2K
         repository</a>- use the LibXC instead, with <b>ixc</b>=-106132.</li></ul><ul><li>20=>
         Fermi-Amaldi xc ( -1/N Hartree energy, where N is thenumber of electrons per
         cell ; G=0 is not takeninto account however), for TDDFT tests.No spin-pol.
@@ -5382,8 +5487,11 @@
         Phys 112, 1670 (1998).</li><li>27=> GGA, HTCH407 of A.D. Boese, and N.C. Handy,
         J. Chem. Phys 114, 5497 (2001).</li><li>28=> (NOT AVAILABLE : used internally
         for GGA OLYP pseudopotentials fromM. Krack, see Theor. Chem. Acc. 114, 145
-        (2005),available from the <a href="http://cvs.berlios.de/cgi-bin/viewcvs.cgi/cp2k/potentials/Goedecker/abinit/blyp/">CP2K
-        repository</a>- use the LibXC instead, with <b>ixc</b>=-110131.</li></ul><p><b>
+        (2005),available from the <a href="https://github.com/cp2k/cp2k/tree/master/potentials/Goedecker/abinit/olyp">CP2K
+        repository</a>- use the LibXC instead, with <b>ixc</b>=-110131.</li></ul><ul><li>40=>
+        Hartree-Fock </li><li>41=> PBE0, J.P. Perdew, M. Ernzerhof and K. Burke, J.
+        Chem. Phys. 105, 9982 (1996)</li><li>42=> PBE0-1/3, C.A. Guido, E. Bremond,
+        C. Adamo and P. Cortona, J. Chem. Phys. 138, 021104 (2013) </li></ul><p><b>
         ETSF Lib XC functionals</b><p>Note that you must compile ABINIT with the LibXC
         plug-in in order to be able to access these functionals.<br>The LibXC functionals
         are accessed by <b>negative values</b> of <b>ixc</b>.The LibXC contains functional
@@ -6399,9 +6507,10 @@
     errortype: ''
     range: null
     section: varpar
-    text: <p>If [[autoparal]] != 0 and <b>max_ncpus</b> is greater than 0,ABINIT analyzes
-        the efficiency of the process distribution for each possible number of processorsfrom
-        2to <b>max_ncpus</b>.After having printed out the efficiency, the code stops.
+    text: <p>If [[autoparal]] &gt; 1 and <b>max_ncpus</b> is greater than 0,ABINIT
+        analyzes the efficiency of the process distribution for each possible number
+        of processorsfrom 2 to <b>max_ncpus</b>.After having printed out the efficiency,
+        the code stops.
     varname: max_ncpus
     vartype: integer
 - !variable
@@ -6562,30 +6671,6 @@
         be constrained with a maximum allowed step size for each image; see [[mep_mxstep]].
         This is by default the case of the Nudged Elastic Band ([[imgmov]]=5).'
     varname: mep_solver
-    vartype: integer
-- !variable
-    category: ' '
-    defaultval: null
-    definition: 'Maximum number of FFt grids in MEMory '
-    dimensions: null
-    errordefault: 1, i.ean in-core solution. [error reading default]
-    errordimensions: ''
-    errortype: ''
-    range: null
-    section: varfil
-    text: '<p>Governs the choice of number ofFFT arrays that will be kept permanently
-        in core memory.<br>The allowed values are 0, in which case maximal useis made
-        of disk space, saving core memory at the expense ofexecution time (not much,
-        usually),or 1, in which case everything is kept in core memory.<br>More detailed
-        explanations : if <b>mffmem</b>==0, some arraysof size <br>double precision
-        :: xx(nfft,[[nsppol]]) <br>will be savedon disk when the wavefunctions are
-        optimized or whenthe Hartree and xc potential is computed (which can requiresome
-        sizeable memory space also).<br>The number of these arrays is<br> 5 if [[iscf]]==1,<br>
-        3 if [[iscf]]==2 or 12,<br> 4 if [[iscf]]==3 or 3,<br> 6 if [[iscf]]==4 or
-        14,<br> 10 if [[iscf]]==5,<br> (2+2*[[npulayit]]) if [[iscf]]==7 or 17.<br>The
-        saving of memory can be appreciable especially when [[iscf]]==5, 7 ,17 and
-        [[nsppol]]=2.'
-    varname: mffmem
     vartype: integer
 - !variable
     category: '<a href="../users/abinit_help.html#internal">INTERNAL</a> '
@@ -6981,6 +7066,20 @@
         to generate the _KSSfile (see [[kssform]])the relevant number of bands is
         given by [[nbandkss]].'
     varname: nband
+    vartype: integer
+- !variable
+    category: ' '
+    defaultval: null
+    definition: Number of BANDs for Fock exact exchange
+    dimensions: null
+    errordefault: the estimated number of occupied states. [error reading default]
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: varbas
+    text: <p>Gives the maximum number of occupied bands with which Fock exact exchange
+        is being computed for the wavefunctions.
+    varname: nbandhf
     vartype: integer
 - !variable
     category: ' '
@@ -7658,6 +7757,21 @@
     vartype: integer
 - !variable
     category: ' '
+    defaultval: null
+    definition: Number of K - Points for Fock exact exchange
+    dimensions: null
+    errordefault: the total number of k-point in the full Brillouin zone [error reading
+        default]
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: varbas
+    text: <p><b>nkpthf</b> gives the number of k points used to sample the full Brillouin
+        zone for the Fock exact exchange contribution.
+    varname: nkpthf
+    vartype: integer
+- !variable
+    category: ' '
     defaultval: 4
     definition: 'Number of LINE minimisations '
     dimensions: null
@@ -7724,9 +7838,10 @@
     errortype: ''
     range: null
     section: varrlx
-    text: <p>Give the number of oscillators in the Martyna et al.chain of oscillators
-        thermostats (when [[ionmov]]=13).The mass of these oscillators is given by
-        qmass (similar to <ahref="varrlx.html#noseinert">noseinert</a>)&nbsp;
+    text: <p>Gives the number of thermostats in the Martyna et al. chain of oscillators
+        thermostats. The thermostat chains can be used either to perform Molecular
+        Dynamics (MD) ([[ionmov]]=13) or to perform Path Integral Molecular Dynamics
+        (PIMD) ([[imgmov]]=13). <br>The mass of these thermostats is given by <ahref="varrlx.html#qmass">qmass</a>.  <br>
     varname: nnos
     vartype: integer
 - !variable
@@ -7746,6 +7861,23 @@
         wavefunctions have 2 non-self consistent loops,and the next ones to have only
         1 non-self consistent loop. '
     varname: nnsclo
+    vartype: integer
+- !variable
+    category: '<a href="../users/abinit_help.html#develop">DEVELOP</a> '
+    defaultval: null
+    definition: Number of Non-Self Consistent LOops for Fock exact exchange
+    dimensions: null
+    errordefault: 0 if [[usefock]] &lt;=0, and 1 if [[usefock]] &lt;=1. [error reading
+        default]
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: vardev
+    text: '<p>Gives the maximum number of loops with non-self-consistent occupied
+        states used to calculate Fock exact exchange,in the SCF case.<br>The Default
+        value is 0 when [[usefock]] &lt;=0.Default value is 1 when [[usefock]] &lt;=1
+        and correspond to update occupiedwavefunctions at each self-consistent loop. '
+    varname: nnsclohf
     vartype: integer
 - !variable
     category: '<a href="../users/abinit_help.html#geometry_builder">GEOMETRY BUILDER</a>,
@@ -7949,6 +8081,25 @@
     vartype: integer
 - !variable
     category: ''
+    defaultval: 1
+    definition: 'Number of Processors for Fock exact exchange '
+    dimensions: null
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: varpar
+    text: '<p>Relevant only for the k-point/fock parallelisation(option [[paral_kgb]]
+        input variable).<br> <b>nphf</b> gives the number of processors amongwhich
+        the work load over the occupied states level is shared.<b>nphf</b> and [[npkpt]]
+        are combined to give the total numberof processors (nproc) working on the
+        parallelisation.<br><p>Note : <b>nphf</b> should be a divisor or equal to
+        the number of k-point/number of bands forexact exchange ([[nkpthf]]*[[nbandhf]])in
+        order to have the better load-balancing and efficiency.<br>'
+    varname: nphf
+    vartype: integer
+- !variable
+    category: ''
     defaultval: null
     definition: 'Number of Processors at the IMAGE level '
     dimensions: null
@@ -8074,6 +8225,24 @@
     text: <p>Needed only when[[iscf]]=7 or 17.<p>Gives the  number of previous iterations
         involved in Pulay mixing (mixingduring electronic SC iterations).
     varname: npulayit
+    vartype: integer
+- !variable
+    category: '<a href="../users/abinit_help.html#gw">GW</a>  '
+    defaultval: 0
+    definition: 'Number of Particle Velocities '
+    dimensions: null
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: vargw
+    text: <p>Only relevant if [[optdriver]]=3 , that is screening calculations.<p>In
+        the context of the electronic stopping power of impinging ion in matter,<b>npvel</b>
+        sets the number of the ion velocities to be calculated via linear response.<br>When
+        <b>npvel</b>=0, no stopping power calculation is performed.<br>The direction
+        and the velocity maximum are set with the input variable [[pvelmax]].Note
+        that the results are output for a Z=1 impinging ion, i.e. a proton.
+    varname: npvel
     vartype: integer
 - !variable
     category: '<a href="../users/abinit_help.html#gw">GW</a>  '
@@ -8363,13 +8532,13 @@
     range: null
     section: varbas
     text: <p>Gives the maximum number of cycles (or "iterations") in a SCF or non-SCF
-        run.<br>Full convergence from random numbers if usually achieved in12-20 SCF
+        run.<br>Full convergence from random numbers is usually achieved in12-20 SCF
         iterations. Each can take from minutes to hours.In certain difficult cases,
         usually related to a small orzero bandgap or magnetism, convergence performance
         may be much worse.When the convergence tolerance [[tolwfr]] on the wavefunctionsis
         satisfied, iterations will stop, so for well convergedcalculations you should
         set <b>nstep</b> to a value larger thanyou think will be needed for full convergence,
-        e.g.if 20 steps usually converges the system, set <b>nstep</b> to 30.<br>For
+        e.g.if using 20 steps usually converges the system, set <b>nstep</b> to 30.<br>For
         non-self-consistent runs (<a name="iscf">iscf</a> &lt; 0) nstep governsthe
         number of cycles of convergence for the wavefunctions for a fixed densityand
         Hamiltonian.<p>NOTE that a choice of <b>nstep</b>=0 is permitted; this willeither
@@ -8491,14 +8660,10 @@
     errordimensions: ''
     errortype: ''
     range: null
-    section: varbas
-    text: <p>Gives the number of types of atoms.  E.g. fora homopolar system (e.g.
-        pure Si) <b>ntypat</b> is 1, while for BaTiO3,<b>ntypat</b> is 3.<br>Except
-        when alchemical mixing of pseudopotentials is used, the numberof types of
-        atoms will be equal to the number of pseudopotentials[[npsp]] to be provided
-        by the user.Thus, the code will try to read the same number of pseudopotential
-        files,whose names should have been given in the "files" file.<br>The first
-        pseudopotential will be assigned the type number 1, and soon ...
+    section: varrlx
+    text: <p>Gives the number of types of atoms. E.g. fora homopolar system (e.g.
+        pure Si) <b>ntypat</b> is 1.<br>The code tries to read the same number pseudopotential
+        files.<br>The first pseudopotential is assigned type number 1, and soon ...
     varname: ntypat
     vartype: integer
 - !variable
@@ -9018,25 +9183,24 @@
     range: null
     section: varpar
     text: '<p><b>If paral_kgb is not explicitely put in the input file</b>,ABINIT
-        automatically detects if the job has been sent in sequential or in parallel.
-        In this last case, it detects the number of processors on which the job has
-        been sent and calculates values of[[npkpt]], [[npfft]],[[npband]], [[bandpp]]
-        ,[[npimage]] and [[npspinor]] that are compatible with the number of processors.
-        It then setparal_kgb to 0 or 1 (see hereunder)and launches the job.</p><b>If
-        paral_kgb=0</b>,the parallelization over k-points only is activated. In this
-        case,[[npkpt]], [[npfft]] and[[npband]] are ignored. Require compilation option
-        --enable-mpi="yes".</p><p><b>If paral_kgb=1</b>,the parallelization over bands,
-        FFTs, and k-point/spin-components is activated(see [[npkpt]], [[npfft]] and[[npband]]).
-        With this parallelization, the work load is split overthree levels of parallelization.
-        The different communications almost occuralong one dimension only. Require
-        compilation option --enable-mpi="yes".</p>HOWTO fix the number of processors
-        along one level of parallelisation:<br>At first, try to parallelise over the
-        k point and spin(see [[npkpt]]).Otherwise, for unpolarized calculation at
-        the gamma point, parallelise over thetwo other levels: the band and FFT ones.
-        For nproc<=50,the best speed-up is achieved for[[npband]]=nproc and[[npfft]]=1
-        (which is not yet the default).For nproc>=50, the best speed-up is achieved
-        for[[npband]] >=4*[[npfft]].<p>For additional information,download F. Bottin''s
-        presentation at the <a href="http://www.abinit.org/community/events/program3rd">ABINIT
+        automatically detects if the job has been sent in sequential or in parallel.In
+        this last case, it detects the number of processors on which the job has been
+        sent and calculates values of[[npkpt]], [[npfft]],[[npband]], [[bandpp]] ,[[npimage]]
+        and [[npspinor]] that are compatible with the number of processors. It then
+        setparal_kgb to 0 or 1 (see hereunder) and launches the job.</p><b>If paral_kgb=0</b>,the
+        parallelization over k-points only is activated. In this case,[[npkpt]], [[npfft]]
+        and[[npband]] are ignored. Require compilation option --enable-mpi="yes".</p><p><b>If
+        paral_kgb=1</b>,the parallelization over bands, FFTs, and k-point/spin-components
+        is activated(see [[npkpt]], [[npfft]] and[[npband]]). With this parallelization,
+        the work load is split overthree levels of parallelization. The different
+        communications almost occuralong one dimension only. Require compilation option
+        --enable-mpi="yes".</p>HOWTO fix the number of processors along one level
+        of parallelisation:<br>At first, try to parallelise over the k point and spin(see
+        [[npkpt]]).Otherwise, for unpolarized calculation at the gamma point, parallelise
+        over thetwo other levels: the band and FFT ones. For nproc<=50,the best speed-up
+        is achieved for[[npband]]=nproc and[[npfft]]=1 (which is not yet the default).For
+        nproc>=50, the best speed-up is achieved for[[npband]] >=4*[[npfft]].<p>For
+        additional information,download F. Bottin''s presentation at the <a href="http://www.abinit.org/community/events/program3rd">ABINIT
         workshop 2007</a><p>Suggested acknowledgments :<br>F. Bottin, S. Leroux, A.
         Knyazev and G. Zerah,<i>Large scale ab initio calculations based on three
         levels of parallelization</i>,Comput. Mat. Science <b>42</b>, 329 (2008),available
@@ -9044,16 +9208,16 @@
         used is compatible with the three levels of parallelization, the values for
         [[npband]], [[npfft]], [[npband]] and [[bandpp]] will be filled automatically,
         although the repartition may not be optimal. To optimize the repartition use:<p><b>If
-        paral_kgb=-n </b>, ABINIT will test automatically if all the processor numbers
-        between 2 and n are convenient for a parallel calculation and print the possible
-        values in the log file. A weight is attributed to each possible processors
-        repartition. It is adviced to select a processor repartition for which the
-        weight is high (as closed to the number of processors as possible). The code
-        will then stop after the printing. This test can be done as well with a sequential
-        as with a parallel version of the code. The user can then choose the adequate
-        number of processor on which he can run his job. He must put again paral_kgb=1
-        in the input file and put the corresponding values for [[npband]], [[npfft]],
-        [[npband]] and [[bandpp]] in the input file.'
+        paral_kgb=1 </b> and <b>max_ncpus = n /= 0</b> ABINIT will test automatically
+        if all the processor numbers between 2 and n are convenientfor a parallel
+        calculation and print the possible values in the log file.A weight is attributed
+        to each possible processors repartition. It is adviced to select a processor
+        repartition for which the weight is high(as closed to the number of processors
+        as possible). The code will then stop after the printing.This test can be
+        done as well with a sequential as with a parallel version of the code.The
+        user can then choose the adequate number of processor on which he can run
+        his job.He must put again paral_kgb=1 in the input file and put the corresponding
+        values for[[npband]], [[npfft]], [[npband]]and [[bandpp]] in the input file.'
     varname: paral_kgb
     vartype: integer
 - !variable
@@ -9331,6 +9495,27 @@
         the potential (or density) residual.<br>If <b>pawoptmix</b>=1 the residual
         is a sum of the potential (or density) residualand the "spherical part" residual.
     varname: pawoptmix
+    vartype: integer
+- !variable
+    category: ' '
+    defaultval: 0
+    definition: PAW - OPTion for the computation of the OSCillator matrix elements
+    dimensions: null
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: varpaw
+    text: Relevant only for GW or BSE calculations with PAW.<p>This variable defines
+        the approach used for the evaluation of the oscillator matrix elements within
+        the PAW formalism.Possible values are 0,1,2.<br>If <b>pawoptosc</b>=0 the
+        code uses its internal default value (2 for SCREENING calculations, 1 for
+        SIGMA calculations, 2 for BSE)<br>If <b>pawoptosc</b>=1 the matrix elements
+        are computed with the expression given by Arnaud and Alouani in PRB 62. 4464The
+        equation is exact provided that the set of PAW partial waves is complete.<br>If
+        <b>pawoptosc</b>=2  the matrix elements are computed with the approaximated
+        expression proposed by Shishkin andKresse in PRB 74. 035101
+    varname: pawoptosc
     vartype: integer
 - !variable
     category: ' '
@@ -9642,7 +9827,7 @@
 - !variable
     category: ''
     defaultval: '[[ntypat]]'
-    definition: Path Integral inertial MASSes
+    definition: Path Integral fictitious MASSes
     dimensions:
     - '[[ntypat]]'
     errordefault: ''
@@ -9651,26 +9836,39 @@
     range: null
     section: varrlx
     text: <p>Only relevant if [[imgmov]]=9 or 13 (Path-Integral Molecular Dynamics).<br>Gives
-        the inertial masses (called "fictitious masses" in<i>D. Marx and M. Parrinello,
-        J. Chem. Phys. 104, 4077 (1996)</i>)in atomic mass units for each kind of
-        atom in cell. These masses are usedin performing molecular dynamical atomic
-        motion.<br>See [[amu]] for further details.
+        the fictitious masses (<i>D. Marx and M. Parrinello, J. Chem. Phys. 104, 4077
+        (1996)</i>)in atomic mass units for each kind of atom in cell. These masses
+        are the inertial masses usedin performing Path Integral Molecular Dynamics
+        (PIMD), they are different from the true masses ([[amu]]) used to define the
+        quantum spring that relates the different beads in PIMD. They can be chosen
+        arbitrarily, but an appropriate choice will lead the different variables to
+        move on the same time scale in order to optimize the sampling efficiency of
+        the PIMD trajectory.<br>If [[pitransform]]=1 (normal mode transformation),
+        or [[pitransform]]=2 (staging transformation), [[pimass]] is automatically
+        set to its optimal value. <br>
     varname: pimass
     vartype: real
 - !variable
     category: ''
     defaultval: 0
-    definition: Path Integral TRANSFORMation
+    definition: Path Integral coordinate TRANSFORMation
     dimensions: null
     errordefault: ''
     errordimensions: ''
     errortype: ''
     range: null
     section: varrlx
-    text: <p>Only relevant if [[imgmov]]=13 (Path-Integral Molecular Dynamics).Allows
-        to change the dynamics of the Path Integral chains, as described by M. Tuckerman
-        et al, J. Chem. Phys. 104, 5579 (1996).<p>If equal to 1, staging transformation.<br>If
-        equal to 2, normal modes transformation.
+    text: <p>Only relevant if [[imgmov]]=9 or 13 (Path-Integral Molecular Dynamics).Coordinate
+        transformation used in the integration of the Path Integral Molecular Dynamics
+        equations of motion. The transformation, with an appropriate choice of fictitious
+        masses ([[pimass]]), is used to force the different modes to move on the same
+        time scale, and thus optimize the efficiency of the statistical sampling in
+        the corresponding statisctical ensemble.Available with a Langevin thermostat
+        ([[imgmov]]=9) or with Nose-Hoover chains ([[imgmov]]=13).See M. Tuckerman
+        et al, J. Chem. Phys. 104, 5579 (1996).<p>If equal to 0, no transformation
+        is applied (primitive coordinates).<br>If equal to 1, normal mode transformation
+        (in that case, [[nimage]] must be absolutely EVEN).<br>If equal to 2, staging
+        transformation.
     varname: pitransform
     vartype: integer
 - !variable
@@ -10451,10 +10649,12 @@
     errortype: ''
     range: null
     section: varfil
-    text: <p>If set to 1  or a larger value, provide output of electron-phonon"gkk"
-        matrix elements, for further treatment by mrggkk utility or anaddb utility.Additional
-        information on electron-phonon treatment in ABINIT is given in ~abinit/doc/users/elphon_manual.ps
-        .
+    text: <p>If set to 1, provide output of electron-phonon "gkk" matrixelements,
+        for further treatment by mrggkk utility or anaddb utility. Note thatsymmetry
+        will be disabled for the calculation of the perturbation, forcing theinclusion
+        of all k-points and all perturbation directions. Additionalinformation on
+        electron-phonon treatment in ABINIT is given in the tutorial~abinit/doc/tutorial/lesson_eph.html
+        and in ~abinit/doc/users/elphon_manual.ps
     varname: prtgkk
     vartype: integer
 - !variable
@@ -11014,6 +11214,27 @@
     vartype: integer
 - !variable
     category: ''
+    defaultval:
+    - 1.0
+    - 1.0
+    - 1.0
+    definition: Particle VELocity MAXimum
+    dimensions:
+    - 3
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: vargw
+    text: <p>Only relevant if [[optdriver]]=3, that is screening calculations.<p>When
+        [[npvel]] is larger than 0, it performs electronic stopping power calculationson
+        a velocity grid along the direction determined by <b>pvelmax</b>.<br>The vector
+        <b>pvelmax</b> defines both the direction and the maximum velocity.<b>pvelmax</b>
+        is input in Cartesian coordinates.
+    varname: pvelmax
+    vartype: real
+- !variable
+    category: ''
     defaultval: nnos*10.0
     definition: 'Q thermostat mass '
     dimensions:
@@ -11023,8 +11244,14 @@
     errortype: ''
     range: null
     section: varrlx
-    text: '<p>This are the masses of the chains of [[nnos]] thermostats to be used
-        when [[ionmov]]=13. '
+    text: <p>This are the masses of the chains of [[nnos]] thermostats to be used
+        when [[ionmov]]=13 (Molecular Dynamics) or [[imgmov]]=13 (Path Integral Molecular
+        Dynamics).<p>If [[ionmov]]=13 (Molecular Dynamics),this temperature control
+        can be used with&nbsp; <ahref="varrlx.html#optcell">optcell</a>=0, 1 (homogeneous
+        celldeformation) or 2 (full cell deformation). <br>If [[imgmov]]=13 (Path
+        Integral Molecular Dynamics),this temperature control can be used with&nbsp;
+        <ahref="varrlx.html#optcell">optcell</a>=0 (NVT ensemble) or 2 (fully flexible
+        NPT ensemble).In that case, [[optcell]]=2 iS NOT USABLE yet.
     varname: qmass
     vartype: real
 - !variable
@@ -11566,8 +11793,9 @@
         together with[[rfdir]] 1 1 1 . For selected elements of thedynamical matrix,
         use different values of <b>rfatpol</b> and/or[[rfdir]]. The name 'iatpol'
         is used for the part of theinternal variable ipert when it runs from 1 to
-        [[natom]]. Theinternal variable ipert can also assume values largerthan [[natom]],
-        of electric field or stress type (see respfn.help).
+        [[natom]]. Theinternal variable ipert can also assume values largerthan [[natom]],denoting
+        perturbations of electric field or stress type (see <a href="../users/respfn_help.html">the
+        response function help file</a>).
     varname: rf1atpol
     vartype: integer
 - !variable
@@ -11666,8 +11894,9 @@
         together with[[rfdir]] 1 1 1 . For selected elements of thedynamical matrix,
         use different values of <b>rfatpol</b> and/or[[rfdir]]. The name 'iatpol'
         is used for the part of theinternal variable ipert when it runs from 1 to
-        [[natom]]. Theinternal variable ipert can also assume values largerthan [[natom]],
-        of electric field or stress type (see respfn.help).
+        [[natom]]. Theinternal variable ipert can also assume values largerthan [[natom]],denoting
+        perturbations of electric field or stress type (see <a href="../users/respfn_help.html">the
+        response function help file</a>).
     varname: rf2atpol
     vartype: integer
 - !variable
@@ -11766,8 +11995,9 @@
         together with[[rfdir]] 1 1 1 . For selected elements of thedynamical matrix,
         use different values of <b>rfatpol</b> and/or[[rfdir]]. The name 'iatpol'
         is used for the part of theinternal variable ipert when it runs from 1 to
-        [[natom]]. Theinternal variable ipert can also assume values largerthan [[natom]],
-        of electric field or stress type (see respfn.help).
+        [[natom]]. Theinternal variable ipert can also assume values largerthan [[natom]],denoting
+        perturbations of electric field or stress type (see <a href="../users/respfn_help.html">the
+        response function help file</a>).
     varname: rf3atpol
     vartype: integer
 - !variable
@@ -11889,8 +12119,9 @@
         together with[[rfdir]] 1 1 1 . For selected elements of thedynamical matrix,
         use different values of <b>rfatpol</b> and/or[[rfdir]]. The name 'iatpol'
         is used for the part of theinternal variable ipert when it runs from 1 to
-        [[natom]]. Theinternal variable ipert can also assume values largerthan [[natom]],
-        of electric field or stress type (see respfn.help).
+        [[natom]]. Theinternal variable ipert can also assume values largerthan [[natom]],denoting
+        perturbations of electric field or stress type (see <a href="../users/respfn_help.html">the
+        response function help file</a>).
     varname: rfatpol
     vartype: integer
 - !variable
@@ -12491,7 +12722,17 @@
         the orientation as it appears on the web page, </li><li>A is the real Bravais
         type lattice, </li><li>2/a the existent symmetry elements, </li><li>_c marks
         the orientation of the two-fold axis or of the mirror plane, </li><li>C2/c
-        represents the parent space group.</li></ul>'
+        represents the parent space group.</li></ul><p>How to determine which spgaxor
+        you need:<ol><li>check the reduced positions you have, for more symmetric
+        positions, e.g. 1/2 1/4 3/4 etc... Let''s say your symmetric positions are
+        in the first coordinate (a axis) and you are using spgroup 62.</li><li>look
+        up the raw space group Wyckoff positions on <a href="http://www.cryst.ehu.es/cgi-bin/cryst/programs/nph-wp-list">the
+        Bilbao server</a> to see where they put the corresponding symmetric positions.
+        For spgroup 62 Bilbao puts the 1/4 3/4 in the second coordinate, ie along
+        the b axis.</li><li>in this case you need to swap the axes from the original
+        abc order to a new order where the Bilbao axis (b) is in the first position.
+        In this case you have 2 possibilities, spgaxor 3 or 5. If you have more than
+        one highly symmetric coordinate you may have only a single possibility.</li></ol></p>'
     varname: spgaxor
     vartype: integer
 - !variable
@@ -13409,13 +13650,24 @@
     errortype: ''
     range: null
     section: vargw
-    text: <p>When equal to one, this variable allows for the calculation of U with
-        the cRPA method.An explicit test is shown in automatic test v7/t23.The present
-        implementation is non parallelized, do not use symetry over k-points (except
-        inversion),and is restricted to the case when correlated bands are isolated
-        (such as in SrVO3).This implementation is thus not yet for production.The
-        constrained calculation of the polarisability can only be done by eliminatingtransition
-        betweens correlated bands (and not orbitals) with the variable [[ucrpa_bands]].<p>
+    text: <p>When equal to one or two, this variable allows for the calculation of
+        U with the cRPA method.An explicit test is shown in automatic tests v7/t23-t24-t25
+        and in v7/t68.The present implementation is parallelized (as for usual GW
+        calculations), use symetry over k-points only for calculations involving one
+        correlated atom,and can be use when correlated bands are entangled or not.The
+        constrained calculation of the polarisability can be done by eliminatingtransition
+        betweens correlated bands (and not orbitals) with the variable [[ucrpa_bands]].
+        </p><p> For [[ucrpa]] = 1, two solutions are possible. The first one is to
+        specify(with the variable [[ucrpa_bands]]) the bands to exclude from the polarisability
+        calculation.The second solution is to provide an energy window (with the variable
+        [[ucrpa_window]]). The transitioninside this window will not be taken into
+        account inthe polarisability calculation.</p><p> For [[ucrpa]] = 2, the ucrpa_bands
+        should be equal to the dmftbandi and dmftbandfvalues, and the polarisability
+        of the correlated subspaceis constructed with a band and k-point dependant
+        weight.A short presentation of the method and some aspect of the implementation
+        can be found in Section II and Appendix A of <a href="http://journals.aps.org/prb/abstract/10.1103/PhysRevB.89.125110">B.
+        Amadon, T. Applencourt and F. Bruneval Phys. Rev. B 89, 125110 (2014)</a>.
+        </p><p>
     varname: ucrpa
     vartype: integer
 - !variable
@@ -13433,6 +13685,24 @@
         the polarisability.<p>
     varname: ucrpa_bands
     vartype: integer
+- !variable
+    category: '<a href="../users/abinit_help.html#gw">GW</a> '
+    defaultval: -1
+    definition: For the calculation of U with the Constrained RPA method, gives energy
+        WINDOW
+    dimensions: null
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: vargw
+    text: <p>Specify a window of energy. The transition inside this window will not
+        be taken into account in the constrained polarisabilty calculations. </p>nd
+        last correlated window for the cRPA calculation of the polarisability.The
+        lower bound and the upper bound energies must be specified (two real numbers)
+        with respect to the position of the Fermi level.<p>
+    varname: ucrpa_window
+    vartype: real
 - !variable
     category: ' '
     defaultval: null
@@ -13591,20 +13861,48 @@
     errortype: ''
     range: null
     section: vardev
-    text: "<p>If set to 1, enable the use of LDA+DMFT, see in particular the important\
+    text: "<p>If set to 1, enable the use of DFT+DMFT, see in particular the important\
         \ variables[[dmft_solv]],[[dmftbandi]],[[dmftbandf]],[[dmft_nwli]],[[dmft_nwlo]],[[dmft_tollc]],and\t\
-        [[dmft_iter]].DMFT is currently available for collinear (nspinor=1) polarized\
-        \ or unpolarized calculations (nspden=nsppol=2 or nspden=nsppol=1)and for\
-        \ non collinear calculations (nspinor=2,nspden=4,nsppol=1). However it is\
-        \ not yet availablefor collinear antiferromagnetic calculations  (nspden=2,nsppol=1)\
-        \ and non collinear non magnetic calculations (nspden=1, nsppol=1,nspinor=2).Only\
-        \ static calculations without relaxation or dynamics are possible. Relevant\
-        \ quantity fromconverged DMFT calculations are total energy and spectral function.\
-        \ Total and partail spectralfunctions can be obtained with prtdos=1 and can\
-        \ be found in files OUTSpFunc* (where OUT is the root foroutput files).(see\
-        \ Amadon, B., Lechermann, F., Georges, A., Jollet, F., Wehling, T. O., and\
-        \ Lichtenstein, A. I. Phys. Rev. B 77(20), (2008)and B Amadon 2012 J. Phys.:\
-        \ Condens. Matter 24 075604 )"
+        [[dmft_iter]]. </p><p> The current implementation uses Wannier functions obtained\
+        \ from<a href=\"http://journals.aps.org/prb/abstract/10.1103/PhysRevB.77.205112\"\
+        >projected local orbitals</a> as correlated orbitals (see [[dmftbandi]]  and\
+        \ [[dmftbandf]] input variables to define them). </p><p> The Green's function\
+        \ are computed on a mesh of linear Matsubara frequencies. However, most of\
+        \ the code uses logarithmic Matsubara grid to lower the computational cost.\
+        \ Both [[dmft_nwli]] and [[dmft_nwlo]] are thus convergence parameters. </p><p>\
+        \ DMFT is currently available for collinear (nspinor=1) polarized or unpolarized\
+        \ calculations (nspden=nsppol=2 or nspden=nsppol=1)and for non collinear calculations\
+        \ (nspinor=2,nspden=4,nsppol=1). However it is not yet availablefor collinear\
+        \ antiferromagnetic calculations  (nspden=2,nsppol=1) and non collinear non\
+        \ magnetic calculations (nspden=1, nsppol=1,nspinor=2).CTQMC calculations\
+        \ ([[dmft_solv]]=5) are not yet possible if nspinor=2.</p><p> Only static\
+        \ calculations without relaxation or dynamics are possible (forces and stress\
+        \ are not computed in the scheme: so the computed values should NOT be trusted).</p><p>\
+        \ When correlated density matrices are diagonal, all values of  [[upawu]]\
+        \ and <a href=\"varpaw.html#upawu\">jpawu</a> are possible. If the correlated\
+        \ density matrices are non diagonal, only <a href=\"varpaw.html#upawu\">jpawu</a>=0\
+        \ is implemented. </p><p> Relevant direct output quantities fromconverged\
+        \ DMFT calculations are total energy and occupation of correlated orbitals.\
+        \ For Hubbard I calculation ([[dmft_solv]]=2), total and partial spectralfunctions\
+        \ can be obtained with prtdos=1 and can be found in files OUTSpFunc* (where\
+        \ OUT is the root foroutput files). For CTQMC calculations ([[dmft_solv]]=5),\
+        \ imaginary time impurity Green's function are output of the calculations\
+        \ and can be used to producespectral function using an external Maximum Entropy\
+        \ Code. </p><p> A typical DFT+DMFT calculation involves two runs. First, a\
+        \ DFT calculation is fully converged (even unoccupied wavefunctions have to\
+        \ be converged).Then, the DFT+DMFT calculation is started using DFT wavefunctions\
+        \ or density files.  As DFT+DMFT calculations (with CTQMC) are computationnallyexpensive,\
+        \ it is convenient to use prtden=-1, to write DEN file at each DFT iteration,\
+        \ in order to be able to restart the calculation easily. </p><p>For details\
+        \ of the implementation see,<a href=\"http://journals.aps.org/prb/abstract/10.1103/PhysRevB.77.205112\"\
+        >B. Amadon, F. Lechermann, A. Georges, F.  Jollet, T. O.  Wehling, and A.\
+        \ I.  Lichtenstein, Phys. Rev. B 77(20), (2008)</a>, for Wannier functions\
+        \ and<a href=\"http://iopscience.iop.org/0953-8984/24/7/075604\">B. Amadon,\
+        \ J. Phys.: Condens. Matter 24 075604 (2012)</a>,for self-consistency and\
+        \ Hubbard I implementation.If usedmft=1 and bandkss/=0, then, the DFT+DMFT\
+        \ calculation is not done and only projections are computed at the endof the\
+        \ calculation. They can be used by an external code or used to compute the\
+        \ screened interaction (see variable [[ucrpa]])."
     varname: usedmft
     vartype: integer
 - !variable
@@ -13621,6 +13919,21 @@
         PAW spheres only, and only for correlated orbitals given by[[lexexch]]. To
         change the ratio of exact exchange, see also [[exchmix]].
     varname: useexexch
+    vartype: integer
+- !variable
+    category: <a href="../users/abinit_help.html#internal">INTERNAL</a>
+    defaultval: 0
+    definition: 'USE FOCK exact exchange '
+    dimensions: null
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: varint
+    text: <p>This internal variable is automatically set to 1 when the value of [[ixc]]  refers
+        to an Hartree-Fock calculation or hybrid functionals.<ul><li>0 => No use of
+        exact exchange.</li><li>1 => exact exchange is required for the calculation.</li></ul>
+    varname: usefock
     vartype: integer
 - !variable
     category: ' '
@@ -14400,7 +14713,9 @@
         this is a fictitious damping used to relaxstructures. A typical value for
         silicon is 400 with[[dtion]] of 350 and atomic mass 28 <ahref="varrlx.html#amu">amu</a>.
         Criticaldamping is most desirable and is found only byoptimizing <b>vis</b>
-        for a given situation.
+        for a given situation. <br><br>In the case of Path-Integral Molecular Dynamics
+        using the Langevin Thermostat ([[imgmov]]=9), [[vis]] defines the friction
+        coefficient, in atomic units. Typical value range is 0.00001-0.001.
     varname: vis
     vartype: real
 - !variable
@@ -14790,8 +15105,8 @@
     range: null
     section: vargs
     text: <p>Automatically determined from the value of [[ixc]].<ul><li>0 => No XC
-        contribution.</li><li>1 => LDA functional.</li><li>2 => GGA functional.</li><li>3
-        => Functional for TDDFT.</li></ul>
+        contribution.</li><li>1 => LDA functional.</li><li>2 => GGA functional or
+        hybrid functional based on GGA.</li><li>3 => Functional for TDDFT.</li></ul>
     varname: xclevel
     vartype: integer
 - !variable
