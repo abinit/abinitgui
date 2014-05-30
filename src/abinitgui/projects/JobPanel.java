@@ -250,15 +250,20 @@ public class JobPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void simuListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_simuListValueChanged
-        Simulation simu = (Simulation)(simuList.getSelectedValue());
-        System.out.println("simu : "+simu);
         
-        if(simu != null)
+        boolean adjust = evt.getValueIsAdjusting();
+        if(!adjust)
         {
-            currentSimu = simu;
+            Simulation simu = (Simulation)(simuList.getSelectedValue());
+            System.out.println("simu : "+simu);
+
+            if(simu != null)
+            {
+                currentSimu = simu;
+            }
+
+            refresh();
         }
-        
-        refresh();
     }//GEN-LAST:event_simuListValueChanged
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed

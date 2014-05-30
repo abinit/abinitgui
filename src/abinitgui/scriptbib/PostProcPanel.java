@@ -402,56 +402,60 @@ public class PostProcPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void scriptListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_scriptListValueChanged
-        int index = scriptList.getSelectedIndex();
-        if (index < 0) {
-            scriptName.setText("Name");
-            scriptDescription.setText("Description of the script");
-            scriptProgram.setText("");
-            argsModel.resetScripts();
-            outModel.resetScripts();
-        } else {
-            Script scr = scriptBibs.getList().get(index);
-            if (scr == null) {
+        boolean adjust = evt.getValueIsAdjusting();
+        if(!adjust)
+        {
+            int index = scriptList.getSelectedIndex();
+            if (index < 0) {
                 scriptName.setText("Name");
                 scriptDescription.setText("Description of the script");
                 scriptProgram.setText("");
                 argsModel.resetScripts();
                 outModel.resetScripts();
-                return;
-            }
+            } else {
+                Script scr = scriptBibs.getList().get(index);
+                if (scr == null) {
+                    scriptName.setText("Name");
+                    scriptDescription.setText("Description of the script");
+                    scriptProgram.setText("");
+                    argsModel.resetScripts();
+                    outModel.resetScripts();
+                    return;
+                }
 
-            scriptName.setText(scr.title);
-            remoteCB.setSelected(scr.runRemote);
+                scriptName.setText(scr.title);
+                remoteCB.setSelected(scr.runRemote);
 
-            scriptDescription.setText(scr.description.replace("\\n", "\n"));
+                scriptDescription.setText(scr.description.replace("\\n", "\n"));
 
-            scriptProgram.setText(scr.program);
-            argsModel.resetScripts();
-            outModel.resetScripts();
-            inModel.resetScripts();
-            
-            ArrayList<ScriptArgument> inArgs = scr.listInput;
+                scriptProgram.setText(scr.program);
+                argsModel.resetScripts();
+                outModel.resetScripts();
+                inModel.resetScripts();
 
-            int nbIn = inArgs.size();
+                ArrayList<ScriptArgument> inArgs = scr.listInput;
 
-            for (int i = 0; i < nbIn; i++) {
-                inModel.addScript(inArgs.get(i));
-            }
+                int nbIn = inArgs.size();
 
-            ArrayList<ScriptArgument> listArgs = scr.listArgs;
+                for (int i = 0; i < nbIn; i++) {
+                    inModel.addScript(inArgs.get(i));
+                }
 
-            int nbArgs = listArgs.size();
+                ArrayList<ScriptArgument> listArgs = scr.listArgs;
 
-            for (int i = 0; i < nbArgs; i++) {
-                argsModel.addScript(listArgs.get(i));
-            }
+                int nbArgs = listArgs.size();
 
-            ArrayList<ScriptArgument> outArgs = scr.listOutput;
+                for (int i = 0; i < nbArgs; i++) {
+                    argsModel.addScript(listArgs.get(i));
+                }
 
-            int nbOut = outArgs.size();
+                ArrayList<ScriptArgument> outArgs = scr.listOutput;
 
-            for (int i = 0; i < nbOut; i++) {
-                outModel.addScript(outArgs.get(i));
+                int nbOut = outArgs.size();
+
+                for (int i = 0; i < nbOut; i++) {
+                    outModel.addScript(outArgs.get(i));
+                }
             }
         }
     }//GEN-LAST:event_scriptListValueChanged

@@ -713,8 +713,12 @@ public class MachinePane extends JPanel {
     }//GEN-LAST:event_abinitPathPathLabelMouseClicked
 
     private void machineListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_machineListValueChanged
-        Machine mach = (Machine) (machineList.getSelectedValue());
-        fillFieldsFromMachine(mach);
+        boolean adjust = evt.getValueIsAdjusting();
+        if(!adjust)
+        {
+            Machine mach = (Machine) (machineList.getSelectedValue());
+            fillFieldsFromMachine(mach);
+        }
     }//GEN-LAST:event_machineListValueChanged
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed

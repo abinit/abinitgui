@@ -277,33 +277,35 @@ public class AbinitInputVars extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listVarsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listVarsValueChanged
-        
-        Object obj = listVars.getSelectedValue();
-        if(obj == null)
-            return;
-        
-        String varName = (String)obj;
-        
-        Variable curVar2 = database.getVar(varName);
-        
-        namePane.setText("<html><b>"+curVar2.getVarname()+"</b></html>");
-        sectionPane.setText("<html>"+curVar2.getSection()+"</html>");
-        defaultValPane.setText("<html>"+makeLinkVars(curVar2.getDefaultval()+"")+"</html>");
-        mnemoPane.setText("<html>"+makeLinkVars(curVar2.getDefinition())+"</html>");
-        typePane.setText("<html>"+makeLinkVars(curVar2.getVartype())+"</html>");
-        categoryPane.setText("<html>"+makeLinkVars(curVar2.getCategory())+"</html>");
-        descriptPaneEdit.setText("<html>"+makeLinkVars(curVar2.getText())+"</html>");
-        Object o = curVar2.getDimensions();
-        String s = null;
-        if(o != null)
+        boolean adjust = evt.getValueIsAdjusting();   
+        if(!adjust)
         {
-            if(o.getClass().isArray())
+            Object obj = listVars.getSelectedValue();
+            if(obj == null)
+                return;
+
+            String varName = (String)obj;
+
+            Variable curVar2 = database.getVar(varName);
+
+            namePane.setText("<html><b>"+curVar2.getVarname()+"</b></html>");
+            sectionPane.setText("<html>"+curVar2.getSection()+"</html>");
+            defaultValPane.setText("<html>"+makeLinkVars(curVar2.getDefaultval()+"")+"</html>");
+            mnemoPane.setText("<html>"+makeLinkVars(curVar2.getDefinition())+"</html>");
+            typePane.setText("<html>"+makeLinkVars(curVar2.getVartype())+"</html>");
+            categoryPane.setText("<html>"+makeLinkVars(curVar2.getCategory())+"</html>");
+            descriptPaneEdit.setText("<html>"+makeLinkVars(curVar2.getText())+"</html>");
+            Object o = curVar2.getDimensions();
+            String s = null;
+            if(o != null)
             {
-                s = Arrays.toString((Object[])o);
+                if(o.getClass().isArray())
+                {
+                    s = Arrays.toString((Object[])o);
+                }
             }
+            dimensionsPane.setText("<html>"+makeLinkVars(s)+"</html>");
         }
-        dimensionsPane.setText("<html>"+makeLinkVars(s)+"</html>");
-        
     }//GEN-LAST:event_listVarsValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

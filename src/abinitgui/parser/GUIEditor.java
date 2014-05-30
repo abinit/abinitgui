@@ -347,10 +347,15 @@ public class GUIEditor extends JFrame {
     }
     
     private void dtsetListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_dtsetListValueChanged
+
+        boolean adjust = evt.getValueIsAdjusting();
         
-        loadDatabase();
-        
-        model.fireTableDataChanged();
+        if(!adjust)
+        {
+            loadDatabase();
+
+            model.fireTableDataChanged();
+        }
     }//GEN-LAST:event_dtsetListValueChanged
 
     public class DatasetTable extends JTable
