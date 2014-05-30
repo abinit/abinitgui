@@ -47,10 +47,13 @@ For more information on the Abinit Project, please see
 package abinitgui.variables;
 
 import abinitgui.variables.AllInputVars;
-import java.util.Arrays;
-import javax.swing.text.html.HTMLEditorKit;
 import abinitgui.variables.Variable;
+import java.net.URL;
+import java.util.Arrays;
 import javax.swing.JFrame;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import javax.swing.text.html.HTMLEditorKit;
 
 public class AbinitInputVars extends JFrame {
     
@@ -66,6 +69,7 @@ public class AbinitInputVars extends JFrame {
         
         descriptPaneEdit.setEditable(false);
         descriptPaneEdit.setEditorKit(new HTMLEditorKit());
+        descriptPaneEdit.addHyperlinkListener(new HyperlinkListen());
         
         namePane.setEditable(false);
         namePane.setEditorKit(new HTMLEditorKit());
@@ -308,6 +312,26 @@ public class AbinitInputVars extends JFrame {
         }
     }//GEN-LAST:event_listVarsValueChanged
 
+    public class HyperlinkListen implements HyperlinkListener
+    {
+
+        @Override
+        public void hyperlinkUpdate(HyperlinkEvent e) {
+            
+            if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
+            {
+                String a = e.getDescription();
+                Variable var = database.getVar(a);
+                if(var != null)
+                {
+                    listVars.setSelectedValue(var.getVarname(), true);
+                }
+            }
+            
+        }
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JEditorPane categoryPane;
     private javax.swing.JEditorPane defaultValPane;
