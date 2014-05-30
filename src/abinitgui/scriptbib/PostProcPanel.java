@@ -507,7 +507,7 @@ public class PostProcPanel extends javax.swing.JPanel {
                 }
                 
                 mach.createTree(path);
-                if(isRunRemote && (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE))
+                if((mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE))
                 {
                     MainFrame.getLocalExec().createTree(path);
                 }
