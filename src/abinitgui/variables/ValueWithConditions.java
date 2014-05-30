@@ -79,7 +79,7 @@ public class ValueWithConditions implements Serializable {
         boolean already = false;
         for (Entry<String, Object> val : values.entrySet()) {
             if (val.getKey().equals("defaultval")) {
-                attheend += "else is " + val.getValue();
+                attheend += "else : <<parent>> = " + val.getValue();
             } else {
                 if (already) {
                     s += "else if ";
@@ -87,9 +87,9 @@ public class ValueWithConditions implements Serializable {
                     already = true;
                     s += "if ";
                 }
-                s += val.getKey().replace("<", "&lt;").replace(">", "&gt;") + " is " + val.getValue() + "  ";
+                s += val.getKey().replace("<", "&lt;").replace(">", "&gt;") + " : <<parent>> = " + val.getValue() + "  <br />";
             }
         }
-        return s + ", " + attheend;
+        return s + attheend;
     }
 }

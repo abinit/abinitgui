@@ -55,7 +55,7 @@ import abinitgui.inputgen.ReReDialog;
 import abinitgui.projects.MachineDialog;
 import abinitgui.variables.AllInputVars;
 import abinitgui.parser.GUIEditor;
-import abinitgui.parser.AbinitInputVars;
+import abinitgui.variables.AbinitInputVars;
 import abinitgui.projects.SubmissionScript;
 import abinitgui.projects.Simulation;
 import abinitgui.projects.SubmissionScriptFrame;

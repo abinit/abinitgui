@@ -44,7 +44,7 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package abinitgui.parser;
+package abinitgui.variables;
 
 import abinitgui.variables.AllInputVars;
 import java.util.Arrays;
@@ -101,13 +101,13 @@ public class AbinitInputVars extends JFrame {
         listVars.setListData(strName);
     }
     
-    public String makeLinkVars(String txt)
+    public String makeLinkVars(String txt, String parent)
     {
         if(txt == null)
         {
             return null;
         }
-        return txt.replaceAll("\\[\\[([a-zA-Z0-9_]*)\\]\\]", "<a href=\"$1\">$1</a>");
+        return txt.replaceAll("\\[\\[([a-zA-Z0-9_]*)\\]\\]", "<a href=\"$1\">$1</a>").replaceAll("<<parent>>", parent);
     }
 
     /**
@@ -228,7 +228,7 @@ public class AbinitInputVars extends JFrame {
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jScrollPane9)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -290,11 +290,11 @@ public class AbinitInputVars extends JFrame {
 
             namePane.setText("<html><b>"+curVar2.getVarname()+"</b></html>");
             sectionPane.setText("<html>"+curVar2.getSection()+"</html>");
-            defaultValPane.setText("<html>"+makeLinkVars(curVar2.getDefaultval()+"")+"</html>");
-            mnemoPane.setText("<html>"+makeLinkVars(curVar2.getDefinition())+"</html>");
-            typePane.setText("<html>"+makeLinkVars(curVar2.getVartype())+"</html>");
-            categoryPane.setText("<html>"+makeLinkVars(curVar2.getCategory())+"</html>");
-            descriptPaneEdit.setText("<html>"+makeLinkVars(curVar2.getText())+"</html>");
+            defaultValPane.setText("<html>"+makeLinkVars(curVar2.getDefaultval()+"",curVar2.getVarname())+"</html>");
+            mnemoPane.setText("<html>"+makeLinkVars(curVar2.getDefinition(),curVar2.getVarname())+"</html>");
+            typePane.setText("<html>"+makeLinkVars(curVar2.getVartype(),curVar2.getVarname())+"</html>");
+            categoryPane.setText("<html>"+makeLinkVars(curVar2.getCategory(),curVar2.getVarname())+"</html>");
+            descriptPaneEdit.setText("<html>"+makeLinkVars(curVar2.getText(),curVar2.getVarname())+"</html>");
             Object o = curVar2.getDimensions();
             String s = null;
             if(o != null)
@@ -304,7 +304,7 @@ public class AbinitInputVars extends JFrame {
                     s = Arrays.toString((Object[])o);
                 }
             }
-            dimensionsPane.setText("<html>"+makeLinkVars(s)+"</html>");
+            dimensionsPane.setText("<html>"+makeLinkVars(s,curVar2.getVarname())+"</html>");
         }
     }//GEN-LAST:event_listVarsValueChanged
 
