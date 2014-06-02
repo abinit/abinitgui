@@ -385,6 +385,11 @@ public class JobPanel extends javax.swing.JPanel {
         String input = (String) JOptionPane.showInputDialog(this,
                 "Please select your program", null,
                 JOptionPane.INFORMATION_MESSAGE, null, programs, "abinit");
+        
+        if(input == null)
+        {
+            return;
+        }
         switch (input) {
             case "abinit":
                 if(currentProject != null)
