@@ -354,7 +354,7 @@ public class AbinitGeometry {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     // Check order of indices
-                    rprimd[i][j] = scalecart[j] * rprim[i][j] * acell[i] * ANGSTROMPERBOHR;
+                    rprimd[i][j] = scalecart[i] * rprim[i][j] * acell[j] * ANGSTROMPERBOHR;
                 }
             }
             System.out.println(printArray(rprimd));
