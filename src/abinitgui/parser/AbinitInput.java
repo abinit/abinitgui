@@ -886,6 +886,13 @@ public class AbinitInput
         
         if(checkDim)
         {
+            if(dims == null)
+            {
+                System.err.println("listValues : "+listValues);
+                System.err.println("type : "+type);
+                throw new InvalidInputFileException("Missing dimension for var = "+name);
+            }
+            
             int nbTotal = 1;
             for(int i : dims)
                 nbTotal*= i;
