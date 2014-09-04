@@ -179,7 +179,7 @@ public class TestParser {
     
     public static void main(String[] args)
     {
-        testAllInputsInPath("/home/yannick/abinit/7.9.3-training","test-all.txt");
+        testAllInputsInPath("/home/yannick/abinit/7.11.0-training","test-all.txt");
         
         //testOneInputFile("/home/yannick/abinit/7.5.4-private/tests/v3/Input/t76.in","test-v3-76.txt");
     }

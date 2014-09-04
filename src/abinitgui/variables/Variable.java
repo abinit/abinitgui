@@ -2,7 +2,7 @@
  Copyright (c) 2009-2014 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
  Yannick GILLET (yannick.gillet@uclouvain.be)
 
- Université catholique de Louvain, Louvain-la-Neuve, Belgium
+ Universitï¿½ catholique de Louvain, Louvain-la-Neuve, Belgium
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without

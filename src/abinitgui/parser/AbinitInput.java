@@ -85,6 +85,7 @@ public class AbinitInput
     public AbinitInput()
     {
         allInputs = new AllInputVars();
+        allInputs.loadVars("abinit_vars.yml");
         
         listOfUnits = new HashMap<>();
         

@@ -219,6 +219,7 @@ public class MainFrame extends JFrame {
 
         guiEditor = new GUIEditor();
         allInputVars = new AllInputVars();
+        allInputVars.loadVars("abinit_vars.yml");
         abinitInputVars = new AbinitInputVars(allInputVars);
 
         submitScriptFrame = new SubmissionScriptFrame();

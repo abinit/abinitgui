@@ -1,6 +1,6 @@
 /*
  Copyright (c) 2009-2014 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
- Yannick GILLET (yannick.gillet@uclouvain.be)
+                         Yannick GILLET (yannick.gillet@uclouvain.be)
 
  Universit� catholique de Louvain, Louvain-la-Neuve, Belgium
  All rights reserved.
@@ -46,26 +46,37 @@
 
 package abinitgui.variables;
 
-import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.Tag;
-import org.yaml.snakeyaml.representer.Represent;
-import org.yaml.snakeyaml.representer.Representer;
+import java.io.Serializable;
 
-public class VariableRepresenter extends Representer {
-
-    public VariableRepresenter() {
-        this.addClassTag(Variable.class, new Tag("!variable"));
-        this.addClassTag(ValueWithUnit.class, new Tag("!valuewithunit"));
-        this.addClassTag(MultipleValue.class, new Tag("!multiplevalue"));
-        this.addClassTag(Range.class, new Tag("!range"));
-        this.representers.put(ValueWithConditions.class, new RepresentConditions());
-    }
-
-    class RepresentConditions implements Represent {
-        @Override
-        public Node representData(Object data) {
-            ValueWithConditions vwc = (ValueWithConditions) data;
-            return representMapping(new Tag("!valuewithconditions"), vwc.getValues(), false);
-        }
-    }
+public class MultipleValue implements Serializable
+{
+	private static final long serialVersionUID = 1917009023883304327L;
+	
+	private Object value = null;
+	private Object number = null;
+	
+	public Object getValue() {
+		return value;
+	}
+	public void setValue(Object value) {
+		this.value = value;
+	}
+	public Object getNumber() {
+		return number;
+	}
+	public void setNumber(Object number) {
+		this.number = number;
+	}
+	
+	public String toString()
+	{
+            if(this.number == null)
+            {
+                return "*"+this.value;
+            }
+            else
+            {
+		return this.number+"*"+this.value;
+            }
+	}
 }

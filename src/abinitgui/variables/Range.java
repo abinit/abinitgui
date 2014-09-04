@@ -2,7 +2,7 @@
  Copyright (c) 2009-2014 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
                          Yannick GILLET (yannick.gillet@uclouvain.be)
 
- Université catholique de Louvain, Louvain-la-Neuve, Belgium
+ Universitï¿½ catholique de Louvain, Louvain-la-Neuve, Belgium
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -67,5 +67,24 @@ public class Range implements Serializable
 	public void setStop(Object stop) {
 		this.stop = stop;
 	}
+        public String toString()
+        {
+            if(this.start != null && this.stop != null)
+            {
+                return "["+this.start+".."+this.stop+"]";
+            }
+            if(this.start != null)
+            {
+                return "["+this.start+"; ->";
+            }
+            if(this.stop != null)
+            {
+                return "<- ;"+this.stop+"]";
+            }
+            else
+            {
+                return "[]";
+            }
+        }
 
 }
