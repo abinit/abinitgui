@@ -46,7 +46,7 @@ For more information on the Abinit Project, please see
 
 package abinitgui.parser;
 
-import abinitgui.variables.AllInputVars;
+import abivars.AllInputVars;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +54,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import abinitgui.variables.Variable;
+import abivars.Variable;
 import java.util.Map.Entry;
 
 // TODO : Change the way we build things. We should start by filling the table variable : value with the default values

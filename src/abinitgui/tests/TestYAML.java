@@ -46,8 +46,8 @@
 
 package abinitgui.tests;
 
-import abinitgui.variables.VariableConstructor;
-import abinitgui.variables.VariableRepresenter;
+import abivars.VariableConstructor;
+import abivars.VariableRepresenter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
