@@ -3,10 +3,7 @@
     defaultval: null
     definition: ACCESS to WaveFunction Files
     dimensions: null
-    errordefault: 0. However, if mpi_io is available, <b>accesswff</b> will be set
-        to 1 for the datasets for which [[paral_kgb]]=1, while an explicit mention
-        of <b>accesswff</b> in the input file will override this intermediate default.
-        [error reading default]
+    errordefault: 0. However, if mpi_io is available, <b>accesswff</b> will be set to 1 for the datasets for which [[paral_kgb]]=1, while an explicit mention of <b>accesswff</b> in the input file will override this intermediate default. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -93,8 +90,7 @@
     dimensions:
     - 3
     errordefault: 3*1 (in Bohr). [error reading default]
-    errordimensions: real array acell(3), represented internally as acell(3,[[nimage]])
-        [error reading dimensions]
+    errordimensions: real array acell(3), represented internally as acell(3,[[nimage]]) [error reading dimensions]
     errortype: ''
     range: null
     section: varbas
@@ -484,8 +480,7 @@
 - !variable
     category: '[[GW]]'
     defaultval: null
-    definition: evaluate the Adler-Wiser expression of $\chi^{(0)}_{KS}$ assuming
-        Time-Reversal
+    definition: evaluate the Adler-Wiser expression of $\chi^{(0)}_{KS}$ assuming Time-Reversal
     dimensions: null
     errordefault: 1 (was 0 prior to 5.8) [error reading default]
     errordimensions: ''
@@ -629,6 +624,7 @@
 - !variable
     category: '[[GW]]'
     defaultval: !multiplevalue
+        number: null
         value: 0
     definition: BanDs for GW calculation
     dimensions:
@@ -2135,8 +2131,7 @@
     defaultval: null
     definition: Type of Conjugate Gradient used for Fock exact exchange
     dimensions: null
-    errordefault: 0 if [[usefock]] &lt;=0, and 2 [[usefock]] &lt;=1. [error reading
-        default]
+    errordefault: 0 if [[usefock]] &lt;=0, and 2 [[usefock]] &lt;=1. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -2198,8 +2193,7 @@
     defaultval: null
     definition: CHecK whether the user want to EXIT
     dimensions: null
-    errordefault: 0 (before v5.3, it was 2 for sequential version of ABINIT, 1 for
-        parallel version of ABINIT.) [error reading default]
+    errordefault: 0 (before v5.3, it was 2 for sequential version of ABINIT, 1 for parallel version of ABINIT.) [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -2842,8 +2836,7 @@
     defaultval: null
     definition: model DIElectric MIXing factor
     dimensions: null
-    errordefault: 1.0 (norm-conserving psps or [[iprcel]]/=0) or 0.7 (PAW and [[iprcel]]=0).
-        [error reading default]
+    errordefault: 1.0 (norm-conserving psps or [[iprcel]]/=0) or 0.7 (PAW and [[iprcel]]=0). [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -2878,15 +2871,13 @@
 - !variable
     category: ''
     defaultval: !valuewithconditions
-        '70 < [[iprcel]] and [[iprcel]] < 80': '[[diemix]]'
-        defaultval: '-[[diemix]]'
-        '[[iprcel]]==0': '[[diemix]]'
+        defaultval: -[[diemix]]
+        70 < [[iprcel]] and [[iprcel]] < 80: '[[diemix]]'
         '[[iscf]]<10': '[[diemix]]'
+        '[[iprcel]]==0': '[[diemix]]'
     definition: model DIElectric MIXing factor for the MAGgnetization
     dimensions: null
-    errordefault: diemixmag= <a href="vargs.html#diemixmag">diemix</a> when [[iprcel]]=0
-        or 70<[[iprcel]]<80 or [[iscf]]<10 (SCF mixing on potential), else diemixmag=
-        - <a href="vargs.html#diemixmag">diemix</a> [error reading default]
+    errordefault: diemixmag= <a href="vargs.html#diemixmag">diemix</a> when [[iprcel]]=0 or 70<[[iprcel]]<80 or [[iscf]]<10 (SCF mixing on potential), else diemixmag= - <a href="vargs.html#diemixmag">diemix</a> [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -3001,10 +2992,7 @@
     definition: initial Density MATrix for PAW+U
     dimensions: null
     errordefault: -10. (not defined) [error reading default]
-    errordimensions: real array dmatpawu(2*max([[lpawu]])+1,2*max([[lpawu]])+1, max([[nsppol]],[[nspinor]]),
-        %[[natpawu]]) <br>where %[[natpawu]] is the number of atoms on which LDA/GGA+U
-        is applied. [error reading dimensions][ text after dimensions moved to text
-        ! ]
+    errordimensions: real array dmatpawu(2*max([[lpawu]])+1,2*max([[lpawu]])+1, max([[nsppol]],[[nspinor]]), %[[natpawu]]) <br>where %[[natpawu]] is the number of atoms on which LDA/GGA+U is applied. [error reading dimensions][ text after dimensions moved to text ! ]
     errortype: ''
     range: null
     section: varpaw
@@ -3262,7 +3250,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0.3
-    definition: 'Dynamical Mean Fied Theory: MiXing parameter for the SelF energy'
+    definition: 'Dynamical Mean Fied Theory: MiXing parameter for the SelF
+        energy'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3279,8 +3268,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: 'Dynamical Mean Fied Theory: Number of frequency omega (W) in the
-        LInear mesh'
+    definition: 'Dynamical Mean Fied Theory: Number of frequency omega (W)
+        in the LInear mesh'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3297,8 +3286,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: 'Dynamical Mean Fied Theory: Number of frequency omega (W) in the
-        log mesh'
+    definition: 'Dynamical Mean Fied Theory: Number of frequency omega (W)
+        in the log mesh'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3434,9 +3423,9 @@
     vartype: integer
 - !variable
     category: '[[DEVELOP]]'
-    defaultval: 1.0e-05
-    definition: 'Dynamical Mean Fied Theory: Tolerance on Local Charge for convergency
-        of the DMFT loop'
+    defaultval: 1.0E-5
+    definition: 'Dynamical Mean Fied Theory: Tolerance on Local Charge for
+        convergency of the DMFT loop'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3511,7 +3500,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte Carlo check'
+    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte
+        Carlo check'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3543,7 +3533,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte Carlo correlations'
+    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte
+        Carlo correlations'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3569,8 +3560,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte Carlo global
-        moves'
+    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte
+        Carlo global moves'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3589,7 +3580,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte Carlo greens'
+    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte
+        Carlo greens'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3615,7 +3607,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 1
-    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte Carlo measurements'
+    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte
+        Carlo measurements'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3633,7 +3626,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte Carlo movie'
+    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte
+        Carlo movie'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3659,8 +3653,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte Carlo markov
-        analysis'
+    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte
+        Carlo markov analysis'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3686,8 +3680,8 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte Carlo perturbation
-        order'
+    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte
+        Carlo perturbation order'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -3867,8 +3861,7 @@
     definition: DYNamics of the IMAGE
     dimensions:
     - nimage
-    errordefault: <b>dynimage(:)</b>=1; if [[imgmov]]=2 or 5 (String Method, NEB),
-        <b>dynimage(1)</b>=0 and <b>dynimage([[nimage]])</b>=0. [error reading default]
+    errordefault: <b>dynimage(:)</b>=1; if [[imgmov]]=2 or 5 (String Method, NEB), <b>dynimage(1)</b>=0 and <b>dynimage([[nimage]])</b>=0. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -4128,9 +4121,7 @@
     defaultval: null
     definition: Energy CUT-off for WaveFunctions
     dimensions: null
-    errordefault: 0.0, although, if a screening or self-energy calculation is done
-        ([[optdriver]]=3 or 4), <b>ecutwfn</b> is automatically set to [[ecut]] [error
-        reading default]
+    errordefault: 0.0, although, if a screening or self-energy calculation is done ([[optdriver]]=3 or 4), <b>ecutwfn</b> is automatically set to [[ecut]] [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -4234,8 +4225,8 @@
     defaultval: !valuewithunit
         units: Ha
         value: 0.0
-    definition: 'ELectron-PHonon interaction at 2nd order : IMAGina y shoft of the
-        DENominator'
+    definition: 'ELectron-PHonon interaction at 2nd order : IMAGina y shoft
+        of the DENominator'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -4267,8 +4258,7 @@
     defaultval: null
     definition: ENergy UNITs
     dimensions: null
-    errordefault: 0 (eigenvalues in hartree and phonon frequencies in hartree and
-        cm-1). [error reading default]
+    errordefault: 0 (eigenvalues in hartree and phonon frequencies in hartree and cm-1). [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -4508,9 +4498,7 @@
     defaultval: null
     definition: Factor for the number of BANDs
     dimensions: null
-    errordefault: 0.125 in case [[occopt]]==1 (insulating case), 0.500 for other values
-        of [[occopt]] (metallic case) and 0. in wavelet case. Not used in case [[occopt]]==0
-        or 2. [error reading default]
+    errordefault: 0.125 in case [[occopt]]==1 (insulating case), 0.500 for other values of [[occopt]] (metallic case) and 0. in wavelet case. Not used in case [[occopt]]==0 or 2. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -4599,11 +4587,7 @@
     defaultval: null
     definition: Fast Fourier Transform ALGorithm
     dimensions: null
-    errordefault: 112, except for VPP Fujitsu, for which the Default is 111, and for
-        NEC, for which the default is 200. Moreover, if the FFTW3 library has been
-        enabled, the default becomes 312, EXCEPT if [[usedmft]] is non-zero for at
-        least one dataset. <br> Finally, If [[paral_kgb]]=1, <b>fftalg</b> is automatically
-        set to 401, with the hightest precedence. [error reading default]
+    errordefault: 112, except for VPP Fujitsu, for which the Default is 111, and for NEC, for which the default is 200. Moreover, if the FFTW3 library has been enabled, the default becomes 312, EXCEPT if [[usedmft]] is non-zero for at least one dataset. <br> Finally, If [[paral_kgb]]=1, <b>fftalg</b> is automatically set to 401, with the hightest precedence. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -7009,9 +6993,9 @@
 - !variable
     category: '[[GW]]'
     defaultval:
-    - 1.0e-05
-    - 2.0e-05
-    - 3.0e-05
+    - 1.0E-5
+    - 2.0E-5
+    - 3.0E-5
     definition: GW, Q-points for the Long Wave-Length Limit
     dimensions:
     - 3
@@ -7540,10 +7524,8 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Z direction
     dimensions: null
-    errordefault: No Default (ignored unless [[natfix]],[[natfixx]], [[natfixy]] or
-        [[natfixz]] &gt; 0). [error reading default]
-    errordimensions: integer arrays of length [[natfix]], [[natfixx]], [[natfixy]]
-        or [[natfixz]] [no dimension]
+    errordefault: No Default (ignored unless [[natfix]],[[natfixx]], [[natfixy]] or [[natfixz]] &gt; 0). [error reading default]
+    errordimensions: integer arrays of length [[natfix]], [[natfixx]], [[natfixy]] or [[natfixz]] [no dimension]
     errortype: ''
     range: null
     section: varrlx
@@ -7611,10 +7593,8 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Z direction
     dimensions: null
-    errordefault: No Default (ignored unless [[natfix]],[[natfixx]], [[natfixy]] or
-        [[natfixz]] &gt; 0). [error reading default]
-    errordimensions: integer arrays of length [[natfix]], [[natfixx]], [[natfixy]]
-        or [[natfixz]] [no dimension]
+    errordefault: No Default (ignored unless [[natfix]],[[natfixx]], [[natfixy]] or [[natfixz]] &gt; 0). [error reading default]
+    errordimensions: integer arrays of length [[natfix]], [[natfixx]], [[natfixy]] or [[natfixz]] [no dimension]
     errortype: ''
     range: null
     section: varrlx
@@ -7694,10 +7674,8 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Z direction
     dimensions: null
-    errordefault: No Default (ignored unless [[natfix]],[[natfixx]], [[natfixy]] or
-        [[natfixz]] &gt; 0). [error reading default]
-    errordimensions: integer arrays of length [[natfix]], [[natfixx]], [[natfixy]]
-        or [[natfixz]] [no dimension]
+    errordefault: No Default (ignored unless [[natfix]],[[natfixx]], [[natfixy]] or [[natfixz]] &gt; 0). [error reading default]
+    errordimensions: integer arrays of length [[natfix]], [[natfixx]], [[natfixy]] or [[natfixz]] [no dimension]
     errortype: ''
     range: null
     section: varrlx
@@ -7777,10 +7755,8 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Z direction
     dimensions: null
-    errordefault: No Default (ignored unless [[natfix]],[[natfixx]], [[natfixy]] or
-        [[natfixz]] &gt; 0). [error reading default]
-    errordimensions: integer arrays of length [[natfix]], [[natfixx]], [[natfixy]]
-        or [[natfixz]] [no dimension]
+    errordefault: No Default (ignored unless [[natfix]],[[natfixx]], [[natfixy]] or [[natfixz]] &gt; 0). [error reading default]
+    errordimensions: integer arrays of length [[natfix]], [[natfixx]], [[natfixy]] or [[natfixz]] [no dimension]
     errortype: ''
     range: null
     section: varrlx
@@ -7859,7 +7835,8 @@
     category: ''
     defaultval: !range
         start: 1
-        stop: [[natsph]]
+        stop:
+        -   - natsph
     definition: Index for the ATomic SPHeres of the atom-projected density-of-states
     dimensions: null
     errordefault: 1, 2, ... [[natsph]] [error reading default]
@@ -8134,7 +8111,8 @@
     defaultval: null
     definition: INCLude VKB
     dimensions: null
-    errordefault: '1 <b>TODO: should be changed to 0 or 2</b> [error reading default]'
+    errordefault: '1 <b>TODO: should be changed to 0 or 2</b> [error reading
+        default]'
     errordimensions: ''
     errortype: ''
     range: null
@@ -8244,9 +8222,7 @@
     defaultval: null
     definition: Integer for PReConditioning of CHarge response
     dimensions: null
-    errordefault: 2.If [[ionmov]]=4 and [[iscf]]=5,<b>iprcch</b> is automatically
-        put to 3. If [[paral_kgb]]=1, <b>iprcch</b> is automatically put to 6. [error
-        reading default]
+    errordefault: 2.If [[ionmov]]=4 and [[iscf]]=5,<b>iprcch</b> is automatically put to 3. If [[paral_kgb]]=1, <b>iprcch</b> is automatically put to 6. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -8520,8 +8496,7 @@
 - !variable
     category: ''
     defaultval: 0
-    definition: Integer for PReConditioning (of electron response) based on Thomas
-        - Fermi - von Weizs&auml;cker approximations of the kinetic energy
+    definition: Integer for PReConditioning (of electron response) based on Thomas - Fermi - von Weizs&auml;cker approximations of the kinetic energy
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -9606,8 +9581,8 @@
     defaultval: null
     definition: Integer for Self-Consistent-Field cycles
     dimensions: null
-    errordefault: '7 (norm-conserving), 17 (PAW) or 0 (WVL). (prior to v5.3 : 5 and
-        14) [error reading default]'
+    errordefault: '7 (norm-conserving), 17 (PAW) or 0 (WVL). (prior to v5.3
+        : 5 and 14) [error reading default]'
     errordimensions: ''
     errortype: ''
     range: null
@@ -9842,8 +9817,7 @@
     defaultval: null
     definition: Integer for STATus file SHiFT
     dimensions: null
-    errordefault: 49, and 149 for Cray T3E (slow I/Os).Values lower than 10 may not
-        work on some machines. Default <b>istatshft</b> is 1. [error reading default]
+    errordefault: 49, and 149 for Cray T3E (slow I/Os).Values lower than 10 may not work on some machines. Default <b>istatshft</b> is 1. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -9869,8 +9843,7 @@
     defaultval: null
     definition: Integer for STATus file SHiFT
     dimensions: null
-    errordefault: 49, and 149 for Cray T3E (slow I/Os).Values lower than 10 may not
-        work on some machines. Default <b>istatshft</b> is 1. [error reading default]
+    errordefault: 49, and 149 for Cray T3E (slow I/Os).Values lower than 10 may not work on some machines. Default <b>istatshft</b> is 1. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -9901,10 +9874,11 @@
     definition: Integer for choice of STorage of WaveFunction at each k point
     dimensions:
     - '[[nkpt]]'
-    errordefault: '0 for all k points for GS calculations. For RF calculations, the
-        Default is not used : <b>istwfk</b> is forced to be 1 deep inside the code,
-        for all k points. For spin-orbit calculations ([[nspinor]]=2), <b>istwfk</b>
-        is also forced to be 1, for all k points. [error reading default]'
+    errordefault: '0 for all k points for GS calculations. For RF calculations,
+        the Default is not used : <b>istwfk</b> is forced to be 1 deep inside
+        the code, for all k points. For spin-orbit calculations ([[nspinor]]=2),
+        <b>istwfk</b> is also forced to be 1, for all k points. [error reading
+        default]'
     errordimensions: ''
     errortype: ''
     range: null
@@ -9980,9 +9954,7 @@
     defaultval: null
     definition: Integer for eXchange-Correlation choice
     dimensions: null
-    errordefault: <b>ixc</b>=1 (Teter parameterization). However, if all the pseudopotentials
-        have the same value of pspxc, the initial value of <b>ixc</b> will be that
-        common value. [error reading default]
+    errordefault: <b>ixc</b>=1 (Teter parameterization). However, if all the pseudopotentials have the same value of pspxc, the initial value of <b>ixc</b> will be that common value. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -10979,8 +10951,7 @@
 - !variable
     category: ''
     defaultval: 0
-    definition: Integer for the eXchange-Correlation applied to the electron-POSITRON
-        interaction
+    definition: Integer for the eXchange-Correlation applied to the electron-POSITRON interaction
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -11299,8 +11270,7 @@
     dimensions:
     - 3
     - '[[nkpt]]'
-    errordefault: 0. 0. 0. (for just one k-point, adequate for one molecule in a supercell)
-        [error reading default]
+    errordefault: 0. 0. 0. (for just one k-point, adequate for one molecule in a supercell) [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -11620,6 +11590,7 @@
 - !variable
     category: '[[GW]]'
     defaultval: !multiplevalue
+        number: null
         value: 0
     definition: K-PoinTs for GW calculations
     dimensions:
@@ -11874,7 +11845,8 @@
     defaultval: null
     definition: 'K - PoinTs grid : Real space LENgth'
     dimensions: null
-    errordefault: '30.0d0 (WARNING : was 20 prior to v5.8). [error reading default]'
+    errordefault: '30.0d0 (WARNING : was 20 prior to v5.8). [error reading
+        default]'
     errordimensions: ''
     errortype: ''
     range: null
@@ -12183,8 +12155,7 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: Macro variable that activates the determination of the U and J parameter
-        (for the PAW+U calculations)
+    definition: Macro variable that activates the determination of the U and J parameter (for the PAW+U calculations)
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -12387,8 +12358,7 @@
     defaultval: null
     definition: Molecular Dynamics WALL location
     dimensions: null
-    errordefault: 10000.0 Bohr (the walls are extremely far away). [error reading
-        default]
+    errordefault: 10000.0 Bohr (the walls are extremely far away). [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -12446,8 +12416,7 @@
     defaultval: null
     definition: 'Minimal Energy Path search: MaXimum allowed STEP size'
     dimensions: null
-    errordefault: <b>mep_mxstep</b>=0.4 Bohr if [[imgmov]]=5 (NEB) otherwise <b>mep_mxstep</b>=100.
-        Bohr [error reading default]
+    errordefault: <b>mep_mxstep</b>=0.4 Bohr if [[imgmov]]=5 (NEB) otherwise <b>mep_mxstep</b>=100. Bohr [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -12702,8 +12671,7 @@
 - !variable
     category: '[[RESPFN]]'
     defaultval: null
-    definition: Maximum number of K - points for 1st order wavefunctions, kept in
-        MEMory
+    definition: Maximum number of K - points for 1st order wavefunctions, kept in MEMory
     dimensions: null
     errordefault: '[[nkpt]], i.e. in-core solution. [error reading default]'
     errordimensions: ''
@@ -12762,8 +12730,7 @@
 - !variable
     category: '[[RESPFN]]'
     defaultval: null
-    definition: Maximum number of K - points for 1st order wavefunctions, kept in
-        MEMory
+    definition: Maximum number of K - points for 1st order wavefunctions, kept in MEMory
     dimensions: null
     errordefault: '[[nkpt]], i.e. in-core solution. [error reading default]'
     errordimensions: ''
@@ -13138,8 +13105,7 @@
 - !variable
     category: ''
     defaultval: 0
-    definition: Number of ATomic SPHeres for the l-projected density-of-states in
-        EXTRA set
+    definition: Number of ATomic SPHeres for the l-projected density-of-states in EXTRA set
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -13352,8 +13318,7 @@
     defaultval: null
     definition: Number of BanDs for the BUFfer
     dimensions: null
-    errordefault: 0. However, the default is changed to 2 in some cases, see later.
-        [error reading default]
+    errordefault: 0. However, the default is changed to 2 in some cases, see later. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -14017,8 +13982,7 @@
     definition: Number of Grid points for Fast Fourier Transform
     dimensions:
     - 3
-    errordefault: 0 0 0 (so, automatic selection of optimal values) [error reading
-        default]
+    errordefault: 0 0 0 (so, automatic selection of optimal values) [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -14106,11 +14070,11 @@
 - !variable
     category: ''
     defaultval: null
-    definition: 'Number of Grid points for Fast Fourier Transform : Double Grid'
+    definition: 'Number of Grid points for Fast Fourier Transform : Double
+        Grid'
     dimensions:
     - 3
-    errordefault: 0 0 0 (so, automatic selection of optimal values) [error reading
-        default]
+    errordefault: 0 0 0 (so, automatic selection of optimal values) [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -14445,8 +14409,7 @@
     defaultval: null
     definition: Number of K - Points for Fock exact exchange
     dimensions: null
-    errordefault: the total number of k-point in the full Brillouin zone [error reading
-        default]
+    errordefault: the total number of k-point in the full Brillouin zone [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -14491,8 +14454,7 @@
     defaultval: null
     definition: Non Local ALGorithm
     dimensions: null
-    errordefault: 4 (norm-conserving psps) or 14 (PAW), except for the NEC where it
-        is 2 (or 12). [error reading default]
+    errordefault: 4 (norm-conserving psps) or 14 (PAW), except for the NEC where it is 2 (or 12). [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -14651,8 +14613,7 @@
     defaultval: null
     definition: Number of Non-Self Consistent LOops for Fock exact exchange
     dimensions: null
-    errordefault: 0 if [[usefock]] &lt;=0, and 1 if [[usefock]] &lt;=1. [error reading
-        default]
+    errordefault: 0 if [[usefock]] &lt;=0, and 1 if [[usefock]] &lt;=1. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -15106,8 +15067,7 @@
     varname: npkpt
     vartype: integer
 - !variable
-    category: can even be specified separately for each dataset, parameter paral_rf
-        is necessary
+    category: can even be specified separately for each dataset, parameter paral_rf is necessary
     defaultval: 1
     definition: Number of Processors at the PERTurbation level
     dimensions: null
@@ -15977,8 +15937,7 @@
     definition: 'OBJect A : list of AToms, OBJect B : list of AToms'
     dimensions: null
     errordefault: None [error reading default]
-    errordimensions: integer arrays objaat([[objan]]) and objbat(<a href="vargeo.html#objan">objbn</a>)
-        [error reading dimensions]
+    errordimensions: integer arrays objaat([[objan]]) and objbat(<a href="vargeo.html#objan">objbn</a>) [error reading dimensions]
     errortype: ''
     range: null
     section: vargeo
@@ -16443,7 +16402,8 @@
     defaultval: !valuewithunit
         units: eV
         value: 50
-    definition: 'OMEGA to evaluate Sigma along the Imaginary axis D: MAXimal value'
+    definition: 'OMEGA to evaluate Sigma along the Imaginary axis D: MAXimal
+        value'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -16468,7 +16428,8 @@
     defaultval: !valuewithunit
         units: eV
         value: 1.0
-    definition: 'OMEGA to evaluate the Sigma Real axis Derivative : MAXimal value'
+    definition: 'OMEGA to evaluate the Sigma Real axis Derivative : MAXimal
+        value'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -16562,8 +16523,7 @@
     defaultval: null
     definition: OPTions for the calculation of FORCES
     dimensions: null
-    errordefault: 2. However, <b>optforces</b> is automatically set to 1 when [[toldff]]
-        or [[tolrff]] are non-zero. [error reading default]
+    errordefault: 2. However, <b>optforces</b> is automatically set to 1 when [[toldff]] or [[tolrff]] are non-zero. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -16666,8 +16626,7 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 1
-    definition: OPTion for the calculation of Non-Linear eXchange-Correlation Core
-        Correction
+    definition: OPTion for the calculation of Non-Linear eXchange-Correlation Core Correction
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -16740,8 +16699,7 @@
     defaultval: null
     definition: ORThogonalisation ALGorithm
     dimensions: null
-    errordefault: 2 when [[wfoptalg]] &lt; 10,<br> -2 when [[wfoptalg]] >=10. [error
-        reading default]
+    errordefault: 2 when [[wfoptalg]] &lt; 10,<br> -2 when [[wfoptalg]] >=10. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -16965,10 +16923,7 @@
     defaultval: null
     definition: PAW - use ComPleX rhoij OCCupancies
     dimensions: null
-    errordefault: 1, except for Ground-state static calculations ([[optdriver]]=0,
-        [[ionmov]]<6) with spin-orbit coupling ([[pawspnorb]]=1), density mixing ([[iscf]]>=10)
-        and time-reversal symmetry desactivated for k-points ([[kptopt]]/=1 or 2)
-        [error reading default]
+    errordefault: 1, except for Ground-state static calculations ([[optdriver]]=0, [[ionmov]]<6) with spin-orbit coupling ([[pawspnorb]]=1), density mixing ([[iscf]]>=10) and time-reversal symmetry desactivated for k-points ([[kptopt]]/=1 or 2) [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -17040,8 +16995,7 @@
     defaultval: null
     definition: PAW - Energy CUToff for the Double Grid
     dimensions: null
-    errordefault: -1, so pawecutdg MUST be specified for PAW calculations. [error
-        reading default]
+    errordefault: -1, so pawecutdg MUST be specified for PAW calculations. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -17117,8 +17071,7 @@
 - !variable
     category: ''
     defaultval: 10
-    definition: PAW - L angular momentum used to CUT the development in moments of
-        the Densitites
+    definition: PAW - L angular momentum used to CUT the development in moments of the Densitites
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -17278,8 +17231,7 @@
 - !variable
     category: ''
     defaultval: 13
-    definition: PAW - Number of PHI angles used to discretize the sphere around each
-        atom.
+    definition: PAW - Number of PHI angles used to discretize the sphere around each atom.
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -17301,8 +17253,7 @@
 - !variable
     category: ''
     defaultval: 12
-    definition: PAW - Number of THETA angles used to discretize the sphere around
-        each atom.
+    definition: PAW - Number of THETA angles used to discretize the sphere around each atom.
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -17324,8 +17275,7 @@
 - !variable
     category: ''
     defaultval: 1
-    definition: PAW - only compute Non-Zero LM-moments of the contributions to the
-        density from the spheres
+    definition: PAW - only compute Non-Zero LM-moments of the contributions to the density from the spheres
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -17832,8 +17782,7 @@
 - !variable
     category: ''
     defaultval: 1
-    definition: PAW - option for the USE of CPrj in memory (cprj=WF projected with
-        NL projector)
+    definition: PAW - option for the USE of CPrj in memory (cprj=WF projected with NL projector)
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -18074,8 +18023,7 @@
     definition: Projected Local Orbital WANnier functions,  L values to use for CALCulation
     dimensions: null
     errordefault: ''
-    errordimensions: integer array plowan_lcalc(\sum_plowan_natom plowan_nbl(iatom))
-        [error reading dimensions]
+    errordimensions: integer array plowan_lcalc(\sum_plowan_natom plowan_nbl(iatom)) [error reading dimensions]
     errortype: ''
     range: null
     section: vardev
@@ -18125,10 +18073,9 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 0
-    definition: 'Projected Local Orbital WANnier functions,  Number of Translation
-        on which the real space values of
-
-        energy is computed'
+    definition: |-
+        Projected Local Orbital WANnier functions,  Number of Translation on which the real space values of
+        energy is computed
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -18147,12 +18094,10 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: -1
-    definition: Projected Local Orbital WANnier functions,  PROJectors values to use
-        for CALCulation
+    definition: Projected Local Orbital WANnier functions,  PROJectors values to use for CALCulation
     dimensions: null
     errordefault: ''
-    errordimensions: integer array plowan_projcalc(\sum_plowan_natom plowan_nbl(iatom))
-        [error reading dimensions]
+    errordimensions: integer array plowan_projcalc(\sum_plowan_natom plowan_nbl(iatom)) [error reading dimensions]
     errortype: ''
     range: null
     section: vardev
@@ -18504,8 +18449,9 @@
     vartype: real
 - !variable
     category: '[[ENERGY]]'
-    defaultval: 1.0e-06
-    definition: 'POSITRON calculation: TOLerance on the DiFference of total Energy'
+    defaultval: 1.0E-6
+    definition: 'POSITRON calculation: TOLerance on the DiFference of total
+        Energy'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -18962,8 +18908,7 @@
     defaultval: null
     definition: PRinT the DENsity
     dimensions: null
-    errordefault: 1. (was 0 before v5.3), except when [[nimage]]>1 [error reading
-        default]
+    errordefault: 1. (was 0 before v5.3), except when [[nimage]]>1 [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -19112,8 +19057,7 @@
     defaultval: null
     definition: PRinT integral of DENsity inside atomic SPHeres
     dimensions: null
-    errordefault: 0 except when antiferro-magnetism is activated ([[nsppol]]=1, [[nspden]]=2).
-        [error reading default]
+    errordefault: 0 except when antiferro-magnetism is activated ([[nsppol]]=1, [[nspden]]=2). [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -20986,8 +20930,7 @@
     definition: Radii of the ATomic SPHere(s)
     dimensions:
     - '[[ntypat]]'
-    errordefault: 2.0 Bohr for norm-conserving psps, PAW radius (found in PAW dataset
-        file) for PAW [error reading default]
+    errordefault: 2.0 Bohr for norm-conserving psps, PAW radius (found in PAW dataset file) for PAW [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -21459,8 +21402,8 @@
     defaultval:
     - 1
     - 1
-    definition: 'non-linear Response Function, 3rd mixed perturbation : limits of
-        ATomic POLarisations'
+    definition: 'non-linear Response Function, 3rd mixed perturbation : limits
+        of ATomic POLarisations'
     dimensions:
     - 2
     errordefault: ''
@@ -21575,7 +21518,8 @@
 - !variable
     category: NON-LINEAR
     defaultval: 0
-    definition: 'non-linear Response Function, 3rd mixed perturbation : ELectric FielD'
+    definition: 'non-linear Response Function, 3rd mixed perturbation : ELectric
+        FielD'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -21651,8 +21595,8 @@
     defaultval:
     - 1
     - 1
-    definition: 'non-linear Response Function, 3rd mixed perturbation : limits of
-        ATomic POLarisations'
+    definition: 'non-linear Response Function, 3rd mixed perturbation : limits
+        of ATomic POLarisations'
     dimensions:
     - 2
     errordefault: ''
@@ -21767,7 +21711,8 @@
 - !variable
     category: NON-LINEAR
     defaultval: 0
-    definition: 'non-linear Response Function, 3rd mixed perturbation : ELectric FielD'
+    definition: 'non-linear Response Function, 3rd mixed perturbation : ELectric
+        FielD'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -21843,8 +21788,8 @@
     defaultval:
     - 1
     - 1
-    definition: 'non-linear Response Function, 3rd mixed perturbation : limits of
-        ATomic POLarisations'
+    definition: 'non-linear Response Function, 3rd mixed perturbation : limits
+        of ATomic POLarisations'
     dimensions:
     - 2
     errordefault: ''
@@ -21959,7 +21904,8 @@
 - !variable
     category: NON-LINEAR
     defaultval: 0
-    definition: 'non-linear Response Function, 3rd mixed perturbation : ELectric FielD'
+    definition: 'non-linear Response Function, 3rd mixed perturbation : ELectric
+        FielD'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -22078,8 +22024,8 @@
     defaultval:
     - 1
     - 1
-    definition: 'non-linear Response Function, 3rd mixed perturbation : limits of
-        ATomic POLarisations'
+    definition: 'non-linear Response Function, 3rd mixed perturbation : limits
+        of ATomic POLarisations'
     dimensions:
     - 2
     errordefault: ''
@@ -22194,7 +22140,8 @@
 - !variable
     category: NON-LINEAR
     defaultval: 0
-    definition: 'non-linear Response Function, 3rd mixed perturbation : ELectric FielD'
+    definition: 'non-linear Response Function, 3rd mixed perturbation : ELectric
+        FielD'
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -22388,10 +22335,11 @@
     category: '[[EVOLVING]] (if [[ionmov]]==2 and [[optcell]]/=0)'
     defaultval: null
     definition: Real space PRIMitive translations
-    dimensions: null
+    dimensions: 
+    -  3
+    -  3
     errordefault: 3x3 unity matrix. [error reading default]
-    errordimensions: real array rprim(3,3), represented internally as rprim(3,3,[[nimage]])
-        [error reading dimensions]
+    errordimensions: real array rprim(3,3), represented internally as rprim(3,3,[[nimage]]) [error reading dimensions]
     errortype: ''
     range: null
     section: varbas
@@ -22534,8 +22482,7 @@
     definition: Real space PRIMitive translations, Dimensional
     dimensions: null
     errordefault: None [error reading default]
-    errordimensions: real array rprimd(3,3), represented internally as rprimd(3,3,[[nimage]])
-        [error reading dimensions]
+    errordimensions: real array rprimd(3,3), represented internally as rprimd(3,3,[[nimage]]) [error reading dimensions]
     errortype: ''
     range: null
     section: varbas
@@ -23351,9 +23298,7 @@
     definition: SPIN for AToms
     dimensions: null
     errordefault: ''
-    errordimensions: real array spinat(3,[[natom]]) or spinat(3,[[natrd]]) if the
-        symmetriser is used [error reading dimensions][ text after dimensions moved
-        to text ! ]
+    errordimensions: real array spinat(3,[[natom]]) or spinat(3,[[natrd]]) if the symmetriser is used [error reading dimensions][ text after dimensions moved to text ! ]
     errortype: ''
     range: null
     section: vargs
@@ -24424,7 +24369,7 @@
     vartype: real
 - !variable
     category: ''
-    defaultval: 1.0e-08
+    defaultval: 1.0E-8
     definition: TOLERANCE for SYMmetries
     dimensions: null
     errordefault: ''
@@ -24671,8 +24616,8 @@
     dimensions:
     - '[[natom]]'
     errordefault: 1 (for [[natom]]=1) [error reading default]
-    errordimensions: 'integer array typat([[natom]]) (or : typat([[natrd]]), if the
-        geometry builder is used) [error reading dimensions]'
+    errordimensions: 'integer array typat([[natom]]) (or : typat([[natrd]]),
+        if the geometry builder is used) [error reading dimensions]'
     errortype: ''
     range: null
     section: varbas
@@ -24714,8 +24659,7 @@
 - !variable
     category: '[[GW]]'
     defaultval: 0
-    definition: calculation of the screened interaction U with the Constrained RPA
-        method
+    definition: calculation of the screened interaction U with the Constrained RPA method
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -24756,8 +24700,7 @@
 - !variable
     category: '[[GW]]'
     defaultval: -1
-    definition: For the calculation of U with the Constrained RPA method, gives correlated
-        BANDS
+    definition: For the calculation of U with the Constrained RPA method, gives correlated BANDS
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -24775,8 +24718,7 @@
 - !variable
     category: '[[GW]]'
     defaultval: -1
-    definition: For the calculation of U with the Constrained RPA method, gives energy
-        WINDOW
+    definition: For the calculation of U with the Constrained RPA method, gives energy WINDOW
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -24799,8 +24741,7 @@
     definition: Upper limit on DaTa SETs
     dimensions:
     - 2
-    errordefault: No Default (since it is not used when it is not defined). [error
-        reading default]
+    errordefault: No Default (since it is not used when it is not defined). [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -24890,8 +24831,7 @@
     defaultval: null
     definition: USE the GEMM routine for the application of the NON-Local OPerator
     dimensions: null
-    errordefault: 0 because it is not usually worth using it unless bandpp is large
-        and it requires additional memory [error reading default]
+    errordefault: 0 because it is not usually worth using it unless bandpp is large and it requires additional memory [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -24920,8 +24860,7 @@
     defaultval: null
     definition: activate USE of GPU accelerators with CUDA (nvidia)
     dimensions: null
-    errordefault: 1 for ground-state calculations ([[optdriver]]=0) when ABINIT has
-        been compiled using cuda, 0 otherwise [error reading default]
+    errordefault: 1 for ground-state calculations ([[optdriver]]=0) when ABINIT has been compiled using cuda, 0 otherwise [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -24957,8 +24896,7 @@
     defaultval: null
     definition: USE NON-SCF calculation of GKK matrix elements (electron phonon)
     dimensions: null
-    errordefault: 0 for the moment (do not use non-scf method) For old behavior set
-        to 0. [error reading default]
+    errordefault: 0 for the moment (do not use non-scf method) For old behavior set to 0. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -25440,9 +25378,7 @@
     defaultval: null
     definition: USE YLM (the spherical harmonics)
     dimensions: null
-    errordefault: 0 for norm-conserving pseudopotential(s), 1 for Projector Augmented-Wave
-        (PAW), 1 when the recursion method is used ([[tfkinfunc]]=1). [error reading
-        default]
+    errordefault: 0 for norm-conserving pseudopotential(s), 1 for Projector Augmented-Wave (PAW), 1 when the recursion method is used ([[tfkinfunc]]=1). [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -25689,9 +25625,9 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 30
-    definition: 'vdW-DF RATIO between the highest and
-
-        lowest Angle.'
+    definition: |-
+        vdW-DF RATIO between the highest and
+        lowest Angle.
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -25755,9 +25691,9 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 20
-    definition: 'vdW-DF RATIO between the highest and
-
-        lowest D.'
+    definition: |-
+        vdW-DF RATIO between the highest and
+        lowest D.
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -25917,9 +25853,9 @@
 - !variable
     category: '[[DEVELOP]]'
     defaultval: 20
-    definition: 'vdW-DF RATIO between highest and
-
-        lowest Q'
+    definition: |-
+        vdW-DF RATIO between highest and
+        lowest Q
     dimensions: null
     errordefault: ''
     errordimensions: ''
@@ -25986,7 +25922,7 @@
     vartype: real
 - !variable
     category: '[[DEVELOP]]'
-    defaultval: 1.0e-13
+    defaultval: 1.0E-13
     definition: vdW-DF global TOLERANCE.
     dimensions: null
     errordefault: ''
@@ -26269,8 +26205,7 @@
     definition: VELocity
     dimensions: null
     errordefault: 3*[[natom]] 0's. [error reading default]
-    errordimensions: real array vel(3,[[natom]]) represented internally as vel(3,[[natom]],[[nimage]])
-        [error reading dimensions]
+    errordimensions: real array vel(3,[[natom]]) represented internally as vel(3,[[natom]],[[nimage]]) [error reading dimensions]
     errortype: ''
     range: null
     section: varrlx
@@ -26302,8 +26237,7 @@
     definition: VELocity of the CELL parameters
     dimensions: null
     errordefault: 3*3 0's. [error reading default]
-    errordimensions: real array vel_cell(3,3) represented internally as vel_cell(3,3,[[nimage]])
-        [error reading dimensions]
+    errordimensions: real array vel_cell(3,3) represented internally as vel_cell(3,3,[[nimage]]) [error reading dimensions]
     errortype: ''
     range: null
     section: varrlx
@@ -26587,8 +26521,7 @@
     defaultval: null
     definition: WaveFunction OPTimisation ALGorithm
     dimensions: null
-    errordefault: 0 when [[usepaw]]=0 (norm-conserving pseudopotentials),<br>10 when
-        [[usepaw]]=1 (PAW).<br>Default is 14 if [[paral_kgb]]=1. [error reading default]
+    errordefault: 0 when [[usepaw]]=0 (norm-conserving pseudopotentials),<br>10 when [[usepaw]]=1 (PAW).<br>Default is 14 if [[paral_kgb]]=1. [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -26954,14 +26887,12 @@
 - !variable
     category: '[[NOT INTERNAL]]'
     defaultval: null
-    definition: vectors (X) of atom positions in cartesian coordinates -length in
-        ANGSTrom-
+    definition: vectors (X) of atom positions in cartesian coordinates -length in ANGSTrom-
     dimensions:
     - 3
     - '[[natom]]'
     errordefault: None [error reading default]
-    errordimensions: real array xangst(3,[[natom]]) (or xangst(3,[[natrd]]) if the
-        geometry builder is used) [error reading dimensions]
+    errordimensions: real array xangst(3,[[natom]]) (or xangst(3,[[natrd]]) if the geometry builder is used) [error reading dimensions]
     errortype: ''
     range: null
     section: varbas
@@ -26995,7 +26926,7 @@
     vartype: real
 - !variable
     category: '[[DEVELOP]]'
-    defaultval: 1.0e-14
+    defaultval: 1.0E-14
     definition: eXchange-Correlation - DENsity POSitivity value
     dimensions: null
     errordefault: ''
@@ -27063,8 +26994,7 @@
     - 3
     - '[[natom]]'
     errordefault: None [error reading default]
-    errordimensions: real array xcart(3,[[natom]]) (or xcart(3,[[natrd]]) if the geometry
-        builder is used) [error reading dimensions]
+    errordimensions: real array xcart(3,[[natom]]) (or xcart(3,[[natrd]]) if the geometry builder is used) [error reading dimensions]
     errortype: ''
     range: null
     section: varbas
@@ -27133,9 +27063,7 @@
     - 3
     - '[[natom]]'
     errordefault: all 0.0d0 [error reading default]
-    errordimensions: real array xred(3,[[natom]]) (or xred(3,[[natrd]]) if the geometry
-        builder is used), represented internally as xred(3,[[natom]],[[nimage]]) [error
-        reading dimensions]
+    errordimensions: real array xred(3,[[natom]]) (or xred(3,[[natrd]]) if the geometry builder is used), represented internally as xred(3,[[natom]],[[nimage]]) [error reading dimensions]
     errortype: ''
     range: null
     section: varbas
@@ -27174,13 +27102,11 @@
 - !variable
     category: </a>
     defaultval: null
-    definition: X(position) in REDuced coordinates of the SPHeres for dos projection
-        in the EXTRA set
+    definition: X(position) in REDuced coordinates of the SPHeres for dos projection in the EXTRA set
     dimensions:
     - 3
     - '[[natsph_extra]]'
-    errordefault: unallocated unless [[natsph_extra]] is greater than 0 [error reading
-        default]
+    errordefault: unallocated unless [[natsph_extra]] is greater than 0 [error reading default]
     errordimensions: ''
     errortype: ''
     range: null
@@ -27314,3 +27240,4 @@
         </p>
     varname: znucl
     vartype: real
+
