@@ -46,6 +46,7 @@
 
 package abinitgui.tests;
 
+import abinitgui.parser.AbinitGeometry;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -56,6 +57,7 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import abinitgui.parser.AbinitInput;
+import java.util.HashMap;
 
 public class TestParser {
     
@@ -163,14 +165,52 @@ public class TestParser {
     
     public static void testOneFile(String name, PrintWriter pw)
     {
+        boolean isExc = false;
+        AbinitInput ai = new AbinitInput();
         try {
             //pw.print("Reading file : "+name+" ...");
 
-            new AbinitInput().readFromFile(name);
+            ai.readFromFile(name);
+            
+            /*if(jdtset == null)
+            {
+                return;
+            }*/ // TODO: ? voir plus haut !!
             //pw.println("OK !");
         } catch (Exception ex) {
+            System.err.println("Parsing file : "+name+" : Failed (Msg = "+ex.getMessage()+")");
+            isExc =true;
             ex.printStackTrace();
             pw.println("Parsing file : "+name+" : Failed (Msg = "+ex.getMessage()+")");
+            //Logger.getLogger(TestParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(isExc)
+            return;
+        
+        try{
+        
+            HashMap<String,Object> values;
+            if(ai.isUsejdtset())
+            {
+                values = ai.getAllDatasets().get(ai.getJdtsets().get(0));
+            }
+            else
+            {
+                values = ai.getAllDatasets().get(0);
+            }
+            
+            if(values == null)
+            {
+                throw new Exception("GetAllDatasets returned null");
+            }
+            
+            AbinitGeometry geom = new AbinitGeometry();
+            geom.loadData(values);
+            
+        } catch(Exception exc) {
+            System.err.println("Building geometry from file : "+name+" : Failed (Msg = "+exc.getMessage()+")");
+            exc.printStackTrace();
+            pw.println("Building geometry from file : "+name+" : Failed (Msg = "+exc.getMessage()+")");
             //Logger.getLogger(TestParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
