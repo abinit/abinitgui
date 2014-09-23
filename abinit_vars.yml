@@ -881,7 +881,7 @@
     section: varff
     text: |-
         <p>
-         Perform finite magnetic field calculation. THIS CODE IS UNDER [[DEVELOP]]MENT AND IS NOT READY FOR USE.
+         Perform finite magnetic field calculation. THIS CODE IS UNDER DEVELOPMENT AND IS NOT READY FOR USE.
         </p>
     varname: bfield
     vartype: real
@@ -1085,7 +1085,7 @@
           <li>
            3 =&gt;
         Conjugate-gradient method
-        [STILL UNDER [[DEVELOP]]MENT]
+        [STILL UNDER DEVELOPMENT]
         Only available for resonant calculations.
           </li>
          </ul>
@@ -3455,7 +3455,7 @@
     text: |-
         <p>
          <br />
-         dmftbandi and dmftbandf are the first and last bands taken into account in the Projected Local
+         [[dmftbandi]] and [[dmftbandf]] are the first and last bands taken into account in the Projected Local
         Orbitals scheme of LDA+DMFT. They thus define the energy window used to define Wannier Functions.
         (see  Amadon, B., Lechermann, F., Georges, A., Jollet, F., Wehling, T. O., and Lichtenstein, A. I. Phys. Rev. B 77(20), (2008).)
         </p>
@@ -3860,7 +3860,7 @@
     defaultval: null
     definition: DYNamics of the IMAGE
     dimensions:
-    - nimage
+    - '[[nimage]]'
     errordefault: <b>dynimage(:)</b>=1; if [[imgmov]]=2 or 5 (String Method, NEB), <b>dynimage(1)</b>=0 and <b>dynimage([[nimage]])</b>=0. [error reading default]
     errordimensions: ''
     errortype: ''
@@ -4220,6 +4220,34 @@
         </p>
     varname: efield
     vartype: real
+- !variable
+    category: '[[RESPFN]]'
+    defaultval: 0
+    definition: EFfective MASs
+    dimensions: null
+    errordefault: ''
+    errordimensions: ''
+    errortype: ''
+    range: null
+    section: varrf
+    text: |-
+        <p>
+         Turns on effective mass tensor calculations.
+        Such calculations requires the non-self-consistent calculation
+        of derivatives with respect to k, in the same dataset.
+        It must therefore be used with [[rfelfd]]=2.
+         <br />
+         <ul>
+          <li>
+           0=&gt;no effective mass tensor calculation
+          </li>
+          <li>
+           1=&gt;effective mass tensor calculation
+          </li>
+         </ul>
+        </p>
+    varname: efmas
+    vartype: integer
 - !variable
     category: '[[RESPFN]],''[[ENERGY]]'''
     defaultval: !valuewithunit
@@ -8032,7 +8060,7 @@
          <br />
          If [[ieig2rf]] is set to 3, the second-order electronic eigenvalues will be calculated from the DFPT method (sum over states) but using a different part of the code. This is equivalent to [[ieig2rf]] = 1 [debuging]
          <br />
-         If [[ieig2rf]] is set to 4, the second-order electronic eigenvalues will be calculated from the dynamical DFPT method (Sternheimer).
+         If [[ieig2rf]] is set to 4, the second-order electronic eigenvalues will be calculated from the dynamical DFPT method (Sternheimer). Note that [[ieig2rf]]=4 can only be used if Abinit is compiled with NETCDF support.
          <br />
          Related variables : [[bdeigrf]],[[elph2_imagden]],[[getgam_eig2nkq]],[[smdelta]]
         </p>
@@ -8393,10 +8421,10 @@
         the electronic dielectric matrix instead of the RPA one.
           </li>
           <li>
-           Between 71 and 78 =&gt; STILL UNDER [[DEVELOP]]MENT -- NOT USABLE ; Use the modified Kerker preconditioner with a real-space formulation (basic formulation is shown at [[dielng]]). The dielectric matrix is approximated thanks to  [[diemac]] and [[dielng]].  Note that [[diemix]] is also used.
+           Between 71 and 78 =&gt; STILL UNDER DEVELOPMENT -- NOT USABLE ; Use the modified Kerker preconditioner with a real-space formulation (basic formulation is shown at [[dielng]]). The dielectric matrix is approximated thanks to  [[diemac]] and [[dielng]].  Note that [[diemix]] is also used.
           </li>
           <li>
-           79 =&gt; STILL UNDER [[DEVELOP]]MENT -- NOT USABLE ; same as previous but with an alternate algorithm.
+           79 =&gt; STILL UNDER DEVELOPMENT -- NOT USABLE ; same as previous but with an alternate algorithm.
           </li>
           <li>
            141 to 169 =&gt; same as Between 41 and 69 (but, the dielectric matrix is also recomputed every iprcel modulo 10 step).
@@ -8505,7 +8533,7 @@
     section: vargs
     text: |
         <p>
-         Used when [[iscf]]&gt;0, to use the TFvW preconditioner. This is still in an early [[DEVELOP]]MENT stage and is not usable as is.
+         Used when [[iscf]]&gt;0, to use the TFvW preconditioner. This is still in an early DEVELOPMENT stage and is not usable as is.
          <ul>
           <li>
            0 =&gt; not TFvW preconditioning applied ;
@@ -15866,20 +15894,15 @@
     errordimensions: ''
     errortype: ''
     range: null
-    section: varbas
+    section: varrlx
     text: |-
         <p>
-         Gives the number of types of atoms.  E.g. for
-        a homopolar system (e.g. pure Si) [[ntypat]] is 1, while for BaTiO3,
-        [[ntypat]] is 3.
+         Gives the number of types of atoms. E.g. for
+        a homopolar system (e.g. pure Si) [[ntypat]] is 1.
          <br />
-         Except when alchemical mixing of pseudopotentials is used, the number
-        of types of atoms will be equal to the number of pseudopotentials
-        [[npsp]] to be provided by the user.
-        Thus, the code will try to read the same number of pseudopotential files,
-        whose names should have been given in the "files" file.
+         The code tries to read the same number of pseudopotential files.
          <br />
-         The first pseudopotential will be assigned the type number 1, and so
+         The first pseudopotential is assigned type number 1, and so
         on ...
         </p>
     varname: ntypat
@@ -16689,7 +16712,7 @@
         <ul>
          <li>
           If set to 1, calculate the orbital magnetization. THIS CODE
-        IS UNDER [[DEVELOP]]MENT AND IS NOT READY FOR USE.
+        IS UNDER DEVELOPMENT AND IS NOT READY FOR USE.
          </li>
         </ul>
     varname: orbmag
@@ -18897,7 +18920,7 @@
          <ul>
           <li>
            If set to 1, calculate the chemical shielding at each atomic site in the unit cell. THIS CODE
-        IS UNDER [[DEVELOP]]MENT AND IS NOT READY FOR USE.
+        IS UNDER DEVELOPMENT AND IS NOT READY FOR USE.
           </li>
          </ul>
         </p>
@@ -22335,9 +22358,9 @@
     category: '[[EVOLVING]] (if [[ionmov]]==2 and [[optcell]]/=0)'
     defaultval: null
     definition: Real space PRIMitive translations
-    dimensions: 
-    -  3
-    -  3
+    dimensions:
+    - 3
+    - 3
     errordefault: 3x3 unity matrix. [error reading default]
     errordimensions: real array rprim(3,3), represented internally as rprim(3,3,[[nimage]]) [error reading dimensions]
     errortype: ''
@@ -22480,7 +22503,9 @@
         [[ionmov]]==2 and [[optcell]]/=0)'
     defaultval: null
     definition: Real space PRIMitive translations, Dimensional
-    dimensions: null
+    dimensions:
+    - 3
+    - 3
     errordefault: None [error reading default]
     errordimensions: real array rprimd(3,3), represented internally as rprimd(3,3,[[nimage]]) [error reading dimensions]
     errortype: ''
@@ -26543,7 +26568,7 @@
         bands, with possibility to parallelize over blocks of states (or bands).
         The number of states in a block
         is defined in [[nbdblock]].
-        THIS IS STILL IN [[DEVELOP]]MENT.
+        THIS IS STILL IN DEVELOPMENT.
           </li>
           <li>
            [[wfoptalg]]=3 : minimisation of the residual with respect
