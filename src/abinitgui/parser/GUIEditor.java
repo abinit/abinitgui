@@ -63,7 +63,8 @@ public class GUIEditor extends JFrame {
     private DatasetModel model;
     private ArrayList<HashMap<String,Object>> dataTable;
     
-    private AbinitInput input = null;
+    private AbinitInputJEval inputEval = null;
+    private AbinitInputMapping inputMapping = null;
     
     //private String[] toHide = new String[]{"ndtset","spgroup","bravais","kptns","nelect",
     //             "ntyppure","prtpmp","rprimd_orig", "rprimd","xclevel","ziontypat"};
@@ -95,10 +96,10 @@ public class GUIEditor extends JFrame {
         dataTable.clear();
         this.fileName = fileName;
         
-        input = new AbinitInput();
+        inputEval = new AbinitInputJEval();
 
         try{
-            input.readFromFile(fileName);
+            inputMapping = inputEval.readFromFile(fileName);
         } catch(IOException e)
         {
             MainFrame.printERR("Unable to parse fileName = "+fileName+".");
@@ -107,15 +108,15 @@ public class GUIEditor extends JFrame {
         }
         
         Integer[] data;
-        if(input.getNdtset() == 1 || input.getNdtset() == 0)
+        if(inputMapping.getNdtset() == 1 || inputMapping.getNdtset() == 0)
         {
             data = new Integer[1];
             data[0] = 1;
         }
         else
         {
-            int ndtset = input.getNdtset();
-            data = input.getJdtsets().toArray(new Integer[0]);
+            int ndtset = inputMapping.getNdtset();
+            data = inputMapping.getJdtsets().toArray(new Integer[0]);
         }
         
         dtsetList.setListData(data);
@@ -272,17 +273,8 @@ public class GUIEditor extends JFrame {
             {
                 return;
             }*/ // TODO: ? voir plus haut !!
-            HashMap<String,Object> values;
-            if(input.isUsejdtset())
-            {
-                values = input.getAllDatasets().get(jdtset);
-            }
-            else
-            {
-                values = input.getAllDatasets().get(0);
-            }
             
-            geom.loadData(values);
+            geom.loadData(inputMapping, jdtset);
 
             /*if (geom == null) { // TODO: si c'était null on aurait déjà une exception après la ligne précédente !!
                 MainFrame.printERR("Unable to load data from the parser !");
@@ -317,25 +309,25 @@ public class GUIEditor extends JFrame {
         {
             return;
         }
-        HashMap<String,Object> values;
-        if(input.isUsejdtset())
+        AbinitDataset values;
+        if(inputMapping.isUsejdtset())
         {
-            values = input.getAllDatasets().get(jdtset);
+            values = inputMapping.getDataset(jdtset);
         }
         else
         {
-            values = input.getAllDatasets().get(0);
+            values = inputMapping.getDataset(0);
         }
         
         dataTable.clear();
         
-        Iterator<String> iter = values.keySet().iterator();
+        Iterator<AbinitVariable> iter = values.iterator();
         
         while(iter.hasNext())
         {
-            String o = iter.next();
+            AbinitVariable o = iter.next();
             
-            Object value = values.get(o);
+            Object value = o.getValue();
             System.out.println(""+o+" = "+value);
             
             HashMap<String,Object> map = new HashMap<>();

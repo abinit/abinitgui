@@ -57,6 +57,8 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import abinitgui.parser.AbinitInput;
+import abinitgui.parser.AbinitInputJEval;
+import abinitgui.parser.AbinitInputMapping;
 import java.util.HashMap;
 
 public class TestParser {
@@ -166,11 +168,13 @@ public class TestParser {
     public static void testOneFile(String name, PrintWriter pw)
     {
         boolean isExc = false;
-        AbinitInput ai = new AbinitInput();
+        AbinitInputJEval ai = new AbinitInputJEval();
+        AbinitInputMapping mapping = null;
         try {
             //pw.print("Reading file : "+name+" ...");
 
-            ai.readFromFile(name);
+            mapping = ai.readFromFile(name);
+            mapping.evaluateAll();
             
             /*if(jdtset == null)
             {
@@ -189,7 +193,7 @@ public class TestParser {
         
         try{
         
-            HashMap<String,Object> values;
+            /*HashMap<String,Object> values;
             if(ai.isUsejdtset())
             {
                 values = ai.getAllDatasets().get(ai.getJdtsets().get(0));
@@ -197,15 +201,15 @@ public class TestParser {
             else
             {
                 values = ai.getAllDatasets().get(0);
-            }
+            }*/
             
-            if(values == null)
+            /*if(values == null)
             {
                 throw new Exception("GetAllDatasets returned null");
-            }
+            }*/
             
             AbinitGeometry geom = new AbinitGeometry();
-            geom.loadData(values);
+            geom.loadData(mapping,0);
             
         } catch(Exception exc) {
             System.err.println("Building geometry from file : "+name+" : Failed (Msg = "+exc.getMessage()+")");

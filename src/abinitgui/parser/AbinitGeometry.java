@@ -169,67 +169,66 @@ public class AbinitGeometry {
         return s + "]";
     }
 
-    public void loadData(HashMap<String, Object> map) {
-        Iterator<String> iter = map.keySet().iterator();
+    public void loadData(AbinitInputMapping map, int idtset) {
 
-        Object o = map.get("natom");
+        AbinitVariable o = map.getVariable("natom",idtset);
         if (o != null) {
-            this.natom = (int) o;
+            this.natom = (int) (o.getValue());
         }
 
-        o = map.get("ntypat");
+        o = map.getVariable("ntypat",idtset);
         if (o != null) {
-            this.ntypat = (int) o;
+            this.ntypat = (int) (o.getValue());
         }
 
-        o = map.get("typat");
+        o = map.getVariable("typat",idtset);
         if (o != null) {
-            this.typat = (Integer[]) o;
+            this.typat = (Integer[]) (o.getValue());
         }
 
-        o = map.get("znucl");
+        o = map.getVariable("znucl",idtset);
         if (o != null) {
-            this.znucl = (Double[]) o;
+            this.znucl = (Double[]) (o.getValue());
         }
 
-        o = map.get("xred");
+        o = map.getVariable("xred",idtset);
         if (o != null) {
-            this.xred = (Double[][]) o;
+            this.xred = (Double[][]) (o.getValue());
         }
 
-        o = map.get("xcart");
+        o = map.getVariable("xcart",idtset);
         if (o != null) {
-            this.xcart = (Double[][]) o;
+            this.xcart = (Double[][]) (o.getValue());
         }
 
-        o = map.get("rprim");
+        o = map.getVariable("rprim",idtset);
         if (o != null) {
-            this.rprim = (Double[][]) o;
+            this.rprim = (Double[][]) (o.getValue());
         }
 
-        o = map.get("rprimd");
+        o = map.getVariable("rprimd",idtset);
         if (o != null) {
-            this.rprimd = (Double[][]) o;
+            this.rprimd = (Double[][]) (o.getValue());
         }
 
-        o = map.get("scalecart");
+        o = map.getVariable("scalecart",idtset);
         if (o != null) {
-            this.scalecart = (Double[]) o;
+            this.scalecart = (Double[]) (o.getValue());
         }
 
-        o = map.get("xangst");
+        o = map.getVariable("xangst",idtset);
         if (o != null) {
-            this.xangst = (Double[][]) o;
+            this.xangst = (Double[][]) (o.getValue());
         }
 
-        o = map.get("acell");
+        o = map.getVariable("acell",idtset);
         if (o != null) {
-            this.acell = (Double[]) o;
+            this.acell = (Double[]) (o.getValue());
         }
 
-        o = map.get("angdeg");
+        o = map.getVariable("angdeg",idtset);
         if (o != null) {
-            this.angdeg = (Double[]) o;
+            this.angdeg = (Double[]) (o.getValue());
         }
 
 
