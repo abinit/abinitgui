@@ -8,6 +8,7 @@ package abinitgui.parser;
 import abivars.MultipleValue;
 import abivars.Variable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;
@@ -120,7 +121,7 @@ public class AbinitVariable {
     
     public void evaluateDim(Evaluator evaluator) throws EvaluationException 
     {
-        if(getDocVariable().getVarname().equals("natom"))
+        if(getDocVariable().getVarname().equals("rprimd"))
         {
             System.out.println("dim for natom ");
             System.out.println(dims);
@@ -157,7 +158,7 @@ public class AbinitVariable {
     
     public void evaluateValue(Evaluator evaluator) throws EvaluationException
     {
-        if(getDocVariable().getVarname().equals("natom"))
+        if(getDocVariable().getVarname().equals("rprimd"))
         {
             System.out.println("value for natom ");
             System.out.println(dims);
@@ -183,8 +184,17 @@ public class AbinitVariable {
         {
             for(int i = 0; i < getAlldims.size(); i++)
             {
-                nbTotDims *= getAlldims.get(i);
+                int size = getAlldims.get(i);
+                if(size == 0)
+                {
+                    System.out.println("0 size for variable : "+docVariable.getVarname());
+                }
+                nbTotDims *= size;
             }
+        }
+        else
+        {
+            nbTotDims = -1;
         }
         
         String type = docVariable.getVartype();
@@ -197,6 +207,10 @@ public class AbinitVariable {
         {
             listValues.addAll((Set)myVal);
         }
+        else if(myVal instanceof ArrayList)
+        {
+            listValues.addAll((ArrayList)myVal);
+        }
         else if(myVal instanceof MultipleValue)
         {
             Object out = getDim(((MultipleValue)myVal).getValue(),evaluator,false);
@@ -205,36 +219,110 @@ public class AbinitVariable {
                 listValues.add(out);
             }
         }
-        
-        // We don't know the size of table
-        if(listValues.size() == 1)
+        if(docVariable.getVarname().equals("natom"))
         {
-            if(type.contains("integer"))
+            System.out.println("listValues = "+listValues);
+            System.out.println("myVal = "+myVal);
+            System.out.println("myVal = "+myVal.getClass());
+        }
+        
+        if(nbTotDims == -1)
+        {
+            // We don't know the size of table
+            if(listValues.size() == 1)
             {
-                this.value = (int)(listValues.get(0));
+                if(type.contains("integer"))
+                {
+                    this.value = (int)(listValues.get(0));
+                }
+                else if(type.contains("real"))
+                {
+                    this.value =  (listValues.get(0));
+                }
             }
-            else if(type.contains("real"))
+            else
             {
-                this.value =  (listValues.get(0));
+                if(type.contains("integer"))
+                {
+                    this.value =  listValues.toArray(new Integer[0]);
+                }
+                else if(type.contains("real"))
+                {
+                    try{
+                        this.value = listValues.toArray(new Double[0]);
+                    }
+                    catch(ArrayStoreException exc)
+                    {
+                        System.out.println("ArrayStoreException e");
+                        System.out.println(docVariable.getVarname());
+                        System.out.println("listValues = "+listValues);
+                    }
+                }
             }
         }
         else
         {
-            if(type.contains("integer"))
+            int[] dims = new int[getAlldims.size()];
+            for(int i = 0; i < getAlldims.size(); i++)
             {
-                this.value =  listValues.toArray(new Integer[0]);
+                dims[i] = getAlldims.get(i);
             }
-            else if(type.contains("real"))
+            
+            if(nbTotDims != listValues.size())
             {
-                try{
+                System.err.println("Mismatch for var = "+docVariable.getVarname()+" between doc dim ("+Arrays.toString(dims)+") and input file ("+listValues.size()+")");
+                return;
+            }
+            
+            if(dims.length > 2) // TODO: check if null
+            {
+                if(type.contains("integer"))
+                {
+                    this.value = listValues.toArray(new Integer[0]);
+                }
+                else if(type.contains("real"))
+                {
                     this.value = listValues.toArray(new Double[0]);
                 }
-                catch(ArrayStoreException exc)
+            }
+            else if(dims.length == 1)
+            {
+                if(type.contains("integer"))
                 {
-                    System.out.println("ArrayStoreException e");
-                    System.out.println(docVariable.getVarname());
-                    System.out.println("listValues = "+listValues);
+                    this.value = listValues.toArray(new Integer[0]);
                 }
+                else if(type.contains("real"))
+                {
+                    this.value = listValues.toArray(new Double[0]);
+                }
+            }
+            else if(dims.length == 2)
+            {
+                int length1 = dims[0];
+                int length2 = dims[1];
+
+                Number[][] tab = null;
+                if(type.contains("integer"))
+                {
+                    tab = new Integer[length1][length2];
+                }
+                else if(type.contains("real"))
+                {
+                    tab = new Double[length1][length2];
+                }
+
+                int index = 0;
+                System.out.println("listValues = "+listValues);
+                for(int i = 0; i < length2; i++)
+                {
+                    for(int k = 0; k < length1; k++)
+                    {
+                        // Still fortran convention Have to invert the reading sense !
+                        tab[k][i] = (Number)listValues.get(index);
+                        index++;
+                    }
+                }
+                this.value = tab;
             }
         }
     }
