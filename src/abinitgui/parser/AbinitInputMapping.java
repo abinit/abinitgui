@@ -5,6 +5,8 @@
  */
 package abinitgui.parser;
 
+import abivars.AllInputVars;
+import abivars.Variable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.sourceforge.jeval.EvaluationException;
@@ -22,10 +24,13 @@ public class AbinitInputMapping
     private boolean usedtsets;
     private boolean useudtset;
     private boolean usejdtset;
+    private AllInputVars database;
+    private AbinitDataset defaultDataset;
     
     public AbinitInputMapping()
     {
         allDatasets = new HashMap<>();
+        defaultDataset = null;
     }
     
     public void clean()
@@ -134,10 +139,61 @@ public class AbinitInputMapping
     public void setUsejdtset(boolean usejdtset) {
         this.usejdtset = usejdtset;
     }
+
+    /**
+     * @return the database
+     */
+    public AllInputVars getDatabase() {
+        return database;
+    }
+
+    /**
+     * @param database the database to set
+     */
+    public void setDatabase(AllInputVars database) {
+        this.database = database;
+    }
+    
+    public String createExprForJEval(Object value)
+    {
+        if(value instanceof String)
+        {
+            String s = (String)value;
+            s = s.replaceAll("\\[\\[","#{").replaceAll("\\]\\]","}");
+            return s;
+        }
+        
+        return "0";
+    }
+    
+    public void buildDefaultValues()
+    {
+        defaultDataset = new AbinitDataset();
+        for(String varname : database.getListKeys())
+        {
+            Variable var = database.getVar(varname);
+            AbinitVariable abivar = new AbinitVariable();
+            abivar.setDocVariable(var);
+            abivar.setInputValue(null);
+            defaultDataset.setVariable(varname, abivar);
+        }
+    }
     
     public void evaluateAll() throws EvaluationException
     {
         Evaluator evaluator = new Evaluator();
+        
+        // First create a fake dataset with default values ! 
+        // We will look in this dataset in case the value is not defined in the
+        // input file
+        buildDefaultValues();
+        
+        defaultDataset.evaluateAll(evaluator);
+        
+        System.out.println("   -------------------------------   ");
+        
+        
+        
         allDatasets.get(0).evaluateAll(evaluator);
         // Then I should set all the variables in evaluator with their values
         for(int idtset : getJdtsets())

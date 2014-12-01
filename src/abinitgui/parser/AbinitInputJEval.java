@@ -231,7 +231,7 @@ public class AbinitInputJEval
     private AbinitInputMapping buildDtset(HashMap<String, String> mapString) throws InvalidInputFileException {
         
         AbinitInputMapping allDatasets = new AbinitInputMapping();
-        
+        allDatasets.setDatabase(allInputs);
         
         // Find ndtset
         String ndtset_S = mapString.get("ndtset");
@@ -472,7 +472,8 @@ public class AbinitInputJEval
             Variable var = allInputs.getVar(name);
             Object o = getObjectFromArray(valueArray,name,var.getVartype(),var.getDimensions(), idtset, mapData);
             AbinitVariable curVar = new AbinitVariable();
-            curVar.setValue(o);
+            //curVar.setValue(o);
+            curVar.setInputValue(valueArray);
             curVar.setDocVariable(var);
             dataset.setVariable(name,curVar);
         }
