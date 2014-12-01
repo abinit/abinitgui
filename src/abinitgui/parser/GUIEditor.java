@@ -336,6 +336,7 @@ public class GUIEditor extends JFrame {
             String o = iter.next();
             
             Object value = values.get(o);
+            System.out.println(""+o+" = "+value);
             
             HashMap<String,Object> map = new HashMap<>();
             
@@ -423,6 +424,8 @@ public class GUIEditor extends JFrame {
                 }
                 else
                 {
+                    System.out.println(dataTable.get(row));
+                    System.out.println("o = "+o);
                     sb.append(o.toString());
                 }
                 

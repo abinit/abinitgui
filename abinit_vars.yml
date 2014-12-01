@@ -12354,7 +12354,7 @@
     definition: K PoinTs BOUNDarieS
     dimensions:
     - 3
-    - abs([[kptopt]])+1)
+    - abs([[kptopt]])+1
     excludes: null
     requires: null
     section: vargs

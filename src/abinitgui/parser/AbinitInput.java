@@ -47,6 +47,7 @@ For more information on the Abinit Project, please see
 package abinitgui.parser;
 
 import abivars.AllInputVars;
+import abivars.ValueWithConditions;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +57,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import abivars.Variable;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.sourceforge.jeval.EvaluationException;
+import net.sourceforge.jeval.Evaluator;
 
 // TODO : Change the way we build things. We should start by filling the table variable : value with the default values
 public class AbinitInput 
@@ -623,7 +628,7 @@ public class AbinitInput
 
         return listValues;
     }
-    
+   
     public int getDim(Object dim, HashMap<String, ArrayList<Object>> mapArray, int idtset) throws InvalidInputFileException
     {
         int nb = 0;
@@ -636,6 +641,74 @@ public class AbinitInput
             {
                 var = var.replaceAll("\\[\\[","").replaceAll("\\]\\]", "");
             }
+            if(mapArray.containsKey(var))
+            {
+                ArrayList<Object> curList = mapArray.get(var);
+                if(curList.size() > 1)
+                {
+                    throw new InvalidInputFileException("Fields specifying a dimension should be scalar !");
+                }
+                Object o = curList.get(0);
+                if(o instanceof Integer)
+                {
+                    return (int)o;
+                }
+                throw new InvalidInputFileException("Error reading dimensions from variable : "+var);
+            }
+            
+            // Try reading directly:
+            try{
+                int mydim = Integer.valueOf((String)dim);
+                return mydim;
+            }
+            catch(NumberFormatException e)
+            {
+                ;
+            }
+            
+            if(var.contains("+"))
+            {
+                String[] sv = var.split("\\+");
+                int acc = 0;
+                for(String expr : sv)
+                {
+                    acc += getDim(expr,mapArray,idtset);
+                    System.out.println(expr+" is : "+getDim(expr,mapArray,idtset));
+                }
+                return acc;
+            }
+            if(var.trim().startsWith("min("))
+            {
+                var = var.replace("min(","").trim();
+                if(var.endsWith(")"))
+                    var = var.substring(0,var.length()-1);
+                // Now var is var1,var2
+                String var1 = var.split(",")[0];
+                String var2 = var.split(",")[1];
+                return Math.min(getDim(var1,mapArray,idtset), getDim(var2,mapArray,idtset));
+            }
+            if(var.trim().startsWith("max("))
+            {
+                var = var.replace("max(","").trim();
+                if(var.endsWith(")"))
+                    var = var.substring(0,var.length()-1);
+                // Now var is var1,var2
+                String var1 = var.split(",")[0];
+                String var2 = var.split(",")[1];
+                return Math.max(getDim(var1,mapArray,idtset), getDim(var2,mapArray,idtset));
+            }
+            if(var.trim().startsWith("abs("))
+            {
+                System.out.println("var is : "+var);
+                var = var.replace("abs(","").trim();
+                if(var.endsWith(")"))
+                    var = var.substring(0,var.length()-1);
+                // Now var is var1
+                String var1 = var;
+                System.out.println("taking abs of : "+getDim(var1,mapArray,idtset));
+                return Math.abs(getDim(var1,mapArray,idtset));
+            }
+            
             try{
                 
                 Variable vard = allInputs.getVar(var);
@@ -835,27 +908,49 @@ public class AbinitInput
     {
         int[] dims = null;
         boolean checkDim = true;
-        if(dimensions != null)
+        if(dimensions != null && !dimensions.equals("scalar"))
         {
+            Object[] tab = null;
+            
             if(dimensions.getClass().isArray())
             {
-                Object[] tab = (Object[])dimensions;
+                tab = (Object[])dimensions;
+            }
+            else if(dimensions instanceof ArrayList)
+            {
+                ArrayList list = (ArrayList)dimensions;
                 
-                dims = new int[tab.length];
+                int length = list.size();
                 
-                for(int i = 0; i < tab.length; i++)
+                tab = new Object[length];
+                
+                for(int i = 0; i < length; i++)
                 {
-                    dims[i] = getDim(tab[i], mapArray, jdtset);
-                    if(dims[i] == -1)
-                    {
-                        checkDim = false;
-                    }
+                    tab[i] = list.get(i);
                 }
             }
-            else
+            else if(dimensions instanceof ValueWithConditions)
             {
-                System.out.println(dimensions.getClass());
+                System.err.println("ValueWithConditions for dimensions not yet supported by the parser !");
                 return null;
+            }
+            
+            if(tab == null)
+            {
+                System.err.println("Dimension class not recognized : "+dimensions.getClass());
+                System.err.println(dimensions);
+                return null;
+            }
+                
+            dims = new int[tab.length];
+
+            for(int i = 0; i < tab.length; i++)
+            {
+                dims[i] = getDim(tab[i], mapArray, jdtset);
+                if(dims[i] == -1)
+                {
+                    checkDim = false;
+                }
             }
         }
         else

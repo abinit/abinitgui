@@ -357,9 +357,6 @@ public class AbinitGeometry {
                     rprimd[i][j] = scalecart[i] * rprim[i][j] * acell[j] * ANGSTROMPERBOHR;
                 }
             }
-            System.out.println(printArray(rprimd));
-
-            System.out.println(printArray(acell));
         }
 
         if (xangst == null) {
