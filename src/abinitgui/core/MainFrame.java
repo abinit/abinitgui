@@ -220,7 +220,8 @@ public class MainFrame extends JFrame {
         guiEditor = new GUIEditor();
         allInputVars = new AllInputVars();
         allInputVars.loadVars("abinit_vars.yml");
-        abinitInputVars = new AbinitInputVars(allInputVars);
+        File fileOpened = new File("abinit_vars.yml");
+        abinitInputVars = new AbinitInputVars(allInputVars,fileOpened);
 
         submitScriptFrame = new SubmissionScriptFrame();
         jMenuClustepAndTB.setVisible(false);
