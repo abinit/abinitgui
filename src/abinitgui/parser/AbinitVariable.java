@@ -5,6 +5,7 @@
  */
 package abinitgui.parser;
 
+import abivars.MultipleValue;
 import abivars.Variable;
 import java.util.ArrayList;
 import java.util.Set;
@@ -20,6 +21,11 @@ public class AbinitVariable {
     private ArrayList<Object> inputValue;
     private Variable docVariable;
     private ArrayList<Integer> dims;
+    
+    public String toString()
+    {
+        return docVariable.getVarname()+" = "+value+" (from "+inputValue+")";
+    }
 
     /**
      * @return the value
@@ -35,17 +41,32 @@ public class AbinitVariable {
         this.value = value;
     }
     
-    public Object getDim(Object docDim, Evaluator evaluator) throws EvaluationException
+    public Object getDim(Object docDim, Evaluator evaluator, boolean isDim) throws EvaluationException
     {
+        String type = docVariable.getVartype();
         if(docDim instanceof String)
         {
             String dimS = (String)docDim;
             dimS = dimS.replaceAll("\\[\\[","#{").replaceAll("\\]\\]","}");
-            return evaluator.getNumberResult(dimS);
+            return (int)evaluator.getNumberResult(dimS);
         }
         else if(docDim instanceof Number)
         {
-            return docDim;
+            if(isDim)
+            {
+                return ((Number)docDim).intValue();
+            }
+            else
+            {
+                if(type.contains("real"))
+                {
+                    return ((Number)docDim).doubleValue();
+                }
+                else if(type.contains("integer"))
+                {
+                    return ((Number)docDim).intValue();
+                }
+            }
         }
         else if(docDim instanceof ArrayList)
         {
@@ -53,9 +74,41 @@ public class AbinitVariable {
             ArrayList<Object> dimL = (ArrayList<Object>)docDim;
             for(Object obj : dimL)
             {
-                list.add(getDim(obj,evaluator));
+                list.add(getDim(obj,evaluator, isDim));
             }
             return list;
+        }
+        else if(docDim instanceof MultipleValue)
+        {
+            MultipleValue mv = (MultipleValue)docDim;
+            Object obj = mv.getNumber();
+            Object obj2 = mv.getValue();
+            if(obj != null)
+            {
+                Object out = getDim(obj, evaluator, isDim);
+                Object out2 = getDim(obj2, evaluator, isDim);
+                System.out.println("number = "+out);
+                System.out.println("value = "+out2);
+                if(out instanceof Number && out2 instanceof Number)
+                {
+                    ArrayList<Number> list = new ArrayList<>();
+                    int nb = ((Number)out).intValue();
+
+                    while(nb-- > 0)
+                    {
+                       list.add((Number)out2);
+                    }
+                    return list;
+                }
+                else
+                {
+                    System.err.println("Not yet treated : "+docDim);
+                }
+            }
+            else
+            {
+                return mv;
+            }
         }
         else
         {
@@ -67,6 +120,13 @@ public class AbinitVariable {
     
     public void evaluateDim(Evaluator evaluator) throws EvaluationException 
     {
+        if(getDocVariable().getVarname().equals("natom"))
+        {
+            System.out.println("dim for natom ");
+            System.out.println(dims);
+            System.out.println(value);
+            System.out.println(inputValue);
+        }
         Object docDim = docVariable.getDimensions();
         if(docDim instanceof String && ((String)docDim).equals("scalar"))
         {
@@ -74,7 +134,7 @@ public class AbinitVariable {
         }
         else
         {
-            Object o = getDim(docDim, evaluator);
+            Object o = getDim(docDim, evaluator, true);
             if(o instanceof ArrayList)
             {
                 this.setDims((ArrayList<Integer>)o);
@@ -83,10 +143,11 @@ public class AbinitVariable {
             {
                 ArrayList<Integer> obj = new ArrayList<>();
                 obj.add((Integer)o);
+                this.setDims(obj);
             }
             else 
             {
-                System.err.println("Not yet treated, getDim returned : "+o);
+                System.err.println(docVariable.getVarname()+" Not yet treated, getDim returned : "+o);
             }
         }
         
@@ -96,6 +157,13 @@ public class AbinitVariable {
     
     public void evaluateValue(Evaluator evaluator) throws EvaluationException
     {
+        if(getDocVariable().getVarname().equals("natom"))
+        {
+            System.out.println("value for natom ");
+            System.out.println(dims);
+            System.out.println(value);
+            System.out.println(inputValue);
+        }
         Object data = getInputValue();
         ArrayList<Object> listValues = new ArrayList<Object>();
         
@@ -104,7 +172,23 @@ public class AbinitVariable {
             data = docVariable.getDefaultval();
         }
         
-        Object myVal = getDim(data, evaluator);
+        Object myVal = getDim(data, evaluator, false);
+        ArrayList<Integer> getAlldims = getDims();
+        int nbTotDims = 1;
+        if(getAlldims == null)
+        {
+            return;
+        }
+        if(getAlldims.size() > 0)
+        {
+            for(int i = 0; i < getAlldims.size(); i++)
+            {
+                nbTotDims *= getAlldims.get(i);
+            }
+        }
+        
+        String type = docVariable.getVartype();
+        
         if(myVal instanceof Number)
         {
             listValues.add(myVal);
@@ -113,8 +197,15 @@ public class AbinitVariable {
         {
             listValues.addAll((Set)myVal);
         }
+        else if(myVal instanceof MultipleValue)
+        {
+            Object out = getDim(((MultipleValue)myVal).getValue(),evaluator,false);
+            for(int i = 0; i < nbTotDims; i++)
+            {
+                listValues.add(out);
+            }
+        }
         
-        String type = docVariable.getVartype();
         // We don't know the size of table
         if(listValues.size() == 1)
         {
@@ -135,7 +226,15 @@ public class AbinitVariable {
             }
             else if(type.contains("real"))
             {
-                this.value = listValues.toArray(new Double[0]);
+                try{
+                    this.value = listValues.toArray(new Double[0]);
+                }
+                catch(ArrayStoreException exc)
+                {
+                    System.out.println("ArrayStoreException e");
+                    System.out.println(docVariable.getVarname());
+                    System.out.println("listValues = "+listValues);
+                }
             }
         }
     }

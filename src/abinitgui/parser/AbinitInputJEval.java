@@ -239,7 +239,7 @@ public class AbinitInputJEval
         if(ndtset_S != null)
         {
             allDatasets.setNdtset(Integer.parseInt(ndtset_S));
-            allDatasets.setUsedtsets(true);
+            allDatasets.setUseudtset(true);
         }
         
         String udtset_S = mapString.get("udtset");
@@ -623,7 +623,6 @@ public class AbinitInputJEval
                 }
             }
         }
-
         return listValues;
     }
    

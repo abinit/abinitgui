@@ -69,7 +69,7 @@ public class AbinitDataset implements Iterable<AbinitVariable>
                 }
             }
             
-            LinkedList<String> newVarsForVal = new LinkedList<>(varsForDim);
+            LinkedList<String> newVarsForVal = new LinkedList<>(varsForVal);
             for(String varname : newVarsForVal)
             {
                 AbinitVariable abivar = allData.get(varname);

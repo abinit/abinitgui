@@ -58,6 +58,12 @@ public class AbinitInputMapping
      */
     public AbinitVariable getVariable(String name, int idtset)
     {
+        if(name.equals("natom"))
+        {
+            System.out.println(getDataset(idtset).getVariable(name));
+            System.out.println(getDataset(0).getVariable(name));
+            System.out.println(defaultDataset.getVariable(name));
+        }
         AbinitVariable var = getDataset(idtset).getVariable(name);
         if(var == null)
         {
@@ -190,9 +196,7 @@ public class AbinitInputMapping
         
         defaultDataset.evaluateAll(evaluator);
         
-        System.out.println("   -------------------------------   ");
-        
-        
+        System.out.println("   -------------------------------   "); 
         
         allDatasets.get(0).evaluateAll(evaluator);
         // Then I should set all the variables in evaluator with their values
