@@ -253,6 +253,18 @@ public class AbinitGeometry {
                 + Math.abs(rprim[1][2])+Math.abs(rprim[2][1])) < 1e-8 &&
             rprim[0][0] == 1 && rprim[1][1] == 1 && rprim[2][2] == 1);
     }
+    
+    public boolean areZero(Double[][] table)
+    {
+        for(int i = 0; i < table.length; i++)
+        {
+            for(int j = 0; j < table[i].length; j++)
+            {
+                if(Math.abs(table[i][j]) > 1e-8) return false;
+            }
+        }
+        return true;
+    }
 
     public boolean fillData() {
         DecimalFormat df_rprim = new DecimalFormat("#0.0000000000000");
@@ -265,9 +277,13 @@ public class AbinitGeometry {
             MainFrame.printERR("Rprim & Rprimd are not null.");
             return false;
         }
+        
+        System.out.println(this);
 
-        if ((xred != null && xcart != null) || (xred != null && xangst != null)
-                || (xcart != null && xangst != null)) {
+        if ((xred != null && !areZero(xred)))
+        if (((xred != null && !areZero(xred)) && (xcart != null && !areZero(xcart)))
+                || ((xred != null && !areZero(xred)) && (xangst != null && !areZero(xangst)))
+                || ((xcart != null && !areZero(xcart)) && (xangst != null && !areZero(xangst)))) {
             MainFrame.printERR("Different positions assigned at the same time.");
             return false;
         }
@@ -303,7 +319,7 @@ public class AbinitGeometry {
                 angdeg[2] = 180 / Math.PI * Math.acos(dot12);
             }
 
-            if (rprim == null || isUnity(rprim)) {
+            if (rprim == null || (isUnity(rprim) && angdeg != null)) {
                 rprim = new Double[3][3];
                 Double angdeg1 = angdeg[0]; // angdeg(1)
                 Double angdeg2 = angdeg[1]; // angdeg(2)
@@ -412,6 +428,7 @@ public class AbinitGeometry {
         allpositions = new Double[allatoms][3];
         allznucl = new Double[allatoms];
 
+        System.out.println(this);
         for (int i = 0; i < natom; i++) {
             for (int x = 0; x < nbX; x++) {
                 for (int y = 0; y < nbY; y++) {
