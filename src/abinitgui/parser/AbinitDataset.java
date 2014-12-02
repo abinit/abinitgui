@@ -19,6 +19,7 @@ import net.sourceforge.jeval.Evaluator;
 public class AbinitDataset implements Iterable<AbinitVariable>
 {
     private HashMap<String,AbinitVariable> allData;
+    private DepTree tree;
     
     public AbinitDataset()
     {
@@ -42,7 +43,7 @@ public class AbinitDataset implements Iterable<AbinitVariable>
     
     public void evaluateAll(Evaluator evaluator) throws EvaluationException
     {
-        LinkedList<String> varsForDim = new LinkedList<>();
+        /**LinkedList<String> varsForDim = new LinkedList<>();
         LinkedList<String> varsForVal = new LinkedList<>();
         
         varsForDim.addAll(allData.keySet());
@@ -89,15 +90,14 @@ public class AbinitDataset implements Iterable<AbinitVariable>
         
         // At this point of the code, each variable has its dependencies:
         // TODO: Extract dependencies from the doc directly !
-        DepTree tree = new DepTree();
+        this.setTree(new DepTree());
         for(AbinitVariable abivar : allData.values())
         {
             System.out.println("Dependencies of "+abivar.getDocVariable().getVarname()+" : "+abivar.getListDeps());
-            tree.addDep(abivar.getDocVariable().getVarname(), abivar.getListDeps());
+            getTree().addDep(abivar.getDocVariable().getVarname(), abivar.getListDeps());
         }
         
-        System.out.println(tree.toString());
-        System.exit(0);
+        System.out.println(getTree().toString());**/
         /**
         int maxnbiter = 10;
         while(maxnbiter > 0 && (varsForDim.size() > 0 || varsForVal.size() > 0))
@@ -149,5 +149,19 @@ public class AbinitDataset implements Iterable<AbinitVariable>
             System.err.println("varsForDims = "+varsForDim);
             System.err.println("varsForVal = "+varsForVal);
         }**/
+    }
+
+    /**
+     * @return the tree
+     */
+    public DepTree getTree() {
+        return tree;
+    }
+
+    /**
+     * @param tree the tree to set
+     */
+    public void setTree(DepTree tree) {
+        this.tree = tree;
     }
 }

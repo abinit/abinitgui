@@ -115,7 +115,6 @@ public class GUIEditor extends JFrame {
         }
         
         Integer[] data;
-        System.out.println("getNdtset = "+inputMapping.getNdtset());
         if(inputMapping.getNdtset() == 1 || inputMapping.getNdtset() == 0)
         {
             data = new Integer[1];
@@ -125,8 +124,6 @@ public class GUIEditor extends JFrame {
         {
             int ndtset = inputMapping.getNdtset();
             data = inputMapping.getJdtsets().toArray(new Integer[0]);
-            System.out.println("getJdtsets = "+inputMapping.getJdtsets());
-            System.out.println("data = "+data);
         }
         
         dtsetList.setListData(data);
@@ -338,11 +335,11 @@ public class GUIEditor extends JFrame {
             AbinitVariable o = iter.next();
             
             Object value = o.getValue();
-            System.out.println(""+o+" = "+value);
+            value = inputMapping.getVariableValue(o.getDocVariable().getVarname(), jdtset);
             
             HashMap<String,Object> map = new HashMap<>();
             
-            map.put("name", o);
+            map.put("name", o.getDocVariable().getVarname());
             map.put("value", value);
             
             dataTable.add(map);
@@ -402,6 +399,11 @@ public class GUIEditor extends JFrame {
             else if(column == 1)
             {
                 Object o = dataTable.get(row).get("value");
+                if(o == null)
+                {
+                    System.err.println("Null value in dataTable.get(row) : "+dataTable.get(row));
+                    return null;
+                }
                 StringBuilder sb = new StringBuilder();
                 if(o instanceof Number[])
                 {
@@ -426,8 +428,6 @@ public class GUIEditor extends JFrame {
                 }
                 else
                 {
-                    System.out.println(dataTable.get(row));
-                    System.out.println("o = "+o);
                     sb.append(o.toString());
                 }
                 

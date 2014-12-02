@@ -13,6 +13,7 @@ import abivars.ValueWithUnit;
 import abivars.Variable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map.Entry;
 import java.util.Set;
 import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;
@@ -60,7 +61,6 @@ public class AbinitVariable {
         while(id != -1)
         {
             tmpS = tmpS.substring(id);
-            System.out.println(tmpS);
             int end = tmpS.indexOf("]]");
             listDeps.add(tmpS.substring(2,end));
             tmpS = tmpS.substring(end);
@@ -76,12 +76,11 @@ public class AbinitVariable {
         {
             String dimS = (String)docDim;
             listDeps.addAll(getVars(dimS));
-            System.out.println("dependence for docDim = "+docDim+" : "+listDeps);
             dimS = dimS.replaceAll("\\[\\[","#{").replaceAll("\\]\\]","}");
             dimS.replace("0.0d0", "0.0");
             try{
                 Number n = evaluator.getNumberResult(dimS);
-                System.out.println("evaluator : "+dimS+", result = "+n);
+                //System.out.println("evaluator : "+dimS+", result = "+n);
                 if(isDim)
                 {
                     return n.intValue();
@@ -99,7 +98,8 @@ public class AbinitVariable {
                 }
             }catch(EvaluationException exc)
             {
-                System.err.println("Exception encountered, with expression : "+dimS);
+                System.out.println(evaluator.getVariables());
+                System.err.println("Exception encountered for var : "+this.docVariable.getVarname()+", with expression : "+dimS);
                 throw exc;
             }
         }
@@ -262,7 +262,6 @@ public class AbinitVariable {
     {
         Object data = getInputValue();
         ArrayList<Object> listValues = new ArrayList<Object>();
-        
         if(data == null)
         {
             data = docVariable.getDefaultval();
@@ -478,5 +477,58 @@ public class AbinitVariable {
      */
     public void setListDeps(ArrayList<String> listDeps) {
         this.listDeps = listDeps;
+    }
+    
+    public ArrayList<String> getDep(Object obj)
+    {
+        ArrayList<String> list = new ArrayList<>();
+        if(obj instanceof String)
+        {
+            list.addAll(getVars((String)obj));
+        }
+        else if(obj instanceof ArrayList)
+        {
+            for(Object inobj : (ArrayList)obj)
+            {
+                list.addAll(getDep(inobj));
+            }
+        }
+        else if(obj instanceof ValueWithConditions)
+        {
+            ValueWithConditions vwc = (ValueWithConditions)obj;
+            
+            for(Entry<? extends Object,Object> entry : vwc.getValues().entrySet())
+            {
+                list.addAll(getDep(entry.getValue()));
+                list.addAll(getDep(entry.getKey()));
+            }
+        }
+        else if(obj instanceof ValueWithUnit)
+        {
+            ValueWithUnit vwu = (ValueWithUnit)obj;
+            
+            list.addAll(getDep(vwu.getValue()));
+        }
+        else if(obj instanceof MultipleValue)
+        {
+            MultipleValue mv = (MultipleValue)obj;
+            list.addAll(getDep(mv.getNumber()));
+            list.addAll(getDep(mv.getValue()));
+        }
+        
+        return list;
+    }
+
+    public ArrayList<String> lookForDeps() 
+    {
+        // Dependencies can be in default values
+        // Dependencies can be in dimensions
+        
+        ArrayList<String> listDeps = new ArrayList<>();
+        
+        listDeps.addAll(getDep(this.docVariable.getDefaultval()));
+        listDeps.addAll(getDep(this.docVariable.getDimensions()));
+        
+        return listDeps;
     }
 }

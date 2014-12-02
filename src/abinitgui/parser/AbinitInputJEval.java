@@ -92,6 +92,7 @@ public class AbinitInputJEval
         }
         
     }
+    
     public AbinitInputMapping readFromFile(String fileName) throws IOException
     {
         content = fileToString(fileName);
@@ -671,7 +672,7 @@ public class AbinitInputJEval
                 for(String expr : sv)
                 {
                     acc += getDim(expr,mapArray,idtset);
-                    System.out.println(expr+" is : "+getDim(expr,mapArray,idtset));
+                    //System.out.println(expr+" is : "+getDim(expr,mapArray,idtset));
                 }
                 return acc;
             }
@@ -697,13 +698,13 @@ public class AbinitInputJEval
             }
             if(var.trim().startsWith("abs("))
             {
-                System.out.println("var is : "+var);
+                //System.out.println("var is : "+var);
                 var = var.replace("abs(","").trim();
                 if(var.endsWith(")"))
                     var = var.substring(0,var.length()-1);
                 // Now var is var1
                 String var1 = var;
-                System.out.println("taking abs of : "+getDim(var1,mapArray,idtset));
+                //System.out.println("taking abs of : "+getDim(var1,mapArray,idtset));
                 return Math.abs(getDim(var1,mapArray,idtset));
             }
             

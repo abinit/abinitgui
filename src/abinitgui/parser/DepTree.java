@@ -31,6 +31,11 @@ public class DepTree {
         }
     }
     
+    public DepNode getVar(String variable)
+    {
+        return hashMap.get(variable);
+    }
+    
     public void addDep(String variable, String other)
     {
         DepNode varNode = hashMap.get(variable);
