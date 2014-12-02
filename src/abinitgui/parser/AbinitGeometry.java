@@ -277,8 +277,6 @@ public class AbinitGeometry {
             MainFrame.printERR("Rprim & Rprimd are not null.");
             return false;
         }
-        
-        System.out.println(this);
 
         if ((xred != null && !areZero(xred)))
         if (((xred != null && !areZero(xred)) && (xcart != null && !areZero(xcart)))
