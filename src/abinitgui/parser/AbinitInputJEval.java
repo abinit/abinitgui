@@ -645,7 +645,7 @@ public class AbinitInputJEval
                 ArrayList<Object> curList = mapArray.get(var);
                 if(curList.size() > 1)
                 {
-                    throw new InvalidInputFileException("Fields specifying a dimension should be scalar !");
+                    throw new InvalidInputFileException("Fields specifying a dimension should be scalar : "+curList+" for var : "+var);
                 }
                 Object o = curList.get(0);
                 if(o instanceof Integer)

@@ -243,9 +243,6 @@ public class AbinitGeometry {
         if (o2 != null) {
             this.angdeg = (Double[]) (o2);
         }
-        
-        System.out.println(angdeg[0]);
-
 
     }
     

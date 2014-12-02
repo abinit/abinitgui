@@ -223,9 +223,9 @@ public class TestParser {
     
     public static void main(String[] args)
     {
-        //testAllInputsInPath("/home/yannick/abinit/7.11.0-training","test-all.txt");
+        testAllInputsInPath("/home/yannick/abinit/7.11.0-training","test-all.txt");
         
-        testOneInputFile("/home/yannick/abinit/7.11.0-private/tests/v1/Input/t01.in","test-v1-01.txt");
+        //testOneInputFile("/home/yannick/abinit/7.11.0-private/tests/v1/Input/t01.in","test-v1-01.txt");
     }
     
 }

@@ -156,24 +156,12 @@ public class AbinitInputMapping
             return getSpecValue(name);
         }
         Object obj = valueFromDataset(allDatasets.get(idtset),name,idtset);
-        if(name.equals("natrd"))
-        {
-            System.out.println("obj from current dataset : "+obj);
-        }
         if(obj == null)
         {
             obj = valueFromDataset(allDatasets.get(0),name,idtset);
-            if(name.equals("natrd"))
-            {
-                System.out.println("obj from 0 dataset : "+obj);
-            }
             if(obj == null)
             {
                 obj = valueFromDataset(defaultDataset,name,idtset);
-                if(name.equals("natrd"))
-                {
-                    System.out.println("obj from default dataset : "+obj);
-                }
             }
         }
         return obj;
