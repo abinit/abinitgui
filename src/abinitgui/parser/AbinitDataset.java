@@ -49,10 +49,60 @@ public class AbinitDataset implements Iterable<AbinitVariable>
         varsForVal.addAll(allData.keySet());
         
         // Brute force !
+        // 1st set going to get all the dependencies !
+        LinkedList<String> newVarsForDims = new LinkedList<>(varsForDim);
+        for(String varname : newVarsForDims)
+        {
+            AbinitVariable abivar = allData.get(varname);
+            try{
+                abivar.evaluateDim(evaluator);
+                if(abivar.getDims() != null)
+                {
+                    varsForDim.remove(varname);
+                }
+            }
+            catch(EvaluationException exc)
+            {
+                System.err.println("exception encountered : "+exc);
+            }
+        }
+
+        LinkedList<String> newVarsForVal = new LinkedList<>(varsForVal);
+        for(String varname : newVarsForVal)
+        {
+            AbinitVariable abivar = allData.get(varname);
+            try{
+                abivar.evaluateValue(evaluator);
+                if(abivar.getValue() != null)
+                {
+                    Object obj = abivar.getValue();
+                    varsForVal.remove(varname);
+                    // I don't want to set variable here in this new version !
+                    //evaluator.putVariable(varname, obj.toString());
+                }
+            }
+            catch(EvaluationException exc)
+            {
+                System.err.println("exception encoutered : "+exc);
+            }
+        }
+        
+        // At this point of the code, each variable has its dependencies:
+        // TODO: Extract dependencies from the doc directly !
+        DepTree tree = new DepTree();
+        for(AbinitVariable abivar : allData.values())
+        {
+            System.out.println("Dependencies of "+abivar.getDocVariable().getVarname()+" : "+abivar.getListDeps());
+            tree.addDep(abivar.getDocVariable().getVarname(), abivar.getListDeps());
+        }
+        
+        System.out.println(tree.toString());
+        System.exit(0);
+        /**
         int maxnbiter = 10;
         while(maxnbiter > 0 && (varsForDim.size() > 0 || varsForVal.size() > 0))
         {
-            LinkedList<String> newVarsForDims = new LinkedList<>(varsForDim);
+            newVarsForDims = new LinkedList<>(varsForDim);
             for(String varname : newVarsForDims)
             {
                 AbinitVariable abivar = allData.get(varname);
@@ -69,7 +119,7 @@ public class AbinitDataset implements Iterable<AbinitVariable>
                 }
             }
             
-            LinkedList<String> newVarsForVal = new LinkedList<>(varsForVal);
+            newVarsForVal = new LinkedList<>(varsForVal);
             for(String varname : newVarsForVal)
             {
                 AbinitVariable abivar = allData.get(varname);
@@ -98,6 +148,6 @@ public class AbinitDataset implements Iterable<AbinitVariable>
             System.err.println("Number max of iteration reached !");
             System.err.println("varsForDims = "+varsForDim);
             System.err.println("varsForVal = "+varsForVal);
-        }
+        }**/
     }
 }

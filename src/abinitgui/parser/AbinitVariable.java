@@ -26,6 +26,12 @@ public class AbinitVariable {
     private ArrayList<Object> inputValue;
     private Variable docVariable;
     private ArrayList<Integer> dims;
+    private ArrayList<String> listDeps;
+    
+    public AbinitVariable()
+    {
+        listDeps = new ArrayList<String>();
+    }
     
     public String toString()
     {
@@ -46,12 +52,31 @@ public class AbinitVariable {
         this.value = value;
     }
     
+    public ArrayList<String> getVars(String dimS)
+    {
+        ArrayList<String> listDeps = new ArrayList<String>();
+        String tmpS = dimS;
+        int id = tmpS.indexOf("[[");
+        while(id != -1)
+        {
+            tmpS = tmpS.substring(id);
+            System.out.println(tmpS);
+            int end = tmpS.indexOf("]]");
+            listDeps.add(tmpS.substring(2,end));
+            tmpS = tmpS.substring(end);
+            id = tmpS.indexOf("[[");
+        }
+        return listDeps;
+    }
+    
     public Object getDim(Object docDim, Evaluator evaluator, boolean isDim) throws EvaluationException
     {
         String type = docVariable.getVartype();
         if(docDim instanceof String)
         {
             String dimS = (String)docDim;
+            listDeps.addAll(getVars(dimS));
+            System.out.println("dependence for docDim = "+docDim+" : "+listDeps);
             dimS = dimS.replaceAll("\\[\\[","#{").replaceAll("\\]\\]","}");
             dimS.replace("0.0d0", "0.0");
             try{
@@ -439,5 +464,19 @@ public class AbinitVariable {
      */
     public void setDims(ArrayList<Integer> dims) {
         this.dims = dims;
+    }
+
+    /**
+     * @return the listDeps
+     */
+    public ArrayList<String> getListDeps() {
+        return listDeps;
+    }
+
+    /**
+     * @param listDeps the listDeps to set
+     */
+    public void setListDeps(ArrayList<String> listDeps) {
+        this.listDeps = listDeps;
     }
 }
