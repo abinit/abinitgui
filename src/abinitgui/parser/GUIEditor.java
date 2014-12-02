@@ -51,10 +51,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 //import javax.swing.*;
 import javax.swing.table.*;
+import net.sourceforge.jeval.EvaluationException;
 
 public class GUIEditor extends JFrame {
     
@@ -100,14 +103,19 @@ public class GUIEditor extends JFrame {
 
         try{
             inputMapping = inputEval.readFromFile(fileName);
+            inputMapping.evaluateAll();
         } catch(IOException e)
         {
             MainFrame.printERR("Unable to parse fileName = "+fileName+".");
             MainFrame.printERR("Error = "+e.getMessage()+".");
             return;
+        } catch (EvaluationException e) {
+            MainFrame.printERR("Unable to parse fileName = "+fileName+".");
+            MainFrame.printERR("Error = "+e.getMessage()+".");
         }
         
         Integer[] data;
+        System.out.println("getNdtset = "+inputMapping.getNdtset());
         if(inputMapping.getNdtset() == 1 || inputMapping.getNdtset() == 0)
         {
             data = new Integer[1];
@@ -117,6 +125,8 @@ public class GUIEditor extends JFrame {
         {
             int ndtset = inputMapping.getNdtset();
             data = inputMapping.getJdtsets().toArray(new Integer[0]);
+            System.out.println("getJdtsets = "+inputMapping.getJdtsets());
+            System.out.println("data = "+data);
         }
         
         dtsetList.setListData(data);

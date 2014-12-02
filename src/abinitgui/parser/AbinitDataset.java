@@ -88,7 +88,7 @@ public class AbinitDataset implements Iterable<AbinitVariable>
                 }
             }
             
-            System.out.println("evaluator = "+evaluator.getVariables());
+            //System.out.println("evaluator = "+evaluator.getVariables());
             
             maxnbiter--;
         }

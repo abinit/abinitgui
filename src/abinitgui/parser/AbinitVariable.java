@@ -6,6 +6,7 @@
 package abinitgui.parser;
 
 import abivars.MultipleValue;
+import abivars.ValueWithConditions;
 import abivars.Variable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +50,22 @@ public class AbinitVariable {
         {
             String dimS = (String)docDim;
             dimS = dimS.replaceAll("\\[\\[","#{").replaceAll("\\]\\]","}");
-            return (int)evaluator.getNumberResult(dimS);
+            Number n = evaluator.getNumberResult(dimS);
+            if(isDim)
+            {
+                return n.intValue();
+            }
+            else
+            {
+                if(type.contains("real"))
+                {
+                    return n.doubleValue();
+                }
+                else if(type.contains("integer"))
+                {
+                    return n.intValue();
+                }
+            }
         }
         else if(docDim instanceof Number)
         {
@@ -103,7 +119,7 @@ public class AbinitVariable {
                 }
                 else
                 {
-                    System.err.println("Not yet treated : "+docDim);
+                    System.err.println("Problem with Multiple value with non-numeric values : "+docDim);
                 }
             }
             else
@@ -111,9 +127,14 @@ public class AbinitVariable {
                 return mv;
             }
         }
+        else if(docDim instanceof ValueWithConditions)
+        {
+            // Just fake reading
+            return getDim(((ValueWithConditions)docDim).getValues().get("defaultval"), evaluator, isDim);
+        }
         else
         {
-            System.err.println("Not yet treated : "+docDim);
+            //System.err.println("Not yet treated : "+docDim);
         }
         
         return null;
@@ -173,6 +194,12 @@ public class AbinitVariable {
             data = docVariable.getDefaultval();
         }
         
+        if(data == null)
+        {
+            this.value = null;
+            return;
+        }
+        
         Object myVal = getDim(data, evaluator, false);
         ArrayList<Integer> getAlldims = getDims();
         int nbTotDims = 1;
@@ -219,6 +246,12 @@ public class AbinitVariable {
                 listValues.add(out);
             }
         }
+        else
+        {
+            this.value = null;
+            return;
+        }
+        
         if(docVariable.getVarname().equals("natom"))
         {
             System.out.println("listValues = "+listValues);
@@ -293,6 +326,8 @@ public class AbinitVariable {
                 }
                 else if(type.contains("real"))
                 {
+                    System.out.println("listValues real = "+listValues);
+                    System.out.println("myVal was = "+myVal);
                     this.value = listValues.toArray(new Double[0]);
                 }
             }

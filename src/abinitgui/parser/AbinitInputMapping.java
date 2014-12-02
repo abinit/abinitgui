@@ -26,10 +26,12 @@ public class AbinitInputMapping
     private boolean usejdtset;
     private AllInputVars database;
     private AbinitDataset defaultDataset;
+    private ArrayList<Integer> jdtsets;
     
     public AbinitInputMapping()
     {
         allDatasets = new HashMap<>();
+        jdtsets = new ArrayList<>();
         defaultDataset = null;
     }
     
@@ -73,7 +75,12 @@ public class AbinitInputMapping
     }
 
     public ArrayList<Integer> getJdtsets() {
-       return new ArrayList<>(allDatasets.keySet());
+       return jdtsets;
+    }
+    
+    public void addJdtset(int jdtset)
+    {
+        jdtsets.add(jdtset);
     }
 
     /**
@@ -198,7 +205,8 @@ public class AbinitInputMapping
         
         System.out.println("   -------------------------------   "); 
         
-        allDatasets.get(0).evaluateAll(evaluator);
+        System.out.println("allDatasets = "+allDatasets);
+        //allDatasets.get(0).evaluateAll(evaluator);
         // Then I should set all the variables in evaluator with their values
         for(int idtset : getJdtsets())
         {
