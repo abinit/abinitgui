@@ -7220,8 +7220,7 @@
     commentdims: null
     defaultval: !range
         start: 1
-        stop:
-        - '[[gw_customnfreqsp]]'
+        stop: '[[gw_customnfreqsp]]'
     definition: GW SPectral FREQuencies
     dimensions:
     - '[[gw_customnfreqsp]]'
@@ -8438,7 +8437,7 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Y direction
     dimensions:
-    -   -   - natfixy
+    - '[[natfixy]]'
     excludes: null
     requires: '[[natfixy]] > 0'
     section: varrlx
@@ -8463,7 +8462,7 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Z direction
     dimensions:
-    -   -   - natfixz
+    - '[[natfixz]]'
     excludes: null
     requires: '[[natfixz]] > 0'
     section: varrlx
@@ -25069,10 +25068,8 @@
     definition: TYPE of atoms
     dimensions: !valuewithconditions
         '[[natrd]]<[[natom]]':
-        - 3
         - '[[natrd]]'
         defaultval:
-        - 3
         - '[[natom]]'
     excludes: null
     requires: null

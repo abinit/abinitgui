@@ -60,16 +60,27 @@ public class AbinitInputMapping
      */
     public AbinitVariable getVariable(String name, int idtset)
     {
-        if(name.equals("natom"))
+        if(name.equals("rprim"))
         {
             System.out.println(getDataset(idtset).getVariable(name));
-            System.out.println(getDataset(0).getVariable(name));
+            //System.out.println(getDataset(0).getVariable(name));
             System.out.println(defaultDataset.getVariable(name));
         }
         AbinitVariable var = getDataset(idtset).getVariable(name);
         if(var == null)
         {
-            return getDataset(0).getVariable(name);
+            if(allDatasets.keySet().contains(0))
+            {
+                var = getDataset(0).getVariable(name);
+                if(var == null)
+                {
+                    return defaultDataset.getVariable(name);
+                }
+            }
+            else
+            {
+                return defaultDataset.getVariable(name);
+            }
         }
         return var;
     }
@@ -201,16 +212,26 @@ public class AbinitInputMapping
         // input file
         buildDefaultValues();
         
-        defaultDataset.evaluateAll(evaluator);
         
-        System.out.println("   -------------------------------   "); 
         
-        System.out.println("allDatasets = "+allDatasets);
-        //allDatasets.get(0).evaluateAll(evaluator);
-        // Then I should set all the variables in evaluator with their values
-        for(int idtset : getJdtsets())
+        if(isUsejdtset())
         {
-            allDatasets.get(idtset).evaluateAll(evaluator);
+            //allDatasets.get(0).evaluateAll(evaluator);
+            // Then I should set all the variables in evaluator with their values
+            for(int idtset : getJdtsets())
+            {
+                System.out.println("   -------------------------------   "); 
+                System.out.println("Jdtset = "+idtset);
+                defaultDataset.evaluateAll(evaluator);
+                allDatasets.get(idtset).evaluateAll(evaluator);
+            }
+        }
+        else
+        {
+            System.out.println("   -------------------------------   "); 
+            System.out.println("Jdtset = "+0);
+            defaultDataset.evaluateAll(evaluator);
+            allDatasets.get(0).evaluateAll(evaluator);
         }
     }
 }

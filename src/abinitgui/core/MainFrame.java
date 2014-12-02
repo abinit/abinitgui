@@ -328,7 +328,8 @@ public class MainFrame extends JFrame {
     }
 
     public static void printERR(String s) {
-        msgdisp.printERR(Utils.removeEndl(s));
+        if(s != null)
+          msgdisp.printERR(Utils.removeEndl(s));
     }
 
     public static void printOUT(String s) {

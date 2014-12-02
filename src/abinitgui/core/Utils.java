@@ -54,6 +54,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
@@ -81,6 +83,22 @@ public class Utils {
             return false;
         }
     }
+    
+    public static List<?> flatten(List<?> input) {
+        List<Object> result = new ArrayList<>();
+
+        for (Object o: input) {
+            if (o instanceof List<?>) {
+                result.addAll(flatten((List<?>) o));
+            } else {
+                result.add(o);
+            }
+        }
+
+        return result;
+    }
+
+
 
     public static String osName() {
         return System.getProperty("os.name");
