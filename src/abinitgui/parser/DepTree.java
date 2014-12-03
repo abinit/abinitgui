@@ -86,4 +86,17 @@ public class DepTree {
         }
         return s;
     }
+
+    public String getGraphViz() {
+        String s = "digraph {\n";
+        for(DepNode node : hashMap.values())
+        {
+            for(DepNode other : node.listDeps)
+            {
+                s = s + "   "+node.name+"->"+other.name+"\n";
+            }
+        }
+        return s+"}\n";
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

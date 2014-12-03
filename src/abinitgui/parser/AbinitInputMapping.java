@@ -315,8 +315,8 @@ public class AbinitInputMapping
             this.tree.addDep(varname, listDeps);
         }
         try{
-            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("tree.txt")));
-            pw.println(this.tree);
+            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("tree.gv")));
+            pw.println(this.tree.getGraphViz());
             pw.close();
         }catch(Exception e)
         {
