@@ -380,7 +380,13 @@ public class AbinitVariable {
             {
                 if(type.contains("integer"))
                 {
-                    this.value = listValues.toArray(new Integer[0]);
+                    Integer[] tab = new Integer[listValues.size()];
+                    for(int i = 0; i < tab.length; i++)
+                    {
+                        tab[i] = ((Number)listValues.get(i)).intValue();
+                    }
+                    this.value = tab;
+                    //this.value = listValues.toArray(new Integer[0]);
                 }
                 else if(type.contains("real"))
                 {

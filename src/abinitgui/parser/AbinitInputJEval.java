@@ -47,6 +47,7 @@ For more information on the Abinit Project, please see
 package abinitgui.parser;
 
 import abivars.AllInputVars;
+import abivars.MultipleValue;
 import abivars.ValueWithConditions;
 import java.io.*;
 import java.util.ArrayList;
@@ -472,7 +473,7 @@ public class AbinitInputJEval
             String name = entry.getKey();
             ArrayList<Object> valueArray = entry.getValue();
             Variable var = allInputs.getVar(name);
-            Object o = getObjectFromArray(valueArray,name,var.getVartype(),var.getDimensions(), idtset, mapData);
+            //Object o = getObjectFromArray(valueArray,name,var.getVartype(),var.getDimensions(), idtset, mapData);
             AbinitVariable curVar = new AbinitVariable();
             //curVar.setValue(o);
             curVar.setInputValue(valueArray);
@@ -580,6 +581,35 @@ public class AbinitInputJEval
 
                 if(curValue.contains("*"))
                 {
+                    String[] multTab = curValue.split("\\*");
+                    MultipleValue multVal = new MultipleValue();
+                    Object value = null;
+                    Object number = null;
+                    if(multTab.length == 1)
+                    {
+                        value = readData(multTab[0],type);
+                    }
+                    else if(multTab.length == 2)
+                    {
+                        number = readData(multTab[0],type);
+                        value = readData(multTab[1],type);
+                    }
+                    if(isUnit)
+                    {
+                        if(value instanceof Double)
+                        {
+                            value = scalingFactor*(Double)value;
+                        }
+                        else
+                        {
+                            System.err.println("values with units should be numbers !");
+                        }
+                    }
+                    multVal.setNumber(number);
+                    multVal.setValue(value);
+                    listValues.add(multVal);
+                    continue;
+                    /**
                     if(curValue.startsWith("*"))
                     {
                         for(int j = 0; j < nbValues; j++)
@@ -611,6 +641,7 @@ public class AbinitInputJEval
                             }
                         }
                     }
+                    **/
                 }
                 else
                 {
@@ -794,6 +825,11 @@ public class AbinitInputJEval
     public Number readData(String text, String type) throws InvalidInputFileException
     {
         Double val = null;
+        
+        if(text == null || text.isEmpty())
+        {
+            return null;
+        }
         
         if(type.contains("integer"))
         {
