@@ -18,5 +18,6 @@ public class AbinitEvaluator extends Evaluator
         super();
         
         this.putVariable("AUTO_FROM_PSP", "0");
+        this.putVariable("SEQUENTIAL","0");
     }
 }

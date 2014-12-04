@@ -43,6 +43,7 @@ public class AbinitInputMapping
         
         listSpecs = new ArrayList<String>();
         listSpecs.add("AUTO_FROM_PSP");
+        listSpecs.add("SEQUENTIAL");
     }
     
     public void clean()
@@ -55,6 +56,8 @@ public class AbinitInputMapping
         switch(spec)
         {
             case "AUTO_FROM_PSP":
+                return 0;
+            case "SEQUENTIAL":
                 return 0;
             default:
                 return null;
