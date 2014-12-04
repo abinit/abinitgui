@@ -4,8 +4,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0
         '[[MPI_IO]] and [[paral_kgb]]==1': 1
+        defaultval: 0
     definition: ACCESS to WaveFunction Files
     dimensions: scalar
     excludes: null
@@ -2617,8 +2617,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0
         '[[usefock]] == 1': 2
+        defaultval: 0
     definition: Conjugate Gradient TYpe used for Hartree Fock exact exchange
     dimensions: scalar
     excludes: null
@@ -3303,8 +3303,8 @@
     commentdims: null
     defaultval: !valuewithconditions
         '[[usepaw]]==0 or [[iprcel]] !=0': 1.0
-        defaultval: null
         '[[usepaw]]==1 or [[iprcel]]==0': 0.7
+        defaultval: null
     definition: model DIElectric MIXing factor
     dimensions: scalar
     excludes: null
@@ -3342,10 +3342,10 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: -[[diemix]]
         70 < [[iprcel]] and [[iprcel]] < 80: '[[diemix]]'
-        '[[iscf]]<10': '[[diemix]]'
         '[[iprcel]]==0': '[[diemix]]'
+        '[[iscf]]<10': '[[diemix]]'
+        defaultval: -[[diemix]]
     definition: model DIElectric MIXing factor for the MAGgnetization
     dimensions: scalar
     excludes: null
@@ -3691,7 +3691,7 @@
     commentdims: null
     defaultval: 0
     definition: 'Dynamical Mean Fied Theory: ENTROPY'
-    dimensions: null
+    dimensions: scalar
     excludes: null
     requires: '[[usedmft]]==1 and [[dmft_solv]]==5'
     section: vardev
@@ -4621,8 +4621,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0.0
         '[[optdriver]] in [3, 4]': '[[ecut]]'
+        defaultval: 0.0
     definition: Energy CUT-off for WaveFunctions
     dimensions: scalar
     excludes: null
@@ -5036,8 +5036,8 @@
     defaultval: !valuewithconditions
         '[[occopt]]==1': 0.125
         '[[occopt]]>2': 0.5
-        defaultval: 0.0
         '[[usewvl]]==1': 0.0
+        defaultval: 0.0
     definition: Factor for the number of BANDs
     dimensions: scalar
     excludes: null
@@ -5098,8 +5098,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 2
         '[[paral_kgb]]==1': 1
+        defaultval: 2
     definition: Fast Fourier Transform parallelisation - OPTion for LOB algorithm
     dimensions: scalar
     excludes: null
@@ -5132,8 +5132,8 @@
     commentdims: null
     defaultval: !valuewithconditions
         '[[FFTW3]] and [[usedmft]]==0': 312
-        defaultval: 112
         '[[paral_kgb]]==1': 401
+        defaultval: 112
     definition: Fast Fourier Transform ALGorithm
     dimensions: scalar
     excludes: null
@@ -5484,7 +5484,7 @@
     characteristics: null
     commentdefault: null
     commentdims: null
-    defaultval: 0.0010
+    defaultval: 0.001
     definition: internal FRICTION coefficient
     dimensions: scalar
     excludes: null
@@ -7220,8 +7220,7 @@
     commentdims: null
     defaultval: !range
         start: 1
-        stop:
-        - '[[gw_customnfreqsp]]'
+        stop: '[[gw_customnfreqsp]]'
     definition: GW SPectral FREQuencies
     dimensions:
     - '[[gw_customnfreqsp]]'
@@ -7840,7 +7839,7 @@
     varname: gwgamma
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -7858,7 +7857,7 @@
     varname: gwls_band_index
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -7878,22 +7877,22 @@
         <li> [[gwls_correlation]] == 2 : GWLS calculation WITHOUT the dielectric model and WITHOUT the shift Lanczos technique, </li>
         <li> [[gwls_correlation]] == 3 : GWLS calculation WITH the dielectric model and WITH the shift Lanczos technique, </li>
         <li> [[gwls_correlation]] == 4 : GWLS calculation WITHOUT the dielectric model and WITH the shift Lanczos technique, </li>
-        <li> [[gwls_correlation]] == 5 : Not a GWLS calculation; just calculate and print the eigenvalues of the (static) dielectric matrix (for debugging purposes). </li> 
+        <li> [[gwls_correlation]] == 5 : Not a GWLS calculation; just calculate and print the eigenvalues of the (static) dielectric matrix (for debugging purposes). </li>
         </ul>
         </p>
         <p>
-        The default, ([[gwls_correlation]] == 3), is the most performant option and should be kept by the user. 
-        Option 1, 2 and 5 are deprecated and will be removed. 
+        The default, ([[gwls_correlation]] == 3), is the most performant option and should be kept by the user.
+        Option 1, 2 and 5 are deprecated and will be removed.
         </p>
     varname: gwls_correlation
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
     defaultval: 2
-    definition: GWLS dielectric model 
+    definition: GWLS dielectric model
     dimensions: scalar
     excludes: null
     requires: '[[optdriver]]==66'
@@ -7903,7 +7902,7 @@
     varname: gwls_dielectric_model
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -7920,7 +7919,7 @@
     varname: gwls_exchange
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -7945,7 +7944,7 @@
     varname: gwls_first_seed
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -7963,7 +7962,7 @@
     varname: gwls_kmax_analytic
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -7975,10 +7974,10 @@
     section: vargw
     text: |-
         <p>
-        The G0W0 formalism involves the calculation of a summation conceptually linked to the trace of the dielectric matrix (see eq. (38) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>). 
+        The G0W0 formalism involves the calculation of a summation conceptually linked to the trace of the dielectric matrix (see eq. (38) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>).
         Since the eigenvalues spectrum of the dielectric matrix of formed by a few large discrete eigenvalues and an integrable divergence in the density of eigenvalues around 0, it is expensive to sample accurately this divergence using the exact dielectric operator.
         It this becomes interesting to calculate the 'trace' of the 'exact - model' dielectric matrix in a small basis and add it to the 'trace' of the 'model' dielectric matrix obtained in a large bais.
-        In the context where the model dielectric matrix is used in the calculations, [[gwls_sternheimer_kmax]] determines the size of the 'small' basis and [[gwls_kmax_complement]] determines the size of the 'large' basis. 
+        In the context where the model dielectric matrix is used in the calculations, [[gwls_sternheimer_kmax]] determines the size of the 'small' basis and [[gwls_kmax_complement]] determines the size of the 'large' basis.
         </p>
         <p>
         For more information on the exact role of these bases and on the model dielectric operator used, see section V of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>.
@@ -7986,7 +7985,7 @@
     varname: gwls_kmax_complement
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8004,7 +8003,7 @@
     varname: gwls_kmax_numeric
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8017,9 +8016,9 @@
     text: |-
         <p>
         The contour deformation technique, in the G0W0 context, will involve the calculation of pole residues associated to states lying between the one corrected ([[gwls_band_index]]) and the fermi level.
-        These residues take the form of a matrix element of the inverse dielectric matrix at a real frequency (see eq. (11) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>). 
-        Therefore, the dielectric matrix must be constructed in some basis at these frequencies and inverted to calculate the matrix element. 
-        The present input variable sets the size of the Lanczos basis to be constructed for this purpose. 
+        These residues take the form of a matrix element of the inverse dielectric matrix at a real frequency (see eq. (11) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>).
+        Therefore, the dielectric matrix must be constructed in some basis at these frequencies and inverted to calculate the matrix element.
+        The present input variable sets the size of the Lanczos basis to be constructed for this purpose.
         The default value has proven to be very robust for many molecular systems and should therefore be left to the default value by the user.
         </p>
         <p>
@@ -8028,25 +8027,25 @@
     varname: gwls_kmax_poles
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
     defaultval: '*0.0'
     definition: GWLS LIST of the PROJection FREQuencies
-    dimensions: 
+    dimensions:
     - '[[gwls_n_proj_freq]]'
     excludes: null
     requires: '[[optdriver]]==66'
     section: vargw
     text: |-
-        This variable sets the frequencies to be used to construct the basis in which the hamiltonian is projected to accelerate the solution of the Sternheimer equations involved by the construction of the dielectric matrix at finite frequencies. 
+        This variable sets the frequencies to be used to construct the basis in which the hamiltonian is projected to accelerate the solution of the Sternheimer equations involved by the construction of the dielectric matrix at finite frequencies.
         See section VI of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>.
         For most cases, since the frequencies \Infty and (if [[gwls_recycle]]>0) 0.0 are used at no computational cost, [[gwls_n_proj_freq]]==0 (which means no ADDITIONAL frequency is to be used) is fine and no frequencies need to be picked up.
     varname: gwls_list_proj_freq
     vartype: real
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     - '[[ENERGY]]'
     commentdefault: ''
@@ -8059,20 +8058,37 @@
     section: vargw
     text: |-
         <p>
-        This is the width of the lorentzian, in Ha, used to model the frequency dependence of the dielectric matrix in the GWLS calculation (see eqs. (12), (13), (14), (15), (16) and (34) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>). 
+        This is the width of the lorentzian, in Ha, used to model the frequency dependence of the dielectric matrix in the GWLS calculation (see eqs. (12), (13), (14), (15), (16) and (34) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>).
         More precisely, this parameter is the value of \alpha used in eq. (34).
-        This model is then used to separate the integration over frequencies into a 'model' part (second term of eq. (12)) and a 'exact - model' part (first term of eq. (12)). 
+        This model is then used to separate the integration over frequencies into a 'model' part (second term of eq. (12)) and a 'exact - model' part (first term of eq. (12)).
         Since the 'model' part can be integrated analytically (see eqs. (15), (16) and (34)), only the the 'exact - model' part needs to be integrated numerically.
         </p>
         <p>
-        The only effect of this model is therefore to alleviate the numerical cost of the integration over frequencies in the G0W0 calculation. 
-        The value of the associated parameter has thus an impact on the convergence rate of the GWLS calculation with respect to the number of frequencies of integration ([[gwls_npt_gauss_quad]]), but no impact on the converged result of the GWLS calculation. 
+        The only effect of this model is therefore to alleviate the numerical cost of the integration over frequencies in the G0W0 calculation.
+        The value of the associated parameter has thus an impact on the convergence rate of the GWLS calculation with respect to the number of frequencies of integration ([[gwls_npt_gauss_quad]]), but no impact on the converged result of the GWLS calculation.
         Typically, the default ([[gwls_model_parameter]]==1.0) is optimal.
         </p>
     varname: gwls_model_parameter
     vartype: real
 - !variable
-    characteristics: 
+    characteristics:
+    - '[[GW]]'
+    commentdefault: ''
+    commentdims: ''
+    defaultval: 0
+    definition: GWLS Number of PROJection FREQuencies
+    dimensions: scalar
+    excludes: ''
+    requires: '[[optdriver]]==66'
+    section: vargw
+    text: |-
+        This variable sets the number of frequencies, on top of \Infty and (if [[gwls_recycle]]>0) 0.0, to be used for the construction of the basis in which the hamiltonian is projected to accelerate the solution of the Sternheimer equations involved in the construction of the dielectric matrix at finite frequencies.
+        See section VI of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>.
+        For most cases, the default ([[gwls_n_proj_freq]]==0) is fine.
+    varname: gwls_n_proj_freq
+    vartype: integer
+- !variable
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8083,12 +8099,12 @@
     requires: '[[optdriver]]==66'
     section: vargw
     text: |-
-        This variable defines the number of points used for the numerical integration of the self-energy over frequencies in GWLS computations (see eq. (12) of  <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>). 
+        This variable defines the number of points used for the numerical integration of the self-energy over frequencies in GWLS computations (see eq. (12) of  <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>).
         The default is fine for most cases.
     varname: gwls_npt_gauss_quad
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8105,24 +8121,7 @@
     varname: gwls_nseeds
     vartype: integer
 - !variable
-    characteristics: 
-    - '[[GW]]'
-    commentdefault: ''
-    commentdims: ''
-    defaultval: 0
-    definition: 'GWLS Number of PROJection FREQuencies'
-    dimensions: scalar
-    excludes: ''
-    requires: '[[optdriver]]==66'
-    section: vargw
-    text: |-
-        This variable sets the number of frequencies, on top of \Infty and (if [[gwls_recycle]]>0) 0.0, to be used for the construction of the basis in which the hamiltonian is projected to accelerate the solution of the Sternheimer equations involved in the construction of the dielectric matrix at finite frequencies. 
-        See section VI of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>.
-        For most cases, the default ([[gwls_n_proj_freq]]==0) is fine.
-    varname: gwls_n_proj_freq
-    vartype: integer
-- !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8137,38 +8136,38 @@
     varname: gwls_print_debug
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
     defaultval: 2
-    definition: GWLS RECYCLE 
+    definition: GWLS RECYCLE
     dimensions: scalar
     excludes: null
     requires: '[[optdriver]]==66'
     section: vargw
     text: |-
         <p>
-        This variable let the user choose if and how he wants to recycle the solutions of the Sternheimer equations involved in the construction of the static dielectric matrix. 
+        This variable let the user choose if and how he wants to recycle the solutions of the Sternheimer equations involved in the construction of the static dielectric matrix.
         <ul>
         <li> [[gwls_recycle]]==0 : No recycling of the solutions </li>
         <li> [[gwls_recycle]]==1 : Recycle the solutions. To do so, store them in RAM. </li>
         <li> [[gwls_recycle]]==2 : Recycle the solutions. To do so, store them on disk. </li>
         </ul>
-        If the user choose to recycle the solutions, they are used to construct the basis in which the hamiltonian is projected for the solution of the Sternheimer equations involved by the calculation of the dielectric matrix at finite frequencies. 
+        If the user choose to recycle the solutions, they are used to construct the basis in which the hamiltonian is projected for the solution of the Sternheimer equations involved by the calculation of the dielectric matrix at finite frequencies.
         The other solutions used will be those at \omega \to \Infty (alwyas used) and those at \omega=[[gwls_list_proj_freq]].
         For more information of the basis constructed, see section IV of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>.
         </p>
         <p>
-        It is important to note that the solutions rapidly take much space to store. 
+        It is important to note that the solutions rapidly take much space to store.
         Therefore, it is often not possible to store them in RAM in production calculations, yet still desirable to retain them.
-        This is when it becomes interesting to store them on disk. 
+        This is when it becomes interesting to store them on disk.
         It is particularly efficient to choose the path of the file to be on disk space local to the processor in large MPI calculations, since each processor need only his own solutions in the construction of the basis.
         </p>
     varname: gwls_recycle
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     - '[[ENERGY]]'
     commentdefault: ''
@@ -8184,7 +8183,7 @@
     varname: gwls_second_model_parameter
     vartype: real
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8195,12 +8194,12 @@
     requires: '[[optdriver]]==66'
     section: vargw
     text: |-
-        This variable sets the dimension of the dielectric matrix used in a GWLS calculation (see section IV of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>). 
+        This variable sets the dimension of the dielectric matrix used in a GWLS calculation (see section IV of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>).
         Typically converged at a value of a few hundreds to a few thousands for a convergence criterion of 50meV on the  eigenenergies.
     varname: gwls_sternheimer_kmax
     vartype: integer
 - !variable
-    characteristics: 
+    characteristics:
     - '[[GW]]'
     commentdefault: null
     commentdims: null
@@ -8438,7 +8437,7 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Y direction
     dimensions:
-    -   -   - natfixy
+    - '[[natfixy]]'
     excludes: null
     requires: '[[natfixy]] > 0'
     section: varrlx
@@ -8463,7 +8462,7 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Z direction
     dimensions:
-    -   -   - natfixz
+    - '[[natfixz]]'
     excludes: null
     requires: '[[natfixz]] > 0'
     section: varrlx
@@ -9287,9 +9286,9 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 2
         '[[ionmov]]==4 and [[iscf]]==5': '3'
         '[[paral_kgb]]==1': '6'
+        defaultval: 2
     definition: Integer for PReConditioning of CHarge response
     dimensions: scalar
     excludes: null
@@ -10594,9 +10593,9 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 7
         '[[usepaw]]==1': 17
         '[[usewvl]]==1': 0
+        defaultval: 7
     definition: Integer for Self-Consistent-Field cycles
     dimensions: scalar
     excludes: null
@@ -12354,7 +12353,7 @@
     definition: K PoinTs BOUNDarieS
     dimensions:
     - 3
-    - abs([[kptopt]])+1)
+    - abs([[kptopt]])+1
     excludes: null
     requires: null
     section: vargs
@@ -13222,7 +13221,7 @@
     characteristics: null
     commentdefault: null
     commentdims: null
-    defaultval: 0.0050
+    defaultval: 0.005
     definition: MAXimum Electric field STEP
     dimensions: scalar
     excludes: null
@@ -14128,9 +14127,9 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0
         '[[optdriver]]==0 and [[iscf]]<0': 2*[[nspinor]]
         '[[optdriver]]==1 and 3<=[[occopt]] and [[occopt]]<= 8': 2*[[nspinor]]
+        defaultval: 0
     definition: Number of BanDs for the BUFfer
     dimensions: scalar
     excludes: null
@@ -15156,9 +15155,9 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 4
-        '[[usepaw]]==1': 14
         '[[usepaw]]==0': 4
+        '[[usepaw]]==1': 14
+        defaultval: 4
     definition: Non Local ALGorithm
     dimensions: scalar
     excludes: null
@@ -15318,8 +15317,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0
         '[[usefock]]==1': 1
+        defaultval: 0
     definition: Number of Non-Self Consistent LOops for Fock exact exchange
     dimensions: scalar
     excludes: null
@@ -16174,8 +16173,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 1
         '[[pawspnorb]]==1': 2
+        defaultval: 1
     definition: Number of SPINORial components of the wavefunctions
     dimensions: scalar
     excludes: null
@@ -16579,7 +16578,8 @@
     commentdims: null
     defaultval: null
     definition: 'OBJect A : AXis, OBJect B : AXis'
-    dimensions: null
+    dimensions: 
+    - 6
     excludes: null
     requires: null
     section: vargeo
@@ -16640,7 +16640,8 @@
     - 1
     - 1
     definition: 'OBJect A : Repetition Factors, OBJect B : Repetition Factors'
-    dimensions: null
+    dimensions: 
+    - 3
     excludes: null
     requires: null
     section: vargeo
@@ -17306,8 +17307,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 2
         '[[toldff]] or [[tolrff]] != 0': 1
+        defaultval: 2
     definition: OPTions for the calculation of FORCES
     dimensions: scalar
     excludes: null
@@ -17409,8 +17410,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 2
         '[[wfoptalg]] >= 10 ': -2
+        defaultval: 2
     definition: ORThogonalisation ALGorithm
     dimensions: scalar
     excludes: null
@@ -17632,10 +17633,10 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 1
         ? '[[optdriver]]==0 and [[ionmov]]<6 and [[pawspnorb]]==1 and [[iscf]]>=10
             and ([[kptopt]] !=1 or [[kptopt]]!=2) and [[usepaw]]==1'
         : 2
+        defaultval: 1
     definition: PAW - use ComPleX rhoij OCCupancies
     dimensions: scalar
     excludes: null
@@ -19054,8 +19055,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0.0
         '[[postoldff]]=0': 1.0E-6
+        defaultval: 0.0
     definition: 'POSITRON calculation: TOLerance on the DiFference of total
         Energy'
     dimensions: scalar
@@ -19512,8 +19513,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 1
         '[[nimage]]>1': 0
+        defaultval: 1
     definition: PRinT the DENsity
     dimensions: scalar
     excludes: null
@@ -19663,8 +19664,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0
         '[[nsppol]]==1 and [[nspden]]==2': 1
+        defaultval: 0
     definition: PRinT integral of DENsity inside atomic SPHeres
     dimensions: scalar
     excludes: null
@@ -23159,11 +23160,11 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
+        '[[nshiftk]]>1': null
         defaultval:
         - 0.5
         - 0.5
         - 0.5
-        '[[nshiftk]]>1': null
     definition: SHIFT for K points
     dimensions:
     - 3
@@ -23271,11 +23272,11 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
+        '[[nshiftq]]>1': null
         defaultval:
         - 0.5
         - 0.5
         - 0.5
-        '[[nshiftq]]>1': null
     definition: SHIFT for Q points
     dimensions:
     - 3
@@ -23741,12 +23742,12 @@
     defaultval: 0.0
     definition: SPIN for AToms
     dimensions: !valuewithconditions
-        defaultval:
-        - 3
-        - '[[natom]]'
         '[[natrd]]<[[natom]]':
         - 3
         - '[[natrd]]'
+        defaultval:
+        - 3
+        - '[[natom]]'
     excludes: null
     requires: null
     section: vargs
@@ -24237,7 +24238,6 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: null
         '[[nsym]]==1':
         -   - 1
             - 0
@@ -24248,6 +24248,7 @@
         -   - 0
             - 0
             - 1
+        defaultval: null
     definition: SYMmetry in REaL space
     dimensions:
     - 3
@@ -24453,8 +24454,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0
         '[[SEQUENTIAL]]': 1
+        defaultval: 0
     definition: TIMing OPTion
     dimensions: scalar
     excludes: null
@@ -24743,7 +24744,7 @@
     characteristics: null
     commentdefault: null
     commentdims: null
-    defaultval: 0.0050
+    defaultval: 0.005
     definition: TOLerance on the Relative Difference of Eigenenergies
     dimensions: scalar
     excludes: null
@@ -25064,14 +25065,14 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: null
         '[[natom]]==1': 1
+        defaultval: null
     definition: TYPE of atoms
     dimensions: !valuewithconditions
-        defaultval:
-        - '[[natom]]'
         '[[natrd]]<[[natom]]':
         - '[[natrd]]'
+        defaultval:
+        - '[[natom]]'
     excludes: null
     requires: null
     section: varbas
@@ -25313,8 +25314,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0
         '[[optdriver]]==0 and [[CUDA]]': 1
+        defaultval: 0
     definition: activate USE of GPU accelerators with CUDA (nvidia)
     dimensions: scalar
     excludes: null
@@ -25965,9 +25966,9 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0
-        '[[usepaw]]==1': 1
         '[[tfkinfunc]]==1': 1
+        '[[usepaw]]==1': 1
+        defaultval: 0
     definition: USE YLM (the spherical harmonics)
     dimensions: scalar
     excludes: null
