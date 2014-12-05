@@ -80,6 +80,7 @@ import abinitgui.projects.Machine;
 import abinitgui.projects.MachineDatabase;
 import abinitgui.projects.MachinePane;
 import abinitgui.projects.Project;
+import abinitgui.projects.ProjectFrame;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
@@ -273,6 +274,10 @@ public class MainFrame extends JFrame {
                 printERR("Error saving new project! (Exception: " + exc.getMessage() + ")");
             }*/
         }
+        
+        ProjectFrame pf = new ProjectFrame();
+        pf.setProject(currentProject);
+        pf.setVisible(true);
         
         machinePane1.refresh();
         jobPanel1.refreshProject();

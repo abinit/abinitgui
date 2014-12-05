@@ -62,13 +62,13 @@ public class ProjectFrame extends javax.swing.JDialog {
 
     //private MainFrame mainFrame;
     private Project project;
+    DefaultMutableTreeNode top;
 
     public ProjectFrame() {
 
         initComponents();
 
-        DefaultMutableTreeNode top =
-                new DefaultMutableTreeNode("Current project");
+        top = new DefaultMutableTreeNode("Current project");
 
         TreeModel model = new DefaultTreeModel(top);
         tasksTree.setModel(model);
@@ -83,6 +83,12 @@ public class ProjectFrame extends javax.swing.JDialog {
 
         setLocationRelativeTo(MainFrame.mainFrame);
         setLocation(800, 0);
+    }
+    
+    public void setProject(Project project)
+    {
+        this.project = project;
+        createNodes(top);
     }
 
     public final void createNodes(DefaultMutableTreeNode top) {
@@ -140,6 +146,8 @@ public class ProjectFrame extends javax.swing.JDialog {
                 Simulation simu = (Simulation) obj;
 
                 System.out.println("Status = " + simu.getStatus());
+                System.out.println("Status = " + simu.getRemoteJob().getStatus());
+                System.out.println("Status = " + simu.getRemoteJob().getStatusString());
 
                 if (simu.getStatus() == RemoteJob.RUNNING) {
                     c.setForeground(Color.BLUE);
@@ -190,6 +198,11 @@ public class ProjectFrame extends javax.swing.JDialog {
         jButton7.setText("Rename simulation");
 
         jButton5.setText("Refresh status");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Delete job");
 
@@ -241,11 +254,19 @@ public class ProjectFrame extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tasksTreeMousePressed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        updateAllStatus();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     public void updateAllStatus() {
         Iterator<Simulation> iter = project.iterator();
 
         while (iter.hasNext()) {
-            iter.next().updateStatus();
+            Simulation simu = iter.next();
+            System.out.println("simu = "+simu);
+            System.out.println("simu = "+simu.getClass());
+            simu.updateStatus();
+            System.out.println("simu = "+simu.getRemoteJob().getStatusString());
         }
         tasksTree.repaint();
     }

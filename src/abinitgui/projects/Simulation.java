@@ -52,7 +52,7 @@ public class Simulation {
 
     private String name = "default";
     private String inputFileName = "./test3.in";
-    private RemoteJob job;
+    public RemoteJob job;
 
     public Simulation() {
         job = new RemoteJob();
@@ -81,6 +81,8 @@ public class Simulation {
     }
 
     public int getStatus() {
+        System.out.println("My status : "+job.getStatus());
+        System.out.println("job status : "+getRemoteJob().getStatus());
         return job.getStatus();
     }
 
@@ -92,7 +94,7 @@ public class Simulation {
         this.job = job;
     }
 
-    void updateStatus() {
+    public void updateStatus() {
         job.updateStatus();
     }
     

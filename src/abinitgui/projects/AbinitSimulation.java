@@ -63,13 +63,10 @@ public class AbinitSimulation extends Simulation {
 
     private String name = "default";
     private String inputFileName = "./test3.in";
-    private RemoteJob job;
-    private int status;
     private ArrayList<Atom> listPseudos;
     private boolean usingExtInputFile = false;
 
     public AbinitSimulation() {
-        job = new RemoteJob();
         listPseudos = new ArrayList<>();
     }
 
@@ -117,21 +114,6 @@ public class AbinitSimulation extends Simulation {
     public String toString() {
         return name;
         //return "Simulation(name = " + name + "; fileName = " + inputFileName + ")";
-    }
-
-    @Override
-    public RemoteJob getRemoteJob() {
-        return job;
-    }
-
-    @Override
-    public void setRemoteJob(RemoteJob job) {
-        this.job = job;
-    }
-
-    @Override
-    void updateStatus() {
-        job.updateStatus();
     }
     
     @Override

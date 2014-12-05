@@ -96,7 +96,8 @@ public class TightBindingSimulationOld extends Simulation {
         this.job = job;
     }
 
-    void updateStatus() {
+    @Override
+    public void updateStatus() {
         job.updateStatus();
     }
     

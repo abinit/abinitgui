@@ -91,6 +91,7 @@ public class RemoteSlurmJob extends RemoteJob
     @Override
     public void updateStatus()
     {
+        System.out.println("updating Status !");
         if(getJobId() == -1) 
         {
             this.status = READY;
@@ -138,21 +139,23 @@ public class RemoteSlurmJob extends RemoteJob
 
             Matcher m = state.matcher(retMsg);
             while (m.find()) {
-                String status = m.group().trim();
-                if(status.equals("Pending"))
+                String statusS = m.group().trim();
+                if(statusS.equals("Pending"))
                 {
                     this.status = PENDING;
                 }
-                else if(status.equals("Running"))
+                else if(statusS.equals("Running"))
                 {
                     this.status = RUNNING;
                 }
-                else if(status.equals("Completed"))
+                else if(statusS.equals("Completed"))
                 {
                     this.status = COMPLETED;
                 }
             }
         }
+        
+        System.out.println("this.status = "+this.getStatusString());
     }
     
 }

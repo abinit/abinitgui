@@ -109,7 +109,8 @@ public class ClustepSimulation extends Simulation {
         this.job = job;
     }
 
-    void updateStatus() {
+    @Override
+    public void updateStatus() {
         job.updateStatus();
     }
     
