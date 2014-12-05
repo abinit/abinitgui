@@ -338,7 +338,7 @@ public class AbinitSimulation extends Simulation {
             }
 
             this.getRemoteJob().submit(rootPath,simName);
-            this.getRemoteJob().printInfos();
+            //this.getRemoteJob().printInfos();
             
         } else {
             MainFrame.printERR("Please setup the inputfile textfield !");

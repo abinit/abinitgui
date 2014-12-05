@@ -157,5 +157,14 @@ public class RemoteSlurmJob extends RemoteJob
         
         System.out.println("this.status = "+this.getStatusString());
     }
+   
+    @Override
+    public void kill() {
+        Machine machine = MainFrame.getMachineDatabase().getMachine(this.getMachineName());
+        if(!machine.isConnected())
+            machine.connection();
+        
+        machine.sendCommand("scancel "+this.getJobId());
+    }
     
 }

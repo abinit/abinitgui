@@ -103,6 +103,13 @@ public class RemoteJob
         return status;
     }
     
+    /**
+     * Try to kill the job on the remote machine !
+     */
+    public void kill() {
+        MainFrame.printERR("Nothing to do !");
+    }
+    
     public String getStatusString() {
         switch(status)
         {

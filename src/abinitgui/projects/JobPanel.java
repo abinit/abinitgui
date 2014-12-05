@@ -356,6 +356,9 @@ public class JobPanel extends javax.swing.JPanel {
             public void run()
             {
                 currentSimu.submit();
+                saveButtonActionPerformed(null); // Save before run!
+        
+        
             }
         };
         

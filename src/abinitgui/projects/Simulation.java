@@ -79,15 +79,21 @@ public class Simulation {
         return name;
         //return "Simulation(name = " + name + "; fileName = " + inputFileName + ")";
     }
+    
+    public void printInfos() {
+        job.printInfos();
+    }
 
     public int getStatus() {
-        System.out.println("My status : "+job.getStatus());
-        System.out.println("job status : "+getRemoteJob().getStatus());
         return job.getStatus();
     }
 
     public RemoteJob getRemoteJob() {
         return job;
+    }
+    
+    public void kill() {
+        job.kill();
     }
 
     public void setRemoteJob(RemoteJob job) {

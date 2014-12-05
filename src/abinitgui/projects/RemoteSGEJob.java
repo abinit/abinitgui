@@ -87,4 +87,14 @@ public class RemoteSGEJob extends RemoteJob
         }
     }
     
+   
+    @Override
+    public void kill() {
+        Machine machine = MainFrame.getMachineDatabase().getMachine(this.getMachineName());
+        if(!machine.isConnected())
+            machine.connection();
+        
+        machine.sendCommand("qdel "+this.getJobId());
+    }
+    
 }
