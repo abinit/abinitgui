@@ -73,8 +73,6 @@ public class TightBindingSimulation extends Simulation {
     private boolean use66, use110, use120;
 
     public TightBindingSimulation() {
-        status = READY;
-
         job = new RemoteJob();
     }
 
@@ -102,16 +100,6 @@ public class TightBindingSimulation extends Simulation {
     public String toString() {
         return name;
         //return "Simulation(name = " + name + "; fileName = " + tbenerFileName + ")";
-    }
-
-    @Override
-    public int getStatus() {
-        return status;
-    }
-
-    @Override
-    public void setStatus(int status) {
-        this.status = status;
     }
     
     @Override

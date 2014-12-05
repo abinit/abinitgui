@@ -230,13 +230,13 @@ public final class Project implements Iterable<Simulation> {
                                 case "status":
                                     switch (attrValue) {
                                         case "running":
-                                            simu.setStatus(Simulation.RUNNING);
+                                            simu.getRemoteJob().setStatus(RemoteJob.RUNNING);
                                             break;
                                         case "finished":
-                                            simu.setStatus(Simulation.FINISHED);
+                                            simu.getRemoteJob().setStatus(RemoteJob.COMPLETED);
                                             break;
                                         default:
-                                            simu.setStatus(Simulation.READY);
+                                            simu.getRemoteJob().setStatus(RemoteJob.READY);
                                             break;
                                     }
                                     break;

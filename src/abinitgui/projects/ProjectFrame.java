@@ -141,9 +141,9 @@ public class ProjectFrame extends javax.swing.JDialog {
 
                 System.out.println("Status = " + simu.getStatus());
 
-                if (simu.getStatus() == Simulation.RUNNING) {
+                if (simu.getStatus() == RemoteJob.RUNNING) {
                     c.setForeground(Color.BLUE);
-                } else if (simu.getStatus() == Simulation.FINISHED) {
+                } else if (simu.getStatus() == RemoteJob.COMPLETED) {
                     c.setForeground(Color.BLACK);
                 } else {
                     c.setForeground(Color.LIGHT_GRAY);

@@ -46,13 +46,26 @@ For more information on the Abinit Project, please see
 
 package abinitgui.projects;
 
+import abinitgui.core.MainFrame;
+import abinitgui.core.RetMSG;
+
 public class RemoteJob 
 {
-    private SubmissionScript script;
+    public final static int READY = 0;
+    public final static int RUNNING = 1;
+    public final static int COMPLETED = 2;
+    public final static int PENDING = 3;
+    public final static int UNKNOWN = 4;
+    public final static int FAILED = 5;
+    public final static int CANCELLED = 6;
     
-    private int status;
+    protected SubmissionScript script;
     
-    private String machineName;
+    protected int status;
+    
+    protected String machineName;
+    
+    protected int jobId;
     
     public void updateStatus()
     {
@@ -89,6 +102,28 @@ public class RemoteJob
     public int getStatus() {
         return status;
     }
+    
+    public String getStatusString() {
+        switch(status)
+        {
+            case PENDING:
+                return "Submitted";
+            case READY:
+                return "Ready";
+            case COMPLETED:
+                return "Completed";
+            case RUNNING:
+                return "Running";
+            case UNKNOWN:
+                return "Unknown";
+            case FAILED:
+                return "Failed";
+            case CANCELLED:
+                return "Cancelled";
+            default:
+                return "Unknown";
+        }
+    }
 
     /**
      * @param status the status to set
@@ -96,4 +131,42 @@ public class RemoteJob
     public void setStatus(int status) {
         this.status = status;
     }
+    
+    /**
+     * Create the submission scripts and submits it to the remote machine
+     * @param rootPath Path where the simulation should be run
+     * @param simName Simulation name
+     */
+    public void submit(String rootPath, String simName)
+    {
+        ;
+    }
+    
+    /**
+     * Print to main output the infos on the job !
+     */
+    public void printInfos()
+    {
+        if(getMachineName() == null)
+        {
+            MainFrame.printOUT("No machine associated to this job");
+            return;
+        } 
+    }
+
+    /**
+     * @return the jobId
+     */
+    public int getJobId() {
+        return jobId;
+    }
+
+    /**
+     * @param jobId the jobId to set
+     */
+    public void setJobId(int jobId) {
+        this.jobId = jobId;
+    }
+    
+    
 }

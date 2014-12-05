@@ -53,14 +53,8 @@ public class Simulation {
     private String name = "default";
     private String inputFileName = "./test3.in";
     private RemoteJob job;
-    public static int RUNNING = 1;
-    public static int FINISHED = 2;
-    public static int READY = 0;
-    private int status;
 
     public Simulation() {
-        status = READY;
-
         job = new RemoteJob();
     }
 
@@ -87,11 +81,7 @@ public class Simulation {
     }
 
     public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+        return job.getStatus();
     }
 
     public RemoteJob getRemoteJob() {

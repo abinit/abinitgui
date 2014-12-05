@@ -64,6 +64,7 @@ public class JobPanel extends javax.swing.JPanel {
         newButton1 = new javax.swing.JButton();
         machineCombo = new javax.swing.JComboBox();
         machineLabel = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         simuList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -176,6 +177,13 @@ public class JobPanel extends javax.swing.JPanel {
 
         machineLabel.setText("Where to run the simulation:");
 
+        jButton1.setText("Get remote infos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -190,7 +198,8 @@ public class JobPanel extends javax.swing.JPanel {
                     .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(saveButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(openLOGButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(openOUTButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(openOUTButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -232,7 +241,9 @@ public class JobPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(openLOGButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(openOUTButton))
+                        .addComponent(openOUTButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pspPathLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -285,18 +296,37 @@ public class JobPanel extends javax.swing.JPanel {
                 currentPanel.fillSimu(currentSimu);
             }
             
+            String oldMachine = currentSimu.getRemoteJob().getMachineName();
             SubmissionScript currentScript = submissionScriptPanel1.getScript();
-            currentSimu.getRemoteJob().setScript(currentScript);
             
             Machine mach = (Machine)machineCombo.getSelectedItem();
-            if(mach != null)
+            if(mach == null)
             {
+                MainFrame.printERR("You should first select a machine !");
+                return;
+            }
+            if(!mach.getName().equals(oldMachine))
+            {
+                // If I change of machine, I should first tell the user, then create new remote job !
+                // TODO : tell the user that the machine will erase everything !
                 currentSimu.getRemoteJob().setMachineName(mach.getName());
+                
+                if(currentScript.getSystem().equals("SLURM"))
+                {
+                    currentSimu.setRemoteJob(new RemoteSlurmJob());
+                }
+                else if(currentScript.getSystem().equals("SGE"))
+                {
+                    currentSimu.setRemoteJob(new RemoteSGEJob());
+                }
+                else if(currentScript.getSystem().equals("Frontend"))
+                {
+                    currentSimu.setRemoteJob(new RemoteFrontendJob());
+                }
             }
-            else
-            {
-                currentSimu.getRemoteJob().setMachineName(null);
-            }
+            
+            currentSimu.getRemoteJob().setScript(currentScript);
+            
         }
         
         currentProject.setPSPPath(this.pspPathTextField.getText());
@@ -435,6 +465,13 @@ public class JobPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_machineComboItemStateChanged
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(currentSimu != null)
+        {
+            currentSimu.getRemoteJob().printInfos();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void refreshMachines()
     {
         Machine mymach = (Machine)(machineCombo.getSelectedItem());
@@ -471,6 +508,7 @@ public class JobPanel extends javax.swing.JPanel {
     private abinitgui.mdtb.ClustepPanel clustepPanel1;
     private javax.swing.JButton deleteButton;
     private javax.swing.JPanel inputPanel2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox machineCombo;

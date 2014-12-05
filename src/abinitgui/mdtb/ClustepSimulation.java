@@ -70,8 +70,6 @@ public class ClustepSimulation extends Simulation {
     private String positionFileName;
 
     public ClustepSimulation() {
-        status = READY;
-
         job = new RemoteJob();
     }
 
@@ -99,16 +97,6 @@ public class ClustepSimulation extends Simulation {
     public String toString() {
         return name;
         //return "Simulation(name = " + name + "; fileName = " + inputFileName + ")";
-    }
-
-    @Override
-    public int getStatus() {
-        return status;
-    }
-
-    @Override
-    public void setStatus(int status) {
-        this.status = status;
     }
     
     @Override

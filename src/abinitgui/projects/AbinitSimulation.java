@@ -69,8 +69,6 @@ public class AbinitSimulation extends Simulation {
     private boolean usingExtInputFile = false;
 
     public AbinitSimulation() {
-        status = READY;
-
         job = new RemoteJob();
         listPseudos = new ArrayList<>();
     }
@@ -119,16 +117,6 @@ public class AbinitSimulation extends Simulation {
     public String toString() {
         return name;
         //return "Simulation(name = " + name + "; fileName = " + inputFileName + ")";
-    }
-
-    @Override
-    public int getStatus() {
-        return status;
-    }
-
-    @Override
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     @Override
@@ -267,22 +255,22 @@ public class AbinitSimulation extends Simulation {
             script.setLogPath(cwd + "/"
                     + rootPath.replaceFirst("./", "") + "/" + logfilesFolder + "/" + simName + ".log");
             switch (script.getSystem()) {
-                case "SGE":
+                /*case "SGE":
                     {
                         String PBSfileName = rootPath + sep + simName + ".SGE.sh";
                         script.writeToFile(PBSfileName);
                         break;
-                    }
-                case "SLURM":
+                    }*/
+                /*case "SLURM":
                     {
                         String PBSfileName = rootPath + sep + simName + ".SLURM.sh";
                         script.writeToFile(PBSfileName);
                         break;
-                    }
-                case "Frontend":
+                    }*/
+                /*case "Frontend":
                     String SHfileName = rootPath + sep + simName + ".sh";
                     script.writeToFile(SHfileName);
-                    break;
+                    break;*/
             }
 
             // Envoie (copie) du fichier d'input
@@ -367,55 +355,9 @@ public class AbinitSimulation extends Simulation {
                 mach.mkdir(rootPath + "/" + wholedataFolder + "/" + simName);
             }
 
-            if (script.getSystem().equals("SGE")) {
-                String sgeSHFile = rootPath + sep + simName + ".SGE.sh";
-                String sgeSHFileR = rootPath + "/" + simName + ".SGE.sh";
-                if (isRemoteGatewayMachine
-                        || isRemoteAbinitMachine) {
-
-                    // Envoie du fichier SGE
-                    mach.putFile(sgeSHFile + " " + sgeSHFileR);
-
-                    if (Utils.osName().startsWith("Windows")) {
-                        mach.sendCommand("dos2unix " + sgeSHFileR);
-                    }
-                }
-                // lancement des commandes d'exécution de la simulation
-                mach.sendCommand("qsub " + sgeSHFileR);
-            } else if (script.getSystem().equals("Frontend")) {
-                String SHFile = rootPath + sep + simName + ".sh";
-                String SHFileR = rootPath + "/" + simName + ".sh";
-
-                if (isRemoteGatewayMachine
-                        || isRemoteAbinitMachine) {
-                    /*if (Utils.osName().startsWith("Windows")) {
-                     Utils.dos2unix(new File(SHFileR));
-                     }*/
-                    // Envoie du fichier BASH
-                    mach.putFile(SHFile + " " + SHFileR);
-
-                    if (Utils.osName().startsWith("Windows")) {
-                        mach.sendCommand("dos2unix " + SHFileR);
-                    }
-                }
-                // lancement des commandes d'exécution de la simulation
-                mach.sendCommand("bash "+SHFileR);
-            } else if (script.getSystem().equals("SLURM")) {
-                String slurmSHFile = rootPath + sep + simName + ".SLURM.sh";
-                String slurmSHFileR = rootPath + "/" + simName + ".SLURM.sh";
-                if (isRemoteGatewayMachine
-                        || isRemoteAbinitMachine) {
-
-                    // Envoie du fichier SGE
-                    mach.putFile(slurmSHFile + " " + slurmSHFileR);
-
-                    if (Utils.osName().startsWith("Windows")) {
-                        mach.sendCommand("dos2unix " + slurmSHFileR);
-                    }
-                }
-                // lancement des commandes d'exécution de la simulation
-                mach.sendCommand("sbatch " + slurmSHFileR);
-            }
+            this.getRemoteJob().submit(rootPath,simName);
+            this.getRemoteJob().printInfos();
+            
         } else {
             MainFrame.printERR("Please setup the inputfile textfield !");
             return false;
