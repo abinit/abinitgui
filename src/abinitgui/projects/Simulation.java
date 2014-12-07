@@ -52,10 +52,12 @@ public class Simulation {
 
     private String name = "default";
     private String inputFileName = "./test3.in";
+    private SubmissionScript script;
     public RemoteJob job;
 
     public Simulation() {
         job = new RemoteJob();
+        script = null;
     }
 
     public String getName() {
@@ -130,5 +132,19 @@ public class Simulation {
     public void downloadOutput()
     {
         throw new UnsupportedOperationException("Not yet supported.");
+    }
+
+    /**
+     * @return the script
+     */
+    public SubmissionScript getScript() {
+        return script;
+    }
+
+    /**
+     * @param script the script to set
+     */
+    public void setScript(SubmissionScript script) {
+        this.script = script;
     }
 }

@@ -109,6 +109,7 @@ public class MachineDatabase implements Iterable<Machine> {
             this.list = (HashMap<String, Machine>) data;
         } catch(RuntimeException e)
         {
+            e.printStackTrace();
             throw new IOException(e.getMessage());
         }
     }

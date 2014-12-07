@@ -65,6 +65,7 @@ public abstract class Machine
     protected String abinitPath;
     protected String simulationPath;
     protected String name;
+    protected SubmissionSystem submissionSystem;
     protected SubmissionScript submissionScript;
     
     public final static int LOCAL_MACHINE = 0;
@@ -73,6 +74,7 @@ public abstract class Machine
     
     // Runtime arguments
     protected int lport;
+    protected SubmissionSystem frontendSystem;
     protected SSHTunnel sshtun;
     protected boolean isConnected;
     
@@ -88,6 +90,7 @@ public abstract class Machine
         sshtun = null;
         isConnected = false;
         last_port = 2568;
+        this.frontendSystem = new SubmissionFrontendSystem(this);
     }
     
     public ConnectionInfo getRemoteConnect()
@@ -171,6 +174,24 @@ public abstract class Machine
         return isConnected;
     }
     
+    public RemoteJob submitSimulation(Simulation simulation, String rootPath, String name)
+    {
+        RemoteJob rj = null;
+        if(simulation.getScript().getSystem().equals("Frontend"))
+        {
+            rj = frontendSystem.submit(simulation.getScript(), rootPath, name);
+        }
+        else if(simulation.getScript().getSystem().equals(this.getSubmissionScript().getSystem()))
+        {
+            rj = getSubmissionSystem().submit(simulation.getScript(), rootPath, name);
+        }
+        else
+        {
+            MainFrame.printOUT("The submission script can not be submitted to the selected machine");
+        }
+        return rj;
+    }
+    
     public abstract void connection();
     
     public abstract void stopConnection();
@@ -206,5 +227,19 @@ public abstract class Machine
         {
             MainFrame.printERR("Exec is null!");
         }
+    }
+
+    /**
+     * @return the submissionSystem
+     */
+    public SubmissionSystem getSubmissionSystem() {
+        return submissionSystem;
+    }
+
+    /**
+     * @param submissionSystem the submissionSystem to set
+     */
+    public void setSubmissionSystem(SubmissionSystem submissionSystem) {
+        this.submissionSystem = submissionSystem;
     }
 }

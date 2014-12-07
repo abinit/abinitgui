@@ -263,6 +263,22 @@ public class MachinePane extends JPanel {
                 }
 
                 this.machine.setSubmissionScript(submissionScriptPanel1.getScript());
+                if(this.machine.getSubmissionScript().getSystem().equals("SGE"))
+                {
+                    this.machine.setSubmissionSystem(new SubmissionSGESystem(this.machine));
+                }
+                else if(this.machine.getSubmissionScript().getSystem().equals("SLURM"))
+                {
+                    this.machine.setSubmissionSystem(new SubmissionSLURMSystem(this.machine));
+                }
+                else if(this.machine.getSubmissionScript().getSystem().equals("Frontend"))
+                {
+                    this.machine.setSubmissionSystem(new SubmissionFrontendSystem(this.machine));
+                }
+                else
+                {
+                    MainFrame.printERR("Submission system not recognized: "+this.machine.getSubmissionScript().getSystem());
+                }
 
                 try {
                     MainFrame.getMachineDatabase().saveToFile("machines.yml");

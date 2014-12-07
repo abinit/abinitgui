@@ -75,9 +75,10 @@ public class ProjectConstructor extends Constructor {
         this.addTypeDescription(new TypeDescription(TightBindingSimulation.class, new Tag("!tightbindingsimulation")));
         this.addTypeDescription(new TypeDescription(Atom.class, new Tag("!atom")));
         this.addTypeDescription(new TypeDescription(RemoteJob.class,new Tag("!remotejob")));
-        this.addTypeDescription(new TypeDescription(RemoteSGEJob.class,new Tag("!remotesgejob")));
-        this.addTypeDescription(new TypeDescription(RemoteSlurmJob.class,new Tag("!remoteslurmjob")));
-        this.addTypeDescription(new TypeDescription(RemoteFrontendJob.class,new Tag("!remotefrontendjob")));
+        this.addTypeDescription(new TypeDescription(SubmissionSystem.class, new Tag("!submissionsystem")));
+        this.addTypeDescription(new TypeDescription(SubmissionSGESystem.class, new Tag("!submissionsgesystem")));
+        this.addTypeDescription(new TypeDescription(SubmissionSLURMSystem.class, new Tag("!submissionslurmsystem")));
+        this.addTypeDescription(new TypeDescription(SubmissionFrontendSystem.class, new Tag("!submissionfrontendsystem")));
         this.yamlConstructors.put(new Tag("!password"), new ConstructPassword());
     }
 

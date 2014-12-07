@@ -149,6 +149,8 @@ public class ProjectFrame extends javax.swing.JDialog {
                     c.setForeground(Color.BLUE);
                 } else if (simu.getStatus() == RemoteJob.COMPLETED) {
                     c.setForeground(Color.BLACK);
+                } else if (simu.getStatus() == RemoteJob.CANCELLED || simu.getStatus() == RemoteJob.FAILED) {
+                    c.setForeground(Color.RED);
                 } else {
                     c.setForeground(Color.LIGHT_GRAY);
                 }

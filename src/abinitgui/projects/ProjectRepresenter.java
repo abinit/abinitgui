@@ -72,9 +72,10 @@ public class ProjectRepresenter extends Representer {
             this.addClassTag(ClustepSimulation.class, new Tag("!clustepsimulation"));
             this.addClassTag(TightBindingSimulation.class, new Tag("!tightbindingsimulation"));
             this.addClassTag(RemoteJob.class,new Tag("!remotejob"));
-            this.addClassTag(RemoteSlurmJob.class,new Tag("!remoteslurmjob"));
-            this.addClassTag(RemoteSGEJob.class,new Tag("!remotesgejob"));
-            this.addClassTag(RemoteFrontendJob.class,new Tag("!remotefrontendjob"));
+            this.addClassTag(SubmissionSystem.class,new Tag("!submissionsystem"));
+            this.addClassTag(SubmissionSGESystem.class,new Tag("!submissionsgesystem"));
+            this.addClassTag(SubmissionSLURMSystem.class,new Tag("!submissionslurmsystem"));
+            this.addClassTag(SubmissionFrontendSystem.class,new Tag("!submissionfrontendsystem"));
         
             this.addClassTag(Atom.class, new Tag("!atom"));
             this.representers.put(Password.class, new RepresentPassword());

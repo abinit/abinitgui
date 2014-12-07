@@ -295,8 +295,13 @@ public class JobPanel extends javax.swing.JPanel {
             {
                 currentPanel.fillSimu(currentSimu);
             }
-            
-            String oldMachine = currentSimu.getRemoteJob().getMachineName();
+
+            RemoteJob rj = currentSimu.getRemoteJob();
+            String oldMachine = null;
+            if(rj != null)
+            {
+                oldMachine = currentSimu.getRemoteJob().getMachineName();
+            }
             SubmissionScript currentScript = submissionScriptPanel1.getScript();
             
             Machine mach = (Machine)machineCombo.getSelectedItem();
@@ -309,9 +314,11 @@ public class JobPanel extends javax.swing.JPanel {
             {
                 // If I change of machine, I should first tell the user, then create new remote job !
                 // TODO : tell the user that the machine will erase everything !
+                System.out.println("Change remote Job : "+mach.getName()+", "+oldMachine);
+                currentSimu.setRemoteJob(new RemoteJob());
                 currentSimu.getRemoteJob().setMachineName(mach.getName());
                 
-                if(currentScript.getSystem().equals("SLURM"))
+                /**if(currentScript.getSystem().equals("SLURM"))
                 {
                     currentSimu.setRemoteJob(new RemoteSlurmJob());
                 }
@@ -322,13 +329,15 @@ public class JobPanel extends javax.swing.JPanel {
                 else if(currentScript.getSystem().equals("Frontend"))
                 {
                     currentSimu.setRemoteJob(new RemoteFrontendJob());
-                }
+                }**/
             }
             
-            currentSimu.getRemoteJob().setScript(currentScript);
             
-        }
+            currentSimu.setScript(currentScript);
+            currentSimu.getRemoteJob().setScript(currentScript);
         
+        }
+
         currentProject.setPSPPath(this.pspPathTextField.getText());
         
         try {

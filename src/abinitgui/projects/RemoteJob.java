@@ -140,16 +140,6 @@ public class RemoteJob
     }
     
     /**
-     * Create the submission scripts and submits it to the remote machine
-     * @param rootPath Path where the simulation should be run
-     * @param simName Simulation name
-     */
-    public void submit(String rootPath, String simName)
-    {
-        ;
-    }
-    
-    /**
      * Print to main output the infos on the job !
      */
     public void printInfos()
@@ -159,6 +149,12 @@ public class RemoteJob
             MainFrame.printOUT("No machine associated to this job");
             return;
         } 
+        
+        Machine mach = MainFrame.getMachineDatabase().getMachine(machineName);
+        if(mach != null)
+        {
+            mach.getSubmissionSystem().printInfos(this);
+        }
     }
 
     /**

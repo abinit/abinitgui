@@ -337,7 +337,9 @@ public class AbinitSimulation extends Simulation {
                 mach.mkdir(rootPath + "/" + wholedataFolder + "/" + simName);
             }
 
-            this.getRemoteJob().submit(rootPath,simName);
+            RemoteJob rj = mach.submitSimulation(this, rootPath, simName);
+            this.setRemoteJob(rj);
+            //this.getRemoteJob().submit(rootPath,simName);
             //this.getRemoteJob().printInfos();
             
         } else {

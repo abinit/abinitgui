@@ -1,4 +1,4 @@
-Local machine: !localmachine
+Local machine: &id001 !localmachine
   abinitPath: ''
   gatewayConnect: null
   name: Local machine
@@ -8,7 +8,9 @@ Local machine: !localmachine
     email: '', inputPath: /dev/null, logPath: TB_simu_BD.log, memoryMax: '', nbProcs: '1',
     parallel: false, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/BS,
     simName: simulation, system: Frontend, timeLimit: ''}
-Lemaitre2: !remotemachine
+  submissionSystem: !submissionfrontendsystem
+    machine: *id001
+Lemaitre2: &id002 !remotemachine
   abinitPath: ''
   gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: fabreu,
     password: !password '6i2NGjig240=', useKey: false}
@@ -19,18 +21,22 @@ Lemaitre2: !remotemachine
   submissionScript: !slurmscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
     inputPath: '', logPath: '', memoryMax: '2000', nbProcs: '2', parallel: true, postProcessPart: '',
     preProcessPart: '', simName: simulation, system: SLURM, timeLimit: '23:59:59'}
-Manneback: !gatewaymachine
+  submissionSystem: !submissionslurmsystem
+    machine: *id002
+Manneback: &id003 !gatewaymachine
   abinitPath: ''
-  gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: fabreu,
-    password: !password '6i2NGjig240=', useKey: false}
+  gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: ygillet,
+    password: !password 'RzJzYxJ76Dwmzuo4awRSPQ==', useKey: false}
   name: Manneback
-  remoteConnect: !connectioninfo {host: manneback.cism.ucl.ac.be, keyPath: '', login: fabreu,
-    password: !password '6i2NGjig240=', useKey: false}
+  remoteConnect: !connectioninfo {host: manneback.cism.ucl.ac.be, keyPath: '', login: ygillet,
+    password: !password 'RzJzYxJ76Dwmzuo4awRSPQ==', useKey: false}
   simulationPath: ./MySims
-  submissionScript: !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+  submissionScript: !slurmscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
     inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false, postProcessPart: '',
-    preProcessPart: '', simName: simulation, system: SGE, timeLimit: '23:59:59'}
-Green: !gatewaymachine
+    preProcessPart: '', simName: simulation, system: SLURM, timeLimit: '23:59:59'}
+  submissionSystem: !submissionslurmsystem
+    machine: *id003
+Green: &id004 !gatewaymachine
   abinitPath: ''
   gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: tuto05,
     password: !password 'AcGpp2bFImZDghMH5vEFWw==', useKey: false}
@@ -42,4 +48,6 @@ Green: !gatewaymachine
     email: '', inputPath: '', logPath: '', memoryMax: '', nbProcs: '1', parallel: false,
     postProcessPart: '', preProcessPart: '', simName: simulation, system: Frontend,
     timeLimit: ''}
+  submissionSystem: !submissionfrontendsystem
+    machine: *id004
 
