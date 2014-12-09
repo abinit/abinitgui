@@ -84,7 +84,30 @@ public class SubmissionSLURMSystem extends SubmissionSystem
 
     @Override
     public ArrayList<RemoteJob> getRemoteJobs() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<RemoteJob> listJobs = new ArrayList<>();
+        
+        
+        if(!machine.isConnected())
+            getMachine().connection();
+        
+        String login = null;
+        if(machine.getType() == Machine.REMOTE_MACHINE || machine.getType() == Machine.GATEWAY_MACHINE)
+        {
+            login = machine.getRemoteConnect().getLogin();
+        }
+        if(login == null)
+        {
+            MainFrame.printERR("Cannot get login for the machine !");
+            return null;
+        }
+        RetMSG msg = getMachine().sendCommand("sacct --noheader --parsable -u "+login+" -o \"JobId,State\"");
+
+        String retMsg = msg.getRetMSG();
+        
+        System.out.println(retMsg.split("\n")[0]);
+        
+        return listJobs;
+
     }
 
     @Override

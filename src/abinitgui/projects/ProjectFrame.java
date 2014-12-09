@@ -49,6 +49,7 @@ package abinitgui.projects;
 import abinitgui.core.MainFrame;
 import java.awt.Color;
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -281,6 +282,14 @@ public class ProjectFrame extends javax.swing.JDialog {
             Simulation simu = (Simulation) ((DefaultMutableTreeNode) node).getUserObject();
             
             simu.printInfos();
+            String machineName = simu.getRemoteJob().getMachineName();
+            Machine mach = MainFrame.getMachineDatabase().getMachine(machineName);
+            ArrayList<RemoteJob> alljobs = null;
+            if(mach != null)
+            {
+                alljobs = mach.getSubmissionSystem().getRemoteJobs();
+            }
+            System.out.println("all jobs = "+alljobs);
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
