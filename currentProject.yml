@@ -5,7 +5,7 @@ dict:
     inputFileName: ./ClustepEx/Seance1/ex1/C2-input
     name: clustep simu
     positionFileName: ./ClustepEx/Seance1/ex1/C2-pos
-    remoteJob: !remotefrontendjob
+    remoteJob: !remotejob
       jobId: -1
       machineName: Green
       script: !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: yannick.gillet@uclouvain.be,
@@ -21,7 +21,7 @@ dict:
     model: 1
     name: TB simu
     nkpt: 20
-    remoteJob: !remotefrontendjob
+    remoteJob: !remotejob
       jobId: -1
       machineName: Green
       script: !frontendscript {CDPart: cd ./MySims/Tight-Binding, MPIPath: mpirun,
@@ -35,7 +35,7 @@ dict:
     - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
       symbol: H, typat: 0, znucl: 1}
     name: Tbase1_1
-    remoteJob: !remoteslurmjob
+    remoteJob: !remotejob
       jobId: -1
       machineName: Manneback
       script: !slurmscript {CDPart: '', MPIPath: mpirun, abinitPath: abinit, email: yanikou19@gmail.com,
@@ -50,7 +50,7 @@ dict:
     - {PSPFileName: 14si.pspnc, PSPPath: ./PSP/LDA_TM.psps/14, PSPType: LDA_TM, name: '',
       symbol: Si, typat: 0, znucl: 14}
     name: Tbase1_2
-    remoteJob: !remoteslurmjob
+    remoteJob: !remotejob
       jobId: 941531
       machineName: Manneback
       script: !slurmscript
@@ -80,7 +80,7 @@ dict:
     - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
       symbol: H, typat: 0, znucl: 1}
     name: Tbase1_3
-    remoteJob: !remotefrontendjob
+    remoteJob: !remotejob
       jobId: -1
       machineName: Green
       script: &id001 !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: abinit,
@@ -95,7 +95,7 @@ dict:
     - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
       symbol: H, typat: 0, znucl: 1}
     name: Tbase1_4
-    remoteJob: !remotefrontendjob
+    remoteJob: !remotejob
       jobId: -1
       machineName: Green
       script: *id001
@@ -107,7 +107,7 @@ dict:
     - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
       symbol: H, typat: 0, znucl: 1}
     name: Tbase1_5
-    remoteJob: !remotefrontendjob
+    remoteJob: !remotejob
       jobId: -1
       machineName: Green
       script: *id001
@@ -119,7 +119,7 @@ dict:
     - {PSPFileName: 13al.pspnc, PSPPath: ./PSP/LDA_TM.psps/13, PSPType: LDA_TM, name: '',
       symbol: Al, typat: 0, znucl: 13}
     name: Others
-    remoteJob: !remotesgejob
+    remoteJob: !remotejob
       jobId: -1
       machineName: Green
       script: !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: abinit, email: '',
