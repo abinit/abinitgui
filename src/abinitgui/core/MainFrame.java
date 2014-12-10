@@ -80,7 +80,6 @@ import abinitgui.projects.Machine;
 import abinitgui.projects.MachineDatabase;
 import abinitgui.projects.MachinePane;
 import abinitgui.projects.Project;
-import abinitgui.projects.ProjectFrame;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
@@ -275,15 +274,12 @@ public class MainFrame extends JFrame {
             }*/
         }
         
-        ProjectFrame pf = new ProjectFrame();
-        pf.setProject(currentProject);
-        pf.setVisible(true);
-        
         machinePane1.refresh();
         jobPanel1.refreshProject();
         jobPanel1.refreshMachines();
         postProcPanel1.refresh();
         postProcPanel1.refreshMachines();
+        jobMonitorPanel1.refreshMachines();
         
         refreshMachines();
         
@@ -366,6 +362,7 @@ public class MainFrame extends JFrame {
         machinePane1 = new abinitgui.projects.MachinePane();
         jobPanel1 = new abinitgui.projects.JobPanel();
         postProcPanel1 = new abinitgui.scriptbib.PostProcPanel();
+        jobMonitorPanel1 = new abinitgui.projects.JobMonitorPanel();
         connectionToggleButton = new javax.swing.JToggleButton();
         SSH2ClientButton = new javax.swing.JButton();
         SFTPButton = new javax.swing.JButton();
@@ -396,6 +393,7 @@ public class MainFrame extends JFrame {
         mainTabbedPane.addTab("Machines", machinePane1);
         mainTabbedPane.addTab("Jobs", jobPanel1);
         mainTabbedPane.addTab("Post-processing", postProcPanel1);
+        mainTabbedPane.addTab("Job Monitor", jobMonitorPanel1);
 
         connectionToggleButton.setText("Connect");
         connectionToggleButton.addActionListener(new java.awt.event.ActionListener() {
@@ -800,6 +798,7 @@ public class MainFrame extends JFrame {
     javax.swing.JMenuItem jMenuItem4;
     javax.swing.JMenuItem jMenuItemClustep;
     javax.swing.JMenuItem jMenuItemTB;
+    abinitgui.projects.JobMonitorPanel jobMonitorPanel1;
     abinitgui.projects.JobPanel jobPanel1;
     javax.swing.ButtonGroup lookAndFeelbuttonGroup;
     javax.swing.JComboBox machineCombo;

@@ -114,7 +114,7 @@ public class JobPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(submissionScriptPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addContainerGap(207, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +177,7 @@ public class JobPanel extends javax.swing.JPanel {
 
         machineLabel.setText("Where to run the simulation:");
 
-        jButton1.setText("Get remote infos");
+        jButton1.setText("Get remote status");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -215,7 +215,7 @@ public class JobPanel extends javax.swing.JPanel {
                                 .addComponent(machineCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(tabbedPane))
+                        .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pspPathTextField)))
@@ -480,7 +480,7 @@ public class JobPanel extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(currentSimu != null)
         {
-            currentSimu.getRemoteJob().printInfos();
+            MainFrame.printOUT(currentSimu.getRemoteJob().printInfos());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

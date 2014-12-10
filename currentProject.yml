@@ -3,6 +3,7 @@ PSPPath: ./PSP
 dict:
   clustep simu: !clustepsimulation
     inputFileName: ./ClustepEx/Seance1/ex1/C2-input
+    job: !remotejob {jobId: 0, machineName: null, script: null, status: 0, statusString: Ready}
     name: clustep simu
     positionFileName: ./ClustepEx/Seance1/ex1/C2-pos
     remoteJob: !remotejob
@@ -13,9 +14,12 @@ dict:
         postProcessPart: '', preProcessPart: '', simName: simulation, system: Frontend,
         timeLimit: '02:00:00'}
       status: 0
+      statusString: Ready
+    script: null
     sendClustepSources: true
   TB simu: !!abinitgui.mdtb.TightBindingSimulationOld
     inputFileName: ./test3.in
+    job: !remotejob {jobId: 0, machineName: null, script: null, status: 0, statusString: Ready}
     l: 4
     m: 4
     model: 1
@@ -29,31 +33,32 @@ dict:
         memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
         simName: simulation, system: Frontend, timeLimit: ''}
       status: 0
+      statusString: Ready
+    script: null
   Tbase1_1: !abinitsimulation
     inputFileName: /home/yannick/abinit/7.7.2-private/tests/bigdft/Input/t05.in
-    listPseudos:
-    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
-      symbol: H, typat: 0, znucl: 1}
-    name: Tbase1_1
-    remoteJob: !remotejob
+    job: &id001 !remotejob
       jobId: -1
       machineName: Manneback
       script: !slurmscript {CDPart: '', MPIPath: mpirun, abinitPath: abinit, email: yanikou19@gmail.com,
         inputPath: /home/users/t/u/tuto01/MySims/tbase1_1.files, logPath: /home/users/t/u/tuto01/MySims/logfiles/tbase1_1.log,
         memoryMax: '2000', nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: '#SBATCH
           --exclude=mback007,mback040', simName: simulation, system: SLURM, timeLimit: '23:59:59'}
-      status: 0
+      status: 4
+      statusString: Unknown
+    listPseudos:
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
+      symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_1
+    remoteJob: *id001
+    script: null
     usingExtInputFile: true
   Tbase1_2: !abinitsimulation
     inputFileName: ./test3.in
-    listPseudos:
-    - {PSPFileName: 14si.pspnc, PSPPath: ./PSP/LDA_TM.psps/14, PSPType: LDA_TM, name: '',
-      symbol: Si, typat: 0, znucl: 14}
-    name: Tbase1_2
-    remoteJob: !remotejob
-      jobId: 941531
+    job: &id002 !remotejob
+      jobId: 1000378
       machineName: Manneback
-      script: !slurmscript
+      script: &id003 !slurmscript
         CDPart: ''
         MPIPath: mpirun
         abinitPath: abinit
@@ -61,7 +66,7 @@ dict:
         inputPath: /home/users/y/g/ygillet/MySims-test/test3.files
         logPath: /home/users/y/g/ygillet/MySims-test/logfiles/test3.log
         memoryMax: '2000'
-        nbProcs: '60'
+        nbProcs: '4'
         parallel: true
         postProcessPart: ''
         preProcessPart: |-
@@ -72,54 +77,66 @@ dict:
         simName: simulation
         system: SLURM
         timeLimit: '23:59:59'
-      status: 2
+      status: 0
+      statusString: Ready
+    listPseudos:
+    - {PSPFileName: 14si.pspnc, PSPPath: ./PSP/LDA_TM.psps/14, PSPType: LDA_TM, name: '',
+      symbol: Si, typat: 0, znucl: 14}
+    name: Tbase1_2
+    remoteJob: *id002
+    script: *id003
     usingExtInputFile: true
   Tbase1_3: !abinitsimulation
     inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_3.in
-    listPseudos:
-    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
-      symbol: H, typat: 0, znucl: 1}
-    name: Tbase1_3
-    remoteJob: !remotejob
+    job: &id004 !remotejob
       jobId: -1
       machineName: Green
-      script: &id001 !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: abinit,
+      script: &id005 !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: abinit,
         email: '', inputPath: /home/users/t/u/tuto05/MySims/tbase4_5.files, logPath: /home/users/t/u/tuto05/MySims/logfiles/tbase4_5.log,
         memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
         simName: simulation, system: Frontend, timeLimit: ''}
       status: 0
+      statusString: Ready
+    listPseudos:
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
+      symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_3
+    remoteJob: *id004
+    script: null
     usingExtInputFile: true
   Tbase1_4: !abinitsimulation
     inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_4.in
+    job: &id006 !remotejob
+      jobId: -1
+      machineName: Green
+      script: *id005
+      status: 0
+      statusString: Ready
     listPseudos:
     - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
       symbol: H, typat: 0, znucl: 1}
     name: Tbase1_4
-    remoteJob: !remotejob
-      jobId: -1
-      machineName: Green
-      script: *id001
-      status: 0
+    remoteJob: *id006
+    script: null
     usingExtInputFile: true
   Tbase1_5: !abinitsimulation
     inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_5.in
+    job: &id007 !remotejob
+      jobId: -1
+      machineName: Green
+      script: *id005
+      status: 0
+      statusString: Ready
     listPseudos:
     - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
       symbol: H, typat: 0, znucl: 1}
     name: Tbase1_5
-    remoteJob: !remotejob
-      jobId: -1
-      machineName: Green
-      script: *id001
-      status: 0
+    remoteJob: *id007
+    script: null
     usingExtInputFile: true
   Others: !abinitsimulation
     inputFileName: /home/yannick/abinit/7.7.2-private/tests/tutorial/Input/tbase4_5.in
-    listPseudos:
-    - {PSPFileName: 13al.pspnc, PSPPath: ./PSP/LDA_TM.psps/13, PSPType: LDA_TM, name: '',
-      symbol: Al, typat: 0, znucl: 13}
-    name: Others
-    remoteJob: !remotejob
+    job: &id008 !remotejob
       jobId: -1
       machineName: Green
       script: !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: abinit, email: '',
@@ -127,5 +144,12 @@ dict:
         memoryMax: '200', nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: '',
         simName: simulation, system: SGE, timeLimit: '00:10:00'}
       status: 0
+      statusString: Ready
+    listPseudos:
+    - {PSPFileName: 13al.pspnc, PSPPath: ./PSP/LDA_TM.psps/13, PSPType: LDA_TM, name: '',
+      symbol: Al, typat: 0, znucl: 13}
+    name: Others
+    remoteJob: *id008
+    script: null
     usingExtInputFile: true
 

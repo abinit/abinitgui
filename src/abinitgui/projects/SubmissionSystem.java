@@ -17,7 +17,7 @@ public abstract class SubmissionSystem
     
     public abstract void updateStatus(RemoteJob rj);
     
-    public abstract void printInfos(RemoteJob rj);
+    public abstract String printInfos(RemoteJob rj);
     
     public abstract void kill(RemoteJob rj);
     

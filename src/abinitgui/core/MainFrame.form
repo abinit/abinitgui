@@ -232,6 +232,15 @@
             </Constraint>
           </Constraints>
         </Component>
+        <Component class="abinitgui.projects.JobMonitorPanel" name="jobMonitorPanel1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Job Monitor">
+                <Property name="tabTitle" type="java.lang.String" value="Job Monitor"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JToggleButton" name="connectionToggleButton">

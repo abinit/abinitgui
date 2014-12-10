@@ -116,17 +116,20 @@ public class LocalMachine extends Machine
     }
     
     @Override
-    public RetMSG sendCommand(String CMD)
+    public RetMSG sendCommand(String CMD, boolean printMF)
     {
         RetMSG retmsg;
         retmsg = localExec.sendCommand(CMD);
-        if (retmsg.getRetCode() == RetMSG.SUCCES) {
-            MainFrame.printOUT("Succes: " + retmsg.getCMD() + " => " +
-                    Utils.removeEndl(retmsg.getRetMSG()) + ".");
-        } else {
-            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-            MainFrame.printERR("Error: " +
-                    Utils.removeEndl(retmsg.getRetMSG()) + " !");
+        if(printMF)
+        {
+            if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                MainFrame.printOUT("Succes: " + retmsg.getCMD() + " => " +
+                        Utils.removeEndl(retmsg.getRetMSG()) + ".");
+            } else {
+                //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+                MainFrame.printERR("Error: " +
+                        Utils.removeEndl(retmsg.getRetMSG()) + " !");
+            }
         }
         
         return retmsg;

@@ -63,22 +63,22 @@ public class SubmissionFrontendSystem extends SubmissionSystem
 
     @Override
     public ArrayList<RemoteJob> getRemoteJobs() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override
     public void updateStatus(RemoteJob rj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return;
     }
 
     @Override
-    public void printInfos(RemoteJob rj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String printInfos(RemoteJob rj) {
+        return "Frontend job !";
     }
 
     @Override
     public void kill(RemoteJob rj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return;
     }
     
 }

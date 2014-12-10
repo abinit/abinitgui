@@ -204,7 +204,12 @@ public abstract class Machine
 
     public abstract MySFTP newSFTP();
     
-    public abstract RetMSG sendCommand(String CMD);
+    public RetMSG sendCommand(String CMD)
+    {
+        return sendCommand(CMD, true);
+    }
+    
+    public abstract RetMSG sendCommand(String CMD, boolean printMF);
     
     public abstract RetMSG sendCommand(String CMD[]);
     

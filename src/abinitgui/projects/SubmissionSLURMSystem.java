@@ -71,13 +71,11 @@ public class SubmissionSLURMSystem extends SubmissionSystem
             String jobIdS = retMsg.replace("Submitted batch job ", "").replaceAll("\n", "").replaceAll(" ","");
             int id = Integer.parseInt(jobIdS);
             rj.setJobId(id);
-            System.out.println("my job id is : "+rj.getJobId());
         }
         else
         {
             MainFrame.printERR("Error : "+retMsg);
         }
-        System.out.println("id = "+rj.getJobId());
         
         return rj;
     }
@@ -88,7 +86,7 @@ public class SubmissionSLURMSystem extends SubmissionSystem
         
         
         if(!machine.isConnected())
-            getMachine().connection();
+            machine.connection();
         
         String login = null;
         if(machine.getType() == Machine.REMOTE_MACHINE || machine.getType() == Machine.GATEWAY_MACHINE)
@@ -100,11 +98,32 @@ public class SubmissionSLURMSystem extends SubmissionSystem
             MainFrame.printERR("Cannot get login for the machine !");
             return null;
         }
-        RetMSG msg = getMachine().sendCommand("sacct --noheader --parsable -u "+login+" -o \"JobId,State\"");
+        RetMSG msg = machine.sendCommand("sacct --noheader -P -u "+login+" -o \"JobId,State\"",false);
 
         String retMsg = msg.getRetMSG();
         
-        System.out.println(retMsg.split("\n")[0]);
+        String[] lines = retMsg.split("\n");
+        
+        for(String lin : lines)
+        {
+            String[] tab = lin.split("\\|");
+            if(tab.length != 2)
+                continue;
+            String idS = tab[0];
+            String statS = tab[1];
+            
+            try{
+                int id = Integer.parseInt(idS);
+                RemoteJob rj = new RemoteJob();
+                rj.setMachineName(machine.getName());
+                rj.setJobId(id);
+                rj.setStatusString(statS);
+                listJobs.add(rj);
+            } catch(NumberFormatException exc)
+            {
+                continue;
+            }
+        }
         
         return listJobs;
 
@@ -122,38 +141,32 @@ public class SubmissionSLURMSystem extends SubmissionSystem
         if(!machine.isConnected())
             getMachine().connection();
         
-        RetMSG msg = getMachine().sendCommand("sacct -j "+rj.getJobId()+" -o \"JobId,State\"");
+        RetMSG msg = getMachine().sendCommand("sacct --noheader -P -j "+rj.getJobId()+" -o \"JobId,State\"",false);
 
         String retMsg = msg.getRetMSG();
-
-        if(retMsg.contains("COMPLETED"))
+        String[] lines = retMsg.split("\n");
+        for(String lin : lines)
         {
-            status = COMPLETED;
-        }
-        else if(retMsg.contains("CANCELLED"))
-        {
-            status = CANCELLED;
-        }
-        else if(retMsg.contains("FAIL"))
-        {
-            status = FAILED;
-        }
-        else if(retMsg.contains("PENDING"))
-        {
-            status = PENDING;
-        }
-        else if(retMsg.contains("RUNNING"))
-        {
-            status = RUNNING;
-        }
-        else
-        {
-            status = UNKNOWN;
+            String[] tab = lin.split("\\|");
+            String idS = tab[0];
+            String statS = tab[1];
+            
+            try{
+                int id = Integer.parseInt(idS);
+                System.out.println("tab = "+idS+", "+statS);
+                if(rj.getJobId() == id)
+                {
+                    rj.setStatusString(statS);
+                }
+            } catch(NumberFormatException exc)
+            {
+            }
         }
         
-        if(status == UNKNOWN)
+        if(rj.getStatus() == UNKNOWN)
         {
-            msg = getMachine().sendCommand("scontrol show job "+rj.getJobId());
+            String command = "scontrol show job "+rj.getJobId();
+            msg = getMachine().sendCommand("scontrol show job "+rj.getJobId(),false);
 
             retMsg = msg.getRetMSG();
             Pattern state = Pattern.compile("JobState=([A-Z]+)");
@@ -161,47 +174,54 @@ public class SubmissionSLURMSystem extends SubmissionSystem
             Matcher m = state.matcher(retMsg);
             while (m.find()) {
                 String statusS = m.group().trim();
-                if(statusS.equals("Pending"))
-                {
-                    status = PENDING;
-                }
-                else if(statusS.equals("Running"))
-                {
-                    status = RUNNING;
-                }
-                else if(statusS.equals("Completed"))
-                {
-                    status = COMPLETED;
-                }
+                rj.setStatusString(statusS);
             }
         }
-        
-        rj.setStatus(status);
         
         System.out.println("rj.status = "+rj.getStatusString());
     }
 
     @Override
-    public void printInfos(RemoteJob rj) 
+    public String printInfos(RemoteJob rj) 
     {
         if(rj.getJobId() == -1) 
         {
-            MainFrame.printOUT("This job has not been submitted yet !");
-            return;
+            return "This job has not been submitted yet !";
         } 
         
         if(rj.getJobId() == 0)
         {
-            MainFrame.printERR("Job ID is 0 !");
-            return;
+            return "Job ID is 0 !";
         }
         
         if(!machine.isConnected())
             getMachine().connection();
         
         updateStatus(rj);
-        MainFrame.printOUT("The job is currently : "+rj.getStatusString());
-
+        
+        String command = "scontrol show job "+rj.getJobId();
+        RetMSG msg = getMachine().sendCommand(command,false);
+        
+        if(msg.getRetCode() == 0)
+        {
+            return msg.getRetMSG();
+        }
+        else
+        {
+            command = "sacct -j "+rj.getJobId();
+            msg = getMachine().sendCommand(command, false);
+            
+            if(msg.getRetCode() == 0)
+            {
+                return msg.getRetMSG();
+            }
+            else
+            {
+                return "The status of the job is : "+rj.getStatusString();
+            }
+        }
+            
+        
     }
 
     @Override

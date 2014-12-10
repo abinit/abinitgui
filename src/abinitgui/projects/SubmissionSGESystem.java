@@ -85,17 +85,16 @@ public class SubmissionSGESystem extends SubmissionSystem
     }
 
     @Override
-    public void printInfos(RemoteJob rj) {
+    public String printInfos(RemoteJob rj) {
         if(rj.getJobId() == -1) 
         {
-            MainFrame.printOUT("This job has not been submitted yet !");
-            return;
+            return "This job has not been submitted yet !";
         } 
         if(!machine.isConnected())
             getMachine().connection();
         
         RetMSG msg = getMachine().sendCommand("qacct -j "+rj.getJobId());
-        MainFrame.printOUT(msg.getRetMSG());
+        return msg.getRetMSG();
     }
 
     @Override

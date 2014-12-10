@@ -69,7 +69,18 @@ public class RemoteJob
     
     public void updateStatus()
     {
-        // TODO !
+        if(getMachineName() == null)
+        {
+            MainFrame.printOUT("No machine associated to this job");
+            return;
+        } 
+        
+        Machine mach = MainFrame.getMachineDatabase().getMachine(machineName);
+        
+        if(mach != null)
+        {
+            mach.getSubmissionSystem().updateStatus(this);
+        }
     }
     
     public String getMachineName()
@@ -80,6 +91,22 @@ public class RemoteJob
     public void setMachineName(String machineName)
     {
         this.machineName = machineName;
+    }
+    
+    public String toString()
+    {
+        String s = "";
+        if(this.script != null)
+        {
+            s = s + this.script.getSimName();
+        }
+        else
+        {
+            s = s + "Job "+this.getJobId();
+        }
+        
+        s = s + " ("+this.getStatusString()+")";
+        return s;
     }
 
     /**
@@ -107,7 +134,19 @@ public class RemoteJob
      * Try to kill the job on the remote machine !
      */
     public void kill() {
-        MainFrame.printERR("Nothing to do !");
+        
+        if(getMachineName() == null)
+        {
+            MainFrame.printOUT("No machine associated to this job");
+            return;
+        } 
+        
+        Machine mach = MainFrame.getMachineDatabase().getMachine(machineName);
+        if(mach != null)
+        {
+            mach.getSubmissionSystem().kill(this);
+        }
+        
     }
     
     public String getStatusString() {
@@ -142,19 +181,20 @@ public class RemoteJob
     /**
      * Print to main output the infos on the job !
      */
-    public void printInfos()
+    public String printInfos()
     {
         if(getMachineName() == null)
         {
             MainFrame.printOUT("No machine associated to this job");
-            return;
+            return null;
         } 
         
         Machine mach = MainFrame.getMachineDatabase().getMachine(machineName);
         if(mach != null)
         {
-            mach.getSubmissionSystem().printInfos(this);
+            return mach.getSubmissionSystem().printInfos(this);
         }
+        return null;
     }
 
     /**
@@ -169,6 +209,39 @@ public class RemoteJob
      */
     public void setJobId(int jobId) {
         this.jobId = jobId;
+    }
+
+    public void setStatusString(String stat) 
+    {
+        String statS = stat.toUpperCase();
+        if(statS.contains("RUNNING"))
+        {
+            setStatus(RemoteJob.RUNNING);
+        }
+        else if(statS.contains("COMPLETED"))
+        {
+            setStatus(RemoteJob.COMPLETED);
+        }
+        else if(statS.contains("FAILED"))
+        {
+            setStatus(RemoteJob.FAILED);
+        }
+        else if(statS.contains("CANCELLED"))
+        {
+            setStatus(RemoteJob.CANCELLED);
+        }
+        else if(statS.contains("PENDING") || statS.contains("SUBMITTED"))
+        {
+            setStatus(RemoteJob.PENDING);
+        }
+        else if(statS.contains("READY"))
+        {
+            setStatus(RemoteJob.READY);
+        }
+        else
+        {
+            setStatus(RemoteJob.UNKNOWN);
+        }
     }
     
     

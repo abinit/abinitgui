@@ -199,16 +199,19 @@ public class RemoteMachine extends Machine {
     }
     
     @Override
-    public RetMSG sendCommand(String CMD)
+    public RetMSG sendCommand(String CMD, boolean printMF)
     {
         RetMSG retmsg;
         retmsg = remoteExec.sendCommand(CMD);
-        if (retmsg.getRetCode() == RetMSG.SUCCES) {
-            MainFrame.printOUT("Succes: " + retmsg.getCMD() + " => " +
-                    Utils.removeEndl(retmsg.getRetMSG()) + ".");
-        } else {
-            MainFrame.printERR("Error (Code = " + retmsg.getRetCode() + "): " +
-                    Utils.removeEndl(retmsg.getRetMSG()) + " !");
+        if(printMF)
+        {
+            if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                MainFrame.printOUT("Succes: " + retmsg.getCMD() + " => " +
+                        Utils.removeEndl(retmsg.getRetMSG()) + ".");
+            } else {
+                MainFrame.printERR("Error (Code = " + retmsg.getRetCode() + "): " +
+                        Utils.removeEndl(retmsg.getRetMSG()) + " !");
+            }
         }
         return retmsg;
     }
