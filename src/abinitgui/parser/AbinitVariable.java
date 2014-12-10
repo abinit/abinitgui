@@ -230,6 +230,11 @@ public class AbinitVariable {
     
     public void evaluateDim(Evaluator evaluator) throws EvaluationException 
     {
+        evaluateDim(evaluator,false);
+    }
+    
+    public void evaluateDim(Evaluator evaluator, boolean strict) throws EvaluationException 
+    {
         Object docDim = docVariable.getDimensions();
         if(docDim instanceof String && ((String)docDim).equals("scalar"))
         {
@@ -258,10 +263,51 @@ public class AbinitVariable {
         System.out.println("dims = "+this.getDims());*/
     }
     
+    public ArrayList<Object> flattenMultiple(Object o, int nbTotDims, Evaluator evaluator) throws EvaluationException
+    {
+        ArrayList<Object> curList = new ArrayList<>();
+        
+        if(o instanceof Number)
+        {
+            curList.add(o);
+        }
+        else if(o instanceof Set)
+        {
+            curList.addAll((Set)o);
+        }
+        else if(o instanceof ArrayList)
+        {
+            ArrayList<Object> listO = (ArrayList)o;
+            for(Object obj : listO)
+            {
+                curList.addAll(flattenMultiple(obj,nbTotDims,evaluator));
+            }
+        }
+        else if(o instanceof MultipleValue)
+        {
+            Object out = getDim(((MultipleValue)o).getValue(),evaluator,false);
+            for(int i = 0; i < nbTotDims; i++)
+            {
+                curList.add(out);
+            }
+        }
+        else
+        {
+            return null;
+        }
+        return curList;
+    }
+    
+    
     public void evaluateValue(Evaluator evaluator) throws EvaluationException
     {
+        evaluateValue(evaluator,false);
+    }
+    
+    public void evaluateValue(Evaluator evaluator, boolean strict) throws EvaluationException
+    {
         Object data = getInputValue();
-        ArrayList<Object> listValues = new ArrayList<Object>();
+        ArrayList<Object> listValues = new ArrayList<>();
         if(data == null)
         {
             data = docVariable.getDefaultval();
@@ -295,7 +341,14 @@ public class AbinitVariable {
         
         String type = docVariable.getVartype();
         
-        if(myVal instanceof Number)
+        ArrayList<Object> currentList2 = flattenMultiple(myVal,nbTotDims,evaluator);
+        if(currentList2 == null)
+        {
+            this.value = null;
+            return;
+        }
+        listValues.addAll(currentList2);
+        /*if(myVal instanceof Number)
         {
             listValues.add(myVal);
         }
@@ -319,7 +372,7 @@ public class AbinitVariable {
         {
             this.value = null;
             return;
-        }
+        }*/
         
         if(nbTotDims == -1)
         {
@@ -357,7 +410,15 @@ public class AbinitVariable {
             
             if(nbTotDims != listValues.size())
             {
-                System.err.println("Mismatch for var = "+docVariable.getVarname()+" between doc dim ("+Arrays.toString(dims)+") and input file ("+listValues.size()+")");
+                String erMsg = "Mismatch for var = "+docVariable.getVarname()+" between doc dim ("+Arrays.toString(dims)+") and input file ("+listValues.size()+")";
+                if(strict)
+                {
+                    throw new EvaluationException(erMsg);
+                }
+                else
+                {
+                    System.err.println("Mismatch for var = "+docVariable.getVarname()+" between doc dim ("+Arrays.toString(dims)+") and input file ("+listValues.size()+")");
+                }
                 if(nbTotDims > listValues.size())
                 {
                     System.err.println("Not enough elements in input file !");

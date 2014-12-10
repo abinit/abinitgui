@@ -44,6 +44,9 @@ public class AbinitInputMapping
         listSpecs = new ArrayList<String>();
         listSpecs.add("AUTO_FROM_PSP");
         listSpecs.add("SEQUENTIAL");
+        listSpecs.add("FFTW3");
+        listSpecs.add("MPI_IO");
+        listSpecs.add("CUDA");
     }
     
     public void clean()
@@ -58,6 +61,12 @@ public class AbinitInputMapping
             case "AUTO_FROM_PSP":
                 return 0;
             case "SEQUENTIAL":
+                return 0;
+            case "FFTW3":
+                return 0;
+            case "MPI_IO":
+                return 0;
+            case "CUDA":
                 return 0;
             default:
                 return null;
@@ -82,7 +91,7 @@ public class AbinitInputMapping
      * @param dtset Current dataset
      * @return The variable
      */
-    public Object valueFromDataset(AbinitDataset dtset, String name,int idtset)
+    public Object valueFromDataset(AbinitDataset dtset, String name,int idtset,boolean strict) throws EvaluationException
     {
         boolean printDebug = false;
         //if(name.equals("natrd") || name.equals("xred") || name.equals("natom"))
@@ -115,7 +124,7 @@ public class AbinitInputMapping
                     DepNode otherNode = dep;
                     if(printDebug)
                       System.out.println("Try to look in dep : "+otherNode.name);
-                    Object otherObj = getVariableValue(otherNode.name,idtset);
+                    Object otherObj = getVariableValue(otherNode.name,idtset,strict);
                     if(otherObj == null)
                     {
                         System.err.println("!!!!!!! null from getVariableValue: "+otherNode.name+" !!!!");
@@ -123,18 +132,36 @@ public class AbinitInputMapping
                     }
                     else
                     {
-                        eval.putVariable(otherNode.name, otherObj.toString());
+                        String s = "";
+                        if(otherObj.getClass().isArray())
+                        {
+                            s = "";
+                            int val = 0;
+                            Object[] tab = (Object[])otherObj;
+                            for(Object ob : tab)
+                            {
+                                val += Integer.parseInt(ob.toString());
+                                s = s + ob.toString()+",";
+                            }
+                            s = s.substring(0,s.length()-1);
+                            s = ""+val;
+                        }
+                        else
+                        {
+                            s = otherObj.toString();
+                        }
+                        eval.putVariable(otherNode.name, s);
                     }
                 }
             }
             if(printDebug)
               System.out.println(name+" has no dependencies anymore !");
             try {
-                var.evaluateDim(eval);
-                var.evaluateValue(eval);
+                var.evaluateDim(eval,strict);
+                var.evaluateValue(eval,strict);
                 //System.out.println("evaluated !");
             } catch (EvaluationException ex) {
-                Logger.getLogger(AbinitInputMapping.class.getName()).log(Level.SEVERE, null, ex);
+                throw ex;
             }
             out = var.getValue();
             if(printDebug)
@@ -150,24 +177,30 @@ public class AbinitInputMapping
      * in the "0" dataset
      * @param name Name of the variable
      * @param idtset Current dataset
+     * @param strict Should return exception when it does not fit the dimensions
      * @return The variable
      */
-    public Object getVariableValue(String name, int idtset)
+    public Object getVariableValue(String name, int idtset, boolean strict) throws EvaluationException
     {
         if(listSpecs.contains(name))
         {
             return getSpecValue(name);
         }
-        Object obj = valueFromDataset(allDatasets.get(idtset),name,idtset);
+        Object obj = valueFromDataset(allDatasets.get(idtset),name,idtset,strict);
         if(obj == null)
         {
-            obj = valueFromDataset(allDatasets.get(0),name,idtset);
+            obj = valueFromDataset(allDatasets.get(0),name,idtset,strict);
             if(obj == null)
             {
-                obj = valueFromDataset(defaultDataset,name,idtset);
+                obj = valueFromDataset(defaultDataset,name,idtset,strict);
             }
         }
         return obj;
+    }
+    
+    public Object getVariableValue(String name, int idtset) throws EvaluationException
+    {
+        return getVariableValue(name,idtset,false);
     }
     
     /**

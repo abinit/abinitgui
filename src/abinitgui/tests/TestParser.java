@@ -46,6 +46,7 @@
 
 package abinitgui.tests;
 
+import abinitgui.parser.AbinitDataset;
 import abinitgui.parser.AbinitGeometry;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -59,7 +60,10 @@ import java.util.logging.Logger;
 import abinitgui.parser.AbinitInput;
 import abinitgui.parser.AbinitInputJEval;
 import abinitgui.parser.AbinitInputMapping;
+import abinitgui.parser.AbinitVariable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class TestParser {
     
@@ -175,6 +179,43 @@ public class TestParser {
 
             mapping = ai.readFromFile(name);
             mapping.evaluateAll();
+            AbinitDataset values;
+            ArrayList<Integer> listJdtset = mapping.getJdtsets();
+            if(mapping.isUsejdtset())
+            {
+            }
+            else
+            {
+                listJdtset = new ArrayList<>();
+                listJdtset.add(0);
+            }
+            
+            for(int jdtset : listJdtset)
+            {
+                values = mapping.getDataset(jdtset);
+
+                Iterator<AbinitVariable> iter = values.iterator();
+                
+                ArrayList<HashMap<String,Object>> dataTable = new ArrayList<>();
+
+                while(iter.hasNext())
+                {
+                    AbinitVariable o = iter.next();
+
+                    Object value = mapping.getVariableValue(o.getDocVariable().getVarname(), jdtset, true);
+
+                    HashMap<String,Object> map = new HashMap<>();
+
+                    map.put("name", o.getDocVariable().getVarname());
+                    map.put("value", value);
+
+                    dataTable.add(map);
+                }
+                
+                System.out.println(dataTable);
+            
+            }
+
             
             /*if(jdtset == null)
             {
