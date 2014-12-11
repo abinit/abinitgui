@@ -58,6 +58,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import net.sourceforge.jeval.EvaluationException;
 
 public class AbinitGeometry {
 
@@ -170,7 +171,7 @@ public class AbinitGeometry {
         return s + "]";
     }
 
-    public void loadData(AbinitInputMapping map, int idtset) {
+    public void loadData(AbinitInputMapping map, int idtset) throws EvaluationException {
 
         //AbinitVariable o = map.getVariable("natom",idtset);
         Object o2 = map.getVariableValue("natom",idtset);

@@ -329,7 +329,7 @@ public class GUIEditor extends JFrame {
         dataTable.clear();
         
         Iterator<AbinitVariable> iter = values.iterator();
-        
+        try{
         while(iter.hasNext())
         {
             AbinitVariable o = iter.next();
@@ -343,6 +343,11 @@ public class GUIEditor extends JFrame {
             map.put("value", value);
             
             dataTable.add(map);
+        }
+            
+        } catch(EvaluationException exc)
+        {
+            MainFrame.printERR(exc.getMessage());
         }
     }
     
