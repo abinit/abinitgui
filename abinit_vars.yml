@@ -8438,7 +8438,7 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Y direction
     dimensions:
-    -   -   - natfixy
+    - '[[natfixy]]'
     excludes: null
     requires: '[[natfixy]] > 0'
     section: varrlx
@@ -8463,7 +8463,7 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Z direction
     dimensions:
-    -   -   - natfixz
+    - '[[natfixz]]'
     excludes: null
     requires: '[[natfixz]] > 0'
     section: varrlx

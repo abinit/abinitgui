@@ -266,7 +266,7 @@ public class TestParser {
     {
         testAllInputsInPath("/home/yannick/abinit/7.11.0-training","test-all.txt");
         
-        //testOneInputFile("/home/yannick/abinit/7.11.0-private/tests/v1/Input/t01.in","test-v1-01.txt");
+        //testOneInputFile("/home/yannick/abinit/7.11.0-private/tests/v1/Input/t86.in","test-v1-86.txt");
     }
     
 }

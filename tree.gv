@@ -119,11 +119,11 @@ digraph {
    ortalg->wfoptalg
    ecutwfn->ecut
    ecutwfn->optdriver
-   nkpt->kptopt
    ntyppure->ntypat
    ntyppure->ntypalch
-   densty->ntypat
+   nkpt->kptopt
    npsp->ntypat
+   densty->ntypat
    natsph->natom
    iatfixx->natfixx
    kptgw->nkptgw
@@ -139,6 +139,8 @@ digraph {
    useylm->usepaw
    kptbounds->kptopt
    qptdm->nqptdm
+   iatfixy->natfixy
+   iatfixz->natfixz
    xangst->natom
    xangst->natrd
    fband->occopt
