@@ -88,6 +88,12 @@ public class SubmissionSLURMSystem extends SubmissionSystem
         if(!machine.isConnected())
             machine.connection();
         
+        if(!machine.isConnected())
+        {
+            MainFrame.printERR("Cannot connect to the machine !");
+            return null;
+        }
+        
         String login = null;
         if(machine.getType() == Machine.REMOTE_MACHINE || machine.getType() == Machine.GATEWAY_MACHINE)
         {
