@@ -47,6 +47,7 @@ For more information on the Abinit Project, please see
 package abinitgui.pseudos;
 
 public class Atom {
+    private AbinitPseudo pseudo;
 
     public Atom() {
     }
@@ -296,4 +297,8 @@ public class Atom {
         {"Uus", "", new Integer(117)},
         {"Uuo", "", new Integer(118)}
     };
+
+    public void setPseudo(AbinitPseudo pseudo) {
+        this.pseudo = pseudo;
+    }
 }

@@ -44,7 +44,7 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package abinitgui.inputgen;
+package abinitgui.pseudos;
 
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
@@ -53,9 +53,9 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class MendTabDialog extends JDialog {
+public class MendTabDialogOnline extends JDialog {
 
-    public MendTabDialog(JFrame parent, boolean modal, ActionListener al) {
+    public MendTabDialogOnline(JFrame parent, boolean modal, ActionListener al) {
         super(parent, modal);
         SwingUtilities.updateComponentTreeUI(this);
         initComponents();
@@ -200,6 +200,8 @@ public class MendTabDialog extends JDialog {
         LDA_HGH_CheckBox.addActionListener(al);
         LDA_TM_CheckBox.addActionListener(al);
         LDA_Teter_CheckBox.addActionListener(al);
+        PAW_GGA_CheckBox.addActionListener(al);
+        PAW_LDA_CheckBox.addActionListener(al);
 
         /*Object[][] atomsDB = Atom.getAtomsBD();
         for (int i = 0; i < atomsDB.length; i++) {
@@ -333,6 +335,8 @@ public class MendTabDialog extends JDialog {
         GGA_FHI_CheckBox = new javax.swing.JCheckBox();
         GGA_HGH_CheckBox = new javax.swing.JCheckBox();
         LDA_GTH_CheckBox = new javax.swing.JCheckBox();
+        PAW_GGA_CheckBox = new javax.swing.JCheckBox();
+        PAW_LDA_CheckBox = new javax.swing.JCheckBox();
         userPSPButton = new javax.swing.JButton();
         jB_Bh = new javax.swing.JButton();
         jB_Hs = new javax.swing.JButton();
@@ -670,19 +674,24 @@ public class MendTabDialog extends JDialog {
         pspTypePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         buttonGroup.add(LDA_FHI_CheckBox);
-        LDA_FHI_CheckBox.setText("LDA FHI");
-        LDA_FHI_CheckBox.setActionCommand("LDA_FHI");
+        LDA_FHI_CheckBox.setText("NC LDA FHI");
+        LDA_FHI_CheckBox.setActionCommand("NC_LDA_FHI");
         LDA_FHI_CheckBox.setName("LDA_FHI"); // NOI18N
 
         buttonGroup.add(LDA_Core_CheckBox);
-        LDA_Core_CheckBox.setText("LDA Core");
-        LDA_Core_CheckBox.setActionCommand("LDA_Core");
+        LDA_Core_CheckBox.setText("NC LDA Core");
+        LDA_Core_CheckBox.setActionCommand("NC_LDA_Core");
         LDA_Core_CheckBox.setName("LDA_Core"); // NOI18N
+        LDA_Core_CheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LDA_Core_CheckBoxActionPerformed(evt);
+            }
+        });
 
         buttonGroup.add(LDA_TM_CheckBox);
         LDA_TM_CheckBox.setSelected(true);
-        LDA_TM_CheckBox.setText("LDA TM");
-        LDA_TM_CheckBox.setActionCommand("LDA_TM");
+        LDA_TM_CheckBox.setText("NC LDA TM");
+        LDA_TM_CheckBox.setActionCommand("NC_LDA_TM");
         LDA_TM_CheckBox.setName("LDA_TM"); // NOI18N
         LDA_TM_CheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -691,31 +700,44 @@ public class MendTabDialog extends JDialog {
         });
 
         buttonGroup.add(LDA_Teter_CheckBox);
-        LDA_Teter_CheckBox.setText("LDA Teter");
-        LDA_Teter_CheckBox.setActionCommand("LDA_Teter");
-        LDA_Teter_CheckBox.setEnabled(false);
+        LDA_Teter_CheckBox.setText("NC LDA Teter");
+        LDA_Teter_CheckBox.setActionCommand("NC_LDA_Teter");
         LDA_Teter_CheckBox.setName("LDA_Teter"); // NOI18N
 
         buttonGroup.add(LDA_HGH_CheckBox);
-        LDA_HGH_CheckBox.setText("LDA HGH");
-        LDA_HGH_CheckBox.setActionCommand("LDA_HGH");
-        LDA_HGH_CheckBox.setEnabled(false);
+        LDA_HGH_CheckBox.setText("NC LDA HGH ");
+        LDA_HGH_CheckBox.setActionCommand("NC_LDA_HGH");
         LDA_HGH_CheckBox.setName("LDA_HGH"); // NOI18N
 
         buttonGroup.add(GGA_FHI_CheckBox);
-        GGA_FHI_CheckBox.setText("GGA FHI");
-        GGA_FHI_CheckBox.setActionCommand("GGA_FHI");
+        GGA_FHI_CheckBox.setText("NC GGA FHI");
+        GGA_FHI_CheckBox.setActionCommand("NC_GGA_FHI");
         GGA_FHI_CheckBox.setName("GGA_FHI"); // NOI18N
 
         buttonGroup.add(GGA_HGH_CheckBox);
-        GGA_HGH_CheckBox.setText("GGA HGH");
-        GGA_HGH_CheckBox.setActionCommand("GGA_HGH");
+        GGA_HGH_CheckBox.setText("NC GGA HGH");
+        GGA_HGH_CheckBox.setActionCommand("NC_GGA_HGH");
         GGA_HGH_CheckBox.setName("GGA_HGH"); // NOI18N
 
         buttonGroup.add(LDA_GTH_CheckBox);
-        LDA_GTH_CheckBox.setText("LDA GTH");
-        LDA_GTH_CheckBox.setActionCommand("LDA_GTH");
+        LDA_GTH_CheckBox.setText("NC LDA GTH");
+        LDA_GTH_CheckBox.setActionCommand("NC_LDA_GTH");
         LDA_GTH_CheckBox.setName("LDA_GTH"); // NOI18N
+
+        buttonGroup.add(PAW_GGA_CheckBox);
+        PAW_GGA_CheckBox.setText("PAW GGA PBE");
+        PAW_GGA_CheckBox.setActionCommand("PAW_GGA_PBE");
+        PAW_GGA_CheckBox.setName("LDA_Teter"); // NOI18N
+
+        buttonGroup.add(PAW_LDA_CheckBox);
+        PAW_LDA_CheckBox.setText("PAW LDA PW");
+        PAW_LDA_CheckBox.setActionCommand("PAW_LDA_PW");
+        PAW_LDA_CheckBox.setName("LDA_HGH"); // NOI18N
+        PAW_LDA_CheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PAW_LDA_CheckBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pspTypePanelLayout = new javax.swing.GroupLayout(pspTypePanel);
         pspTypePanel.setLayout(pspTypePanelLayout);
@@ -735,8 +757,13 @@ public class MendTabDialog extends JDialog {
                     .addComponent(LDA_Core_CheckBox))
                 .addGap(18, 18, 18)
                 .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LDA_HGH_CheckBox)
-                    .addComponent(LDA_Teter_CheckBox)))
+                    .addComponent(LDA_Teter_CheckBox)
+                    .addComponent(LDA_HGH_CheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PAW_GGA_CheckBox)
+                    .addComponent(PAW_LDA_CheckBox))
+                .addContainerGap())
         );
         pspTypePanelLayout.setVerticalGroup(
             pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -753,9 +780,13 @@ public class MendTabDialog extends JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(GGA_HGH_CheckBox))
             .addGroup(pspTypePanelLayout.createSequentialGroup()
-                .addComponent(LDA_Teter_CheckBox)
+                .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LDA_Teter_CheckBox)
+                    .addComponent(PAW_GGA_CheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LDA_HGH_CheckBox))
+                .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LDA_HGH_CheckBox)
+                    .addComponent(PAW_LDA_CheckBox)))
         );
 
         LDA_FHI_CheckBox.getAccessibleContext().setAccessibleName("LDA_FHI");
@@ -815,214 +846,217 @@ public class MendTabDialog extends JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pspTypePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addComponent(userPSPButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Li)
-                                    .addComponent(jB_Na)
-                                    .addComponent(jB_K)
-                                    .addComponent(jB_Rb)
-                                    .addComponent(jB_Cs)
-                                    .addComponent(jB_Fr))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Be)
-                                    .addComponent(jB_Mg)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_Ca)
-                                            .addComponent(jB_Sr)
-                                            .addComponent(jB_Ba)
-                                            .addComponent(jB_Ra))
+                                            .addComponent(jB_Li)
+                                            .addComponent(jB_Na)
+                                            .addComponent(jB_K)
+                                            .addComponent(jB_Rb)
+                                            .addComponent(jB_Cs)
+                                            .addComponent(jB_Fr))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_Sc)
-                                            .addComponent(jB_Y))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_Ti)
-                                            .addComponent(jB_Zr)
-                                            .addComponent(jB_Hf)
-                                            .addComponent(jB_Rf))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_V)
-                                            .addComponent(jB_Nb)
-                                            .addComponent(jB_Ta)
-                                            .addComponent(jB_Db))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_Be)
+                                            .addComponent(jB_Mg)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_Cr)
-                                                    .addComponent(jB_Mo)
-                                                    .addComponent(jB_W))
+                                                    .addComponent(jB_Ca)
+                                                    .addComponent(jB_Sr)
+                                                    .addComponent(jB_Ba)
+                                                    .addComponent(jB_Ra))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_Mn)
-                                                    .addComponent(jB_Tc)
-                                                    .addComponent(jB_Re))
+                                                    .addComponent(jB_Sc)
+                                                    .addComponent(jB_Y))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_Fe)
-                                                    .addComponent(jB_Ru)
-                                                    .addComponent(jB_Os))
+                                                    .addComponent(jB_Ti)
+                                                    .addComponent(jB_Zr)
+                                                    .addComponent(jB_Hf)
+                                                    .addComponent(jB_Rf))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_Co)
-                                                    .addComponent(jB_Rh)
-                                                    .addComponent(jB_Ir))
+                                                    .addComponent(jB_V)
+                                                    .addComponent(jB_Nb)
+                                                    .addComponent(jB_Ta)
+                                                    .addComponent(jB_Db))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_Ni)
-                                                    .addComponent(jB_Pd)
-                                                    .addComponent(jB_Pt))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_Cu)
-                                                    .addComponent(jB_Ag)
-                                                    .addComponent(jB_Au))
-                                                .addGap(6, 6, 6)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_Zn)
-                                                    .addComponent(jB_Cd)
-                                                    .addComponent(jB_Hg)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jB_Sg)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jB_Bh)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jB_Hs)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jB_Mt)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jB_Ds)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jB_Rg)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jB_Cn))))))
-                            .addComponent(jB_H))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jB_Cr)
+                                                            .addComponent(jB_Mo)
+                                                            .addComponent(jB_W))
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jB_Mn)
+                                                            .addComponent(jB_Tc)
+                                                            .addComponent(jB_Re))
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jB_Fe)
+                                                            .addComponent(jB_Ru)
+                                                            .addComponent(jB_Os))
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jB_Co)
+                                                            .addComponent(jB_Rh)
+                                                            .addComponent(jB_Ir))
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jB_Ni)
+                                                            .addComponent(jB_Pd)
+                                                            .addComponent(jB_Pt))
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jB_Cu)
+                                                            .addComponent(jB_Ag)
+                                                            .addComponent(jB_Au))
+                                                        .addGap(6, 6, 6)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jB_Zn)
+                                                            .addComponent(jB_Cd)
+                                                            .addComponent(jB_Hg)))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jB_Sg)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jB_Bh)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jB_Hs)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jB_Mt)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jB_Ds)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jB_Rg)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jB_Cn))))))
+                                    .addComponent(jB_H))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_B)
+                                            .addComponent(jB_Al)
+                                            .addComponent(jB_Ga)
+                                            .addComponent(jB_In)
+                                            .addComponent(jB_Tl))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_C)
+                                            .addComponent(jB_Si)
+                                            .addComponent(jB_Ge)
+                                            .addComponent(jB_Sn)
+                                            .addComponent(jB_Pb))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_N)
+                                            .addComponent(jB_P)
+                                            .addComponent(jB_As)
+                                            .addComponent(jB_Sb)
+                                            .addComponent(jB_Bi))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_O)
+                                            .addComponent(jB_S)
+                                            .addComponent(jB_Se)
+                                            .addComponent(jB_Te)
+                                            .addComponent(jB_Po))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_F)
+                                            .addComponent(jB_Cl)
+                                            .addComponent(jB_Br)
+                                            .addComponent(jB_I)
+                                            .addComponent(jB_At))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_Ne)
+                                            .addComponent(jB_Ar)
+                                            .addComponent(jB_Kr)
+                                            .addComponent(jB_Xe)
+                                            .addComponent(jB_Rn)
+                                            .addComponent(jB_He)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jB_Uut)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jB_Uuq)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jB_Uup)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jB_Uuh)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jB_Uus)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jB_Uuo))))
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(95, 95, 95)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_B)
-                                    .addComponent(jB_Al)
-                                    .addComponent(jB_Ga)
-                                    .addComponent(jB_In)
-                                    .addComponent(jB_Tl))
+                                    .addComponent(jB_La)
+                                    .addComponent(jB_Ac))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_C)
-                                    .addComponent(jB_Si)
-                                    .addComponent(jB_Ge)
-                                    .addComponent(jB_Sn)
-                                    .addComponent(jB_Pb))
+                                    .addComponent(jB_Ce)
+                                    .addComponent(jB_Th))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_N)
-                                    .addComponent(jB_P)
-                                    .addComponent(jB_As)
-                                    .addComponent(jB_Sb)
-                                    .addComponent(jB_Bi))
+                                    .addComponent(jB_Pr)
+                                    .addComponent(jB_Pa))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_O)
-                                    .addComponent(jB_S)
-                                    .addComponent(jB_Se)
-                                    .addComponent(jB_Te)
-                                    .addComponent(jB_Po))
+                                    .addComponent(jB_Nd)
+                                    .addComponent(jB_U))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_F)
-                                    .addComponent(jB_Cl)
-                                    .addComponent(jB_Br)
-                                    .addComponent(jB_I)
-                                    .addComponent(jB_At))
+                                    .addComponent(jB_Pm)
+                                    .addComponent(jB_Np))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Ne)
-                                    .addComponent(jB_Ar)
-                                    .addComponent(jB_Kr)
-                                    .addComponent(jB_Xe)
-                                    .addComponent(jB_Rn)
-                                    .addComponent(jB_He)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jB_Uut)
+                                    .addComponent(jB_Sm)
+                                    .addComponent(jB_Pu))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jB_Uuq)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Eu)
+                                    .addComponent(jB_Am))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jB_Uup)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Gd)
+                                    .addComponent(jB_Cm))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jB_Uuh)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Tb)
+                                    .addComponent(jB_Bk))
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Dy)
+                                    .addComponent(jB_Cf))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jB_Uus)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Ho)
+                                    .addComponent(jB_Es))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jB_Uuo))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_La)
-                            .addComponent(jB_Ac))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Ce)
-                            .addComponent(jB_Th))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Pr)
-                            .addComponent(jB_Pa))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Nd)
-                            .addComponent(jB_U))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Pm)
-                            .addComponent(jB_Np))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Sm)
-                            .addComponent(jB_Pu))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Eu)
-                            .addComponent(jB_Am))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Gd)
-                            .addComponent(jB_Cm))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Tb)
-                            .addComponent(jB_Bk))
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Dy)
-                            .addComponent(jB_Cf))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Ho)
-                            .addComponent(jB_Es))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Er)
-                            .addComponent(jB_Fm))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Tm)
-                            .addComponent(jB_Md))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Yb)
-                            .addComponent(jB_No))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jB_Lu)
-                            .addComponent(jB_Lr))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Er)
+                                    .addComponent(jB_Fm))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Tm)
+                                    .addComponent(jB_Md))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Yb)
+                                    .addComponent(jB_No))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Lu)
+                                    .addComponent(jB_Lr))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1268,14 +1302,11 @@ public class MendTabDialog extends JDialog {
                         .addComponent(jB_Pm)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Np)))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pspTypePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(userPSPButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pspTypePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(userPSPButton))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jB_Ac, jB_Ag, jB_Al, jB_Am, jB_Ar, jB_As, jB_At, jB_Au, jB_B, jB_Ba, jB_Be, jB_Bh, jB_Bi, jB_Bk, jB_Br, jB_C, jB_Ca, jB_Cd, jB_Ce, jB_Cf, jB_Cl, jB_Cm, jB_Cn, jB_Co, jB_Cr, jB_Cs, jB_Cu, jB_Db, jB_Ds, jB_Dy, jB_Er, jB_Es, jB_Eu, jB_F, jB_Fe, jB_Fm, jB_Fr, jB_Ga, jB_Gd, jB_Ge, jB_H, jB_He, jB_Hf, jB_Hg, jB_Ho, jB_Hs, jB_I, jB_In, jB_Ir, jB_K, jB_Kr, jB_La, jB_Li, jB_Lr, jB_Lu, jB_Md, jB_Mg, jB_Mn, jB_Mo, jB_Mt, jB_N, jB_Na, jB_Nb, jB_Nd, jB_Ne, jB_Ni, jB_No, jB_Np, jB_O, jB_Os, jB_P, jB_Pa, jB_Pb, jB_Pd, jB_Pm, jB_Po, jB_Pr, jB_Pt, jB_Pu, jB_Ra, jB_Rb, jB_Re, jB_Rf, jB_Rg, jB_Rh, jB_Rn, jB_Ru, jB_S, jB_Sb, jB_Sc, jB_Se, jB_Sg, jB_Si, jB_Sm, jB_Sn, jB_Sr, jB_Ta, jB_Tb, jB_Tc, jB_Te, jB_Th, jB_Ti, jB_Tl, jB_Tm, jB_U, jB_Uuh, jB_Uuo, jB_Uup, jB_Uuq, jB_Uus, jB_Uut, jB_V, jB_W, jB_Xe, jB_Y, jB_Yb, jB_Zn, jB_Zr});
@@ -1287,12 +1318,20 @@ public class MendTabDialog extends JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_LDA_TM_CheckBoxActionPerformed
 
+    private void PAW_LDA_CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PAW_LDA_CheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PAW_LDA_CheckBoxActionPerformed
+
+    private void LDA_Core_CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LDA_Core_CheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LDA_Core_CheckBoxActionPerformed
+
     public String getPSPSelected() {
         Enumeration buttons = buttonGroup.getElements();
         while (buttons.hasMoreElements()) {
             JCheckBox cb = (JCheckBox) buttons.nextElement();
             if (cb.isSelected()) {
-                return cb.getName();
+                return cb.getActionCommand();
             }
         }
         return null;
@@ -1549,6 +1588,8 @@ public class MendTabDialog extends JDialog {
     private javax.swing.JCheckBox LDA_HGH_CheckBox;
     private javax.swing.JCheckBox LDA_TM_CheckBox;
     private javax.swing.JCheckBox LDA_Teter_CheckBox;
+    private javax.swing.JCheckBox PAW_GGA_CheckBox;
+    private javax.swing.JCheckBox PAW_LDA_CheckBox;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JButton jB_Ac;
     private javax.swing.JButton jB_Ag;

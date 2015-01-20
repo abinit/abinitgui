@@ -57,36 +57,43 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 
 //@SuppressWarnings("serial")
-public class AtomEditor extends AbstractCellEditor
+public class AtomEditorOnline extends AbstractCellEditor
         implements TableCellEditor,
         ActionListener {
 
     Atom currentAtom;
     JButton but;
-    MendTabDialog dialog;
+    MendTabDialogOnline dialog;
     MainFrame mainFrame;
     Geometry geomFrame;
     protected static final String CMD = "setAtom";
 
-    public AtomEditor(JFrame frame) {
+    public AtomEditorOnline(JFrame frame) {
         but = new JButton();
         but.setActionCommand(CMD);
         but.addActionListener(this);
         but.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         but.setBackground(Color.darkGray);
-        dialog = new MendTabDialog(frame, true, this);
+        dialog = new MendTabDialogOnline(frame, true, this);
     }
 
     @Override
@@ -120,14 +127,16 @@ public class AtomEditor extends AbstractCellEditor
                     break;
                 case "cancel":
                     break;
-                case "GGA_FHI":
-                case "GGA_HGH":
-                case "LDA_Core":
-                case "LDA_FHI":
-                case "LDA_GTH":
-                case "LDA_HGH":
-                case "LDA_TM":
-                case "LDA_Teter":
+                case "NC_GGA_FHI":
+                case "NC_GGA_HGH":
+                case "NC_LDA_Core":
+                case "NC_LDA_FHI":
+                case "NC_LDA_GTH":
+                case "NC_LDA_HGH":
+                case "NC_LDA_TM":
+                case "NC_LDA_Teter":
+                case "PAW_LDA_PW":
+                case "PAW_GGA_PBE":
                     {
                         String pathToPSP = MainFrame.getCurrentProject().getPSPPath();
                         Object[][] atomsDB = Atom.getAtomsBD();
@@ -177,8 +186,8 @@ public class AtomEditor extends AbstractCellEditor
                     break;
                 default:
                     {
-                        //System.out.println("Action: " + ActionCommand);
-                        dialog.setVisible(false);
+                        System.out.println("Action: " + ActionCommand);
+                        /*dialog.setVisible(false);
                         String pspType = dialog.getPSPSelected();
                         String pathToPSP = MainFrame.getCurrentProject().getPSPPath();
                         if (!pathToPSP.equals("")) {
@@ -193,7 +202,7 @@ public class AtomEditor extends AbstractCellEditor
                             currentAtom.setTypat(0);
                             currentAtom.setZnucl(0);
                         }
-                        break;
+                        break;*/
                     }
             }
         }
@@ -363,11 +372,34 @@ public class AtomEditor extends AbstractCellEditor
                 atom.setPSPFileName("");
                 atom.setName("");
                 atom.setSymbol("");
-                atom.setPSPType("");
-                atom.setTypat(0);
+                atom.setPSPType(dialog.getPSPSelected());
                 atom.setZnucl(0);
                 break;
         }
+    }
+    
+    public class ItemListener implements ActionListener
+    {
+        private AbinitPseudo pseudo;
+        private String symbol;
+        
+        public ItemListener(String symbol, AbinitPseudo pseudo)
+        {
+            this.pseudo = pseudo;
+            this.symbol = symbol;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            currentAtom.setPseudo(pseudo);
+            currentAtom.setPSPPath(new File(pseudo.path).getParent());
+            currentAtom.setPSPFileName(new File(pseudo.path).getName());
+            currentAtom.setBySymbol(symbol);
+            currentAtom.setPSPType(dialog.getPSPSelected());
+            dialog.setVisible(false);
+        }
+        
+        
     }
 
     private void setAtomButton(String symbol, String pspType, String pathToPSP) {
@@ -377,7 +409,50 @@ public class AtomEditor extends AbstractCellEditor
         if (button == null) {
             return;
         }
-        switch (pspType) {
+        PseudoDatabase database = MainFrame.getPseudoDatabase();
+        
+        ArrayList<AbinitPseudo> listPseudos = database.getListPseudos(pspType, symbol);
+        
+        if(listPseudos == null)
+        {
+            button.setEnabled(false);
+        }
+        else
+        {
+            //Create the popup menu.
+            final JPopupMenu popup = new JPopupMenu();
+            
+            for(final AbinitPseudo pseudo : listPseudos)
+            {
+                JMenuItem item = new JMenuItem(new File(pseudo.path).getName());
+                item.setToolTipText(pseudo.toString());
+                item.addActionListener(new ItemListener(symbol, pseudo));
+                popup.add(item);
+            }
+
+            button.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
+                    popup.show(e.getComponent(), e.getX(), e.getY());
+                }
+            });
+        
+            button.setEnabled(true);
+            if(listPseudos.size() == 1)
+            {
+                button.setBackground(Color.RED);
+            }
+            else if(listPseudos.size() == 2)
+            {
+                button.setBackground(Color.GREEN);
+            }
+            else
+            {
+                button.setBackground(Color.YELLOW);
+            }
+        }
+        
+        
+        /*switch (pspType) {
             case "GGA_FHI":
                 {
                     int znucl = Atom.getZnuclBySymbol(symbol);
@@ -519,7 +594,7 @@ public class AtomEditor extends AbstractCellEditor
             default:
                 MainFrame.printERR("No pseudopotential type defined!");
                 break;
-        }
+        }*/
     }
 
     private int pspReader(String fileName) {

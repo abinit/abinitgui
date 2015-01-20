@@ -80,9 +80,11 @@ import abinitgui.projects.Machine;
 import abinitgui.projects.MachineDatabase;
 import abinitgui.projects.MachinePane;
 import abinitgui.projects.Project;
+import abinitgui.pseudos.PseudoDatabase;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
+
 
     private SSH ssh = null;
     private MyTableModel pspModel = null;
@@ -131,6 +133,8 @@ public class MainFrame extends JFrame {
     private Machine currentMachine;
     private static Project currentProject;
     private Machine currentMachineForScript;
+    
+    private static PseudoDatabase pseudoDatabase;
 
     /**
      * Creates new form MainFrame
@@ -285,6 +289,17 @@ public class MainFrame extends JFrame {
         
         /**
          * End of projects section
+         */
+        
+        /**
+         * Pseudo section
+         */
+        
+        pseudoDatabase = new PseudoDatabase();
+        pseudoDatabase.from_url("http://gui.abinit.org/PSPS/pseudos.yml");
+        
+        /**
+         * End of pseudo section
          */
 
     }
@@ -839,5 +854,10 @@ public class MainFrame extends JFrame {
     public static LocalExec getLocalExec()
     {
         return localExec;
+    }
+    
+    public static PseudoDatabase getPseudoDatabase() 
+    {
+        return pseudoDatabase;
     }
 }

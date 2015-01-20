@@ -64,6 +64,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import msgdisp.core.MessageDisplayer;
 import abinitgui.parser.GUIEditor;
+import abinitgui.pseudos.AtomEditorOnline;
 
 public class AbinitInputPanel extends SimulationPanel {
 
@@ -85,8 +86,10 @@ public class AbinitInputPanel extends SimulationPanel {
         initTableHeader(pspTable, new String[]{"Atom", "PSP filename",
             "PSP type", "PSP path"}, new Integer[]{null, null, null, null});
         pspTable.setDefaultRenderer(Atom.class, new pspAtomRenderer());
+        /*pspTable.setDefaultEditor(Atom.class,
+                new AtomEditor(MainFrame.mainFrame));*/ 
         pspTable.setDefaultEditor(Atom.class,
-                new AtomEditor(MainFrame.mainFrame));
+                new AtomEditorOnline(MainFrame.mainFrame));
         
         guiEditor = new GUIEditor();
     }
