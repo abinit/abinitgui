@@ -1,1 +1,0 @@
-Building geometry from file : /home/yannick/abinit/7.11.0-private/tests/v1/Input/t01.in : Failed (Msg = null)

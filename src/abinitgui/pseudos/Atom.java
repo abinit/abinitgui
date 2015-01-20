@@ -44,7 +44,7 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package abinitgui.core;
+package abinitgui.pseudos;
 
 public class Atom {
 

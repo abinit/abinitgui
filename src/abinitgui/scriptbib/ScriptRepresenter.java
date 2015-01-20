@@ -49,7 +49,7 @@ package abinitgui.scriptbib;
 import abinitgui.projects.*;
 import abinitgui.mdtb.ClustepSimulation;
 import abinitgui.mdtb.TightBindingSimulation;
-import abinitgui.core.Atom;
+import abinitgui.pseudos.Atom;
 import abinitgui.core.Password;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.Tag;

@@ -46,7 +46,7 @@ For more information on the Abinit Project, please see
 
 package abinitgui.projects;
 
-import abinitgui.core.Atom;
+import abinitgui.pseudos.Atom;
 import abinitgui.core.MainFrame;
 import abinitgui.core.RetMSG;
 import abinitgui.core.Utils;

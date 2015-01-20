@@ -48,9 +48,9 @@ package abinitgui.projects;
 
 import abinitgui.core.MainFrame;
 import abinitgui.core.MyTableModel;
-import abinitgui.core.pspAtomRenderer;
-import abinitgui.core.Atom;
-import abinitgui.core.AtomEditor;
+import abinitgui.pseudos.pspAtomRenderer;
+import abinitgui.pseudos.Atom;
+import abinitgui.pseudos.AtomEditor;
 import abinitgui.core.Utils;
 import java.awt.Color;
 import java.io.File;

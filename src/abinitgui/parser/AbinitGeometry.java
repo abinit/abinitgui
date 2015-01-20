@@ -45,7 +45,7 @@
  */
 package abinitgui.parser;
 
-import abinitgui.core.Atom;
+import abinitgui.pseudos.Atom;
 import abinitgui.core.MainFrame;
 import java.io.BufferedWriter;
 import java.io.FileWriter;

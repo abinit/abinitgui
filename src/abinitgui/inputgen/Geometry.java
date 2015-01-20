@@ -46,11 +46,11 @@
 
 package abinitgui.inputgen;
 
-import abinitgui.core.Atom;
-import abinitgui.core.AtomEditor;
+import abinitgui.pseudos.Atom;
+import abinitgui.pseudos.AtomEditor;
 import abinitgui.core.MainFrame;
 import abinitgui.core.MyTableModel;
-import abinitgui.core.znuclAtomRenderer;
+import abinitgui.pseudos.znuclAtomRenderer;
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

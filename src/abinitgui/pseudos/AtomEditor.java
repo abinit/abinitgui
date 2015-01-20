@@ -44,8 +44,10 @@ For more information on the Abinit Project, please see
 <http://www.abinit.org/>.
  */
 
-package abinitgui.core;
+package abinitgui.pseudos;
 
+import abinitgui.core.MainFrame;
+import abinitgui.core.Utils;
 import abinitgui.inputgen.Geometry;
 import abinitgui.inputgen.MendTabDialog;
 import javax.swing.AbstractCellEditor;
