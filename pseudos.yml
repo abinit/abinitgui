@@ -1,0 +1,12 @@
+NC_LDA_TM:
+  Ti:
+  - !NcAbinitPseudo {Z: 22, Z_val: 4.0, l_local: 0, l_max: 2, md5: 9d5151159dba5b2d9be995f71cdbe165,
+    nlcc_radius: 2.82741504495369, path: 'https://gui.abinit.org/PSPS/NC_LDA_TM/Ti/22ti.pspnc',
+    summary: 'Troullier-Martins psp for element  Ti        Thu Oct 27 17:33:40 EDT
+      1994'}
+  Sc:
+  - !NcAbinitPseudo {Z: 21, Z_val: 3.0, l_local: 0, l_max: 2, md5: e828ade5d3d56489b43069c2fe98aee1,
+    nlcc_radius: 3.23292695886301, path: 'https://gui.abinit.org/PSPS/NC_LDA_TM/Sc/21sc.pspnc',
+    summary: 'Troullier-Martins psp for element  Sc        Thu Oct 27 17:33:22 EDT
+      1994'}
+

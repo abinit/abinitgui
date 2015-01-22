@@ -391,6 +391,44 @@ public class AtomEditorOnline extends AbstractCellEditor
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            
+            PseudoDatabase lDatabase = MainFrame.getLocalPseudoDatabase();
+            
+            ArrayList<AbinitPseudo> listPseudos = lDatabase.getOrCreateListPseudos(dialog.getPSPSelected(), this.symbol);
+            
+            boolean toDownload = true;
+            AbinitPseudo localPseud = null;
+            for(AbinitPseudo pseud : listPseudos)
+            {
+                if(new File(pseud.path).getName().equals(new File(pseudo.path).getName()))
+                {
+                    localPseud = pseud;
+                    if(!pseud.md5.equals(pseudo.md5))
+                    {
+                       int result = JOptionPane.showConfirmDialog(null, "You have a outdated local copy of this pseudo. \n"
+                               + "Do you want to overwrite it ?", "Local copy of the pseudo", JOptionPane.YES_NO_OPTION);
+                       
+                       if(result == JOptionPane.NO_OPTION)
+                       {
+                           toDownload = false;
+                       }
+                    }
+                    else
+                    {
+                        toDownload = false;
+                    }
+                }
+            }
+            
+            if(toDownload)
+            {
+                // TODO : download the pseudo locally !
+                if(localPseud != null)
+                    listPseudos.remove(localPseud);
+                listPseudos.add(pseudo);
+                lDatabase.toFile("pseudos.yml");
+            }
+            
             currentAtom.setPseudo(pseudo);
             currentAtom.setPSPPath(new File(pseudo.path).getParent());
             currentAtom.setPSPFileName(new File(pseudo.path).getName());
@@ -409,9 +447,9 @@ public class AtomEditorOnline extends AbstractCellEditor
         if (button == null) {
             return;
         }
-        PseudoDatabase database = MainFrame.getPseudoDatabase();
+        PseudoDatabase rDatabase = MainFrame.getRemotePseudoDatabase();
         
-        ArrayList<AbinitPseudo> listPseudos = database.getListPseudos(pspType, symbol);
+        ArrayList<AbinitPseudo> listPseudos = rDatabase.getListPseudos(pspType, symbol);
         
         if(listPseudos == null)
         {

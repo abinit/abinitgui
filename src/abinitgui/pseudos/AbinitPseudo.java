@@ -13,4 +13,5 @@ public class AbinitPseudo {
     public int Z;
     public double Z_val;
     public String path;
+    public String md5;
 }

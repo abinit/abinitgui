@@ -134,7 +134,8 @@ public class MainFrame extends JFrame {
     private static Project currentProject;
     private Machine currentMachineForScript;
     
-    private static PseudoDatabase pseudoDatabase;
+    private static PseudoDatabase remotePseudoDatabase;
+    private static PseudoDatabase localPseudoDatabase;
 
     /**
      * Creates new form MainFrame
@@ -295,8 +296,11 @@ public class MainFrame extends JFrame {
          * Pseudo section
          */
         
-        pseudoDatabase = new PseudoDatabase();
-        pseudoDatabase.from_url("http://gui.abinit.org/PSPS/pseudos.yml");
+        remotePseudoDatabase = new PseudoDatabase();
+        remotePseudoDatabase.fromUrl("http://gui.abinit.org/PSPS/pseudos.yml");
+        
+        localPseudoDatabase = new PseudoDatabase();
+        localPseudoDatabase.fromFile("pseudos.yml");
         
         /**
          * End of pseudo section
@@ -856,8 +860,13 @@ public class MainFrame extends JFrame {
         return localExec;
     }
     
-    public static PseudoDatabase getPseudoDatabase() 
+    public static PseudoDatabase getRemotePseudoDatabase() 
     {
-        return pseudoDatabase;
+        return remotePseudoDatabase;
+    }
+    
+    public static PseudoDatabase getLocalPseudoDatabase()
+    {
+        return localPseudoDatabase;
     }
 }
