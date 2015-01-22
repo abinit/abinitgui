@@ -62,7 +62,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class Utils {
 
@@ -245,14 +251,36 @@ public class Utils {
         return "UTF-8";
     }
     
-    public void saveUrl(final String filename, final String urlString)
+    // From stackoverflow
+    public static void saveUrl(final String urlString, final String fileName)
         throws MalformedURLException, IOException 
     {
+        try {
+
+            HttpsURLConnection.setDefaultHostnameVerifier(
+                new javax.net.ssl.HostnameVerifier(){
+
+                    public boolean verify(String hostname,
+                            javax.net.ssl.SSLSession sslSession) {
+                        if (hostname.equals("gui.abinit.org")) {
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        } 
+    
         BufferedInputStream in = null;
         FileOutputStream fout = null;
         try {
-            in = new BufferedInputStream(new URL(urlString).openStream());
-            fout = new FileOutputStream(filename);
+            in = new BufferedInputStream(new URL(urlString.replace("https","http")).openStream());
+
+            if(! Utils.exists(fileName))
+                new File(new File(fileName).getParent()).mkdirs();
+            fout = new FileOutputStream(fileName);
 
             final byte data[] = new byte[1024];
             int count;

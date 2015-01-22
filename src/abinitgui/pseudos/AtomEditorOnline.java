@@ -423,6 +423,16 @@ public class AtomEditorOnline extends AbstractCellEditor
             if(toDownload)
             {
                 // TODO : download the pseudo locally !
+                try{
+                    String path = MainFrame.getCurrentProject().getPSPPath()+"/"+dialog.getPSPSelected()+"/"+symbol+"/"+new File(pseudo.path).getName();
+                    Utils.saveUrl(pseudo.path, path);
+                    pseudo.path = path;
+                }
+                catch(Exception exc)
+                {
+                    exc.printStackTrace();
+                    MainFrame.printERR("Error download pseudo file : "+pseudo.path);
+                }
                 if(localPseud != null)
                     listPseudos.remove(localPseud);
                 listPseudos.add(pseudo);

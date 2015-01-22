@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,16 +30,11 @@ public class PseudoDatabase {
     
     private HashMap<String,HashMap<String,ArrayList<AbinitPseudo>>> database;
     
-    public void fromUrl(String url)
+    public void fromUrl(String url) throws MalformedURLException, IOException
     {
-        try{
-            Yaml yaml = new Yaml(new PseudoConstructor());
-            Object data = yaml.load(new BufferedReader(new InputStreamReader(new URL(url).openStream())));
-            database = (HashMap<String,HashMap<String,ArrayList<AbinitPseudo>>>)(data);
-        } catch(Exception ex)
-        {
-            ex.printStackTrace();
-        }
+        Yaml yaml = new Yaml(new PseudoConstructor());
+        Object data = yaml.load(new BufferedReader(new InputStreamReader(new URL(url).openStream())));
+        database = (HashMap<String,HashMap<String,ArrayList<AbinitPseudo>>>)(data);
     }
     
     public void fromFile(String filename)

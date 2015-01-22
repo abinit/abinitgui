@@ -142,6 +142,11 @@ public class MainFrame extends JFrame {
      */
     public MainFrame() {
 
+        
+        // Disable SNI support !
+        System.setProperty("jsse.enableSNIExtension", "false");
+        
+        
         msgdisp = new MessageDisplayer(this, false, outputFile);
         msgdisp.setTitle("..:: Global MSG Display ::..");
         
@@ -296,11 +301,17 @@ public class MainFrame extends JFrame {
          * Pseudo section
          */
         
-        remotePseudoDatabase = new PseudoDatabase();
-        remotePseudoDatabase.fromUrl("http://gui.abinit.org/PSPS/pseudos.yml");
-        
         localPseudoDatabase = new PseudoDatabase();
         localPseudoDatabase.fromFile("pseudos.yml");
+        
+        remotePseudoDatabase = new PseudoDatabase();
+        try{
+            remotePseudoDatabase.fromUrl("http://gui.abinit.org/PSPS/pseudos.yml");
+        }catch(Exception e)
+        {
+            printERR("Error connecting to gui.abinit.org, will use local database of pseudos");
+            remotePseudoDatabase = localPseudoDatabase;
+        }
         
         /**
          * End of pseudo section
