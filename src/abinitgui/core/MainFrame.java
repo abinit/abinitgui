@@ -114,10 +114,10 @@ public class MainFrame extends JFrame {
     private String ParaAbinit = "abinit";
     public String CharSet = "UTF-8";
     private static boolean autoTest;
-    public static String Version = "0.7";
-    public static String SubVersion = "0.2";
-    public static String VerMonth = "April";
-    public static String VerYear = "2014";
+    public static String Version = "0.8";
+    public static String SubVersion = "0.1";
+    public static String VerMonth = "February";
+    public static String VerYear = "2015";
     private String outputFile = "AbinitGUI.log";
     public static MainFrame mainFrame;
     public static boolean DEBUG = false;
@@ -159,7 +159,7 @@ public class MainFrame extends JFrame {
         //JFrame.setDefaultLookAndFeelDecorated(true);
         //JDialog.setDefaultLookAndFeelDecorated(true);
 
-        this.setTitle("AbinitGUI (v. " + Version + " " + VerMonth
+        this.setTitle("AbinitGUI (v. " + Version + ", " + VerMonth
                 + " " + VerYear + ")");
 
         inputFileDisplayer = new MessageDisplayer(this, false, null);
