@@ -485,18 +485,7 @@ public class AtomEditorOnline extends AbstractCellEditor
             });
         
             button.setEnabled(true);
-            if(listPseudos.size() == 1)
-            {
-                button.setBackground(Color.RED);
-            }
-            else if(listPseudos.size() == 2)
-            {
-                button.setBackground(Color.GREEN);
-            }
-            else
-            {
-                button.setBackground(Color.YELLOW);
-            }
+            button.setBackground(Color.GREEN);
         }
         
         
