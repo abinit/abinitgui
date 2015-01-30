@@ -9,4 +9,13 @@ NC_LDA_TM:
     nlcc_radius: 3.23292695886301, path: 'https://gui.abinit.org/PSPS/NC_LDA_TM/Sc/21sc.pspnc',
     summary: 'Troullier-Martins psp for element  Sc        Thu Oct 27 17:33:22 EDT
       1994'}
+  Si:
+  - !NcAbinitPseudo {Z: 14, Z_val: 4.0, l_local: 2, l_max: 2, md5: 3916b143991b1cfa1542b130be320e5e,
+    nlcc_radius: 1.80626423934776, path: ./PSP/NC_LDA_TM/Si/14si.pspnc, summary: 'Troullier-Martins
+      psp for element  Si        Thu Oct 27 17:31:21 EDT 1994'}
+NC_LDA_GTH:
+  Si:
+  - !NcAbinitPseudo {Z: 14, Z_val: 4.0, l_local: 0, l_max: 1, md5: 4e287405e75902d565a8b766845c0ab3,
+    nlcc_radius: 0.0, path: ./PSP/NC_LDA_GTH/Si/14si.pspgth, summary: 'Goedecker-Teter-Hutter  Fri
+      May 31 17:22:04 EDT 1996'}
 

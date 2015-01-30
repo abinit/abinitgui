@@ -74,6 +74,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.BorderFactory; 
+import javax.swing.border.Border;
 
 //@SuppressWarnings("serial")
 public class AtomEditorOnline extends AbstractCellEditor
@@ -464,6 +466,14 @@ public class AtomEditorOnline extends AbstractCellEditor
         if(listPseudos == null)
         {
             button.setEnabled(false);
+            button.setForeground(Color.WHITE);
+            //button.setForeground(Color.BLUE);
+            java.awt.Font font_tmp = button.getFont().deriveFont(java.awt.Font.BOLD);
+            button.setFont(font_tmp);
+            button.setContentAreaFilled(false);
+            //button.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+            button.setBorder(BorderFactory.createEmptyBorder());
+            button.setBackground(Color.BLUE);
         }
         else
         {
@@ -485,7 +495,14 @@ public class AtomEditorOnline extends AbstractCellEditor
             });
         
             button.setEnabled(true);
-            button.setBackground(Color.GREEN);
+            //button.setForeground(Color.WHITE);
+            button.setForeground(Color.BLUE);
+            java.awt.Font font_tmp = button.getFont().deriveFont(java.awt.Font.BOLD);
+            button.setFont(font_tmp);
+            button.setContentAreaFilled(false);
+            button.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+            //button.setBorder(BorderFactory.createEmptyBorder();
+            button.setBackground(Color.BLUE);
         }
         
         

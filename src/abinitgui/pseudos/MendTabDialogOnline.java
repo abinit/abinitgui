@@ -218,114 +218,9 @@ public class MendTabDialogOnline extends JDialog {
     //@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup = new javax.swing.ButtonGroup();
-        jB_H = new javax.swing.JButton();
-        jB_Li = new javax.swing.JButton();
-        jB_Na = new javax.swing.JButton();
-        jB_K = new javax.swing.JButton();
-        jB_Rb = new javax.swing.JButton();
-        jB_Cs = new javax.swing.JButton();
-        jB_Fr = new javax.swing.JButton();
-        jB_Ra = new javax.swing.JButton();
-        jB_Ba = new javax.swing.JButton();
-        jB_Sr = new javax.swing.JButton();
-        jB_Ca = new javax.swing.JButton();
-        jB_Mg = new javax.swing.JButton();
-        jB_Be = new javax.swing.JButton();
-        jB_Sc = new javax.swing.JButton();
-        jB_Y = new javax.swing.JButton();
-        jB_Rf = new javax.swing.JButton();
-        jB_Zr = new javax.swing.JButton();
-        jB_Hf = new javax.swing.JButton();
-        jB_Ti = new javax.swing.JButton();
-        jB_Db = new javax.swing.JButton();
-        jB_Nb = new javax.swing.JButton();
-        jB_Ta = new javax.swing.JButton();
-        jB_V = new javax.swing.JButton();
-        jB_Sg = new javax.swing.JButton();
-        jB_Mo = new javax.swing.JButton();
-        jB_W = new javax.swing.JButton();
-        jB_Cr = new javax.swing.JButton();
-        jB_Tc = new javax.swing.JButton();
-        jB_Re = new javax.swing.JButton();
-        jB_Mn = new javax.swing.JButton();
-        jB_Fe = new javax.swing.JButton();
-        jB_Os = new javax.swing.JButton();
-        jB_Ru = new javax.swing.JButton();
-        jB_Co = new javax.swing.JButton();
-        jB_Ir = new javax.swing.JButton();
-        jB_Rh = new javax.swing.JButton();
-        jB_Ni = new javax.swing.JButton();
-        jB_Pt = new javax.swing.JButton();
-        jB_Pd = new javax.swing.JButton();
-        jB_Cu = new javax.swing.JButton();
-        jB_Au = new javax.swing.JButton();
-        jB_Ag = new javax.swing.JButton();
-        jB_Zn = new javax.swing.JButton();
-        jB_Hg = new javax.swing.JButton();
-        jB_Cd = new javax.swing.JButton();
-        jB_B = new javax.swing.JButton();
-        jB_Ga = new javax.swing.JButton();
-        jB_Al = new javax.swing.JButton();
-        jB_In = new javax.swing.JButton();
-        jB_Tl = new javax.swing.JButton();
-        jB_Sn = new javax.swing.JButton();
-        jB_Pb = new javax.swing.JButton();
-        jB_C = new javax.swing.JButton();
-        jB_Ge = new javax.swing.JButton();
-        jB_Si = new javax.swing.JButton();
-        jB_P = new javax.swing.JButton();
-        jB_As = new javax.swing.JButton();
-        jB_N = new javax.swing.JButton();
-        jB_Sb = new javax.swing.JButton();
-        jB_Bi = new javax.swing.JButton();
-        jB_O = new javax.swing.JButton();
-        jB_Se = new javax.swing.JButton();
-        jB_S = new javax.swing.JButton();
-        jB_Po = new javax.swing.JButton();
-        jB_Te = new javax.swing.JButton();
-        jB_I = new javax.swing.JButton();
-        jB_At = new javax.swing.JButton();
-        jB_F = new javax.swing.JButton();
-        jB_Br = new javax.swing.JButton();
-        jB_Cl = new javax.swing.JButton();
-        jB_Rn = new javax.swing.JButton();
-        jB_Xe = new javax.swing.JButton();
-        jB_Kr = new javax.swing.JButton();
-        jB_Ar = new javax.swing.JButton();
-        jB_Ne = new javax.swing.JButton();
-        jB_He = new javax.swing.JButton();
-        jB_La = new javax.swing.JButton();
-        jB_Ac = new javax.swing.JButton();
-        jB_Ce = new javax.swing.JButton();
-        jB_Th = new javax.swing.JButton();
-        jB_Er = new javax.swing.JButton();
-        jB_Fm = new javax.swing.JButton();
-        jB_Ho = new javax.swing.JButton();
-        jB_Es = new javax.swing.JButton();
-        jB_Nd = new javax.swing.JButton();
-        jB_U = new javax.swing.JButton();
-        jB_Pr = new javax.swing.JButton();
-        jB_Pa = new javax.swing.JButton();
-        jB_Yb = new javax.swing.JButton();
-        jB_Pm = new javax.swing.JButton();
-        jB_No = new javax.swing.JButton();
-        jB_Lr = new javax.swing.JButton();
-        jB_Lu = new javax.swing.JButton();
-        jB_Md = new javax.swing.JButton();
-        jB_Tm = new javax.swing.JButton();
-        jB_Sm = new javax.swing.JButton();
-        jB_Pu = new javax.swing.JButton();
-        jB_Cm = new javax.swing.JButton();
-        jB_Am = new javax.swing.JButton();
-        jB_Eu = new javax.swing.JButton();
-        jB_Np = new javax.swing.JButton();
-        jB_Tb = new javax.swing.JButton();
-        jB_Cf = new javax.swing.JButton();
-        jB_Dy = new javax.swing.JButton();
-        jB_Gd = new javax.swing.JButton();
-        jB_Bk = new javax.swing.JButton();
         pspTypePanel = new javax.swing.JPanel();
         LDA_FHI_CheckBox = new javax.swing.JCheckBox();
         LDA_Core_CheckBox = new javax.swing.JCheckBox();
@@ -338,338 +233,129 @@ public class MendTabDialogOnline extends JDialog {
         PAW_GGA_CheckBox = new javax.swing.JCheckBox();
         PAW_LDA_CheckBox = new javax.swing.JCheckBox();
         userPSPButton = new javax.swing.JButton();
-        jB_Bh = new javax.swing.JButton();
-        jB_Hs = new javax.swing.JButton();
-        jB_Mt = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jB_Sm = new javax.swing.JButton();
+        jB_Tm = new javax.swing.JButton();
+        jB_Md = new javax.swing.JButton();
+        jB_Lu = new javax.swing.JButton();
+        jB_Cm = new javax.swing.JButton();
+        jB_Pu = new javax.swing.JButton();
+        jB_No = new javax.swing.JButton();
+        jB_Lr = new javax.swing.JButton();
+        jB_Yb = new javax.swing.JButton();
+        jB_Pm = new javax.swing.JButton();
+        jB_Ho = new javax.swing.JButton();
+        jB_Fm = new javax.swing.JButton();
+        jB_Nd = new javax.swing.JButton();
+        jB_Es = new javax.swing.JButton();
+        jB_Pr = new javax.swing.JButton();
+        jB_U = new javax.swing.JButton();
+        jB_Pa = new javax.swing.JButton();
+        jB_Hf = new javax.swing.JButton();
+        jB_Zr = new javax.swing.JButton();
+        jB_Sc = new javax.swing.JButton();
+        jB_Ce = new javax.swing.JButton();
+        jB_Be = new javax.swing.JButton();
+        jB_Th = new javax.swing.JButton();
+        jB_Rf = new javax.swing.JButton();
+        jB_Er = new javax.swing.JButton();
+        jB_Y = new javax.swing.JButton();
+        jB_Sr = new javax.swing.JButton();
+        jB_Ba = new javax.swing.JButton();
+        jB_Mg = new javax.swing.JButton();
+        jB_Ca = new javax.swing.JButton();
         jB_Ds = new javax.swing.JButton();
-        jB_Rg = new javax.swing.JButton();
-        jB_Cn = new javax.swing.JButton();
-        jB_Uut = new javax.swing.JButton();
-        jB_Uuq = new javax.swing.JButton();
-        jB_Uup = new javax.swing.JButton();
+        jB_Cr = new javax.swing.JButton();
+        jB_Mt = new javax.swing.JButton();
+        jB_W = new javax.swing.JButton();
+        jB_Hs = new javax.swing.JButton();
+        jB_Mo = new javax.swing.JButton();
+        jB_Bh = new javax.swing.JButton();
+        jB_Sg = new javax.swing.JButton();
+        jB_Tc = new javax.swing.JButton();
+        jB_Ti = new javax.swing.JButton();
         jB_Uuh = new javax.swing.JButton();
-        jB_Uus = new javax.swing.JButton();
+        jB_Uup = new javax.swing.JButton();
+        jB_Uuq = new javax.swing.JButton();
+        jB_V = new javax.swing.JButton();
+        jB_Uut = new javax.swing.JButton();
+        jB_Ta = new javax.swing.JButton();
+        jB_Cn = new javax.swing.JButton();
+        jB_Nb = new javax.swing.JButton();
+        jB_Rg = new javax.swing.JButton();
+        jB_Db = new javax.swing.JButton();
+        jB_Li = new javax.swing.JButton();
+        jB_H = new javax.swing.JButton();
+        jB_K = new javax.swing.JButton();
+        jB_Na = new javax.swing.JButton();
+        jB_Gd = new javax.swing.JButton();
+        jB_Dy = new javax.swing.JButton();
+        jB_Bk = new javax.swing.JButton();
+        jB_Eu = new javax.swing.JButton();
+        jB_Rh = new javax.swing.JButton();
         jB_Uuo = new javax.swing.JButton();
+        jB_Np = new javax.swing.JButton();
+        jB_Ir = new javax.swing.JButton();
+        jB_Tb = new javax.swing.JButton();
+        jB_Pt = new javax.swing.JButton();
+        jB_Cf = new javax.swing.JButton();
+        jB_Ni = new javax.swing.JButton();
+        jB_Uus = new javax.swing.JButton();
+        jB_Am = new javax.swing.JButton();
+        jB_Rb = new javax.swing.JButton();
+        jB_Cs = new javax.swing.JButton();
+        jB_Mn = new javax.swing.JButton();
+        jB_Fr = new javax.swing.JButton();
+        jB_Re = new javax.swing.JButton();
+        jB_Ra = new javax.swing.JButton();
+        jB_Os = new javax.swing.JButton();
+        jB_Fe = new javax.swing.JButton();
+        jB_Co = new javax.swing.JButton();
+        jB_Ru = new javax.swing.JButton();
+        jB_Hg = new javax.swing.JButton();
+        jB_Cd = new javax.swing.JButton();
+        jB_Ag = new javax.swing.JButton();
+        jB_Zn = new javax.swing.JButton();
+        jB_Cu = new javax.swing.JButton();
+        jB_Au = new javax.swing.JButton();
+        jB_Pd = new javax.swing.JButton();
+        jB_Al = new javax.swing.JButton();
+        jB_B = new javax.swing.JButton();
+        jB_Ga = new javax.swing.JButton();
+        jB_C = new javax.swing.JButton();
+        jB_Ge = new javax.swing.JButton();
+        jB_Si = new javax.swing.JButton();
+        jB_P = new javax.swing.JButton();
+        jB_In = new javax.swing.JButton();
+        jB_Tl = new javax.swing.JButton();
+        jB_Sn = new javax.swing.JButton();
+        jB_Pb = new javax.swing.JButton();
+        jB_As = new javax.swing.JButton();
+        jB_N = new javax.swing.JButton();
+        jB_Sb = new javax.swing.JButton();
+        jB_Se = new javax.swing.JButton();
+        jB_S = new javax.swing.JButton();
+        jB_Bi = new javax.swing.JButton();
+        jB_O = new javax.swing.JButton();
+        jB_I = new javax.swing.JButton();
+        jB_At = new javax.swing.JButton();
+        jB_Po = new javax.swing.JButton();
+        jB_Te = new javax.swing.JButton();
+        jB_F = new javax.swing.JButton();
+        jB_Cl = new javax.swing.JButton();
+        jB_Br = new javax.swing.JButton();
+        jB_Rn = new javax.swing.JButton();
+        jB_Xe = new javax.swing.JButton();
+        jB_Kr = new javax.swing.JButton();
+        jB_Ar = new javax.swing.JButton();
+        jB_Ne = new javax.swing.JButton();
+        jB_He = new javax.swing.JButton();
+        jB_La = new javax.swing.JButton();
+        jB_Ac = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jB_H.setText("H");
-        jB_H.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Li.setText("Li");
-        jB_Li.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Na.setText("Na");
-        jB_Na.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_K.setText("K");
-        jB_K.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Rb.setText("Rb");
-        jB_Rb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Cs.setText("Cs");
-        jB_Cs.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Fr.setText("Fr");
-        jB_Fr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ra.setText("Ra");
-        jB_Ra.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ba.setText("Ba");
-        jB_Ba.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Sr.setText("Sr");
-        jB_Sr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ca.setText("Ca");
-        jB_Ca.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Mg.setText("Mg");
-        jB_Mg.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Be.setText("Be");
-        jB_Be.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Sc.setText("Sc");
-        jB_Sc.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Y.setText("Y");
-        jB_Y.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Rf.setText("Rf");
-        jB_Rf.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Zr.setText("Zr");
-        jB_Zr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Hf.setText("Hf");
-        jB_Hf.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ti.setText("Ti");
-        jB_Ti.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Db.setText("Db");
-        jB_Db.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Nb.setText("Nb");
-        jB_Nb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ta.setText("Ta");
-        jB_Ta.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_V.setText("V");
-        jB_V.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Sg.setText("Sg");
-        jB_Sg.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Mo.setText("Mo");
-        jB_Mo.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_W.setText("W");
-        jB_W.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Cr.setText("Cr");
-        jB_Cr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Tc.setText("Tc");
-        jB_Tc.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Re.setText("Re");
-        jB_Re.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Mn.setText("Mn");
-        jB_Mn.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Fe.setText("Fe");
-        jB_Fe.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Os.setText("Os");
-        jB_Os.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ru.setText("Ru");
-        jB_Ru.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Co.setText("Co");
-        jB_Co.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ir.setText("Ir");
-        jB_Ir.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Rh.setText("Rh");
-        jB_Rh.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ni.setText("Ni");
-        jB_Ni.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Pt.setText("Pt");
-        jB_Pt.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Pd.setText("Pd");
-        jB_Pd.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Cu.setText("Cu");
-        jB_Cu.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Au.setText("Au");
-        jB_Au.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ag.setText("Ag");
-        jB_Ag.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Zn.setText("Zn");
-        jB_Zn.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Hg.setText("Hg");
-        jB_Hg.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Cd.setText("Cd");
-        jB_Cd.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_B.setText("B");
-        jB_B.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ga.setText("Ga");
-        jB_Ga.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Al.setText("Al");
-        jB_Al.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_In.setText("In");
-        jB_In.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Tl.setText("Tl");
-        jB_Tl.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Sn.setText("Sn");
-        jB_Sn.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Pb.setText("Pb");
-        jB_Pb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_C.setText("C");
-        jB_C.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ge.setText("Ge");
-        jB_Ge.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Si.setText("Si");
-        jB_Si.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_P.setText("P");
-        jB_P.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_As.setText("As");
-        jB_As.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_N.setText("N");
-        jB_N.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Sb.setText("Sb");
-        jB_Sb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Bi.setText("Bi");
-        jB_Bi.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_O.setText("O");
-        jB_O.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Se.setText("Se");
-        jB_Se.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_S.setText("S");
-        jB_S.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Po.setText("Po");
-        jB_Po.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Te.setText("Te");
-        jB_Te.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_I.setText("I");
-        jB_I.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_At.setText("At");
-        jB_At.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_F.setText("F");
-        jB_F.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Br.setText("Br");
-        jB_Br.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Cl.setText("Cl");
-        jB_Cl.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Rn.setText("Rn");
-        jB_Rn.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Xe.setText("Xe");
-        jB_Xe.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Kr.setText("Kr");
-        jB_Kr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ar.setText("Ar");
-        jB_Ar.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ne.setText("Ne");
-        jB_Ne.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_He.setText("He");
-        jB_He.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_La.setText("La");
-        jB_La.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ac.setText("Ac");
-        jB_Ac.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ce.setText("Ce");
-        jB_Ce.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Th.setText("Th");
-        jB_Th.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Er.setText("Er");
-        jB_Er.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Fm.setText("Fm");
-        jB_Fm.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Ho.setText("Ho");
-        jB_Ho.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Es.setText("Es");
-        jB_Es.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Nd.setText("Nd");
-        jB_Nd.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_U.setText("U");
-        jB_U.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Pr.setText("Pr");
-        jB_Pr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Pa.setText("Pa");
-        jB_Pa.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Yb.setText("Yb");
-        jB_Yb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Pm.setText("Pm");
-        jB_Pm.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_No.setText("No");
-        jB_No.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Lr.setText("Lr");
-        jB_Lr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Lu.setText("Lu");
-        jB_Lu.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Md.setText("Md");
-        jB_Md.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Tm.setText("Tm");
-        jB_Tm.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Sm.setText("Sm");
-        jB_Sm.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Pu.setText("Pu");
-        jB_Pu.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Cm.setText("Cm");
-        jB_Cm.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Am.setText("Am");
-        jB_Am.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Eu.setText("Eu");
-        jB_Eu.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Np.setText("Np");
-        jB_Np.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Tb.setText("Tb");
-        jB_Tb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Cf.setText("Cf");
-        jB_Cf.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Dy.setText("Dy");
-        jB_Dy.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Gd.setText("Gd");
-        jB_Gd.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-        jB_Bk.setText("Bk");
-        jB_Bk.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        setResizable(false);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         pspTypePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -747,15 +433,15 @@ public class MendTabDialogOnline extends JDialog {
                 .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LDA_TM_CheckBox)
                     .addComponent(LDA_GTH_CheckBox))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LDA_FHI_CheckBox)
                     .addComponent(GGA_FHI_CheckBox))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(GGA_HGH_CheckBox)
                     .addComponent(LDA_Core_CheckBox))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LDA_Teter_CheckBox)
                     .addComponent(LDA_HGH_CheckBox))
@@ -798,280 +484,602 @@ public class MendTabDialogOnline extends JDialog {
         GGA_HGH_CheckBox.getAccessibleContext().setAccessibleName("GGA_HGH");
         LDA_GTH_CheckBox.getAccessibleContext().setAccessibleName("LDA_GTH");
 
-        userPSPButton.setText("User PSP");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        getContentPane().add(pspTypePanel, gridBagConstraints);
+
+        userPSPButton.setText("User defined pseudopotential");
         userPSPButton.setActionCommand("UserPSP");
+        userPSPButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userPSPButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 311;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
+        getContentPane().add(userPSPButton, gridBagConstraints);
 
-        jB_Bh.setText("Bh");
-        jB_Bh.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        jB_Sm.setText("Sm");
+        jB_Sm.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jB_Hs.setText("Hs");
-        jB_Hs.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        jB_Tm.setText("Tm");
+        jB_Tm.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jB_Mt.setText("Mt");
-        jB_Mt.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        jB_Md.setText("Md");
+        jB_Md.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Lu.setText("Lu");
+        jB_Lu.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Cm.setText("Cm");
+        jB_Cm.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Pu.setText("Pu");
+        jB_Pu.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_No.setText("No");
+        jB_No.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Lr.setText("Lr");
+        jB_Lr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Yb.setText("Yb");
+        jB_Yb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Pm.setText("Pm");
+        jB_Pm.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ho.setText("Ho");
+        jB_Ho.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Fm.setText("Fm");
+        jB_Fm.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Nd.setText("Nd");
+        jB_Nd.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Es.setText("Es");
+        jB_Es.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Pr.setText("Pr");
+        jB_Pr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_U.setText("U");
+        jB_U.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Pa.setText("Pa");
+        jB_Pa.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Hf.setText("Hf");
+        jB_Hf.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Zr.setText("Zr");
+        jB_Zr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Sc.setText("Sc");
+        jB_Sc.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ce.setText("Ce");
+        jB_Ce.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Be.setText("Be");
+        jB_Be.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Th.setText("Th");
+        jB_Th.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Rf.setText("Rf");
+        jB_Rf.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Er.setText("Er");
+        jB_Er.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Y.setText("Y");
+        jB_Y.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Sr.setText("Sr");
+        jB_Sr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ba.setText("Ba");
+        jB_Ba.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Mg.setText("Mg");
+        jB_Mg.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ca.setText("Ca");
+        jB_Ca.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
         jB_Ds.setText("Ds");
         jB_Ds.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jB_Rg.setText("Rg");
-        jB_Rg.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        jB_Cr.setText("Cr");
+        jB_Cr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jB_Cn.setText("Cn");
-        jB_Cn.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        jB_Mt.setText("Mt");
+        jB_Mt.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jB_Uut.setText("Uut");
-        jB_Uut.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        jB_W.setText("W");
+        jB_W.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jB_Uuq.setText("Uuq");
-        jB_Uuq.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        jB_Hs.setText("Hs");
+        jB_Hs.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jB_Uup.setText("Uup");
-        jB_Uup.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        jB_Mo.setText("Mo");
+        jB_Mo.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Bh.setText("Bh");
+        jB_Bh.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Sg.setText("Sg");
+        jB_Sg.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Tc.setText("Tc");
+        jB_Tc.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ti.setText("Ti");
+        jB_Ti.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
         jB_Uuh.setText("Uuh");
         jB_Uuh.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jB_Uus.setText("Uus");
-        jB_Uus.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        jB_Uup.setText("Uup");
+        jB_Uup.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Uuq.setText("Uuq");
+        jB_Uuq.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_V.setText("V");
+        jB_V.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Uut.setText("Uut");
+        jB_Uut.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ta.setText("Ta");
+        jB_Ta.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Cn.setText("Cn");
+        jB_Cn.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Nb.setText("Nb");
+        jB_Nb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Rg.setText("Rg");
+        jB_Rg.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Db.setText("Db");
+        jB_Db.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Li.setText("Li");
+        jB_Li.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_H.setText("H");
+        jB_H.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_K.setText("K");
+        jB_K.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Na.setText("Na");
+        jB_Na.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Gd.setText("Gd");
+        jB_Gd.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Dy.setText("Dy");
+        jB_Dy.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Bk.setText("Bk");
+        jB_Bk.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Eu.setText("Eu");
+        jB_Eu.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Rh.setText("Rh");
+        jB_Rh.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
         jB_Uuo.setText("Uuo");
         jB_Uuo.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pspTypePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                        .addComponent(userPSPButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_Li)
-                                            .addComponent(jB_Na)
-                                            .addComponent(jB_K)
-                                            .addComponent(jB_Rb)
-                                            .addComponent(jB_Cs)
-                                            .addComponent(jB_Fr))
+        jB_Np.setText("Np");
+        jB_Np.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ir.setText("Ir");
+        jB_Ir.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Tb.setText("Tb");
+        jB_Tb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Pt.setText("Pt");
+        jB_Pt.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Cf.setText("Cf");
+        jB_Cf.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ni.setText("Ni");
+        jB_Ni.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Uus.setText("Uus");
+        jB_Uus.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Am.setText("Am");
+        jB_Am.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Rb.setText("Rb");
+        jB_Rb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Cs.setText("Cs");
+        jB_Cs.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Mn.setText("Mn");
+        jB_Mn.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Fr.setText("Fr");
+        jB_Fr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Re.setText("Re");
+        jB_Re.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ra.setText("Ra");
+        jB_Ra.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Os.setText("Os");
+        jB_Os.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Fe.setText("Fe");
+        jB_Fe.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Co.setText("Co");
+        jB_Co.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ru.setText("Ru");
+        jB_Ru.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Hg.setText("Hg");
+        jB_Hg.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Cd.setText("Cd");
+        jB_Cd.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ag.setText("Ag");
+        jB_Ag.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Zn.setText("Zn");
+        jB_Zn.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Cu.setText("Cu");
+        jB_Cu.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Au.setText("Au");
+        jB_Au.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Pd.setText("Pd");
+        jB_Pd.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Al.setText("Al");
+        jB_Al.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_B.setText("B");
+        jB_B.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ga.setText("Ga");
+        jB_Ga.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_C.setText("C");
+        jB_C.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ge.setText("Ge");
+        jB_Ge.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Si.setText("Si");
+        jB_Si.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_P.setText("P");
+        jB_P.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_In.setText("In");
+        jB_In.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Tl.setText("Tl");
+        jB_Tl.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Sn.setText("Sn");
+        jB_Sn.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Pb.setText("Pb");
+        jB_Pb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_As.setText("As");
+        jB_As.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_N.setText("N");
+        jB_N.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Sb.setText("Sb");
+        jB_Sb.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Se.setText("Se");
+        jB_Se.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_S.setText("S");
+        jB_S.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Bi.setText("Bi");
+        jB_Bi.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_O.setText("O");
+        jB_O.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_I.setText("I");
+        jB_I.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_At.setText("At");
+        jB_At.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Po.setText("Po");
+        jB_Po.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Te.setText("Te");
+        jB_Te.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_F.setText("F");
+        jB_F.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Cl.setText("Cl");
+        jB_Cl.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Br.setText("Br");
+        jB_Br.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Rn.setText("Rn");
+        jB_Rn.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Xe.setText("Xe");
+        jB_Xe.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Kr.setText("Kr");
+        jB_Kr.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ar.setText("Ar");
+        jB_Ar.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ne.setText("Ne");
+        jB_Ne.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_He.setText("He");
+        jB_He.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_La.setText("La");
+        jB_La.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jB_Ac.setText("Ac");
+        jB_Ac.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jB_Li)
+                            .addComponent(jB_Na)
+                            .addComponent(jB_K)
+                            .addComponent(jB_Rb)
+                            .addComponent(jB_Cs)
+                            .addComponent(jB_Fr))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jB_Be)
+                            .addComponent(jB_Mg)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Ca)
+                                    .addComponent(jB_Sr)
+                                    .addComponent(jB_Ba)
+                                    .addComponent(jB_Ra))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Sc)
+                                    .addComponent(jB_Y))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_Ti)
+                                    .addComponent(jB_Zr)
+                                    .addComponent(jB_Hf)
+                                    .addComponent(jB_Rf))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jB_V)
+                                    .addComponent(jB_Nb)
+                                    .addComponent(jB_Ta)
+                                    .addComponent(jB_Db))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_Cr)
+                                            .addComponent(jB_Mo)
+                                            .addComponent(jB_W))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_Be)
-                                            .addComponent(jB_Mg)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_Ca)
-                                                    .addComponent(jB_Sr)
-                                                    .addComponent(jB_Ba)
-                                                    .addComponent(jB_Ra))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_Sc)
-                                                    .addComponent(jB_Y))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_Ti)
-                                                    .addComponent(jB_Zr)
-                                                    .addComponent(jB_Hf)
-                                                    .addComponent(jB_Rf))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jB_V)
-                                                    .addComponent(jB_Nb)
-                                                    .addComponent(jB_Ta)
-                                                    .addComponent(jB_Db))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jB_Cr)
-                                                            .addComponent(jB_Mo)
-                                                            .addComponent(jB_W))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jB_Mn)
-                                                            .addComponent(jB_Tc)
-                                                            .addComponent(jB_Re))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jB_Fe)
-                                                            .addComponent(jB_Ru)
-                                                            .addComponent(jB_Os))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jB_Co)
-                                                            .addComponent(jB_Rh)
-                                                            .addComponent(jB_Ir))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jB_Ni)
-                                                            .addComponent(jB_Pd)
-                                                            .addComponent(jB_Pt))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jB_Cu)
-                                                            .addComponent(jB_Ag)
-                                                            .addComponent(jB_Au))
-                                                        .addGap(6, 6, 6)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jB_Zn)
-                                                            .addComponent(jB_Cd)
-                                                            .addComponent(jB_Hg)))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jB_Sg)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jB_Bh)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jB_Hs)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jB_Mt)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jB_Ds)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jB_Rg)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jB_Cn))))))
-                                    .addComponent(jB_H))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_B)
-                                            .addComponent(jB_Al)
-                                            .addComponent(jB_Ga)
-                                            .addComponent(jB_In)
-                                            .addComponent(jB_Tl))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_Mn)
+                                            .addComponent(jB_Tc)
+                                            .addComponent(jB_Re))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_C)
-                                            .addComponent(jB_Si)
-                                            .addComponent(jB_Ge)
-                                            .addComponent(jB_Sn)
-                                            .addComponent(jB_Pb))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_Fe)
+                                            .addComponent(jB_Ru)
+                                            .addComponent(jB_Os))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_N)
-                                            .addComponent(jB_P)
-                                            .addComponent(jB_As)
-                                            .addComponent(jB_Sb)
-                                            .addComponent(jB_Bi))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_Co)
+                                            .addComponent(jB_Rh)
+                                            .addComponent(jB_Ir))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_O)
-                                            .addComponent(jB_S)
-                                            .addComponent(jB_Se)
-                                            .addComponent(jB_Te)
-                                            .addComponent(jB_Po))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_Ni)
+                                            .addComponent(jB_Pd)
+                                            .addComponent(jB_Pt))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_F)
-                                            .addComponent(jB_Cl)
-                                            .addComponent(jB_Br)
-                                            .addComponent(jB_I)
-                                            .addComponent(jB_At))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_Cu)
+                                            .addComponent(jB_Ag)
+                                            .addComponent(jB_Au))
+                                        .addGap(6, 6, 6)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jB_Zn)
+                                            .addComponent(jB_Cd)
+                                            .addComponent(jB_Hg)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jB_Sg)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jB_Ne)
-                                            .addComponent(jB_Ar)
-                                            .addComponent(jB_Kr)
-                                            .addComponent(jB_Xe)
-                                            .addComponent(jB_Rn)
-                                            .addComponent(jB_He)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jB_Uut)
+                                        .addComponent(jB_Bh)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jB_Uuq)
+                                        .addComponent(jB_Hs)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jB_Uup)
+                                        .addComponent(jB_Mt)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jB_Uuh)
+                                        .addComponent(jB_Ds)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jB_Uus)
+                                        .addComponent(jB_Rg)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jB_Uuo))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(95, 95, 95)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_La)
-                                    .addComponent(jB_Ac))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Ce)
-                                    .addComponent(jB_Th))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Pr)
-                                    .addComponent(jB_Pa))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Nd)
-                                    .addComponent(jB_U))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Pm)
-                                    .addComponent(jB_Np))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Sm)
-                                    .addComponent(jB_Pu))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Eu)
-                                    .addComponent(jB_Am))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Gd)
-                                    .addComponent(jB_Cm))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Tb)
-                                    .addComponent(jB_Bk))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Dy)
-                                    .addComponent(jB_Cf))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Ho)
-                                    .addComponent(jB_Es))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Er)
-                                    .addComponent(jB_Fm))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Tm)
-                                    .addComponent(jB_Md))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Yb)
-                                    .addComponent(jB_No))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jB_Lu)
-                                    .addComponent(jB_Lr))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jB_Cn))))))
+                    .addComponent(jB_H))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jB_B)
+                            .addComponent(jB_Al)
+                            .addComponent(jB_Ga)
+                            .addComponent(jB_In)
+                            .addComponent(jB_Tl))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jB_C)
+                            .addComponent(jB_Si)
+                            .addComponent(jB_Ge)
+                            .addComponent(jB_Sn)
+                            .addComponent(jB_Pb))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jB_N)
+                            .addComponent(jB_P)
+                            .addComponent(jB_As)
+                            .addComponent(jB_Sb)
+                            .addComponent(jB_Bi))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jB_O)
+                            .addComponent(jB_S)
+                            .addComponent(jB_Se)
+                            .addComponent(jB_Te)
+                            .addComponent(jB_Po))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jB_F)
+                            .addComponent(jB_Cl)
+                            .addComponent(jB_Br)
+                            .addComponent(jB_I)
+                            .addComponent(jB_At))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jB_Ne)
+                            .addComponent(jB_Ar)
+                            .addComponent(jB_Kr)
+                            .addComponent(jB_Xe)
+                            .addComponent(jB_Rn)
+                            .addComponent(jB_He)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jB_Uut)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jB_Uuq)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jB_Uup)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jB_Uuh)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jB_Uus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jB_Uuo))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_La)
+                    .addComponent(jB_Ac))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Ce)
+                    .addComponent(jB_Th))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Pr)
+                    .addComponent(jB_Pa))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Nd)
+                    .addComponent(jB_U))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Pm)
+                    .addComponent(jB_Np))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Sm)
+                    .addComponent(jB_Pu))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Eu)
+                    .addComponent(jB_Am))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Gd)
+                    .addComponent(jB_Cm))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Tb)
+                    .addComponent(jB_Bk))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Dy)
+                    .addComponent(jB_Cf))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Ho)
+                    .addComponent(jB_Es))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Er)
+                    .addComponent(jB_Fm))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Tm)
+                    .addComponent(jB_Md))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Yb)
+                    .addComponent(jB_No))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jB_Lu)
+                    .addComponent(jB_Lr)))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jB_Ac, jB_Ag, jB_Al, jB_Am, jB_Ar, jB_As, jB_At, jB_Au, jB_B, jB_Ba, jB_Be, jB_Bh, jB_Bi, jB_Bk, jB_Br, jB_C, jB_Ca, jB_Cd, jB_Ce, jB_Cf, jB_Cl, jB_Cm, jB_Cn, jB_Co, jB_Cr, jB_Cs, jB_Cu, jB_Db, jB_Ds, jB_Dy, jB_Er, jB_Es, jB_Eu, jB_F, jB_Fe, jB_Fm, jB_Fr, jB_Ga, jB_Gd, jB_Ge, jB_H, jB_He, jB_Hf, jB_Hg, jB_Ho, jB_Hs, jB_I, jB_In, jB_Ir, jB_K, jB_Kr, jB_La, jB_Li, jB_Lr, jB_Lu, jB_Md, jB_Mg, jB_Mn, jB_Mo, jB_Mt, jB_N, jB_Na, jB_Nb, jB_Nd, jB_Ne, jB_Ni, jB_No, jB_Np, jB_O, jB_Os, jB_P, jB_Pa, jB_Pb, jB_Pd, jB_Pm, jB_Po, jB_Pr, jB_Pt, jB_Pu, jB_Ra, jB_Rb, jB_Re, jB_Rf, jB_Rg, jB_Rh, jB_Rn, jB_Ru, jB_S, jB_Sb, jB_Sc, jB_Se, jB_Sg, jB_Si, jB_Sm, jB_Sn, jB_Sr, jB_Ta, jB_Tb, jB_Tc, jB_Te, jB_Th, jB_Ti, jB_Tl, jB_Tm, jB_U, jB_Uuh, jB_Uuo, jB_Uup, jB_Uuq, jB_Uus, jB_Uut, jB_V, jB_W, jB_Xe, jB_Y, jB_Yb, jB_Zn, jB_Zr});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jB_Ac, jB_Ag, jB_Al, jB_Am, jB_Ar, jB_As, jB_At, jB_Au, jB_B, jB_Ba, jB_Be, jB_Bh, jB_Bi, jB_Bk, jB_Br, jB_C, jB_Ca, jB_Cd, jB_Ce, jB_Cf, jB_Cl, jB_Cm, jB_Cn, jB_Co, jB_Cr, jB_Cs, jB_Cu, jB_Db, jB_Ds, jB_Dy, jB_Er, jB_Es, jB_Eu, jB_F, jB_Fe, jB_Fm, jB_Fr, jB_Ga, jB_Gd, jB_Ge, jB_H, jB_He, jB_Hf, jB_Hg, jB_Ho, jB_Hs, jB_I, jB_In, jB_Ir, jB_K, jB_Kr, jB_La, jB_Li, jB_Lr, jB_Lu, jB_Md, jB_Mg, jB_Mn, jB_Mo, jB_Mt, jB_N, jB_Na, jB_Nb, jB_Nd, jB_Ne, jB_Ni, jB_No, jB_Np, jB_O, jB_Os, jB_P, jB_Pa, jB_Pb, jB_Pd, jB_Pm, jB_Po, jB_Pr, jB_Pt, jB_Pu, jB_Ra, jB_Rb, jB_Re, jB_Rf, jB_Rg, jB_Rh, jB_Rn, jB_Ru, jB_S, jB_Sb, jB_Sc, jB_Se, jB_Sg, jB_Si, jB_Sm, jB_Sn, jB_Sr, jB_Ta, jB_Tb, jB_Tc, jB_Te, jB_Th, jB_Ti, jB_Tl, jB_Tm, jB_U, jB_Uuh, jB_Uuo, jB_Uup, jB_Uuq, jB_Uus, jB_Uut, jB_V, jB_W, jB_Xe, jB_Y, jB_Yb, jB_Zn, jB_Zr});
 
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_He)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jB_C)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Si)
@@ -1081,7 +1089,7 @@ public class MendTabDialogOnline extends JDialog {
                                 .addComponent(jB_Sn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Pb))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jB_B)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Al)
@@ -1091,7 +1099,7 @@ public class MendTabDialogOnline extends JDialog {
                                 .addComponent(jB_In)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Tl))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jB_N)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_P)
@@ -1101,7 +1109,7 @@ public class MendTabDialogOnline extends JDialog {
                                 .addComponent(jB_Sb)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Bi))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jB_O)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_S)
@@ -1111,7 +1119,7 @@ public class MendTabDialogOnline extends JDialog {
                                 .addComponent(jB_Te)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Po))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jB_F)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Cl)
@@ -1121,7 +1129,7 @@ public class MendTabDialogOnline extends JDialog {
                                 .addComponent(jB_I)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_At))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jB_Ne)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Ar)
@@ -1131,11 +1139,11 @@ public class MendTabDialogOnline extends JDialog {
                                 .addComponent(jB_Xe)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Rn))))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_H)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jB_Li)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Na)
@@ -1147,17 +1155,17 @@ public class MendTabDialogOnline extends JDialog {
                                 .addComponent(jB_Cs)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Fr))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jB_Be)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jB_Mg)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jB_Sc)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Y))
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jB_Ca)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Sr)
@@ -1165,7 +1173,7 @@ public class MendTabDialogOnline extends JDialog {
                                         .addComponent(jB_Ba)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Ra))
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jB_Ti)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Zr)
@@ -1173,7 +1181,7 @@ public class MendTabDialogOnline extends JDialog {
                                         .addComponent(jB_Hf)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Rf))
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jB_V)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Nb)
@@ -1181,52 +1189,52 @@ public class MendTabDialogOnline extends JDialog {
                                         .addComponent(jB_Ta)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Db))
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jB_Fe)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Ru)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Os))
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jB_Co)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Rh)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Ir))
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jB_Ni)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Pd)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Pt))
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jB_Cu)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Ag)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Au))
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jB_Zn)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Cd)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jB_Hg))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jB_Cr)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jB_Mo)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jB_W))
-                                            .addGroup(layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jB_Mn)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jB_Tc)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jB_Re)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jB_Sg)
                                             .addComponent(jB_Bh)
                                             .addComponent(jB_Hs)
@@ -1240,76 +1248,76 @@ public class MendTabDialogOnline extends JDialog {
                                             .addComponent(jB_Uuh)
                                             .addComponent(jB_Uus)
                                             .addComponent(jB_Uuo))))))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Er)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Fm))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Ho)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Es))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Tm)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Md))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Yb)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_No))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Lu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Lr))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_La)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Ac))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Ce)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Th))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Pr)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Pa))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Sm)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Pu))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Eu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Am))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Gd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Cm))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Tb)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Bk))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Dy)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_Cf))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Nd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jB_U))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jB_Pm)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jB_Np)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pspTypePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userPSPButton))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(jB_Np))))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jB_Ac, jB_Ag, jB_Al, jB_Am, jB_Ar, jB_As, jB_At, jB_Au, jB_B, jB_Ba, jB_Be, jB_Bh, jB_Bi, jB_Bk, jB_Br, jB_C, jB_Ca, jB_Cd, jB_Ce, jB_Cf, jB_Cl, jB_Cm, jB_Cn, jB_Co, jB_Cr, jB_Cs, jB_Cu, jB_Db, jB_Ds, jB_Dy, jB_Er, jB_Es, jB_Eu, jB_F, jB_Fe, jB_Fm, jB_Fr, jB_Ga, jB_Gd, jB_Ge, jB_H, jB_He, jB_Hf, jB_Hg, jB_Ho, jB_Hs, jB_I, jB_In, jB_Ir, jB_K, jB_Kr, jB_La, jB_Li, jB_Lr, jB_Lu, jB_Md, jB_Mg, jB_Mn, jB_Mo, jB_Mt, jB_N, jB_Na, jB_Nb, jB_Nd, jB_Ne, jB_Ni, jB_No, jB_Np, jB_O, jB_Os, jB_P, jB_Pa, jB_Pb, jB_Pd, jB_Pm, jB_Po, jB_Pr, jB_Pt, jB_Pu, jB_Ra, jB_Rb, jB_Re, jB_Rf, jB_Rg, jB_Rh, jB_Rn, jB_Ru, jB_S, jB_Sb, jB_Sc, jB_Se, jB_Sg, jB_Si, jB_Sm, jB_Sn, jB_Sr, jB_Ta, jB_Tb, jB_Tc, jB_Te, jB_Th, jB_Ti, jB_Tl, jB_Tm, jB_U, jB_Uuh, jB_Uuo, jB_Uup, jB_Uuq, jB_Uus, jB_Uut, jB_V, jB_W, jB_Xe, jB_Y, jB_Yb, jB_Zn, jB_Zr});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jB_Ac, jB_Ag, jB_Al, jB_Am, jB_Ar, jB_As, jB_At, jB_Au, jB_B, jB_Ba, jB_Be, jB_Bh, jB_Bi, jB_Bk, jB_Br, jB_C, jB_Ca, jB_Cd, jB_Ce, jB_Cf, jB_Cl, jB_Cm, jB_Cn, jB_Co, jB_Cr, jB_Cs, jB_Cu, jB_Db, jB_Ds, jB_Dy, jB_Er, jB_Es, jB_Eu, jB_F, jB_Fe, jB_Fm, jB_Fr, jB_Ga, jB_Gd, jB_Ge, jB_H, jB_He, jB_Hf, jB_Hg, jB_Ho, jB_Hs, jB_I, jB_In, jB_Ir, jB_K, jB_Kr, jB_La, jB_Li, jB_Lr, jB_Lu, jB_Md, jB_Mg, jB_Mn, jB_Mo, jB_Mt, jB_N, jB_Na, jB_Nb, jB_Nd, jB_Ne, jB_Ni, jB_No, jB_Np, jB_O, jB_Os, jB_P, jB_Pa, jB_Pb, jB_Pd, jB_Pm, jB_Po, jB_Pr, jB_Pt, jB_Pu, jB_Ra, jB_Rb, jB_Re, jB_Rf, jB_Rg, jB_Rh, jB_Rn, jB_Ru, jB_S, jB_Sb, jB_Sc, jB_Se, jB_Sg, jB_Si, jB_Sm, jB_Sn, jB_Sr, jB_Ta, jB_Tb, jB_Tc, jB_Te, jB_Th, jB_Ti, jB_Tl, jB_Tm, jB_U, jB_Uuh, jB_Uuo, jB_Uup, jB_Uuq, jB_Uus, jB_Uut, jB_V, jB_W, jB_Xe, jB_Y, jB_Yb, jB_Zn, jB_Zr});
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        getContentPane().add(jPanel1, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1325,6 +1333,10 @@ public class MendTabDialogOnline extends JDialog {
     private void LDA_Core_CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LDA_Core_CheckBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_LDA_Core_CheckBoxActionPerformed
+
+    private void userPSPButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userPSPButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userPSPButtonActionPerformed
 
     public String getPSPSelected() {
         Enumeration buttons = buttonGroup.getElements();
@@ -1709,6 +1721,7 @@ public class MendTabDialogOnline extends JDialog {
     private javax.swing.JButton jB_Yb;
     private javax.swing.JButton jB_Zn;
     private javax.swing.JButton jB_Zr;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pspTypePanel;
     private javax.swing.JButton userPSPButton;
     // End of variables declaration//GEN-END:variables
