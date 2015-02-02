@@ -74,7 +74,7 @@
     <target name="-pre-init">
         <property name="project.name" value="AbinitGUI" />
         <property name="author" value="Flavio ABREU ARAUJO (abreuaraujo.flavio@gmail.com); Yannick GILLET (yannick.gillet@uclouvain.be)" />
-        <property name="version.num" value="2014" />
+        <property name="version.num" value="2015" />
         
         <tstamp>
             <format property="NOW" pattern="yyyy-MM-dd HH:mm:ss z" />
@@ -112,7 +112,7 @@
        
         <property name="project.name" value="AbinitGUI" />
         <property name="author" value="Flavio ABREU ARAUJO (abreuaraujo.flavio@gmail.com); Yannick GILLET (yannick.gillet@uclouvain.be)" />
-        <property name="version.num" value="2014" />
+        <property name="version.num" value="2015" />
        
         <exec outputproperty="svna.version" executable="svnversion">
             <arg value="-c" />
