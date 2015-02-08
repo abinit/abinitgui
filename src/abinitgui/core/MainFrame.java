@@ -227,7 +227,7 @@ public class MainFrame extends JFrame {
 
         // ---------------------------------------------------------------------
 
-        guiEditor = new GUIEditor();
+        guiEditor = new GUIEditor(this);
         allInputVars = new AllInputVars();
         allInputVars.loadVars("abinit_vars.yml");
         File fileOpened = new File("abinit_vars.yml");
@@ -879,5 +879,10 @@ public class MainFrame extends JFrame {
     public static PseudoDatabase getLocalPseudoDatabase()
     {
         return localPseudoDatabase;
+    }
+
+    public void showDocInput(String var) 
+    {
+        abinitInputVars.openAndShowVar(var);
     }
 }

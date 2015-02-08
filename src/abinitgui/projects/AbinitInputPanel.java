@@ -91,7 +91,7 @@ public class AbinitInputPanel extends SimulationPanel {
         pspTable.setDefaultEditor(Atom.class,
                 new AtomEditorOnline(MainFrame.mainFrame));
         
-        guiEditor = new GUIEditor();
+        guiEditor = new GUIEditor(MainFrame.mainFrame);
     }
 
     private void initTableHeader(JTable table, String header[], Integer headerWidths[]) {

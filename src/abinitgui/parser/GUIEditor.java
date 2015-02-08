@@ -49,6 +49,7 @@ package abinitgui.parser;
 import abinitgui.core.MainFrame;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Point;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -76,7 +77,7 @@ public class GUIEditor extends JFrame {
     /**
      * Creates new form GUIEditor
      */
-    public GUIEditor() {
+    public GUIEditor(MainFrame mf) {
         initComponents();
         
         dataTable = new ArrayList<>();
@@ -92,6 +93,8 @@ public class GUIEditor extends JFrame {
         mapVar.put("amu_orig", "amu");
         mapVar.put("xred_orig", "xred");
         mapVar.put("occ_orig","occ");
+        
+        this.mf = mf;
     }
     
     public void loadFile(String fileName)
@@ -182,6 +185,11 @@ public class GUIEditor extends JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         nbReplicaX.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -233,7 +241,7 @@ public class GUIEditor extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jMolPreview2, javax.swing.GroupLayout.PREFERRED_SIZE, 416, Short.MAX_VALUE)
+                    .addComponent(jMolPreview2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -362,6 +370,18 @@ public class GUIEditor extends JFrame {
             model.fireTableDataChanged();
         }
     }//GEN-LAST:event_dtsetListValueChanged
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+
+        if (evt.getClickCount() == 2) {
+            Point p = evt.getPoint();
+            int row = jTable1.rowAtPoint(p);
+            Object obj = jTable1.getValueAt(row, 0);
+            String var = obj.toString();
+            
+            mf.showDocInput(var);
+        }
+    }//GEN-LAST:event_jTable1MousePressed
 
     public class DatasetTable extends JTable
     {
