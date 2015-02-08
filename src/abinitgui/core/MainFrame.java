@@ -402,6 +402,7 @@ public class MainFrame extends JFrame {
         fileMenu = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
         outputMSGMenuItem = new javax.swing.JMenuItem();
         clearOutMSGMenuItem = new javax.swing.JMenuItem();
@@ -477,6 +478,14 @@ public class MainFrame extends JFrame {
             }
         });
         fileMenu.add(jMenuItem4);
+
+        jMenuItem2.setText("Quit");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItem2);
 
         mainMenuBar.add(fileMenu);
 
@@ -727,6 +736,10 @@ public class MainFrame extends JFrame {
         jobD.refresh();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     public static void localCommand(String CMD) /*throws CMDException*/ {
         RetMSG retmsg;
         retmsg = localExec.sendCommand(CMD);
@@ -824,6 +837,7 @@ public class MainFrame extends JFrame {
     javax.swing.ButtonGroup inputFilebuttonGroup;
     javax.swing.JMenu jMenuClustepAndTB;
     javax.swing.JMenuItem jMenuItem1;
+    javax.swing.JMenuItem jMenuItem2;
     javax.swing.JMenuItem jMenuItem3;
     javax.swing.JMenuItem jMenuItem4;
     javax.swing.JMenuItem jMenuItemClustep;
