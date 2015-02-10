@@ -178,6 +178,8 @@ public class ClustepSimulation extends Simulation {
         } else {
             ClustepProgPath = "../../../CLUSTEP/clustep0";
         }   
+        
+        String TFreqProgPath = ClustepProgPath.replace("clustep0","tfreq");
 
         this.createFileTree(mach);
         
@@ -248,8 +250,9 @@ public class ClustepSimulation extends Simulation {
             mach.sendCommand("tar -zxf ./CLUSTEP_src.tar.gz");
 
             // Compilation de clustep0
-            mach.sendCommand("make -C ./CLUSTEP_src/");
+            mach.sendCommand("make -C ./CLUSTEP_src/ all");
             mach.sendCommand("mv ./CLUSTEP_src/clustep0 ./CLUSTEP");
+            mach.sendCommand("mv ./CLUSTEP_src/tfreq ./CLUSTEP");
             mach.sendCommand("rm -rf ./CLUSTEP_src/");
 
             if(mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE)
@@ -260,11 +263,15 @@ public class ClustepSimulation extends Simulation {
 
         if (!inputFile.equals("")) {
             script.setAbinitPath(ClustepProgPath);
-            script.setInputPath(cwd + "/" 
-                    + rootPath.replaceFirst("./", "") + "/" + clustepFolder + "/" + simName+ "/" + simName + ".files");
-            script.setLogPath(cwd + "/"
-                    + rootPath.replaceFirst("./", "") + "/" + clustepFolder + "/" + simName+ "/" + simName + ".log");
+            String clustepInputPath = cwd + "/" 
+                    + rootPath.replaceFirst("./", "") + "/" + clustepFolder + "/" + simName+ "/" + simName + ".files";
+            String logPath = cwd + "/"
+                    + rootPath.replaceFirst("./", "") + "/" + clustepFolder + "/" + simName+ "/" + simName + ".log";
+            script.setInputPath(clustepInputPath);
+            script.setLogPath(logPath);
             script.setCDPart("cd "+cwd+"/" + rootPath.replaceFirst("./", "") + "/" + clustepFolder + "/" + simName);
+            String tfreqInputPath = simName + "-vel.dat";
+            script.setPostProcessPart(TFreqProgPath+" "+tfreqInputPath+" >> "+logPath);
             switch (script.getSystem()) {
                 case "SGE":
                     {
@@ -318,6 +325,8 @@ public class ClustepSimulation extends Simulation {
             configFileContent += simName + "-evol.dat\n";
             configFileContent += simName + "-pos\n";
             configFileContent += simName + "-film.xyz\n";
+            configFileContent += simName + "-vel.dat\n";
+            configFileContent += "50\n";
 
             // Création du fichier de configuration
             OutputStreamWriter fw;
@@ -592,18 +601,35 @@ public class ClustepSimulation extends Simulation {
             String fileNameEvol = rootPath + "/" + clustepFolder + "/"
             + simName + "/" + simName + "-evol.dat";
 
-            /*if (!Utils.exists(fileNameEvol)) {
+            String fileNameVel = rootPath + "/" + clustepFolder + "/"
+            + simName + "/" + simName + "-vel.dat";
+
+            String fileNameVelZ = rootPath + "/" + clustepFolder + "/"
+            + simName + "/Z." + simName + "-vel.dat";
+
+            String fileNameVelFT = rootPath + "/" + clustepFolder + "/"
+            + simName + "/FT." + simName + "-vel.dat";
+
+            
+            //if (!Utils.exists(fileNameEvol)) {
                 // Réception (copie) du fichier d'output si celui-ci est distant
                 if (mach.getType() == Machine.REMOTE_MACHINE || mach.getType() == Machine.GATEWAY_MACHINE) {
                     //                            if (Utils.osName().startsWith("Windows")) {
                         //                                sendCommand("unix2dos " + fileName);
                         //                            }
                     mach.getFile(fileNameEvol + " " + fileNameEvol);
+                    mach.getFile(fileNameVel + " " + fileNameVel);
+                    mach.getFile(fileNameVelZ + " " + fileNameVelZ);
+                    mach.getFile(fileNameVelFT + " " + fileNameVelFT);
+                    
                     //                            if (Utils.osName().startsWith("Windows")) {
                         //                                sendCommand("dos2unix " + fileName);
                         //                            }
                     if (Utils.osName().startsWith("Windows")) {
                         Utils.unix2dos(new File(fileNameEvol));
+                        Utils.unix2dos(new File(fileNameVel));
+                        Utils.unix2dos(new File(fileNameVelZ));
+                        Utils.unix2dos(new File(fileNameVelFT));
                     }
                 }
             /*} else {
