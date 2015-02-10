@@ -81,6 +81,9 @@ public class ClustepPanel extends SimulationPanel {
         openClustepPositionFileDialogButton = new javax.swing.JButton();
         openClustepPositionFileTextField = new javax.swing.JTextField();
         sendClustepCheckBox = new javax.swing.JCheckBox();
+        openClustepPositionFileLabel1 = new javax.swing.JLabel();
+        nskip = new javax.swing.JSpinner();
+        analyzeVib = new javax.swing.JCheckBox();
 
         openClustepInputFileLabel.setText("Open the Clustep input file");
 
@@ -130,6 +133,12 @@ public class ClustepPanel extends SimulationPanel {
 
         sendClustepCheckBox.setText("Send CLUSTEP source code and compile");
 
+        openClustepPositionFileLabel1.setText("Number of steps to skip for the movie :");
+
+        nskip.setValue(50);
+
+        analyzeVib.setText("Analyse vibrations");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,7 +154,7 @@ public class ClustepPanel extends SimulationPanel {
                         .addComponent(geditClustepInputButton))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(openClustepPositionFileLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
                         .addComponent(displayClustepPositionFileButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(geditClustepPositionButton))
@@ -158,8 +167,14 @@ public class ClustepPanel extends SimulationPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(openClustepPositionFileTextField))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(sendClustepCheckBox)
-                        .addGap(0, 267, Short.MAX_VALUE)))
+                        .addComponent(openClustepPositionFileLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(nskip, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sendClustepCheckBox)
+                            .addComponent(analyzeVib))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -183,7 +198,13 @@ public class ClustepPanel extends SimulationPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(openClustepPositionFileDialogButton)
                     .addComponent(openClustepPositionFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(99, 99, 99)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(openClustepPositionFileLabel1)
+                    .addComponent(nskip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(analyzeVib)
+                .addGap(36, 36, 36)
                 .addComponent(sendClustepCheckBox)
                 .addGap(188, 188, 188))
         );
@@ -211,6 +232,8 @@ public class ClustepPanel extends SimulationPanel {
             openClustepInputFileTextField.setText(simu.getInputFileName());
             openClustepPositionFileTextField.setText(simu.getPositionFileName());
             sendClustepCheckBox.setSelected(simu.isSendClustepSources());
+            nskip.setValue(simu.getNFramesToSkip());
+            analyzeVib.setSelected(simu.getCallTFreq());
         }
         else
         {
@@ -227,6 +250,8 @@ public class ClustepPanel extends SimulationPanel {
             simu.setInputFileName(openClustepInputFileTextField.getText());
             simu.setPositionFileName(openClustepPositionFileTextField.getText());
             simu.setSendClustepSources(sendClustepCheckBox.isSelected());
+            simu.setNFramesToSkip((int)nskip.getValue());
+            simu.setCallTFreq(analyzeVib.isSelected());
         }
         else
         {
@@ -295,15 +320,18 @@ public class ClustepPanel extends SimulationPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox analyzeVib;
     private javax.swing.JButton displayClustepInputFileButton;
     private javax.swing.JButton displayClustepPositionFileButton;
     private javax.swing.JButton geditClustepInputButton;
     private javax.swing.JButton geditClustepPositionButton;
+    private javax.swing.JSpinner nskip;
     private javax.swing.JButton openClustepInputFileDialogButton;
     private javax.swing.JLabel openClustepInputFileLabel;
     public javax.swing.JTextField openClustepInputFileTextField;
     private javax.swing.JButton openClustepPositionFileDialogButton;
     private javax.swing.JLabel openClustepPositionFileLabel;
+    private javax.swing.JLabel openClustepPositionFileLabel1;
     public javax.swing.JTextField openClustepPositionFileTextField;
     private javax.swing.JCheckBox sendClustepCheckBox;
     // End of variables declaration//GEN-END:variables

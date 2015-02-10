@@ -16,7 +16,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="1">
@@ -28,7 +28,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="1">
                       <Component id="openClustepPositionFileLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="247" max="32767" attributes="0"/>
                       <Component id="displayClustepPositionFileButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="geditClustepPositionButton" min="-2" max="-2" attributes="0"/>
@@ -44,8 +44,16 @@
                       <Component id="openClustepPositionFileTextField" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="sendClustepCheckBox" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="267" max="32767" attributes="0"/>
+                      <Component id="openClustepPositionFileLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="nskip" min="-2" pref="60" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="sendClustepCheckBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="analyzeVib" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -77,7 +85,14 @@
                   <Component id="openClustepPositionFileDialogButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="openClustepPositionFileTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="openClustepPositionFileLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="nskip" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="analyzeVib" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               <Component id="sendClustepCheckBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="188" max="-2" attributes="0"/>
           </Group>
@@ -156,6 +171,23 @@
     <Component class="javax.swing.JCheckBox" name="sendClustepCheckBox">
       <Properties>
         <Property name="text" type="java.lang.String" value="Send CLUSTEP source code and compile"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="openClustepPositionFileLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Number of steps to skip for the movie :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="nskip">
+      <Properties>
+        <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="50" type="code"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="analyzeVib">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Analyse vibrations"/>
       </Properties>
     </Component>
   </SubComponents>

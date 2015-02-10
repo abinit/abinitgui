@@ -68,6 +68,8 @@ public class ClustepSimulation extends Simulation {
     private int status;
     private boolean sendClustepSources;
     private String positionFileName;
+    private int nFramesToSkip;
+    private boolean callTFreq;
 
     public ClustepSimulation() {
         job = new RemoteJob();
@@ -271,7 +273,10 @@ public class ClustepSimulation extends Simulation {
             script.setLogPath(logPath);
             script.setCDPart("cd "+cwd+"/" + rootPath.replaceFirst("./", "") + "/" + clustepFolder + "/" + simName);
             String tfreqInputPath = simName + "-vel.dat";
-            script.setPostProcessPart(TFreqProgPath+" "+tfreqInputPath+" >> "+logPath);
+            if(getCallTFreq())
+            {
+                script.setPostProcessPart(TFreqProgPath+" "+tfreqInputPath+" >> "+logPath);
+            }
             switch (script.getSystem()) {
                 case "SGE":
                     {
@@ -326,7 +331,7 @@ public class ClustepSimulation extends Simulation {
             configFileContent += simName + "-pos\n";
             configFileContent += simName + "-film.xyz\n";
             configFileContent += simName + "-vel.dat\n";
-            configFileContent += "50\n";
+            configFileContent += this.getNFramesToSkip()+"\n";
 
             // Création du fichier de configuration
             OutputStreamWriter fw;
@@ -619,8 +624,11 @@ public class ClustepSimulation extends Simulation {
                         //                            }
                     mach.getFile(fileNameEvol + " " + fileNameEvol);
                     mach.getFile(fileNameVel + " " + fileNameVel);
-                    mach.getFile(fileNameVelZ + " " + fileNameVelZ);
-                    mach.getFile(fileNameVelFT + " " + fileNameVelFT);
+                    if(this.getCallTFreq())
+                    {
+                        mach.getFile(fileNameVelZ + " " + fileNameVelZ);
+                        mach.getFile(fileNameVelFT + " " + fileNameVelFT);
+                    }
                     
                     //                            if (Utils.osName().startsWith("Windows")) {
                         //                                sendCommand("dos2unix " + fileName);
@@ -628,8 +636,11 @@ public class ClustepSimulation extends Simulation {
                     if (Utils.osName().startsWith("Windows")) {
                         Utils.unix2dos(new File(fileNameEvol));
                         Utils.unix2dos(new File(fileNameVel));
-                        Utils.unix2dos(new File(fileNameVelZ));
-                        Utils.unix2dos(new File(fileNameVelFT));
+                        if(getCallTFreq())
+                        {
+                            Utils.unix2dos(new File(fileNameVelZ));
+                            Utils.unix2dos(new File(fileNameVelFT));
+                        }
                     }
                 }
             /*} else {
@@ -687,6 +698,26 @@ public class ClustepSimulation extends Simulation {
         } else {
             MainFrame.printERR("Please setup the inputfile textfield!");
         }
+    }
+
+    public void setNFramesToSkip(int i) 
+    {
+       this.nFramesToSkip = i;
+    }
+    
+    public int getNFramesToSkip()
+    {
+        return this.nFramesToSkip;
+    }
+
+    public void setCallTFreq(boolean selected) 
+    {
+       this.callTFreq = selected;
+    }
+    
+    public boolean getCallTFreq()
+    {
+        return this.callTFreq;
     }
     
     
