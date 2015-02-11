@@ -52,6 +52,7 @@ public class JobPanel extends javax.swing.JPanel {
         tightBindingPanel1 = new abinitgui.mdtb.TightBindingPanel();
         abinitInputPanel1 = new abinitgui.projects.AbinitInputPanel();
         tightBindingPanelOld1 = new abinitgui.mdtb.TightBindingPanelOld();
+        anaddbInputPanel1 = new abinitgui.projects.AnaddbInputPanel();
         jPanel1 = new javax.swing.JPanel();
         submissionScriptPanel1 = new abinitgui.projects.SubmissionScriptPanel();
         nameSimuLabel = new javax.swing.JLabel();
@@ -104,6 +105,7 @@ public class JobPanel extends javax.swing.JPanel {
         inputPanel2.add(tightBindingPanel1, "tb");
         inputPanel2.add(abinitInputPanel1, "abinit");
         inputPanel2.add(tightBindingPanelOld1, "tbold");
+        inputPanel2.add(anaddbInputPanel1, "anaddb");
 
         tabbedPane.addTab("Input", inputPanel2);
 
@@ -215,7 +217,7 @@ public class JobPanel extends javax.swing.JPanel {
                                 .addComponent(machineCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE))
+                        .addComponent(tabbedPane))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pspPathTextField)))
@@ -420,7 +422,7 @@ public class JobPanel extends javax.swing.JPanel {
 
     private void newButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButton1ActionPerformed
 
-        String[] programs = new String[] {"abinit", "clustep", "TB"};
+        String[] programs = new String[] {"abinit", "anaddb", "clustep", "TB"};
     
         String input = (String) JOptionPane.showInputDialog(this,
                 "Please select your program", null,
@@ -435,6 +437,15 @@ public class JobPanel extends javax.swing.JPanel {
                 if(currentProject != null)
                 {
                     Simulation simu = new AbinitSimulation();
+                    simu.setName("New simu");
+                    currentProject.addSimulation(simu);
+                }
+                refreshProject();
+                break;
+            case "anaddb":
+                if(currentProject != null)
+                {
+                    Simulation simu = new AnaddbSimulation();
                     simu.setName("New simu");
                     currentProject.addSimulation(simu);
                 }
@@ -515,6 +526,7 @@ public class JobPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private abinitgui.projects.AbinitInputPanel abinitInputPanel1;
+    private abinitgui.projects.AnaddbInputPanel anaddbInputPanel1;
     private abinitgui.mdtb.ClustepPanel clustepPanel1;
     private javax.swing.JButton deleteButton;
     private javax.swing.JPanel inputPanel2;
@@ -564,6 +576,12 @@ public class JobPanel extends javax.swing.JPanel {
                 CardLayout cl = (CardLayout)(inputPanel2.getLayout());
                 cl.show(inputPanel2, "abinit");
                 this.currentPanel = abinitInputPanel1;
+            }
+            else if(currentSimu instanceof AnaddbSimulation)
+            {
+                CardLayout cl = (CardLayout)(inputPanel2.getLayout());
+                cl.show(inputPanel2, "anaddb");
+                this.currentPanel = anaddbInputPanel1;
             }
             else
             {
