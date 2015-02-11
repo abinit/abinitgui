@@ -150,10 +150,12 @@ public class SGEScript extends AbstractSubmissionScript {
                 
         if (parallel) {
             fileContent += "MPI=" + mpiPath + "\n"
-                    + "${MPI} -np " + nbProcs + " " + abinitPath + " < "+ inputPath +" >& " + logPath;
+                    + "${MPI} -np " + nbProcs + " " + abinitPath + " < " +inputPath +" >& " + logPath;
         } else {
             fileContent += abinitPath + " < "+ inputPath +" >& " + logPath;
         }
+        
+        fileContent += "\n";
         
         fileContent+= postProcessPart
                     + "\n";

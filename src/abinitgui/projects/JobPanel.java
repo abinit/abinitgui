@@ -331,8 +331,6 @@ public class JobPanel extends javax.swing.JPanel {
                     currentSimu.setRemoteJob(new RemoteFrontendJob());
                 }**/
             }
-            
-            
             currentSimu.setScript(currentScript);
             currentSimu.getRemoteJob().setScript(currentScript);
         

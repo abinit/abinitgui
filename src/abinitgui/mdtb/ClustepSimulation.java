@@ -64,7 +64,6 @@ public class ClustepSimulation extends Simulation {
 
     private String name = "default";
     private String inputFileName = "./test3.in";
-    private RemoteJob job;
     private int status;
     private boolean sendClustepSources;
     private String positionFileName;
@@ -72,7 +71,6 @@ public class ClustepSimulation extends Simulation {
     private boolean callTFreq;
 
     public ClustepSimulation() {
-        job = new RemoteJob();
     }
 
     @Override
@@ -99,21 +97,6 @@ public class ClustepSimulation extends Simulation {
     public String toString() {
         return name;
         //return "Simulation(name = " + name + "; fileName = " + inputFileName + ")";
-    }
-    
-    @Override
-    public RemoteJob getRemoteJob() {
-        return job;
-    }
-
-    @Override
-    public void setRemoteJob(RemoteJob job) {
-        this.job = job;
-    }
-
-    @Override
-    public void updateStatus() {
-        job.updateStatus();
     }
     
     @Override
@@ -277,7 +260,7 @@ public class ClustepSimulation extends Simulation {
             {
                 script.setPostProcessPart(TFreqProgPath+" "+tfreqInputPath+" >> "+logPath);
             }
-            switch (script.getSystem()) {
+            /*switch (script.getSystem()) {
                 case "SGE":
                     {
                         String PBSfileName = rootPath + sep + clustepFolder + sep + simName+ sep + simName + ".SGE.sh";
@@ -294,7 +277,7 @@ public class ClustepSimulation extends Simulation {
                     String SHfileName = rootPath + sep + clustepFolder + sep + simName+ sep + simName + ".sh";
                     script.writeToFile(SHfileName);
                     break;
-            }
+            }*/
 
             // Envoie (copie) du fichier d'input
             String inputFileR = rootPath + "/" + clustepFolder + "/" + simName + "/" + simName + "-input";
@@ -371,7 +354,7 @@ public class ClustepSimulation extends Simulation {
                 //    sendCommand("dos2unix " + configFileR);
                 //}
             }
-            switch (script.getSystem()) {
+            /**switch (script.getSystem()) {
                 case "SGE":
                     String sgeSHFile = rootPath + sep + clustepFolder + sep + simName+ sep + simName + ".SGE.sh";
                     String sgeSHFileR = rootPath + "/" + clustepFolder + "/" + simName+ "/" + simName + ".SGE.sh";
@@ -393,9 +376,9 @@ public class ClustepSimulation extends Simulation {
                     String SHFileR = rootPath + "/" + clustepFolder + "/" + simName+ "/" + simName + ".sh";
                     if (isRemoteGatewayMachine
                             || isRemoteAbinitMachine) {
-                        /*if (Utils.osName().startsWith("Windows")) {
+                        if (Utils.osName().startsWith("Windows")) {
                          Utils.dos2unix(new File(SHFileR));
-                         }*/
+                         }
                         // Envoie du fichier BASH
                         mach.putFile(SHFile + " " + SHFileR);
 
@@ -422,7 +405,11 @@ public class ClustepSimulation extends Simulation {
                     // lancement des commandes d'exécution de la simulation
                     mach.sendCommand("sbatch " + slurmSHFileR);
                     break;
-            }
+            }*/
+            
+            RemoteJob rj = mach.submitSimulation(this, rootPath, simName);
+            this.setRemoteJob(rj);
+            
         } else {
             MainFrame.printERR("Please setup the inputfile textfield !");
             return false;

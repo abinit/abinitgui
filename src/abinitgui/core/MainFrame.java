@@ -340,6 +340,9 @@ public class MainFrame extends JFrame {
         machineCombo.setSelectedItem(mymach);
         
         jobD.refresh();
+        
+        
+        jobMonitorPanel1.refreshMachines();
     }
 
     private void initTableHeader(JTable table, String header[], Integer headerWidths[]) {
