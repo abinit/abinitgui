@@ -236,6 +236,9 @@ public class AbinitSimulation extends Simulation {
             script.setInputPath(cwd + "/" + rootPath.replaceFirst("./", "") + "/" + simName + ".files");
             script.setLogPath(cwd + "/"
                     + rootPath.replaceFirst("./", "") + "/" + logfilesFolder + "/" + simName + ".log");
+            
+            
+            script.setSimName(simName);
             switch (script.getSystem()) {
                 /*case "SGE":
                     {

@@ -297,11 +297,12 @@ public class TightBindingSimulation extends Simulation {
             script.setAbinitPath("bash " + "execBS.sh" + " " + compile + " " + inputFN + " " + option + "");
         }
             
+        script.setSimName(simName);
         script.setInputPath("/dev/null");
         script.setLogPath(simName + ".log");
 
         script.setPreProcessPart("cd "+TBrootR);
-        switch (script.getSystem()) {
+        /*switch (script.getSystem()) {
             case "SGE":
                 {
                     String PBSfileName = rootPath + "/" + TBrootL + "/" + simName + ".SGE.sh";
@@ -340,9 +341,9 @@ public class TightBindingSimulation extends Simulation {
                 String SHFile = rootPath + "/" + TBrootL + "/" + simName + ".sh";
                 //String SHFileR = rootPath + "/" + TBrootL + "/" + simName + ".sh";
                 String SHFileR = TBrootR + "/" + simName + ".sh";
-                /*if (Utils.osName().startsWith("Windows")) {
+                if (Utils.osName().startsWith("Windows")) {
                 Utils.dos2unix(new File(SHFileR));
-                }*/
+                }
                 // Envoie du fichier BASH
                 mach.putFile(SHFile + " " + SHFileR);
                 if (mach.getType() == Machine.GATEWAY_MACHINE || mach.getType() == Machine.REMOTE_MACHINE) {
@@ -369,7 +370,11 @@ public class TightBindingSimulation extends Simulation {
                 // lancement des commandes d'exécution de la simulation
                 mach.sendCommand("sbatch " + slurmSHFileR);
                 break;
-        }
+        }*/
+        
+        
+        RemoteJob rj = mach.submitSimulation(this, rootPath, simName);
+        this.setRemoteJob(rj);
 
         if (mach.getType() == Machine.LOCAL_MACHINE) {
             MainFrame.printOUT("The simulation was submitted to the local Tight-Binding server.");

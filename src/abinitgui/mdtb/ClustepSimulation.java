@@ -407,6 +407,9 @@ public class ClustepSimulation extends Simulation {
                     break;
             }*/
             
+            
+            script.setSimName(simName);
+            
             RemoteJob rj = mach.submitSimulation(this, rootPath, simName);
             this.setRemoteJob(rj);
             
