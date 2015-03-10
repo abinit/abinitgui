@@ -395,14 +395,7 @@ public class AbinitGeometry {
 
         if (xangst == null) {
             xangst = new Double[3][natom];
-            if (xcart != null) {
-                for (int i = 0; i < natom; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        xangst[j][i] = xcart[j][i] * ANGSTROMPERBOHR;
-                    }
-                }
-            }
-            if (xred != null) {
+            if (xred != null && !areZero(xred)) {
                 for (int i = 0; i < natom; i++) {
                     for (int j = 0; j < 3; j++) {
 
@@ -411,6 +404,13 @@ public class AbinitGeometry {
                             // Should check order of indices
                             xangst[j][i] = xangst[j][i] + rprimd[j][k] * xred[k][i];
                         }
+                    }
+                }
+            }
+            if (xcart != null) {
+                for (int i = 0; i < natom; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        xangst[j][i] = xcart[j][i] * ANGSTROMPERBOHR;
                     }
                 }
             }

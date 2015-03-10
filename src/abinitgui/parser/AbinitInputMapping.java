@@ -124,7 +124,7 @@ public class AbinitInputMapping
                     DepNode otherNode = dep;
                     if(printDebug)
                       System.out.println("Try to look in dep : "+otherNode.name);
-                    Object otherObj = getVariableValue(otherNode.name,idtset,strict);
+                    Object otherObj = getVariableValue(otherNode.name,idtset,strict,true);
                     if(otherObj == null)
                     {
                         System.err.println("!!!!!!! null from getVariableValue: "+otherNode.name+" !!!!");
@@ -180,7 +180,7 @@ public class AbinitInputMapping
      * @param strict Should return exception when it does not fit the dimensions
      * @return The variable
      */
-    public Object getVariableValue(String name, int idtset, boolean strict) throws EvaluationException
+    public Object getVariableValue(String name, int idtset, boolean strict, boolean getDefault) throws EvaluationException
     {
         if(listSpecs.contains(name))
         {
@@ -190,7 +190,7 @@ public class AbinitInputMapping
         if(obj == null)
         {
             obj = valueFromDataset(allDatasets.get(0),name,idtset,strict);
-            if(obj == null)
+            if(obj == null && getDefault)
             {
                 obj = valueFromDataset(defaultDataset,name,idtset,strict);
             }
@@ -200,7 +200,7 @@ public class AbinitInputMapping
     
     public Object getVariableValue(String name, int idtset) throws EvaluationException
     {
-        return getVariableValue(name,idtset,false);
+        return getVariableValue(name,idtset,false,true);
     }
     
     /**

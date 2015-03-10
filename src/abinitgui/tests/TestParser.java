@@ -201,7 +201,7 @@ public class TestParser {
                 {
                     AbinitVariable o = iter.next();
 
-                    Object value = mapping.getVariableValue(o.getDocVariable().getVarname(), jdtset, true);
+                    Object value = mapping.getVariableValue(o.getDocVariable().getVarname(), jdtset, true, true);
 
                     HashMap<String,Object> map = new HashMap<>();
 
