@@ -57,7 +57,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import abinitgui.parser.AbinitInput;
 import abinitgui.parser.AbinitInputJEval;
 import abinitgui.parser.AbinitInputMapping;
 import abinitgui.parser.AbinitVariable;
@@ -69,7 +68,7 @@ public class TestParser {
     
     public static void testAllInputsInPath(String pathAbinit, String outputFile)
     {
-        AbinitInput ai = new AbinitInput();
+        AbinitInputJEval ai = new AbinitInputJEval();
         
         String path = pathAbinit+"/tests/";
         
