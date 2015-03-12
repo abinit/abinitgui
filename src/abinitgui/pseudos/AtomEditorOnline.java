@@ -423,11 +423,12 @@ public class AtomEditorOnline extends AbstractCellEditor
                 }
             }
             
+            String path = MainFrame.getCurrentProject().getPSPPath()+"/"+dialog.getPSPSelected()+"/"+symbol+"/"+new File(pseudo.path).getName();
+            
             if(toDownload)
             {
                 // TODO : download the pseudo locally !
                 try{
-                    String path = MainFrame.getCurrentProject().getPSPPath()+"/"+dialog.getPSPSelected()+"/"+symbol+"/"+new File(pseudo.path).getName();
                     Utils.saveUrl(pseudo.path, path);
                     pseudo.path = path;
                 }
@@ -444,7 +445,7 @@ public class AtomEditorOnline extends AbstractCellEditor
             
             currentAtom.setPseudo(pseudo);
             currentAtom.setPSPPath(new File(pseudo.path).getParent());
-            currentAtom.setPSPFileName(new File(pseudo.path).getName());
+            currentAtom.setPSPFileName(new File(path).getName());
             currentAtom.setBySymbol(symbol);
             currentAtom.setPSPType(dialog.getPSPSelected());
             dialog.setVisible(false);
