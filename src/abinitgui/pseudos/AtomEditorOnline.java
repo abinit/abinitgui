@@ -444,7 +444,7 @@ public class AtomEditorOnline extends AbstractCellEditor
             }
             
             currentAtom.setPseudo(pseudo);
-            currentAtom.setPSPPath(new File(pseudo.path).getParent());
+            currentAtom.setPSPPath(new File(path).getParent());
             currentAtom.setPSPFileName(new File(path).getName());
             currentAtom.setBySymbol(symbol);
             currentAtom.setPSPType(dialog.getPSPSelected());
