@@ -3,7 +3,7 @@
 # Computation of the band structure.
 # First, a SCF density computation, then a non-SCF band structure calculation.
 
-accesswff 3
+#accesswff 3
 
 istwfk *1
 

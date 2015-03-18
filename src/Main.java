@@ -44,8 +44,8 @@
  <http://www.abinit.org/>.
  */
 
-import abinitgui.MainFrame;
-import abinitgui.Utils;
+import core.MainFrame;
+import core.Utils;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
@@ -164,7 +164,7 @@ public class Main {
                     for (int i = 0; i < args.length; i++) {
                         if (args[i].equalsIgnoreCase("AutoTest")) {
                             frame.setVisible(false);
-                            frame.autoTestProc(true);
+                            //frame.autoTestProc(true);
 
                         } else {
                             frame.setVisible(true);

@@ -46,9 +46,9 @@
 
 package MDandTB;
 
-import abinitgui.MainFrame;
-import abinitgui.RetMSG;
-import abinitgui.Utils;
+import core.MainFrame;
+import core.RetMSG;
+import core.Utils;
 import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;

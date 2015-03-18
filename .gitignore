@@ -3,3 +3,4 @@ standalone
 !/standalone/
 /build/
 config.xml
+/dist/

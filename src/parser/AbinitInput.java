@@ -1,22 +1,21 @@
 package parser;
 
-import abinitgui.AllInputVars;
-import abinitgui.InputVar;
+import variables.AllInputVars;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import json.JSONArray;
+import variables.Variable;
 
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+/** 
+ * TODO : Change the way we build things. We should start by filling the table variable : value with the default values
+ * 
+ */ 
 
 /**
  *
@@ -149,7 +148,7 @@ public class AbinitInput
     private boolean isVariable(String word)
     {
         word = word.trim();
-        Pattern pattern = Pattern.compile("(^[a-zA-Z_]+)(\\d*)([a-zA-Z_]*)(\\d*$)");
+        Pattern pattern = Pattern.compile("(^[a-zA-Z0-9_]+)(\\d*)([a-zA-Z0-9_]*)(\\d*$)");
         Matcher matcher = pattern.matcher(word);
         boolean isText = matcher.matches();
         pattern = Pattern.compile("");
@@ -326,7 +325,7 @@ public class AbinitInput
         {
             String name = iter.next();
             
-            InputVar var = allInputs.get(name);
+            Variable var = allInputs.getVar(name);
             String value = mapString.get(name);
             if(isUsejdtset())
             {
@@ -414,8 +413,8 @@ public class AbinitInput
                     
             if(value != null)
             {
-                ArrayList<Object> valueArray = getValue(name,value,var.vartype, var.dimensions,idtset);
-                Object o = getObjectFromArray(valueArray,name,var.vartype,var.dimensions);
+                ArrayList<Object> valueArray = getValue(name,value,var.getVartype(), var.getDimensions(),idtset);
+                Object o = getObjectFromArray(valueArray,name,var.getVartype(),var.getDimensions(), idtset);
                 curMap.put(name,o);
             }
         }
@@ -423,7 +422,7 @@ public class AbinitInput
         return curMap;
     }
     
-    public ArrayList<Object> getValue(String name, String text, String type, String dimensions, int jdtset) throws InvalidInputFileException
+    public ArrayList<Object> getValue(String name, String text, String type, Object dimensions, int jdtset) throws InvalidInputFileException
     {
         
         //System.out.println("Reading variable "+name+" with text = "+text+", type = "+type+", dimensions = "+dimensions);
@@ -574,7 +573,13 @@ public class AbinitInput
         int nb = 0;
         if(dim instanceof String)
         {
+            // It is an expression !
+            // Let's only tackle simplest case [[var]]
             String var = (String)dim;
+            if(var.matches("\\[\\[[a-zA-Z0-9_]*\\]\\]"))
+            {
+                var = var.replaceAll("\\[\\[","").replaceAll("\\]\\]", "");
+            }
             try{
                 String data = mapString.get(var);
                 if(data == null)
@@ -604,11 +609,13 @@ public class AbinitInput
             {
                 if(mapString.get(var) == null)
                 {
-                    throw new InvalidInputFileException("Default values for "+var+" for dimensions are not yet supported by the parser... sorry for inconvenience");
+                    System.err.println("Default values for "+var+" for dimensions are not yet supported by the parser... sorry for inconvenience");
+                    return -1;
                 }
                 else
                 {
-                    throw new InvalidInputFileException("Problem with dimension : "+var);
+                    System.err.println("Problem reading the dimension for "+var+", not yet supported by the parser");
+                    return -1;
                 }
             }
         }
@@ -730,13 +737,35 @@ public class AbinitInput
         return usejdtset;
     }
 
-    private Object getObjectFromArray(ArrayList<Object> listValues, String name, String type, String dimensions) 
+    private Object getObjectFromArray(ArrayList<Object> listValues, String name, String type, Object dimensions, int jdtset) 
             throws InvalidInputFileException 
     {
-        
-        JSONArray dims = new JSONArray(dimensions);
-        
-        if(dims.length() == 0)
+        int[] dims = null;
+        boolean checkDim = true;
+        if(dimensions != null)
+        {
+            if(dimensions.getClass().isArray())
+            {
+                Object[] tab = (Object[])dimensions;
+                
+                dims = new int[tab.length];
+                
+                for(int i = 0; i < tab.length; i++)
+                {
+                    dims[i] = getDim(tab[i]);
+                    if(dims[i] == -1)
+                    {
+                        checkDim = false;
+                    }
+                }
+            }
+            else
+            {
+                System.out.println(dimensions.getClass());
+                return null;
+            }
+        }
+        else
         {
             // We don't know the size of table
             if(listValues.size() == 1)
@@ -761,16 +790,72 @@ public class AbinitInput
                     return listValues.toArray(new Double[0]);
                 }
             }
+        }
+        
+        if(checkDim)
+        {
+            int nbTotal = 1;
+            for(int i : dims)
+                nbTotal*= i;
+            
+            if(nbTotal != listValues.size())
+            {
+                throw new InvalidInputFileException("Mismatch for var = "+name+" between doc dim ("+Arrays.toString(dims)+") and input file ("+listValues.size()+")");
+            }
+            
+            if(dims.length > 2)
+            {
+                if(type.contains("integer"))
+                {
+                    return listValues.toArray(new Integer[0]);
+                }
+                else if(type.contains("real"))
+                {
+                    return listValues.toArray(new Double[0]);
+                }
+            }
+            else if(dims.length == 1)
+            {
+                if(type.contains("integer"))
+                {
+                    return listValues.toArray(new Integer[0]);
+                }
+                else if(type.contains("real"))
+                {
+                    return listValues.toArray(new Double[0]);
+                }
+            }
+            else if(dims.length == 2)
+            {
+                int length1 = dims[0];
+                int length2 = dims[1];
+
+                Number[][] tab = null;
+                if(type.contains("integer"))
+                {
+                    tab = new Integer[length1][length2];
+                }
+                else if(type.contains("real"))
+                {
+                    tab = new Double[length1][length2];
+                }
+
+                int index = 0;
+                for(int i = 0; i < length2; i++)
+                {
+                    for(int k = 0; k < length1; k++)
+                    {
+                        // Still fortran convention Have to invert the reading sense !
+                        tab[k][i] = (Number)listValues.get(index);
+                        index++;
+                    }
+                }
+                return tab;
+            }
             
         }
-        else if(dims.length() == 1)
+        else
         {
-            int length = getDim(dims.get(0));
-            
-            if(length != listValues.size())
-            {
-                throw new InvalidInputFileException("Mismatch for var = "+name+" between doc dim ("+length+") and input file ("+listValues.size()+")");
-            }
             if(type.contains("integer"))
             {
                 return listValues.toArray(new Integer[0]);
@@ -779,37 +864,6 @@ public class AbinitInput
             {
                 return listValues.toArray(new Double[0]);
             }
-        }
-        else if(dims.length() == 2)
-        {
-            int length1 = getDim(dims.get(0));
-            int length2 = getDim(dims.get(1));
-            
-            if(length1*length2 != listValues.size())
-            {
-                throw new InvalidInputFileException("Mismatch between doc dim ("+length1+"x"+length2+") and input file ("+listValues.size()+")");
-            }
-            
-            Number[][] tab = null;
-            if(type.contains("integer"))
-            {
-                tab = new Integer[length1][length2];
-            }
-            else if(type.contains("real"))
-            {
-                tab = new Double[length1][length2];
-            }
-            
-            int index = 0;
-            for(int i = 0; i < length1; i++)
-            {
-                for(int k = 0; k < length2; k++)
-                {
-                    tab[i][k] = (Number)listValues.get(index);
-                    index++;
-                }
-            }
-            return tab;
         }
         
         return null;

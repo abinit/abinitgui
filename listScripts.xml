@@ -9,7 +9,7 @@
             <name name="inputFile" />
 	    <type type="file" />
             <help help="The fileName which will be read" />
-            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+            <default default="./MySims/wholedata/test3/test3o_DS2_GSR.nc" />
         </input>
         <input>
             <name name="show" />
@@ -39,7 +39,7 @@
             <name name="inputFile" />
             <type type="file" />
             <help help="The fileName which will be read" />
-            <default default="./MySims/wholedata/test3/test3o_DS1_WFK_0-etsf.nc" />
+            <default default="./MySims/wholedata/test3/test3o_DS1_GSR.nc" />
         </input>
         <input>
             <name name="show" />
@@ -87,13 +87,13 @@
             <name name="inputDos" />
             <type type="file" />
             <help help="The WFK file used to compute the DOS" />
-            <default default="./MySims/wholedata/test3/test3o_DS1_WFK_0-etsf.nc" />
+            <default default="./MySims/wholedata/test3/test3o_DS1_GSR.nc" />
         </input>	
         <input>
             <name name="inputBand" />
             <type type="file" />
             <help help="The WFK file used to compute the BS" />
-            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+            <default default="./MySims/wholedata/test3/test3o_DS2_GSR.nc" />
         </input>
         <input>
             <name name="show" />
@@ -165,7 +165,7 @@
             <name name="abinitoutput" />
             <help help="DBS file" />
 	    <type type="INPUTFILE" />
-            <default default="./MySims/scripts/test3.dbs" />
+            <default default="./test3.dbs" />
         </input>
         <input>
             <name name="autolaunch" />
