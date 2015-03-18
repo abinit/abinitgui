@@ -395,7 +395,7 @@ public class AbinitGeometry {
 
         if (xangst == null) {
             xangst = new Double[3][natom];
-            if (xred != null && !areZero(xred)) {
+            if (xred != null) {
                 for (int i = 0; i < natom; i++) {
                     for (int j = 0; j < 3; j++) {
 
