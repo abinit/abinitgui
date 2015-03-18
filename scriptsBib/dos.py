@@ -1,12 +1,12 @@
 #!python
 
-from abipy import abiopen
 import os, sys;
 import argparse;
+from abipy.electrons.ebands import ElectronBands
 
 def dos(inputFile,outputFile,title,method,step,width,show):
 
-    ebands = abilab.abiopen(inputFile).ebands
+    ebands = ElectronBands.from_file(inputFile)
 
     dos = ebands.get_edos(method=method, step=float(step), width=float(width));
 

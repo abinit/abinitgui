@@ -2,11 +2,11 @@
 
 import os, sys;
 import argparse;
-from abipy import abilab;
+from abipy.electrons.ebands import ElectronBands
 
 def bandstructure(inputFile,outputFile,title,show):
 
-    ebands = abilab.abiopen(inputFile).ebands
+    ebands = ElectronBands.from_file(inputFile)
 
     fig = ebands.plot(title=title,show=show,savefig=outputFile)
 

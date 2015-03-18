@@ -863,7 +863,12 @@ public class PostProcPanel extends javax.swing.JPanel {
 
     private void reloadScriptsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadScriptsActionPerformed
         scriptBibs.getList().clear();
-        scriptBibs.loadScriptsFromFile("listScripts.xml");
+        try{
+            scriptBibs.loadFromFile("listScripts.yml"); 
+        }catch(IOException exc)
+        {
+            MainFrame.printERR("Error loading listScripts.yml : "+exc.getMessage());
+        }
         showScripts();
     }//GEN-LAST:event_reloadScriptsActionPerformed
 
