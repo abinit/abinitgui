@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2009-2014 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
+ Copyright (c) 2009-2015 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
                          Yannick GILLET (yannick.gillet@uclouvain.be)
 
 Université catholique de Louvain, Louvain-la-Neuve, Belgium
