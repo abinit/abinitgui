@@ -7,12 +7,12 @@ import codecs
 
 if __name__ == "__main__":
   
-  license_file = './LICENSE'
+  license_file = './HEADERS'
 
   with codecs.open(license_file,encoding='utf-8') as lf:
     license = lf.readlines()
 
-  for file in glob.glob('src/abinitgui/*/*.java'):
+  for file in glob.glob('src/*/*/*.java'):
 
     tmp_file = file+'.tmp'
     #with codecs.open(file,encoding="ISO-8859-1") as f:
@@ -36,6 +36,7 @@ if __name__ == "__main__":
                 print("error in encode utf-8 ",iline+1,"of file : ",file, "line : ",line)
         if is_beginning:
           print("!!!!!!!!!!!!!! ERROR !!!!!!!!!!!!!!!! : ",file)
+          sys.exit(0);
 
     with codecs.open(tmp_file,encoding='utf-8') as ft:
       all_lines = ft.readlines()

@@ -1,0 +1,13 @@
+ AbinitGUI - Created in 2009
+ 
+ Copyright (c) 2009-2015 Flavio Miguel ABREU ARAUJO (abreuaraujo.flavio@gmail.com)
+                         Yannick GILLET (yannick.gillet@hotmail.com)
+
+ This software uses libraries developed in the :
+ - Abivars project (GPL) : <http://gui.abinit.org>
+ - Jdom project : <http://www.jdom.org/>
+ - JEval project (Apache2) : <http://jeval.sourceforge.net>
+ - Jmol project (GPL) : <http://jmol.sourceforge.net>
+ - JSFTP project (LGPL) : <http://www.flavio.be>
+ - JSSHTerm project (LGPL) : <http://www.flavio.be>
+ - SnakeYAML project (Apache2) : <http://www.snakeyaml.org>

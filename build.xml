@@ -7,8 +7,31 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="AbinitGUI" default="default" basedir=".">
+<project name="JstdoutGUI" default="default" basedir=".">
     <description>Builds, tests, and runs the project AbinitGUI.</description>
+    
+    <property name="project.name" value="AbinitGUI" />
+    <property name="author" value="Flavio ABREU ARAUJO (abreuaraujo.flavio@gmail.com) and Yannick GILLET (yannick.gillet@hotmail.com)" />
+    <property name="version.num" value="2015a" />
+    <property name="www" value="http://gui.abinit.org" />
+    
+    
+    <tstamp>
+        <format property="NOW" pattern="yyyy-MM-dd HH:mm:ss z" />
+    </tstamp>
+
+    <exec outputproperty="svna.version" executable="svnversion">
+        <arg value="-c" />
+        <redirector>
+            <outputfilterchain>
+                <tokenfilter>
+                    <replaceregex pattern="^[0-9]*:?" replace="" flags="g"/>
+                    <replaceregex pattern="M" replace="" flags="g"/>
+                </tokenfilter>
+            </outputfilterchain>
+        </redirector>
+    </exec>
+
     <import file="nbproject/build-impl.xml"/>
     <!--
 
@@ -69,29 +92,11 @@
     the compile target as the regular run target does. Again, for a list of available 
     properties which you can use, check the target you are overriding in the
     nbproject/build-impl.xml file. 
+
     -->
     
     <target name="-pre-init">
-        <property name="project.name" value="AbinitGUI" />
-        <property name="author" value="Flavio ABREU ARAUJO (abreuaraujo.flavio@gmail.com); Yannick GILLET (yannick.gillet@uclouvain.be)" />
-        <property name="version.num" value="2015" />
-        
-        <tstamp>
-            <format property="NOW" pattern="yyyy-MM-dd HH:mm:ss z" />
-        </tstamp>
 
-        <exec outputproperty="svna.version" executable="svnversion">
-            <arg value="-c" />
-            <redirector>
-                <outputfilterchain>
-                    <tokenfilter>
-                        <replaceregex pattern="^[0-9]*:?" replace="" flags="g"/>
-                        <replaceregex pattern="M" replace="" flags="g"/>
-                    </tokenfilter>
-                </outputfilterchain>
-            </redirector>
-        </exec>
-        
         <property name="dist.jar" value="dist/${project.name}-${version.num}-r${svna.version}.jar" />
 
         <manifest file="manifest.mf">
@@ -103,38 +108,14 @@
             <attribute name="Implementation-Author" value="${author}"/>
             <attribute name="Implementation-Title" value="${project.name}" />
             <attribute name="Implementation-Version" value="${version.num}" />
-            <attribute name="Implementation-URL" value="http://www.flavio.be" />
+            <attribute name="Implementation-URL" value="${www}" />
         </manifest>
 
     </target>
         
     <target name="standalone" depends="jar">
-       
-        <property name="project.name" value="AbinitGUI" />
-        <property name="author" value="Flavio ABREU ARAUJO (abreuaraujo.flavio@gmail.com); Yannick GILLET (yannick.gillet@uclouvain.be)" />
-        <property name="version.num" value="2015" />
-       
-        <exec outputproperty="svna.version" executable="svnversion">
-            <arg value="-c" />
-            <redirector>
-                <outputfilterchain>
-                    <tokenfilter>
-                        <replaceregex pattern="^[0-9]*:?" replace="" flags="g"/>
-                        <replaceregex pattern="M" replace="" flags="g"/>
-                    </tokenfilter>
-                </outputfilterchain>
-            </redirector>
-        </exec>
-      
-        <tstamp>
-            <format property="NOW" pattern="yyyy-MM-dd HH:mm:ss z" />
-        </tstamp>
-       
-       
+        
         <property name="standalone.jar.name" value="${project.name}-${version.num}-r${svna.version}"/>
-
-
-        <!-- don't edit below this line -->
 
         <property name="standalone.dir" value="standalone"/>
         <property name="standalone.jar" value="${standalone.dir}/${standalone.jar.name}.jar"/>
@@ -157,8 +138,13 @@
                 <attribute name="Implementation-Author" value="${author}"/>
                 <attribute name="Implementation-Title" value="${project.name}" />
                 <attribute name="Implementation-Version" value="${version.num}" />
-                <attribute name="Implementation-URL" value="http://www.flavio.be" />
+                <attribute name="Implementation-URL" value="${www}" />
             </manifest>
+            
+            <metainf dir="." includes="COPYING"/>
+            <metainf dir="." includes="COPYING.LESSER"/>
+            <metainf dir="." includes="ACKNOWLEDGEMENTS"/>
+            
         </jar>
 
         <zip destfile="${standalone.jar}">
@@ -169,4 +155,100 @@
         <delete file="${standalone.dir}/temp_final.jar"/>
 
     </target>
+    
+    <target name="javadoc-jar" depends="jar">
+
+        <property name="standalone.jar.name" value="${project.name}-${version.num}-r${svna.version}-javadoc"/>
+
+        <property name="standalone.dir" value="javadoc-jar"/>
+        <property name="standalone.jar" value="${standalone.dir}/${standalone.jar.name}.jar"/>
+
+        <echo message="Packaging ${application.title} into a single JAR at ${standalone.jar}"/>
+
+        <delete dir="${standalone.dir}"/>
+        <mkdir dir="${standalone.dir}"/>
+
+        <jar destfile="${standalone.dir}/temp_final.jar" filesetmanifest="skip">
+
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Bundle-Name" value="${project.name}" />           
+                <attribute name="Bundle-Version" value="${version.num}" />
+                <attribute name="Bundle-Date" value="${NOW}" />
+                <attribute name="Bundle-Revision" value="${svna.version}" />
+                <attribute name="Implementation-Author" value="${author}"/>
+                <attribute name="Implementation-Title" value="${project.name}" />
+                <attribute name="Implementation-Version" value="${version.num}" />
+                <attribute name="Implementation-URL" value="${www}" />
+            </manifest>
+            
+            <metainf dir="." includes="COPYING"/>
+            <metainf dir="." includes="COPYING.LESSER"/>
+            <metainf dir="." includes="ACKNOWLEDGEMENTS"/>
+            
+            <zipfileset dir="dist/javadoc" prefix=""/>
+            
+        </jar>
+
+        <zip destfile="${standalone.jar}">
+            <zipfileset src="${standalone.dir}/temp_final.jar"
+                        excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
+        </zip>
+
+        <delete file="${standalone.dir}/temp_final.jar"/>
+
+    </target>
+    
+    <target name="src-jar" depends="jar">
+
+        <property name="standalone.jar.name" value="${project.name}-${version.num}-r${svna.version}-src"/>
+
+        <property name="standalone.dir" value="src-jar"/>
+        <property name="standalone.jar" value="${standalone.dir}/${standalone.jar.name}.jar"/>
+
+        <echo message="Packaging ${application.title} into a single JAR at ${standalone.jar}"/>
+
+        <delete dir="${standalone.dir}"/>
+        <mkdir dir="${standalone.dir}"/>
+
+        <jar destfile="${standalone.dir}/temp_final.jar" filesetmanifest="skip">
+
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Bundle-Name" value="${project.name}" />           
+                <attribute name="Bundle-Version" value="${version.num}" />
+                <attribute name="Bundle-Date" value="${NOW}" />
+                <attribute name="Bundle-Revision" value="${svna.version}" />
+                <attribute name="Implementation-Author" value="${author}"/>
+                <attribute name="Implementation-Title" value="${project.name}" />
+                <attribute name="Implementation-Version" value="${version.num}" />
+                <attribute name="Implementation-URL" value="${www}" />
+            </manifest>
+            
+            <metainf dir="." includes="COPYING"/>
+            <metainf dir="." includes="COPYING.LESSER"/>
+            <metainf dir="." includes="ACKNOWLEDGEMENTS"/>
+            
+            <zipfileset dir="src" prefix=""/>
+            
+        </jar>
+
+        <zip destfile="${standalone.jar}">
+            <zipfileset src="${standalone.dir}/temp_final.jar"
+                        excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
+        </zip>
+
+        <delete file="${standalone.dir}/temp_final.jar"/>
+
+    </target>
+    
+    <target name="all">
+        <antcall target="clean"/>
+        <antcall target="jar"/>
+        <antcall target="javadoc"/>
+        <antcall target="javadoc-jar"/>
+        <antcall target="src-jar"/>
+        <antcall target="standalone"/>
+    </target>
+    
 </project>
