@@ -15,7 +15,8 @@ if __name__ == "__main__":
   for file in glob.glob('src/abinitgui/*/*.java'):
 
     tmp_file = file+'.tmp'
-    with codecs.open(file,encoding="ISO-8859-1") as f:
+    #with codecs.open(file,encoding="ISO-8859-1") as f:
+    with codecs.open(file,encoding="utf-8") as f:
       all_lines = f.readlines()
 
       is_beginning = True
