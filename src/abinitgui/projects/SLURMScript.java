@@ -1,8 +1,10 @@
 /*
- Copyright (c) 2009-2014 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
- Yannick GILLET (yannick.gillet@uclouvain.be)
+ AbinitGUI - Created in July 2009
+ 
+ Copyright (c) 2009-2015 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
+                         Yannick GILLET (yannick.gillet@uclouvain.be)
 
- Université catholique de Louvain, Louvain-la-Neuve, Belgium
+ UniversitÃ© catholique de Louvain, Louvain-la-Neuve, Belgium
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -42,6 +44,9 @@
 
  For more information on the Abinit Project, please see
  <http://www.abinit.org/>.
+
+ For more information on the AbinitGUI Project, please see
+ <http://gui.abinit.org/>.
  */
 
 package abinitgui.projects;
@@ -56,7 +61,6 @@ public class SLURMScript extends AbstractSubmissionScript {
 
     public SLURMScript() {
         this.system = "SLURM";
-        //this.parallel = true; // Flavio->Yannick: pourquoi c'est défini dans SGE mais pas ici
     }
 
     @Override

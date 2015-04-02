@@ -1,8 +1,10 @@
 /*
- Copyright (c) 2009-2014 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
+ AbinitGUI - Created in July 2009
+ 
+ Copyright (c) 2009-2015 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
                          Yannick GILLET (yannick.gillet@uclouvain.be)
 
- Universit� catholique de Louvain, Louvain-la-Neuve, Belgium
+ Université catholique de Louvain, Louvain-la-Neuve, Belgium
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -42,6 +44,9 @@
 
  For more information on the Abinit Project, please see
  <http://www.abinit.org/>.
+
+ For more information on the AbinitGUI Project, please see
+ <http://gui.abinit.org/>.
  */
 
 package abinitgui.inputgen;
@@ -72,7 +77,6 @@ public class Geometry extends JPanel {
     private MyTableModel znuclModel = null;
     private MyTableModel symrelModel = null;
     private MyTableModel tnonsModel = null;
-    // 1 Bohr = 0,5291772108 Angström
     private final double bohr2angst = 0.5291772108;
     private DecimalFormat df_rprim = new DecimalFormat("#0.0000000000000");
     private DecimalFormat df_angdeg = new DecimalFormat("#0.0000000000");
@@ -1005,7 +1009,6 @@ public class Geometry extends JPanel {
                 angdegCheckBox.setSelected(false);
                 angdegCheckBoxActionPerformed(evt);
 
-                // On transforme angdeg en rprimd (pas implémeté)
                 try {
                     acell1 = Double.parseDouble(acellTextField1.getText());
                     acell2 = Double.parseDouble(acellTextField2.getText());

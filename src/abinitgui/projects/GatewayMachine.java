@@ -1,8 +1,10 @@
 /*
- Copyright (c) 2009-2014 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
+ AbinitGUI - Created in July 2009
+ 
+ Copyright (c) 2009-2015 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
                          Yannick GILLET (yannick.gillet@uclouvain.be)
 
- Université catholique de Louvain, Louvain-la-Neuve, Belgium
+ UniversitÃ© catholique de Louvain, Louvain-la-Neuve, Belgium
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -42,6 +44,9 @@
 
  For more information on the Abinit Project, please see
  <http://www.abinit.org/>.
+
+ For more information on the AbinitGUI Project, please see
+ <http://gui.abinit.org/>.
  */
 
 package abinitgui.projects;
@@ -76,7 +81,6 @@ public class GatewayMachine extends RemoteMachine {
                 String abHostname = remoteConnect.getHost();
                 String abLogin = remoteConnect.getLogin();
                 if (!abLogin.equals("") && !abHostname.equals("")) {
-                    // Début de la création du tunnel SSH
                     MainFrame.printOUT("Connecting to " + gwHostname + " as " + gwLogin + ".");
                     sshtun = new SSHTunnel(gwLogin, gwHostname, 22, abHostname, last_port++, 22);
                     String keyFile = gatewayConnect.getKeyPath();
@@ -103,7 +107,6 @@ public class GatewayMachine extends RemoteMachine {
                         if (remoteExec.start()) {
                             isConnected = true;
                             MainFrame.printOUT("Connected to " + abHostname + " as " + abLogin + ".");
-                            // Le tunnel SSH a été créé avec succÃ¨s
                             //MainFrame.getConnectionToggleButton().setText("Disconnect");
                         } else {
                             lport = 0;

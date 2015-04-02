@@ -1,8 +1,10 @@
 /*
- Copyright (c) 2009-2014 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
- Yannick GILLET (yannick.gillet@uclouvain.be)
+ AbinitGUI - Created in July 2009
+ 
+ Copyright (c) 2009-2015 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
+                         Yannick GILLET (yannick.gillet@uclouvain.be)
 
- Universit� catholique de Louvain, Louvain-la-Neuve, Belgium
+ Université catholique de Louvain, Louvain-la-Neuve, Belgium
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -42,6 +44,9 @@
 
  For more information on the Abinit Project, please see
  <http://www.abinit.org/>.
+
+ For more information on the AbinitGUI Project, please see
+ <http://gui.abinit.org/>.
  */
 
 package abinitgui.core;
@@ -134,19 +139,19 @@ public class SSH {
             }
 
             if (cmd.startsWith("exec") || cmd.startsWith("EXEC")) {
-                // cette commande n'est pas g�r�e
+                // cette commande n'est pas gÃ©rÃ©e
                 outputTA.append("Command [" + cmd + "] not supported by AbinitGUI !\n");
                 return;
             }
 
             if (cmd.equals("vi") || cmd.equals("VI")) {
-                // cette commande n'est pas g�r�e
+                // cette commande n'est pas gÃ©rÃ©e
                 outputTA.append("Command [" + cmd + "] not supported by AbinitGUI !\n");
                 return;
             }
 
             if (cmd.equals("vim") || cmd.equals("VIM")) {
-                // cette commande n'est pas g�r�e
+                // cette commande n'est pas gÃ©rÃ©e
                 outputTA.append("Command [" + cmd + "] not supported by AninitGUI !\n");
                 return;
             }
@@ -300,7 +305,7 @@ public class SSH {
                                 //printOUT(msg + '\n');
                                 String cmd = execNextCMD();
                                 if (cmd.startsWith("exit") || cmd.startsWith("EXIT")) {
-                                    //Ceci provoque l'arrêt contrôlé du thread OutputHandler
+                                    //Ceci provoque l'arrÃÂªt contrÃÂ´lÃÂ© du thread OutputHandler
                                     throw new Exception("OutputHandler thread is shuting down !!");
                                 }
                             } else {
@@ -312,7 +317,7 @@ public class SSH {
                                     outputTA.append("\n");
                                     outputTA.setCaretPosition(outputTA.getDocument().getLength());
                                 } else {
-                                    // Continuer à lire
+                                    // Continuer ÃÂ  lire
                                     break;
                                 }
                             }

@@ -1,8 +1,10 @@
 /*
- Copyright (c) 2009-2014 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
- Yannick GILLET (yannick.gillet@uclouvain.be)
+ AbinitGUI - Created in July 2009
+ 
+ Copyright (c) 2009-2015 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
+                         Yannick GILLET (yannick.gillet@uclouvain.be)
 
- Université catholique de Louvain, Louvain-la-Neuve, Belgium
+ UniversitÃ© catholique de Louvain, Louvain-la-Neuve, Belgium
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -42,6 +44,9 @@
 
  For more information on the Abinit Project, please see
  <http://www.abinit.org/>.
+
+ For more information on the AbinitGUI Project, please see
+ <http://gui.abinit.org/>.
  */
 
 package abinitgui.projects;
@@ -216,7 +221,6 @@ public final class Project implements Iterable<Simulation> {
                         Attribute attr;
                         List lAttr = cur2.getAttributes();
                         Iterator iAttr = lAttr.iterator();
-                        // On s'intéresse qu'a un seul atribut
                         if (iAttr.hasNext()) {
                             attr = (Attribute) iAttr.next();
                             String attrValue = attr.getValue();

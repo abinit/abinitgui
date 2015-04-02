@@ -1,4 +1,3 @@
-/*
  AbinitGUI - Created in July 2009
  
  Copyright (c) 2009-2015 Flavio Miguel ABREU ARAUJO (flavio.abreuaraujo@uclouvain.be)
@@ -47,61 +46,3 @@
 
  For more information on the AbinitGUI Project, please see
  <http://gui.abinit.org/>.
- */
-
-package abinitgui.core;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import jsshterm.core.JSSHTerm;
-
-public class MySSHTerm implements Runnable {
-    
-    private String host;
-    private int port;
-    private String username;
-    private String password;
-    private String userkey;
-    private String passphrase;
-    private boolean authPWD = true;
-
-    public MySSHTerm(String host, int port, String username, String password) {
-        authPWD = true;
-        this.host = host;
-        this.port = port;
-        this.username = username;
-        this.password = password;
-    }
-    
-    public MySSHTerm(String host, int port, String username, String userkey,
-            String passphrase) {
-        authPWD = false;
-        this.host = host;
-        this.port = port;
-        this.username = username;
-        this.userkey = userkey;
-        this.passphrase = passphrase;
-    }
-
-    @Override
-    public void run() {
-        
-        final JSSHTerm dialog;
-        
-        if(authPWD) {
-            dialog = new JSSHTerm(host, port, username, password,
-                    MainFrame.msgdisp, MainFrame.mainFrame, false);
-        } else {
-            dialog = new JSSHTerm(host, port, username, userkey,
-                    passphrase, MainFrame.msgdisp, MainFrame.mainFrame, false);
-        }
-        dialog.setTitle("SSH2 Terminal Client (JSSHTerm by F. ABREU ARAUJO)");
-        dialog.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                dialog.disconnect();
-            }
-        });
-        //dialog.setVisible(true);
-    }
-}
