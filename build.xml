@@ -8,18 +8,14 @@
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
 <project name="AbinitGUI" default="default" basedir=".">
-    <description>Builds, tests, and runs the project AbinitGUI.</description>
-    
+    <import file="nbproject/build-impl.xml"/>
+    <description>Builds, tests, and runs the project AbinitGUI</description>
     <property name="project.name" value="AbinitGUI" />
+    
     <property name="author" value="Flavio ABREU ARAUJO (abreuaraujo.flavio@gmail.com) and Yannick GILLET (yannick.gillet@hotmail.com)" />
     <property name="version.num" value="2015a" />
     <property name="www" value="http://gui.abinit.org" />
     
-    
-    <tstamp>
-        <format property="NOW" pattern="yyyy-MM-dd HH:mm:ss z" />
-    </tstamp>
-
     <exec outputproperty="svna.version" executable="svnversion">
         <arg value="-c" />
         <redirector>
@@ -31,8 +27,14 @@
             </outputfilterchain>
         </redirector>
     </exec>
+    <property name="revision.num" value="${svna.version}" />
+    <!-- <property name="revision.num" value="X" /> -->
+    <property name="base.jar.name" value="${project.name}-${version.num}-r${revision.num}"/>
+    
+    <tstamp>
+        <format property="NOW" pattern="yyyy-MM-dd HH:mm:ss z" />
+    </tstamp>
 
-    <import file="nbproject/build-impl.xml"/>
     <!--
 
     There exist several targets which are by default empty and which can be 
@@ -97,14 +99,14 @@
     
     <target name="-pre-init">
 
-        <property name="dist.jar" value="dist/${project.name}-${version.num}-r${svna.version}.jar" />
+        <property name="dist.jar" value="dist/${base.jar.name}.jar" />
 
         <manifest file="manifest.mf">
             <attribute name="Main-Class" value="${main.class}"/>
             <attribute name="Bundle-Name" value="${project.name}" />
             <attribute name="Bundle-Version" value="${version.num}" />
             <attribute name="Bundle-Date" value="${NOW}" />
-            <attribute name="Bundle-Revision" value="${svna.version}" />
+            <attribute name="Bundle-Revision" value="${revision.num}" />
             <attribute name="Implementation-Author" value="${author}"/>
             <attribute name="Implementation-Title" value="${project.name}" />
             <attribute name="Implementation-Version" value="${version.num}" />
@@ -114,11 +116,8 @@
     </target>
         
     <target name="standalone" depends="jar">
-        
-        <property name="standalone.jar.name" value="${project.name}-${version.num}-r${svna.version}"/>
-
         <property name="standalone.dir" value="standalone"/>
-        <property name="standalone.jar" value="${standalone.dir}/${standalone.jar.name}.jar"/>
+        <property name="standalone.jar" value="${standalone.dir}/${base.jar.name}.jar"/>
 
         <echo message="Packaging ${application.title} into a single JAR at ${standalone.jar}"/>
 
@@ -134,7 +133,7 @@
                 <attribute name="Bundle-Name" value="${project.name}" />           
                 <attribute name="Bundle-Version" value="${version.num}" />
                 <attribute name="Bundle-Date" value="${NOW}" />
-                <attribute name="Bundle-Revision" value="${svna.version}" />
+                <attribute name="Bundle-Revision" value="${revision.num}" />
                 <attribute name="Implementation-Author" value="${author}"/>
                 <attribute name="Implementation-Title" value="${project.name}" />
                 <attribute name="Implementation-Version" value="${version.num}" />
@@ -158,24 +157,24 @@
     
     <target name="javadoc-jar" depends="jar">
 
-        <property name="standalone.jar.name" value="${project.name}-${version.num}-r${svna.version}-javadoc"/>
+        <property name="javadoc.jar.name" value="${base.jar.name}-javadoc"/>
 
-        <property name="standalone.dir" value="javadoc-jar"/>
-        <property name="standalone.jar" value="${standalone.dir}/${standalone.jar.name}.jar"/>
+        <property name="javadoc.dir" value="javadoc-jar"/>
+        <property name="javadoc.jar" value="${javadoc.dir}/${javadoc.jar.name}.jar"/>
 
-        <echo message="Packaging ${application.title} into a single JAR at ${standalone.jar}"/>
+        <echo message="Packaging ${application.title} into a single JAR at ${javadoc.jar}"/>
 
-        <delete dir="${standalone.dir}"/>
-        <mkdir dir="${standalone.dir}"/>
+        <delete dir="${javadoc.dir}"/>
+        <mkdir dir="${javadoc.dir}"/>
 
-        <jar destfile="${standalone.dir}/temp_final.jar" filesetmanifest="skip">
+        <jar destfile="${javadoc.dir}/temp_final.jar" filesetmanifest="skip">
 
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
                 <attribute name="Bundle-Name" value="${project.name}" />           
                 <attribute name="Bundle-Version" value="${version.num}" />
                 <attribute name="Bundle-Date" value="${NOW}" />
-                <attribute name="Bundle-Revision" value="${svna.version}" />
+                <attribute name="Bundle-Revision" value="${revision.num}" />
                 <attribute name="Implementation-Author" value="${author}"/>
                 <attribute name="Implementation-Title" value="${project.name}" />
                 <attribute name="Implementation-Version" value="${version.num}" />
@@ -190,35 +189,35 @@
             
         </jar>
 
-        <zip destfile="${standalone.jar}">
-            <zipfileset src="${standalone.dir}/temp_final.jar"
+        <zip destfile="${javadoc.jar}">
+            <zipfileset src="${javadoc.dir}/temp_final.jar"
                         excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
         </zip>
 
-        <delete file="${standalone.dir}/temp_final.jar"/>
+        <delete file="${javadoc.dir}/temp_final.jar"/>
 
     </target>
     
     <target name="src-jar" depends="jar">
 
-        <property name="standalone.jar.name" value="${project.name}-${version.num}-r${svna.version}-src"/>
+        <property name="src-jar.jar.name" value="${base.jar.name}-src"/>
 
-        <property name="standalone.dir" value="src-jar"/>
-        <property name="standalone.jar" value="${standalone.dir}/${standalone.jar.name}.jar"/>
+        <property name="src-jar.dir" value="src-jar"/>
+        <property name="src-jar.jar" value="${src-jar.dir}/${src-jar.jar.name}.jar"/>
 
-        <echo message="Packaging ${application.title} into a single JAR at ${standalone.jar}"/>
+        <echo message="Packaging ${application.title} into a single JAR at ${src-jar.jar}"/>
 
-        <delete dir="${standalone.dir}"/>
-        <mkdir dir="${standalone.dir}"/>
+        <delete dir="${src-jar.dir}"/>
+        <mkdir dir="${src-jar.dir}"/>
 
-        <jar destfile="${standalone.dir}/temp_final.jar" filesetmanifest="skip">
+        <jar destfile="${src-jar.dir}/temp_final.jar" filesetmanifest="skip">
 
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
                 <attribute name="Bundle-Name" value="${project.name}" />           
                 <attribute name="Bundle-Version" value="${version.num}" />
                 <attribute name="Bundle-Date" value="${NOW}" />
-                <attribute name="Bundle-Revision" value="${svna.version}" />
+                <attribute name="Bundle-Revision" value="${revision.num}" />
                 <attribute name="Implementation-Author" value="${author}"/>
                 <attribute name="Implementation-Title" value="${project.name}" />
                 <attribute name="Implementation-Version" value="${version.num}" />
@@ -233,12 +232,12 @@
             
         </jar>
 
-        <zip destfile="${standalone.jar}">
-            <zipfileset src="${standalone.dir}/temp_final.jar"
+        <zip destfile="${src-jar.jar}">
+            <zipfileset src="${src-jar.dir}/temp_final.jar"
                         excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
         </zip>
 
-        <delete file="${standalone.dir}/temp_final.jar"/>
+        <delete file="${src-jar.dir}/temp_final.jar"/>
 
     </target>
     

@@ -70,7 +70,7 @@ public class AboutDialog extends javax.swing.JDialog {
         jPanel1.setPreferredSize(new java.awt.Dimension(371, 480));
 
         abinitBannerLabel.setFont(new java.awt.Font("Arial", 1, 70)); // NOI18N
-        abinitBannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/abinit_logo_gui_final.png"))); // NOI18N
+        abinitBannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/abinitgui/resources/abinit_logo_gui_final.png"))); // NOI18N
 
         versionLabel.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         versionLabel.setText("Version: ??");
@@ -167,7 +167,7 @@ public class AboutDialog extends javax.swing.JDialog {
                 .addComponent(emailLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(emailLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

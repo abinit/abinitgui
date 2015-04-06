@@ -23,7 +23,17 @@ NC_LDA_FHI:
     nlcc_radius: 0.0, path: ./PSP/NC_LDA_FHI/Si/0.14-Si.LDA.fhi, summary: 'silicon,
       fhi98PP : Trouiller-Martins-type, LDA Ceperley/Alder Perdew/Wang (1992), l=
       0 local'}
+  - !NcAbinitPseudo {Z: 14, Z_val: 4.0, l_local: 2, l_max: 3, md5: 49535a6903cd6ba65f743415657eae62,
+    nlcc_radius: 0.0, path: ./PSP/NC_LDA_FHI/Si/14-Si.LDA_1.fhi, summary: 'silicon,
+      fhi98PP : Trouiller-Martins-type, LDA Ceperley/Alder Perdew/Wang (1992), l=
+      2 local'}
 NC_LDA_Teter:
   Si:
   - !NcAbinitPseudo {Z: 14, Z_val: 4.0, l_local: 2, l_max: 2, md5: ccbfa7a3d7baa201123ecd516a9a00dc,
     nlcc_radius: 0.0, path: ./PSP/NC_LDA_Teter/Si/14si.phoney.mod, summary: 2 bohr rc 15 hartree ec psp for silicon 8 November 1991 (new)}
+NC_LDA_GTH:
+  Si:
+  - !NcAbinitPseudo {Z: 14, Z_val: 4.0, l_local: 0, l_max: 1, md5: 4e287405e75902d565a8b766845c0ab3,
+    nlcc_radius: 0.0, path: null/NC_LDA_GTH/Si/14si.pspgth, summary: 'Goedecker-Teter-Hutter  Fri
+      May 31 17:22:04 EDT 1996'}
+
