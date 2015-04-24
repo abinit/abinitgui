@@ -104,7 +104,6 @@ public class MachineDatabase implements Iterable<Machine> {
         Yaml yaml = new Yaml(new ProjectRepresenter(), new DumperOptions());
 
         String txt = yaml.dump(this.list);
-        System.out.println(txt);
 
         PrintWriter pw;
         pw = new PrintWriter(new FileWriter(fileName));
