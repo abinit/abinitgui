@@ -206,7 +206,7 @@ public class AnaddbSimulation extends Simulation {
             mach.putFile(inputFile + " " + inputFileR);
             
             String ddbFileR = rootPath + "/" + inputFolder + "/" + inputDDB;
-            mach.putFile(ddbFile + " " + inputDDB);
+            mach.putFile(ddbFile + " " + ddbFileR);
 
             if (isRemoteGatewayMachine
                     || isRemoteAbinitMachine) {
