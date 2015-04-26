@@ -221,7 +221,7 @@ public class AnaddbSimulation extends Simulation {
             configFileContent += cwd + "/" + rootPath.replaceFirst("./", "")
                     + "/" + inputFolder + "/" + inputFN + "\n";
             configFileContent += cwd + "/" + rootPath.replaceFirst("./", "")
-                    + "/" + outputFolder + "/" + simName + "/" + simName + "_anaddb.out\n";
+                    + "/" + outputFolder + "/" + simName + "_anaddb.out\n";
             configFileContent += cwd + "/" + rootPath.replaceFirst("./", "")
                     + "/" + inputFolder + "/" + inputDDB + "\n";
             configFileContent += cwd + "/" + rootPath.replaceFirst("./", "")
