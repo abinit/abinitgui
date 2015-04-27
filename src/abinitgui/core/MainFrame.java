@@ -116,6 +116,7 @@ public class MainFrame extends JFrame {
     
     private static PseudoDatabase remotePseudoDatabase;
     private static PseudoDatabase localPseudoDatabase;
+    private final MachineFrame machineFr;
 
     /**
      * Creates new form MainFrame
@@ -129,6 +130,9 @@ public class MainFrame extends JFrame {
         
         msgdisp = new MessageDisplayer(this, false, outputFile);
         msgdisp.setTitle("..:: Global MSG Display ::..");
+        
+        machineFr = new MachineFrame(this);
+        
         
         // ---------------------------------------------------------------------
 
@@ -199,6 +203,8 @@ public class MainFrame extends JFrame {
 
         msgdisp.show();
         msgdisp.setLocationRelativeTo(this);
+        
+        machineFr.setVisible(true);
 
         // TODO rendre visible
         //mainTabbedPane.setEnabledAt(4, false);
@@ -307,7 +313,7 @@ public class MainFrame extends JFrame {
     {
         jobPanel1.refreshMachines();
         
-        Machine mymach = (Machine)(machineCombo.getSelectedItem());
+        //Machine mymach = (Machine)(machineCombo.getSelectedItem());
         
         DefaultComboBoxModel<Machine> model = new DefaultComboBoxModel<>();
         
@@ -316,8 +322,9 @@ public class MainFrame extends JFrame {
             model.addElement(mach);
         }
         
-        machineCombo.setModel(model);
-        machineCombo.setSelectedItem(mymach);
+        machineFr.setModel(model);
+        //machineCombo.setModel(model);
+        //machineCombo.setSelectedItem(mymach);
         
         jobD.refresh();
         
@@ -376,11 +383,6 @@ public class MainFrame extends JFrame {
         jobPanel1 = new abinitgui.projects.JobPanel();
         postProcPanel1 = new abinitgui.scriptbib.PostProcPanel();
         jobMonitorPanel1 = new abinitgui.projects.JobMonitorPanel();
-        connectionToggleButton = new javax.swing.JToggleButton();
-        SSH2ClientButton = new javax.swing.JButton();
-        SFTPButton = new javax.swing.JButton();
-        machineCombo = new javax.swing.JComboBox();
-        machineLabel = new javax.swing.JLabel();
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -408,41 +410,6 @@ public class MainFrame extends JFrame {
         mainTabbedPane.addTab("Jobs", jobPanel1);
         mainTabbedPane.addTab("Post-processing", postProcPanel1);
         mainTabbedPane.addTab("Job Monitor", jobMonitorPanel1);
-
-        connectionToggleButton.setText("Connect");
-        connectionToggleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                connectionToggleButtonActionPerformed(evt);
-            }
-        });
-
-        SSH2ClientButton.setText("SSH2 Client");
-        SSH2ClientButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SSH2ClientButtonActionPerformed(evt);
-            }
-        });
-
-        SFTPButton.setText("SFTP Client");
-        SFTPButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SFTPButtonActionPerformed(evt);
-            }
-        });
-
-        machineCombo.setModel(new DefaultComboBoxModel<Machine>());
-        machineCombo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                machineComboItemStateChanged(evt);
-            }
-        });
-        machineCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                machineComboActionPerformed(evt);
-            }
-        });
-
-        machineLabel.setText("Direct access to:");
 
         fileMenu.setLabel("File");
 
@@ -545,18 +512,7 @@ public class MainFrame extends JFrame {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(mainTabbedPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 754, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(layout.createSequentialGroup()
-                        .add(machineLabel)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(machineCombo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(connectionToggleButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 143, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(SSH2ClientButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(SFTPButton)))
+                .add(mainTabbedPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 754, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -564,13 +520,6 @@ public class MainFrame extends JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(mainTabbedPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(connectionToggleButton)
-                    .add(SSH2ClientButton)
-                    .add(SFTPButton)
-                    .add(machineCombo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(machineLabel))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -605,47 +554,6 @@ public class MainFrame extends JFrame {
         msgdisp.clear();
     }//GEN-LAST:event_clearOutMSGMenuItemActionPerformed
 
-    private void connectionToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectionToggleButtonActionPerformed
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                connectionToggleButton.setEnabled(false);
-                if (connectionToggleButton.isSelected()) {
-                    if(currentMachine != null)
-                    {
-                        currentMachine.connection();
-                        setStateConnect();
-                    }
-                    else
-                    {
-                        printERR("Please select a machine first!");
-                    }
-                } else {
-                    stopConnection();
-                    setStateConnect();
-                    //connectionToggleButton.setText("Connect");
-                    printOUT("You are now disconnected!");
-                }
-                connectionToggleButton.setEnabled(true);
-            }
-        };
-
-        Thread t = new Thread(r);
-        t.start();
-}//GEN-LAST:event_connectionToggleButtonActionPerformed
-
-    private void SSH2ClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SSH2ClientButtonActionPerformed
-        Machine mach = (Machine)machineCombo.getSelectedItem();
-        if(mach != null)
-        {
-            MySSHTerm ssh2 = mach.newSSHTerm();
-        }
-        else
-        {
-            printERR("Please select a machine first!");
-        }
-    }//GEN-LAST:event_SSH2ClientButtonActionPerformed
-
     private void jMenuItemClustepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClustepActionPerformed
         clustepDiag.setVisible(true);
     }//GEN-LAST:event_jMenuItemClustepActionPerformed
@@ -654,47 +562,10 @@ public class MainFrame extends JFrame {
         tightBindingDiag.setVisible(true);
     }//GEN-LAST:event_jMenuItemTBActionPerformed
 
-    private void SFTPButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SFTPButtonActionPerformed
-        if(currentMachine != null)
-        {
-            MySFTP client = currentMachine.newSFTP();
-        }
-        else
-        {
-            printERR("Please select a machine first!");
-        }
-    }//GEN-LAST:event_SFTPButtonActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
         abinitInputVars.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void machineComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_machineComboItemStateChanged
-        
-    }//GEN-LAST:event_machineComboItemStateChanged
-
-    private void setStateConnect()
-    {
-        if(currentMachine != null && currentMachine.isConnected())
-        {
-            connectionToggleButton.setSelected(true);
-            connectionToggleButton.setText("Disconnect");
-        }
-        else
-        {
-            connectionToggleButton.setSelected(false);
-            connectionToggleButton.setText("Connect"); 
-        }
-    }
-    private void machineComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_machineComboActionPerformed
-        Machine mach = (Machine)machineCombo.getSelectedItem();
-        if(mach != null)
-        {
-            this.currentMachine = mach;   
-            setStateConnect();
-        }
-    }//GEN-LAST:event_machineComboActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         if(currentProject != null)
@@ -809,12 +680,9 @@ public class MainFrame extends JFrame {
     // For accessing some private variables from outside of abinitgui package
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    javax.swing.JButton SFTPButton;
-    javax.swing.JButton SSH2ClientButton;
     javax.swing.ButtonGroup abinixbuttonGroup;
     javax.swing.JMenuItem aboutMenuItem;
     javax.swing.JMenuItem clearOutMSGMenuItem;
-    javax.swing.JToggleButton connectionToggleButton;
     javax.swing.JMenu fileMenu;
     javax.swing.JMenu helpMenu;
     javax.swing.ButtonGroup inputFilebuttonGroup;
@@ -828,8 +696,6 @@ public class MainFrame extends JFrame {
     abinitgui.projects.JobMonitorPanel jobMonitorPanel1;
     abinitgui.projects.JobPanel jobPanel1;
     javax.swing.ButtonGroup lookAndFeelbuttonGroup;
-    javax.swing.JComboBox machineCombo;
-    javax.swing.JLabel machineLabel;
     abinitgui.projects.MachinePane machinePane1;
     javax.swing.JMenuBar mainMenuBar;
     javax.swing.JTabbedPane mainTabbedPane;
