@@ -33,7 +33,8 @@ import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;
 
 /**
- *
+ * Representation of the dataset in memory, with a database of variables and
+ * a dependency tree
  * @author yannick
  */
 public class AbinitDataset implements Iterable<AbinitVariable>
@@ -46,21 +47,40 @@ public class AbinitDataset implements Iterable<AbinitVariable>
         allData = new HashMap<>();
     }
     
+    /**
+     * Returns variable with name "name"
+     * @param name the name of the variable to look for
+     * @return the variable of the database, or null if the variable is not
+     * in the database
+     */
     public AbinitVariable getVariable(String name)
     {
         return allData.get(name);
     }
     
+    /**
+     * Sets a variable in the database
+     * @param name The name of the variable (should be equal to the variable
+     * internal representation of name)
+     * @param variable The variable
+     */
     public void setVariable(String name, AbinitVariable variable)
     {
         allData.put(name, variable);
     }
     
+    @Override
     public Iterator<AbinitVariable> iterator()
     {
         return allData.values().iterator();
     }
     
+    /**
+     * Evaluate the set of variables in the dataset 
+     * @param evaluator Evaluator containing current state
+     * @throws EvaluationException If something wrong happened
+     */
+    @Deprecated
     public void evaluateAll(Evaluator evaluator) throws EvaluationException
     {
         /**LinkedList<String> varsForDim = new LinkedList<>();
@@ -172,6 +192,7 @@ public class AbinitDataset implements Iterable<AbinitVariable>
     }
 
     /**
+     * Returns the dependency tree of the dataset
      * @return the tree
      */
     public DepTree getTree() {
@@ -179,6 +200,7 @@ public class AbinitDataset implements Iterable<AbinitVariable>
     }
 
     /**
+     * Set the dependency tree of the dataset
      * @param tree the tree to set
      */
     public void setTree(DepTree tree) {

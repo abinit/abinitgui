@@ -276,4 +276,92 @@ public class Utils {
             }
         }
     }
+    
+        
+    public static boolean isUnity(Double[][] rprim)
+    {
+        return ((Math.abs(rprim[0][1])+Math.abs(rprim[1][0]) 
+                + Math.abs(rprim[0][2])+Math.abs(rprim[2][0]) 
+                + Math.abs(rprim[1][2])+Math.abs(rprim[2][1])) < 1e-8 &&
+            rprim[0][0] == 1 && rprim[1][1] == 1 && rprim[2][2] == 1);
+    }
+    
+    public static boolean areZero(Double[][] table)
+    {
+        for(int i = 0; i < table.length; i++)
+        {
+            for(int j = 0; j < table[i].length; j++)
+            {
+                if(Math.abs(table[i][j]) > 1e-8) return false;
+            }
+        }
+        return true;
+    }
+    
+    
+    public static String printArray(double val) {
+        return "" + val;
+    }
+
+    public static String printArray(Double[] array) {
+        if (array == null) {
+            return "null";
+        }
+
+        String s = "[";
+
+        for (int i = 0; i < array.length; i++) {
+            s = s + array[i] + ";";
+        }
+
+        return s + "]";
+    }
+
+    public static String printArray(Integer[] array) {
+        if (array == null) {
+            return "null";
+        }
+        String s = "[";
+
+        for (int i = 0; i < array.length; i++) {
+            s = s + array[i] + ";";
+        }
+
+        return s + "]";
+    }
+
+    public static String printArray(Double[][] array) {
+        if (array == null) {
+            return "null";
+        }
+        String s = "[";
+
+        for (int i = 0; i < array.length; i++) {
+            s = s + "[";
+            for (int j = 0; j < array[i].length; j++) {
+                s = s + array[i][j] + ";";
+            }
+            s = s + "]\n";
+        }
+
+        return s + "]";
+    }
+
+    public static String printArray(Integer[][] array) {
+        if (array == null) {
+            return "null";
+        }
+        String s = "[";
+
+        for (int i = 0; i < array.length; i++) {
+            s = s + "[";
+            for (int j = 0; j < array[i].length; j++) {
+                s = s + array[i][j] + ";";
+            }
+            s = s + "]\n";
+        }
+
+        return s + "]";
+    }
+
 }

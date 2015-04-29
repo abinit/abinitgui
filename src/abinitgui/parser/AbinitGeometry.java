@@ -27,6 +27,7 @@ package abinitgui.parser;
 
 import abinitgui.pseudos.Atom;
 import abinitgui.core.MainFrame;
+import abinitgui.core.Utils;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -64,189 +65,100 @@ public class AbinitGeometry {
             "xcart", "znucl");
     protected static final double ANGSTROMPERBOHR = 0.529177249f;
 
-    public AbinitGeometry() {
-    }
-
     @Override
     public String toString() {
         String s;
-        s = "acell = " + printArray(acell) + "\n"
-                + "angdeg = " + printArray(angdeg) + "\n"
-                + "natom = " + printArray(natom) + "\n"
-                + "ntypat = " + printArray(ntypat) + "\n"
-                + "rprim = " + printArray(rprim) + "\n"
-                + "rprimd = " + printArray(rprimd) + "\n"
-                + "scalecart = " + printArray(scalecart) + "\n"
-                + "typat = " + printArray(typat) + "\n"
-                + "xangst = " + printArray(xangst) + "\n"
-                + "xred = " + printArray(xred) + "\n"
-                + "xcart = " + printArray(xcart) + "\n"
-                + "znucl = " + printArray(znucl) + "\n";
+        s = "acell = " + Utils.printArray(acell) + "\n"
+                + "angdeg = " + Utils.printArray(angdeg) + "\n"
+                + "natom = " + Utils.printArray(natom) + "\n"
+                + "ntypat = " + Utils.printArray(ntypat) + "\n"
+                + "rprim = " + Utils.printArray(rprim) + "\n"
+                + "rprimd = " + Utils.printArray(rprimd) + "\n"
+                + "scalecart = " + Utils.printArray(scalecart) + "\n"
+                + "typat = " + Utils.printArray(typat) + "\n"
+                + "xangst = " + Utils.printArray(xangst) + "\n"
+                + "xred = " + Utils.printArray(xred) + "\n"
+                + "xcart = " + Utils.printArray(xcart) + "\n"
+                + "znucl = " + Utils.printArray(znucl) + "\n";
 
         return s;
     }
 
-    public String printArray(double val) {
-        return "" + val;
-    }
-
-    public String printArray(Double[] array) {
-        if (array == null) {
-            return "null";
-        }
-
-        String s = "[";
-
-        for (int i = 0; i < array.length; i++) {
-            s = s + array[i] + ";";
-        }
-
-        return s + "]";
-    }
-
-    public String printArray(Integer[] array) {
-        if (array == null) {
-            return "null";
-        }
-        String s = "[";
-
-        for (int i = 0; i < array.length; i++) {
-            s = s + array[i] + ";";
-        }
-
-        return s + "]";
-    }
-
-    public String printArray(Double[][] array) {
-        if (array == null) {
-            return "null";
-        }
-        String s = "[";
-
-        for (int i = 0; i < array.length; i++) {
-            s = s + "[";
-            for (int j = 0; j < array[i].length; j++) {
-                s = s + array[i][j] + ";";
-            }
-            s = s + "]\n";
-        }
-
-        return s + "]";
-    }
-
-    public String printArray(Integer[][] array) {
-        if (array == null) {
-            return "null";
-        }
-        String s = "[";
-
-        for (int i = 0; i < array.length; i++) {
-            s = s + "[";
-            for (int j = 0; j < array[i].length; j++) {
-                s = s + array[i][j] + ";";
-            }
-            s = s + "]\n";
-        }
-
-        return s + "]";
-    }
-
+    /**
+     * Sets the in-memory state from an AbinitInputMapping
+     * @param map The mapping representing the input file
+     * @param idtset The current dataset
+     * @throws EvaluationException If something goes wrong
+     */
     public void loadData(AbinitInputMapping map, int idtset) throws EvaluationException {
 
-        //AbinitVariable o = map.getVariable("natom",idtset);
         Object o2 = map.getVariableValue("natom",idtset);
         if (o2 != null) {
             this.natom = (int) (o2);
         }
 
-        //o = map.getVariable("ntypat",idtset);
         o2 = map.getVariableValue("ntypat",idtset);
         if (o2 != null) {
             this.ntypat = (int) (o2);
         }
 
-        //o = map.getVariable("typat",idtset);
         o2 = map.getVariableValue("typat",idtset);
         if (o2 != null) {
             this.typat = (Integer[]) (o2);
         }
 
-        //o = map.getVariable("znucl",idtset);
         o2 = map.getVariableValue("znucl",idtset);
         if (o2 != null) {
             this.znucl = (Double[]) (o2);
         }
 
-        //o = map.getVariable("xred",idtset);
         o2 = map.getVariableValue("xred",idtset);
         if (o2 != null) {
             this.xred = (Double[][]) (o2);
         }
 
-        //o = map.getVariable("xcart",idtset);
         o2 = map.getVariableValue("xcart",idtset);
         if (o2 != null) {
             this.xcart = (Double[][]) (o2);
         }
 
-        //o = map.getVariable("rprim",idtset);
         o2 = map.getVariableValue("rprim",idtset);
         if (o2 != null) {
             this.rprim = (Double[][]) (o2);
         }
 
-        //o = map.getVariable("rprimd",idtset);
         o2 = map.getVariableValue("rprimd",idtset);
         if (o2 != null) {
             this.rprimd = (Double[][]) (o2);
         }
 
-        //o = map.getVariable("scalecart",idtset);
         o2 = map.getVariableValue("scalecart",idtset);
         if (o2 != null) {
             this.scalecart = (Double[]) (o2);
         }
 
-        //o = map.getVariable("xangst",idtset);
         o2 = map.getVariableValue("xangst",idtset);
         if (o2 != null) {
             this.xangst = (Double[][]) (o2);
         }
 
-        //o = map.getVariable("acell",idtset);
         o2 = map.getVariableValue("acell",idtset);
         if (o2 != null) {
             this.acell = (Double[]) (o2);
         }
 
-        //o = map.getVariable("angdeg",idtset);
         o2 = map.getVariableValue("angdeg",idtset);
         if (o2 != null) {
             this.angdeg = (Double[]) (o2);
         }
 
     }
-    
-    public boolean isUnity(Double[][] rprim)
-    {
-        return ((Math.abs(rprim[0][1])+Math.abs(rprim[1][0]) 
-                + Math.abs(rprim[0][2])+Math.abs(rprim[2][0]) 
-                + Math.abs(rprim[1][2])+Math.abs(rprim[2][1])) < 1e-8 &&
-            rprim[0][0] == 1 && rprim[1][1] == 1 && rprim[2][2] == 1);
-    }
-    
-    public boolean areZero(Double[][] table)
-    {
-        for(int i = 0; i < table.length; i++)
-        {
-            for(int j = 0; j < table[i].length; j++)
-            {
-                if(Math.abs(table[i][j]) > 1e-8) return false;
-            }
-        }
-        return true;
-    }
 
+    /**
+     * Tries to complete information from the already known states
+     * Should be called after @loadData
+     * @return true if everything went fine
+     */
     public boolean fillData() {
         DecimalFormat df_rprim = new DecimalFormat("#0.0000000000000");
 
@@ -259,10 +171,10 @@ public class AbinitGeometry {
             return false;
         }
 
-        if ((xred != null && !areZero(xred)))
-        if (((xred != null && !areZero(xred)) && (xcart != null && !areZero(xcart)))
-                || ((xred != null && !areZero(xred)) && (xangst != null && !areZero(xangst)))
-                || ((xcart != null && !areZero(xcart)) && (xangst != null && !areZero(xangst)))) {
+        if ((xred != null && !Utils.areZero(xred)))
+        if (((xred != null && !Utils.areZero(xred)) && (xcart != null && !Utils.areZero(xcart)))
+                || ((xred != null && !Utils.areZero(xred)) && (xangst != null && !Utils.areZero(xangst)))
+                || ((xcart != null && !Utils.areZero(xcart)) && (xangst != null && !Utils.areZero(xangst)))) {
             MainFrame.printERR("Different positions assigned at the same time.");
             return false;
         }
@@ -298,7 +210,7 @@ public class AbinitGeometry {
                 angdeg[2] = 180 / Math.PI * Math.acos(dot12);
             }
 
-            if (rprim == null || (isUnity(rprim) && angdeg != null)) {
+            if (rprim == null || (Utils.isUnity(rprim) && angdeg != null)) {
                 rprim = new Double[3][3];
                 Double angdeg1 = angdeg[0]; // angdeg(1)
                 Double angdeg2 = angdeg[1]; // angdeg(2)
@@ -397,10 +309,14 @@ public class AbinitGeometry {
         }
 
         return true;
-
-
     }
 
+    /**
+     * Compute the replica's, the positions and the structure
+     * @param nbX Number of replica along the first axis
+     * @param nbY Number of replica along the second axis
+     * @param nbZ Number of replica along the third axis
+     */
     public void computeReplicas(int nbX, int nbY, int nbZ) {
         allatoms = natom * nbX * nbY * nbZ;
 
@@ -424,6 +340,11 @@ public class AbinitGeometry {
         }
     }
 
+    /**
+     * Writes the structure to a XYZ file
+     * @param fileName Name of the file where to write
+     * @throws IOException If something goes wrong when writing the file
+     */
     public void writeIntoXYZ(String fileName) throws IOException {
         PrintWriter pw;
         pw = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
@@ -445,6 +366,11 @@ public class AbinitGeometry {
         pw.close();
     }
 
+    /**
+     * Writes the structure to a AIMS file (may contain the axis)
+     * @param fileName Name of the file where to write
+     * @throws IOException If something goes wrong when writing the file
+     */
     public void writeIntoAIMS(String fileName) throws IOException {
         PrintWriter pw;
         pw = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));

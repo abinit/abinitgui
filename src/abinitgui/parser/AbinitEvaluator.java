@@ -34,7 +34,7 @@ import net.sourceforge.jeval.function.FunctionHelper;
 import net.sourceforge.jeval.function.FunctionResult;
 
 /**
- *
+ * Evaluator for abinit dataset, required to overload some basic functions
  * @author yannick
  */
 public class AbinitEvaluator extends Evaluator
