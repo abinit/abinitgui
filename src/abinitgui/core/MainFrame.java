@@ -229,7 +229,7 @@ public class MainFrame extends JFrame {
         } catch(YAMLException | FileNotFoundException ex)
         {
             printERR("No abinit_vars.yml found, falling back to internal version\nPlease copy a version of abinit_vars.yml corresponding to your version of Abinit"); 
-            BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("/abinitgui/resources/abinit_vars.yml")));
+            BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("abinitgui/resources/abinit_vars.yml")));
             allInputVars.loadVars(br);
         }
         abinitInputVars = new AbinitInputVars(allInputVars,fileOpened);
