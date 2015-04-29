@@ -64,6 +64,7 @@ import abinitgui.pseudos.PseudoDatabase;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import javax.swing.JFrame;
 import org.yaml.snakeyaml.error.YAMLException;
@@ -221,23 +222,15 @@ public class MainFrame extends JFrame {
         guiEditor = new GUIEditor(this);
         allInputVars = new AllInputVars();
         
-        File fileOpened = null;
+        File fileOpened = new File("abinit_vars.yml");
         try{
-            fileOpened = new File("abinit_vars.yml");
             BufferedReader br = new BufferedReader(new FileReader(fileOpened));
             allInputVars.loadVars(br);
         } catch(YAMLException | FileNotFoundException ex)
         {
-            try{
-                printERR("No abinit_vars.yml found, falling back to internal version\nPlease copy a version of abinit_vars.yml corresponding to your version of Abinit");                
-                fileOpened = new File(this.getClass().getResource("/abinitgui/resources/abinit_vars.yml").toURI());
-                BufferedReader br = new BufferedReader(new FileReader(fileOpened));
-                allInputVars.loadVars(br);
-            } catch(YAMLException | FileNotFoundException | URISyntaxException ex2)
-            {
-                printERR("Internal error, abinit_vars.yml not available in the jar file !!!");
-                printERR("BUG !!!");
-            }
+            printERR("No abinit_vars.yml found, falling back to internal version\nPlease copy a version of abinit_vars.yml corresponding to your version of Abinit"); 
+            BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("/abinitgui/resources/abinit_vars.yml")));
+            allInputVars.loadVars(br);
         }
         abinitInputVars = new AbinitInputVars(allInputVars,fileOpened);
 
