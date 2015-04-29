@@ -60,10 +60,9 @@ public class AbinitInputJEval
     private final String[] units = {"HA","HARTREE","RY","RYDBERG","BOHR","AU", "T","TE", "EV", "ANGSTROM", "ANGSTR", "ANGSTROMS", "K", "A.U.", "(BOHR^2)/HARTREE"};
     private final double[] scaling = {1.0,1.0,0.5,0.5,1.0,1.0,tesla_to_au,tesla_to_au,ev_to_Ha,angstrom_to_bohr,angstrom_to_bohr,angstrom_to_bohr,1.0,1.0,1.0};
     
-    public AbinitInputJEval()
+    public AbinitInputJEval(AllInputVars allInputs)
     {
-        allInputs = new AllInputVars();
-        allInputs.loadVars("abinit_vars.yml");
+        this.allInputs = allInputs;
         
         listOfUnits = new HashMap<>();
         

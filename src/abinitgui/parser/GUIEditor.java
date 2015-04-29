@@ -82,7 +82,7 @@ public class GUIEditor extends JFrame {
         dataTable.clear();
         this.fileName = fileName;
         
-        inputEval = new AbinitInputJEval();
+        inputEval = new AbinitInputJEval(mf.getAllInputVars());
 
         try{
             inputMapping = inputEval.readFromFile(fileName);

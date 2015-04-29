@@ -26,6 +26,7 @@
 
 package abinitgui.tests;
 
+import static abinitgui.core.MainFrame.printERR;
 import abinitgui.parser.AbinitDataset;
 import abinitgui.parser.AbinitGeometry;
 import java.io.BufferedReader;
@@ -40,15 +41,38 @@ import java.util.logging.Logger;
 import abinitgui.parser.AbinitInputJEval;
 import abinitgui.parser.AbinitInputMapping;
 import abinitgui.parser.AbinitVariable;
+import abivars.AllInputVars;
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import org.yaml.snakeyaml.error.YAMLException;
 
 public class TestParser {
     
+    public static AllInputVars getAllInputVars()
+    {
+        AllInputVars allInputVars = new AllInputVars();
+        try{
+            printERR("No abinit_vars.yml found, falling back to internal version");
+            File fileOpened = new File(AllInputVars.class.getClassLoader().getResource("/abinitgui/resources/abinit_vars.yml").toURI());
+            BufferedReader br = new BufferedReader(new FileReader(fileOpened));
+            allInputVars.loadVars(br);
+            return allInputVars;
+        } catch(YAMLException | FileNotFoundException | URISyntaxException ex2)
+        {
+            printERR("Internal error, abinit_vars.yml not available in the jar file !!!");
+            printERR("BUG !!!");
+        }
+        
+        return null;
+    }
+    
+    
     public static void testAllInputsInPath(String pathAbinit, String outputFile)
     {
-        AbinitInputJEval ai = new AbinitInputJEval();
+        AbinitInputJEval ai = new AbinitInputJEval(getAllInputVars());
         
         String path = pathAbinit+"/tests/";
         
@@ -151,7 +175,7 @@ public class TestParser {
     public static void testOneFile(String name, PrintWriter pw)
     {
         boolean isExc = false;
-        AbinitInputJEval ai = new AbinitInputJEval();
+        AbinitInputJEval ai = new AbinitInputJEval(getAllInputVars());
         AbinitInputMapping mapping = null;
         try {
             //pw.print("Reading file : "+name+" ...");
