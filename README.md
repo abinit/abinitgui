@@ -1,4 +1,4 @@
 abinitgui
 =========
 
-GUI for Abinit package (http://www.abinit.org)
+GUI for Abinit package (https://www.abinit.org)
